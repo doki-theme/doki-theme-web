@@ -1,0 +1,32 @@
+{
+  "name": "The Doki Theme",
+  "version": "1.0",
+  "description": "Anime based themes for your chrome browser!",
+  "permissions": [
+    "activeTab",
+    "declarativeContent",
+    "storage"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  },
+  "options_page": "options.html",
+  "page_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/favicon-16x16.png",
+      "32": "images/favicon-32x32.png",
+      "192": "images/android-chrome-192x192.png"
+    }
+  },
+  "icons": {
+    "16": "images/favicon-16x16.png",
+    "32": "images/favicon-32x32.png",
+    "48": "images/favicon-48x48.png",
+    "192": "images/android-chrome-192x192.png"
+  },
+  "manifest_version": 2
+}
