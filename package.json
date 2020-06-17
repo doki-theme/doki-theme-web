@@ -15,6 +15,7 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^26.1.0",
     "ts-loader": "^7.0.5",
+    "ts-node": "^8.10.2",
     "typescript": "^3.9.5",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
@@ -25,6 +26,7 @@
     "watch": "webpack --config webpack/webpack.dev.js --watch",
     "build": "webpack --config webpack/webpack.prod.js",
     "clean": "rimraf dist",
+    "buildThemes": "ts-node ./buildSrc/BuildThemes.ts",
     "test": "npx jest"
   }
 }
