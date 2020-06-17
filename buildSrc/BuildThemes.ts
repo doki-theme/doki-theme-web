@@ -1,14 +1,22 @@
 // @ts-ignore
-import {DokiThemeDefinitions, MasterDokiThemeDefinition, StringDictonary} from './types';
+import {DokiThemeDefinitions, ManifestTemplate, MasterDokiThemeDefinition, StringDictonary} from './types';
 
 const path = require('path');
 
 const repoDirectory = path.resolve(__dirname, '..');
 
+const generatedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes');
+
 const fs = require('fs');
 
 const masterThemeDefinitionDirectoryPath =
   path.resolve(repoDirectory, 'masterThemes');
+
+const chromeTemplateDefinitionDirectoryPath = path.resolve(
+  repoDirectory,
+  "templates"
+);
+
 
 function walkDir(dir: string): Promise<string[]> {
   const values: Promise<string[]>[] = fs.readdirSync(dir)
@@ -163,10 +171,13 @@ function resolveNamedColors(
         'dark' : 'light'));
 }
 
-function buildHyperTheme(
+function buildChromeTheme(
   dokiThemeDefinition: MasterDokiThemeDefinition,
   dokiTemplateDefinitions: DokiThemeDefinitions
 ) {
+  if (dokiThemeDefinition.id === '546e8fb8-6082-4ef5-a5e3-44790686f02f') {
+    console.log(JSON.stringify(dokiTemplateDefinitions, null, 2))
+  }
   return {
     colors: buildLAFColors(
       dokiThemeDefinition,
@@ -178,13 +189,15 @@ function buildHyperTheme(
 function createDokiTheme(
   dokiFileDefinitionPath: string,
   dokiThemeDefinition: MasterDokiThemeDefinition,
-  dokiTemplateDefinitions: DokiThemeDefinitions
+  dokiTemplateDefinitions: DokiThemeDefinitions,
+  manifestTemplate: ManifestTemplate
 ) {
   try {
     return {
       path: dokiFileDefinitionPath,
       definition: dokiThemeDefinition,
-      theme: buildHyperTheme(
+      manifest: {},
+      theme: buildChromeTheme(
         dokiThemeDefinition,
         dokiTemplateDefinitions
       )
@@ -277,10 +290,12 @@ walkDir(path.resolve(masterThemeDefinitionDirectoryPath, 'templates'))
       dokiTemplateDefinitions,
       dokiFileDefinitionPaths
     } = templatesAndDefinitions;
+    const manifestTemplate = readJson<ManifestTemplate>(path.resolve(chromeTemplateDefinitionDirectoryPath, 'manifest.template.json'))
     return dokiFileDefinitionPaths
       .map(dokiFileDefinitionPath => ({
         dokiFileDefinitionPath,
         dokiThemeDefinition: readJson<MasterDokiThemeDefinition>(dokiFileDefinitionPath),
+        manifestTemplate,
       }))
       .filter(pathAndDefinition =>
         (pathAndDefinition.dokiThemeDefinition.product === 'ultimate' &&
@@ -290,35 +305,34 @@ walkDir(path.resolve(masterThemeDefinitionDirectoryPath, 'templates'))
       .map(({
               dokiFileDefinitionPath,
               dokiThemeDefinition,
+              manifestTemplate
             }) =>
         createDokiTheme(
           dokiFileDefinitionPath,
           dokiThemeDefinition,
-          dokiTemplateDefinitions
+          dokiTemplateDefinitions,
+          manifestTemplate,
         )
       );
   }).then(dokiThemes => {
+
   // write things for extension
-  const dokiThemeDefinitions = dokiThemes.map(dokiTheme => {
-    const dokiDefinition = dokiTheme.definition;
-    return {
-      information: omit(dokiDefinition, [
-        'colors',
-        'overrides',
-        'ui',
-        'icons'
-      ]),
-      colors: dokiTheme.theme.colors,
-      stickers: getStickers(dokiDefinition, dokiTheme)
-    };
-  }).reduce((accum: StringDictonary<any>, definition) => {
-    accum[definition.information.id] = definition;
-    return accum;
-  }, {});
-  const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions, null, 2);
-  fs.writeFileSync(
-    path.resolve(repoDirectory, 'src', 'DokiThemeDefinitions.ts'),
-    `export default ${finalDokiDefinitions};`);
+  dokiThemes.forEach(theme => {
+    const themeDirectory = path.resolve(
+      generatedThemesDirectory,
+      `${theme.definition.name}'s Theme`
+    );
+    fs.mkdirSync(path.resolve(themeDirectory, 'images'), {recursive: true});
+
+    // copy asset to directory
+    getStickers(theme.definition, theme)
+
+    //write manifest
+    fs.writeFileSync(
+      path.resolve(themeDirectory, 'manifest.json'),
+      JSON.stringify(theme.manifest, null, 2)
+    )
+  });
 })
   .then(() => {
     console.log('Theme Generation Complete!');
