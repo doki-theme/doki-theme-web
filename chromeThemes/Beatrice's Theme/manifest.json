@@ -1,1 +1,130 @@
-{}
+{
+  "name": "Doki Theme: Beatrice",
+  "version": "1.0",
+  "description": "A light theme modeled after Beatrice from Re Zero",
+  "theme": {
+    "images": {
+      "theme_ntp_background": "images/beatrice.png",
+      "theme_ntp_background_incognito": "images/beatrice.png"
+    },
+    "colors": {
+      "bookmark_text": "&foregroundColor&",
+      "button_background": [
+        0,
+        0,
+        0
+      ],
+      "control_background": [
+        0,
+        0,
+        0
+      ],
+      "frame": [
+        0,
+        0,
+        0
+      ],
+      "frame_inactive": [
+        0,
+        0,
+        0
+      ],
+      "frame_incognito": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "frame_incognito_inactive": [
+        0,
+        0,
+        0
+      ],
+      "ntp_background": [
+        0,
+        0,
+        0
+      ],
+      "ntp_header": [
+        0,
+        0,
+        0
+      ],
+      "ntp_link": [
+        0,
+        0,
+        0
+      ],
+      "ntp_link_underline": [
+        0,
+        0,
+        0
+      ],
+      "ntp_section": [
+        0,
+        0,
+        0
+      ],
+      "ntp_section_link": [
+        0,
+        0,
+        0
+      ],
+      "ntp_section_link_underline": [
+        0,
+        0,
+        0
+      ],
+      "ntp_section_text": [
+        0,
+        0,
+        0
+      ],
+      "ntp_text": "&foregroundColor&",
+      "tab_background_text": "&lineNumberColor&",
+      "tab_text": "&accentColor&",
+      "toolbar": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0,
+        0,
+        0
+      ],
+      "frame": [
+        0,
+        0,
+        0
+      ],
+      "frame_inactive": [
+        0,
+        0,
+        0
+      ],
+      "frame_incognito": [
+        0,
+        0,
+        0
+      ],
+      "frame_incognito_inactive": [
+        0,
+        0,
+        0
+      ],
+      "background_tab": [
+        0,
+        0,
+        0
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "center"
+    }
+  },
+  "manifest_version": 2
+}

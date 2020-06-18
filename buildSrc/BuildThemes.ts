@@ -171,18 +171,35 @@ function resolveNamedColors(
         'dark' : 'light'));
 }
 
-function buildChromeTheme(
+const toPairs = require('lodash/toPairs');
+export interface StringDictionary<T> {
+  [key: string]: T;
+}
+
+export const dictionaryReducer = <T>(
+  accum: StringDictionary<T>,
+  [key, value]: [string, T],
+) => {
+  accum[key] = value;
+  return accum;
+};
+
+
+function buildChromeThemeManifest(
   dokiThemeDefinition: MasterDokiThemeDefinition,
-  dokiTemplateDefinitions: DokiThemeDefinitions
-) {
-  if (dokiThemeDefinition.id === '546e8fb8-6082-4ef5-a5e3-44790686f02f') {
-    console.log(JSON.stringify(dokiTemplateDefinitions, null, 2))
-  }
+  dokiTemplateDefinitions: DokiThemeDefinitions,
+  manifestTemplate: ManifestTemplate,
+): ManifestTemplate {
   return {
-    colors: buildLAFColors(
-      dokiThemeDefinition,
-      dokiTemplateDefinitions
-    ),
+    ...manifestTemplate,
+    name: `Doki Theme: ${dokiThemeDefinition.name}`,
+    description: `A ${dokiThemeDefinition.dark ? 'dark' : 'light'} theme modeled after ${dokiThemeDefinition.displayName} from ${dokiThemeDefinition.group}`,
+    theme: {
+      ...manifestTemplate.theme,
+      images: toPairs(manifestTemplate.theme.images)
+        .map(([key]: [string])=>([key, `images/${dokiThemeDefinition.stickers.default}`]))
+        .reduce(dictionaryReducer, {})
+    }
   };
 }
 
@@ -196,11 +213,12 @@ function createDokiTheme(
     return {
       path: dokiFileDefinitionPath,
       definition: dokiThemeDefinition,
-      manifest: {},
-      theme: buildChromeTheme(
+      manifest: buildChromeThemeManifest(
         dokiThemeDefinition,
-        dokiTemplateDefinitions
-      )
+        dokiTemplateDefinitions,
+        manifestTemplate
+      ),
+      theme: {}
     };
   } catch (e) {
     throw new Error(`Unable to build ${dokiThemeDefinition.name}'s theme for reasons ${e}`);
@@ -269,8 +287,6 @@ const getStickers = (
   };
 };
 
-
-const omit = require('lodash/omit');
 
 console.log('Preparing to generate themes.');
 walkDir(path.resolve(masterThemeDefinitionDirectoryPath, 'templates'))
