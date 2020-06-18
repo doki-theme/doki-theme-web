@@ -192,7 +192,42 @@ function replaceValues<T, R>(itemToReplace: T, valueConstructor: (value: string)
     .reduce(dictionaryReducer, {});
 }
 
-function hexToRGB(s: string | [number, number, number]) {
+/**
+ * Converts an RGB color value to HSL. Conversion formula
+ * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+ * Assumes r, g, and b are contained in the set [0, 255] and
+ * returns h, s, and l in the set [0, 1].
+ *
+ * @param   Number  r       The red color value
+ * @param   Number  g       The green color value
+ * @param   Number  b       The blue color value
+ * @return  Array           The HSL representation
+ */
+function rgbToHsl([r, g, b]:[number, number, number]) {
+  r /= 255, g /= 255, b /= 255;
+
+  var max = Math.max(r, g, b), min = Math.min(r, g, b);
+  var h, s, l = (max + min) / 2;
+
+  if (max == min) {
+    h = s = 0; // achromatic
+  } else {
+    var d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h = h || 0;
+    h /= 6;
+  }
+
+  return [ h, 1, l ];
+}
+
+function hexToRGB(s: string | [number, number, number]): [number, number, number] {
   if (typeof s === 'string') {
     const hex = parseInt(s.substr(1), 16)
     return [
@@ -235,11 +270,7 @@ function buildChromeThemeManifest(
         manifestTheme.tints,
         (color: string) => {
           const s = resolveColor(color, namedColors);
-          console.log(color, s);
-          return [
-            parseInt(s.substr(1), 16) / 0xFFFFFF
-            , 1, -1
-          ];
+          return rgbToHsl(hexToRGB(s));
         }
       )
     }

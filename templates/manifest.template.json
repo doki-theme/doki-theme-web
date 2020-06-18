@@ -29,8 +29,7 @@
       "toolbar": "&textEditorBackground&"
     },
     "tints": {
-      "buttons": "&accentColor&",
-      "background_tab": "&highlightColor&"
+      "buttons": "&accentColor&"
     },
     "properties" : {
       "ntp_background_alignment" : "stretch"
