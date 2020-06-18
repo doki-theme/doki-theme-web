@@ -3,12 +3,13 @@
   "version": "1.0",
   "description": "A light theme modeled after Monika from Literature Club",
   "theme": {
-    "images": {
-      "theme_ntp_background": "images/just_monika.png",
-      "theme_ntp_background_incognito": "images/just_monika.png"
-    },
+    "images": {},
     "colors": {
-      "bookmark_text": "&foregroundColor&",
+      "bookmark_text": [
+        37,
+        36,
+        39
+      ],
       "button_background": [
         0,
         0,
@@ -80,9 +81,21 @@
         0,
         0
       ],
-      "ntp_text": "&foregroundColor&",
-      "tab_background_text": "&lineNumberColor&",
-      "tab_text": "&accentColor&",
+      "ntp_text": [
+        37,
+        36,
+        39
+      ],
+      "tab_background_text": [
+        170,
+        170,
+        170
+      ],
+      "tab_text": [
+        56,
+        142,
+        60
+      ],
       "toolbar": [
         0,
         0,

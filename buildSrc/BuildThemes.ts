@@ -80,9 +80,9 @@ function resolveColor(
 ): string {
   const startingTemplateIndex = color.indexOf('&');
   if (startingTemplateIndex > -1) {
-    const lastDelimeterIndex = color.lastIndexOf('&');
+    const lastDelimiterIndex = color.lastIndexOf('&');
     const namedColor =
-      color.substring(startingTemplateIndex + 1, lastDelimeterIndex);
+      color.substring(startingTemplateIndex + 1, lastDelimiterIndex);
     const namedColorValue = namedColors[namedColor];
     if (!namedColorValue) {
       throw new Error(`Named color: '${namedColor}' is not present!`);
@@ -97,7 +97,7 @@ function resolveColor(
     if (!resolvedNamedColor) {
       throw new Error(`Cannot find named color '${namedColor}'.`);
     }
-    return resolvedNamedColor + color.substring(lastDelimeterIndex + 1) || '';
+    return resolvedNamedColor + color.substring(lastDelimiterIndex + 1) || '';
   }
 
   return color;
@@ -124,7 +124,7 @@ function applyNamedColors(
     }, {});
 }
 
-function buildLAFColors(
+function constructNamedColorTemplate(
   dokiThemeTemplateJson: MasterDokiThemeDefinition,
   dokiTemplateDefinitions: DokiThemeDefinitions
 ) {
@@ -185,20 +185,51 @@ export const dictionaryReducer = <T>(
 };
 
 
+  function replaceValues<T, R>(itemToReplace: T, valueConstructor: (value: string) => R): T {
+  return toPairs(itemToReplace)
+    .map(([key, value]: [string, string]) => ([key, valueConstructor(value)]))
+    .reduce(dictionaryReducer, {});
+}
+
+function hexToRGB(s: string | [number, number, number]) {
+  if(typeof s === 'string') {
+    const hex = parseInt(s.substr(1), 16)
+   return [
+     (hex & 0xFF0000) >> 16,
+     (hex & 0xFF00) >> 8,
+     (hex & 0xFF)
+   ]
+  }
+  return s;
+
+}
+
 function buildChromeThemeManifest(
   dokiThemeDefinition: MasterDokiThemeDefinition,
   dokiTemplateDefinitions: DokiThemeDefinitions,
   manifestTemplate: ManifestTemplate,
 ): ManifestTemplate {
+  const namedColors = constructNamedColorTemplate(
+    dokiThemeDefinition, dokiTemplateDefinitions
+  )
+  if(dokiThemeDefinition.id === '546e8fb8-6082-4ef5-a5e3-44790686f02f') {
+   // console.log(JSON.stringify(namedColors, null, 2))
+  }
+  const manifestTheme = manifestTemplate.theme;
   return {
     ...manifestTemplate,
     name: `Doki Theme: ${dokiThemeDefinition.name}`,
     description: `A ${dokiThemeDefinition.dark ? 'dark' : 'light'} theme modeled after ${dokiThemeDefinition.displayName} from ${dokiThemeDefinition.group}`,
     theme: {
-      ...manifestTemplate.theme,
-      images: toPairs(manifestTemplate.theme.images)
-        .map(([key]: [string])=>([key, `images/${dokiThemeDefinition.stickers.default}`]))
-        .reduce(dictionaryReducer, {})
+      ...manifestTheme,
+      images: replaceValues(
+        manifestTheme.images,
+        () => `images/${dokiThemeDefinition.stickers.default}`
+      ),
+      colors: replaceValues(
+        manifestTheme.colors,
+        (color: string) => hexToRGB(resolveColor(color, namedColors))
+      ),
     }
   };
 }
@@ -253,13 +284,12 @@ const readTemplates = (templatePaths: string[]): TemplateTypes => {
     });
 };
 
-
 function resolveStickerPath(
-  themeDefinitonPath: string,
+  themeDefinitionPath: string,
   sticker: string,
 ) {
   const stickerPath = path.resolve(
-    path.resolve(themeDefinitonPath, '..'),
+    path.resolve(themeDefinitionPath, '..'),
     sticker
   );
   return stickerPath.substr(masterThemeDefinitionDirectoryPath.length + '/definitions'.length);

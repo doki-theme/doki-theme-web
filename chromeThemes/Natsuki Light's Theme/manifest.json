@@ -3,12 +3,13 @@
   "version": "1.0",
   "description": "A light theme modeled after Natsuki from Literature Club",
   "theme": {
-    "images": {
-      "theme_ntp_background": "images/natsuki.png",
-      "theme_ntp_background_incognito": "images/natsuki.png"
-    },
+    "images": {},
     "colors": {
-      "bookmark_text": "&foregroundColor&",
+      "bookmark_text": [
+        0,
+        0,
+        0
+      ],
       "button_background": [
         0,
         0,
@@ -80,9 +81,21 @@
         0,
         0
       ],
-      "ntp_text": "&foregroundColor&",
-      "tab_background_text": "&lineNumberColor&",
-      "tab_text": "&accentColor&",
+      "ntp_text": [
+        0,
+        0,
+        0
+      ],
+      "tab_background_text": [
+        170,
+        170,
+        170
+      ],
+      "tab_text": [
+        233,
+        70,
+        134
+      ],
       "toolbar": [
         0,
         0,

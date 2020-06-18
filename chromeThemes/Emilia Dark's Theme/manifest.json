@@ -3,12 +3,13 @@
   "version": "1.0",
   "description": "A dark theme modeled after Emilia from Re Zero",
   "theme": {
-    "images": {
-      "theme_ntp_background": "images/emilia_dark.png",
-      "theme_ntp_background_incognito": "images/emilia_dark.png"
-    },
+    "images": {},
     "colors": {
-      "bookmark_text": "&foregroundColor&",
+      "bookmark_text": [
+        218,
+        218,
+        218
+      ],
       "button_background": [
         0,
         0,
@@ -80,9 +81,21 @@
         0,
         0
       ],
-      "ntp_text": "&foregroundColor&",
-      "tab_background_text": "&lineNumberColor&",
-      "tab_text": "&accentColor&",
+      "ntp_text": [
+        218,
+        218,
+        218
+      ],
+      "tab_background_text": [
+        102,
+        104,
+        121
+      ],
+      "tab_text": [
+        165,
+        59,
+        160
+      ],
       "toolbar": [
         0,
         0,

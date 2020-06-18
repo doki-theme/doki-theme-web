@@ -3,12 +3,13 @@
   "version": "1.0",
   "description": "A dark theme modeled after Miku from Miscellaneous",
   "theme": {
-    "images": {
-      "theme_ntp_background": "images/miku.png",
-      "theme_ntp_background_incognito": "images/miku.png"
-    },
+    "images": {},
     "colors": {
-      "bookmark_text": "&foregroundColor&",
+      "bookmark_text": [
+        187,
+        187,
+        187
+      ],
       "button_background": [
         0,
         0,
@@ -80,9 +81,21 @@
         0,
         0
       ],
-      "ntp_text": "&foregroundColor&",
-      "tab_background_text": "&lineNumberColor&",
-      "tab_text": "&accentColor&",
+      "ntp_text": [
+        187,
+        187,
+        187
+      ],
+      "tab_background_text": [
+        102,
+        104,
+        121
+      ],
+      "tab_text": [
+        83,
+        176,
+        180
+      ],
       "toolbar": [
         0,
         0,

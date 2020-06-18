@@ -3,12 +3,13 @@
   "version": "1.0",
   "description": "A dark theme modeled after Rias from High School DxD",
   "theme": {
-    "images": {
-      "theme_ntp_background": "images/rias_dark.png",
-      "theme_ntp_background_incognito": "images/rias_dark.png"
-    },
+    "images": {},
     "colors": {
-      "bookmark_text": "&foregroundColor&",
+      "bookmark_text": [
+        250,
+        250,
+        250
+      ],
       "button_background": [
         0,
         0,
@@ -80,9 +81,21 @@
         0,
         0
       ],
-      "ntp_text": "&foregroundColor&",
-      "tab_background_text": "&lineNumberColor&",
-      "tab_text": "&accentColor&",
+      "ntp_text": [
+        250,
+        250,
+        250
+      ],
+      "tab_background_text": [
+        205,
+        176,
+        176
+      ],
+      "tab_text": [
+        224,
+        57,
+        67
+      ],
       "toolbar": [
         0,
         0,

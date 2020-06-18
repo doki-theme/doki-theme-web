@@ -4,16 +4,14 @@
   "description": "Anime based themes for your chrome browser!",
   "theme": {
     "images" : {
-      "theme_ntp_background" : "",
-      "theme_ntp_background_incognito" : ""
     },
     "colors": {
       "bookmark_text": "&foregroundColor&",
       "button_background": [0, 0, 0],
       "control_background": [0, 0, 0],
-      "frame": [0, 0, 0],
+      "frame": "&baseBackground&",
       "frame_inactive": [0, 0, 0],
-      "frame_incognito": [255, 0, 0, 0],
+      "frame_incognito": "&baseBackground&",
       "frame_incognito_inactive": [0, 0, 0],
       "ntp_background": [0, 0, 0],
       "ntp_header": [0, 0, 0],
