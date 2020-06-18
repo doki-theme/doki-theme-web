@@ -3,7 +3,10 @@
   "version": "1.0",
   "description": "A dark theme modeled after Yuri from Literature Club",
   "theme": {
-    "images": {},
+    "images": {
+      "theme_ntp_background": "images/yuri_dark.png",
+      "theme_ntp_background_incognito": "images/yuri_dark.png"
+    },
     "colors": {
       "bookmark_text": [
         218,
@@ -11,9 +14,9 @@
         218
       ],
       "button_background": [
-        0,
-        0,
-        0
+        72,
+        57,
+        103
       ],
       "control_background": [
         0,
@@ -21,9 +24,9 @@
         0
       ],
       "frame": [
-        0,
-        0,
-        0
+        73,
+        49,
+        98
       ],
       "frame_inactive": [
         0,
@@ -31,10 +34,9 @@
         0
       ],
       "frame_incognito": [
-        255,
-        0,
-        0,
-        0
+        73,
+        49,
+        98
       ],
       "frame_incognito_inactive": [
         0,
@@ -42,14 +44,14 @@
         0
       ],
       "ntp_background": [
-        0,
-        0,
-        0
+        73,
+        49,
+        98
       ],
       "ntp_header": [
-        0,
-        0,
-        0
+        66,
+        45,
+        90
       ],
       "ntp_link": [
         0,
@@ -92,51 +94,30 @@
         121
       ],
       "tab_text": [
-        171,
-        71,
-        188
+        218,
+        218,
+        218
       ],
       "toolbar": [
-        0,
-        0,
-        0,
-        0
+        66,
+        45,
+        90
       ]
     },
     "tints": {
       "buttons": [
-        0,
-        0,
-        0
-      ],
-      "frame": [
-        0,
-        0,
-        0
-      ],
-      "frame_inactive": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito_inactive": [
-        0,
-        0,
-        0
+        0.6690633695759397,
+        1,
+        -1
       ],
       "background_tab": [
-        0,
-        0,
-        0
+        0.3250489428668584,
+        1,
+        -1
       ]
     },
     "properties": {
-      "ntp_background_alignment": "center"
+      "ntp_background_alignment": "stretch"
     }
   },
   "manifest_version": 2

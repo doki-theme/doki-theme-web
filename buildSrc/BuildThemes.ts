@@ -172,6 +172,7 @@ function resolveNamedColors(
 }
 
 const toPairs = require('lodash/toPairs');
+
 export interface StringDictionary<T> {
   [key: string]: T;
 }
@@ -185,20 +186,20 @@ export const dictionaryReducer = <T>(
 };
 
 
-  function replaceValues<T, R>(itemToReplace: T, valueConstructor: (value: string) => R): T {
+function replaceValues<T, R>(itemToReplace: T, valueConstructor: (value: string) => R): T {
   return toPairs(itemToReplace)
     .map(([key, value]: [string, string]) => ([key, valueConstructor(value)]))
     .reduce(dictionaryReducer, {});
 }
 
 function hexToRGB(s: string | [number, number, number]) {
-  if(typeof s === 'string') {
+  if (typeof s === 'string') {
     const hex = parseInt(s.substr(1), 16)
-   return [
-     (hex & 0xFF0000) >> 16,
-     (hex & 0xFF00) >> 8,
-     (hex & 0xFF)
-   ]
+    return [
+      (hex & 0xFF0000) >> 16,
+      (hex & 0xFF00) >> 8,
+      (hex & 0xFF)
+    ]
   }
   return s;
 
@@ -212,8 +213,8 @@ function buildChromeThemeManifest(
   const namedColors = constructNamedColorTemplate(
     dokiThemeDefinition, dokiTemplateDefinitions
   )
-  if(dokiThemeDefinition.id === '546e8fb8-6082-4ef5-a5e3-44790686f02f') {
-   // console.log(JSON.stringify(namedColors, null, 2))
+  if (dokiThemeDefinition.id === '546e8fb8-6082-4ef5-a5e3-44790686f02f') {
+    // console.log(JSON.stringify(namedColors, null, 2))
   }
   const manifestTheme = manifestTemplate.theme;
   return {
@@ -230,6 +231,17 @@ function buildChromeThemeManifest(
         manifestTheme.colors,
         (color: string) => hexToRGB(resolveColor(color, namedColors))
       ),
+      tints: replaceValues(
+        manifestTheme.tints,
+        (color: string) => {
+          const s = resolveColor(color, namedColors);
+          console.log(color, s);
+          return [
+            parseInt(s.substr(1), 16) / 0xFFFFFF
+            , 1, -1
+          ];
+        }
+      )
     }
   };
 }
@@ -294,6 +306,7 @@ function resolveStickerPath(
   );
   return stickerPath.substr(masterThemeDefinitionDirectoryPath.length + '/definitions'.length);
 }
+
 
 const getStickers = (
   dokiDefinition: MasterDokiThemeDefinition,

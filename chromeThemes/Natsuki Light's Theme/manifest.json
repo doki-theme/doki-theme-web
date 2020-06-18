@@ -3,7 +3,10 @@
   "version": "1.0",
   "description": "A light theme modeled after Natsuki from Literature Club",
   "theme": {
-    "images": {},
+    "images": {
+      "theme_ntp_background": "images/natsuki.png",
+      "theme_ntp_background_incognito": "images/natsuki.png"
+    },
     "colors": {
       "bookmark_text": [
         0,
@@ -11,9 +14,9 @@
         0
       ],
       "button_background": [
-        0,
-        0,
-        0
+        229,
+        197,
+        211
       ],
       "control_background": [
         0,
@@ -21,9 +24,9 @@
         0
       ],
       "frame": [
-        0,
-        0,
-        0
+        255,
+        228,
+        241
       ],
       "frame_inactive": [
         0,
@@ -32,9 +35,8 @@
       ],
       "frame_incognito": [
         255,
-        0,
-        0,
-        0
+        228,
+        241
       ],
       "frame_incognito_inactive": [
         0,
@@ -42,14 +44,14 @@
         0
       ],
       "ntp_background": [
-        0,
-        0,
-        0
+        255,
+        228,
+        241
       ],
       "ntp_header": [
-        0,
-        0,
-        0
+        255,
+        229,
+        241
       ],
       "ntp_link": [
         0,
@@ -92,51 +94,30 @@
         170
       ],
       "tab_text": [
-        233,
-        70,
-        134
-      ],
-      "toolbar": [
-        0,
         0,
         0,
         0
+      ],
+      "toolbar": [
+        255,
+        229,
+        241
       ]
     },
     "tints": {
       "buttons": [
-        0,
-        0,
-        0
-      ],
-      "frame": [
-        0,
-        0,
-        0
-      ],
-      "frame_inactive": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito_inactive": [
-        0,
-        0,
-        0
+        0.9112324065704588,
+        1,
+        -1
       ],
       "background_tab": [
-        0,
-        0,
-        0
+        0.9680619816817034,
+        1,
+        -1
       ]
     },
     "properties": {
-      "ntp_background_alignment": "center"
+      "ntp_background_alignment": "stretch"
     }
   },
   "manifest_version": 2

@@ -3,7 +3,10 @@
   "version": "1.0",
   "description": "A light theme modeled after Darkness from KonoSuba",
   "theme": {
-    "images": {},
+    "images": {
+      "theme_ntp_background": "images/darkness_light.png",
+      "theme_ntp_background_incognito": "images/darkness_light.png"
+    },
     "colors": {
       "bookmark_text": [
         0,
@@ -11,9 +14,9 @@
         0
       ],
       "button_background": [
-        0,
-        0,
-        0
+        255,
+        254,
+        247
       ],
       "control_background": [
         0,
@@ -21,9 +24,9 @@
         0
       ],
       "frame": [
-        0,
-        0,
-        0
+        254,
+        254,
+        250
       ],
       "frame_inactive": [
         0,
@@ -31,10 +34,9 @@
         0
       ],
       "frame_incognito": [
-        255,
-        0,
-        0,
-        0
+        254,
+        254,
+        250
       ],
       "frame_incognito_inactive": [
         0,
@@ -42,14 +44,14 @@
         0
       ],
       "ntp_background": [
-        0,
-        0,
-        0
+        254,
+        254,
+        250
       ],
       "ntp_header": [
-        0,
-        0,
-        0
+        255,
+        254,
+        249
       ],
       "ntp_link": [
         0,
@@ -92,51 +94,30 @@
         170
       ],
       "tab_text": [
-        245,
-        200,
-        60
-      ],
-      "toolbar": [
-        0,
         0,
         0,
         0
+      ],
+      "toolbar": [
+        255,
+        254,
+        249
       ]
     },
     "tints": {
       "buttons": [
-        0,
-        0,
-        0
-      ],
-      "frame": [
-        0,
-        0,
-        0
-      ],
-      "frame_inactive": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito_inactive": [
-        0,
-        0,
-        0
+        0.9600866413168098,
+        1,
+        -1
       ],
       "background_tab": [
-        0,
-        0,
-        0
+        0.9998913407260979,
+        1,
+        -1
       ]
     },
     "properties": {
-      "ntp_background_alignment": "center"
+      "ntp_background_alignment": "stretch"
     }
   },
   "manifest_version": 2

@@ -3,7 +3,10 @@
   "version": "1.0",
   "description": "A dark theme modeled after Miku from Miscellaneous",
   "theme": {
-    "images": {},
+    "images": {
+      "theme_ntp_background": "images/miku.png",
+      "theme_ntp_background_incognito": "images/miku.png"
+    },
     "colors": {
       "bookmark_text": [
         187,
@@ -11,9 +14,9 @@
         187
       ],
       "button_background": [
-        0,
-        0,
-        0
+        50,
+        55,
+        55
       ],
       "control_background": [
         0,
@@ -21,9 +24,9 @@
         0
       ],
       "frame": [
-        0,
-        0,
-        0
+        41,
+        48,
+        48
       ],
       "frame_inactive": [
         0,
@@ -31,10 +34,9 @@
         0
       ],
       "frame_incognito": [
-        255,
-        0,
-        0,
-        0
+        41,
+        48,
+        48
       ],
       "frame_incognito_inactive": [
         0,
@@ -42,14 +44,14 @@
         0
       ],
       "ntp_background": [
-        0,
-        0,
-        0
+        41,
+        48,
+        48
       ],
       "ntp_header": [
-        0,
-        0,
-        0
+        47,
+        54,
+        53
       ],
       "ntp_link": [
         0,
@@ -92,51 +94,30 @@
         121
       ],
       "tab_text": [
-        83,
-        176,
-        180
+        187,
+        187,
+        187
       ],
       "toolbar": [
-        0,
-        0,
-        0,
-        0
+        47,
+        54,
+        53
       ]
     },
     "tints": {
       "buttons": [
-        0,
-        0,
-        0
-      ],
-      "frame": [
-        0,
-        0,
-        0
-      ],
-      "frame_inactive": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito_inactive": [
-        0,
-        0,
-        0
+        0.3269150451967147,
+        1,
+        -1
       ],
       "background_tab": [
-        0,
-        0,
-        0
+        0.21187187504004687,
+        1,
+        -1
       ]
     },
     "properties": {
-      "ntp_background_alignment": "center"
+      "ntp_background_alignment": "stretch"
     }
   },
   "manifest_version": 2

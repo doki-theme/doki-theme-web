@@ -3,7 +3,10 @@
   "version": "1.0",
   "description": "A light theme modeled after Konata from Lucky Star",
   "theme": {
-    "images": {},
+    "images": {
+      "theme_ntp_background": "images/konata_light.png",
+      "theme_ntp_background_incognito": "images/konata_light.png"
+    },
     "colors": {
       "bookmark_text": [
         243,
@@ -11,9 +14,9 @@
         255
       ],
       "button_background": [
-        0,
-        0,
-        0
+        131,
+        160,
+        238
       ],
       "control_background": [
         0,
@@ -21,9 +24,9 @@
         0
       ],
       "frame": [
-        0,
-        0,
-        0
+        97,
+        146,
+        238
       ],
       "frame_inactive": [
         0,
@@ -31,10 +34,9 @@
         0
       ],
       "frame_incognito": [
-        255,
-        0,
-        0,
-        0
+        97,
+        146,
+        238
       ],
       "frame_incognito_inactive": [
         0,
@@ -42,14 +44,14 @@
         0
       ],
       "ntp_background": [
-        0,
-        0,
-        0
+        97,
+        146,
+        238
       ],
       "ntp_header": [
-        0,
-        0,
-        0
+        96,
+        142,
+        233
       ],
       "ntp_link": [
         0,
@@ -92,51 +94,30 @@
         255
       ],
       "tab_text": [
-        75,
-        207,
-        76
+        243,
+        237,
+        255
       ],
       "toolbar": [
-        0,
-        0,
-        0,
-        0
+        96,
+        142,
+        233
       ]
     },
     "tints": {
       "buttons": [
-        0,
-        0,
-        0
-      ],
-      "frame": [
-        0,
-        0,
-        0
-      ],
-      "frame_inactive": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito_inactive": [
-        0,
-        0,
-        0
+        0.29613186693977517,
+        1,
+        -1
       ],
       "background_tab": [
-        0,
-        0,
-        0
+        0.4868766955659804,
+        1,
+        -1
       ]
     },
     "properties": {
-      "ntp_background_alignment": "center"
+      "ntp_background_alignment": "stretch"
     }
   },
   "manifest_version": 2

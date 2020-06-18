@@ -3,7 +3,10 @@
   "version": "1.0",
   "description": "A dark theme modeled after Monika from Literature Club",
   "theme": {
-    "images": {},
+    "images": {
+      "theme_ntp_background": "images/just_monika_dark.png",
+      "theme_ntp_background_incognito": "images/just_monika_dark.png"
+    },
     "colors": {
       "bookmark_text": [
         187,
@@ -11,9 +14,9 @@
         187
       ],
       "button_background": [
-        0,
-        0,
-        0
+        30,
+        50,
+        25
       ],
       "control_background": [
         0,
@@ -21,9 +24,9 @@
         0
       ],
       "frame": [
-        0,
-        0,
-        0
+        26,
+        30,
+        18
       ],
       "frame_inactive": [
         0,
@@ -31,10 +34,9 @@
         0
       ],
       "frame_incognito": [
-        255,
-        0,
-        0,
-        0
+        26,
+        30,
+        18
       ],
       "frame_incognito_inactive": [
         0,
@@ -42,14 +44,14 @@
         0
       ],
       "ntp_background": [
-        0,
-        0,
-        0
+        26,
+        30,
+        18
       ],
       "ntp_header": [
-        0,
-        0,
-        0
+        29,
+        33,
+        21
       ],
       "ntp_link": [
         0,
@@ -92,51 +94,30 @@
         121
       ],
       "tab_text": [
-        56,
-        142,
-        60
+        187,
+        187,
+        187
       ],
       "toolbar": [
-        0,
-        0,
-        0,
-        0
+        29,
+        33,
+        21
       ]
     },
     "tints": {
       "buttons": [
-        0,
-        0,
-        0
-      ],
-      "frame": [
-        0,
-        0,
-        0
-      ],
-      "frame_inactive": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito_inactive": [
-        0,
-        0,
-        0
+        0.22092033749343976,
+        1,
+        -1
       ],
       "background_tab": [
-        0,
-        0,
-        0
+        0.14528084667210858,
+        1,
+        -1
       ]
     },
     "properties": {
-      "ntp_background_alignment": "center"
+      "ntp_background_alignment": "stretch"
     }
   },
   "manifest_version": 2

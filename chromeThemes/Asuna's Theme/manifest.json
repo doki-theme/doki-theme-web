@@ -3,7 +3,10 @@
   "version": "1.0",
   "description": "A light theme modeled after Asuna from Sword Art Online",
   "theme": {
-    "images": {},
+    "images": {
+      "theme_ntp_background": "images/asuna_light.png",
+      "theme_ntp_background_incognito": "images/asuna_light.png"
+    },
     "colors": {
       "bookmark_text": [
         37,
@@ -11,9 +14,9 @@
         39
       ],
       "button_background": [
-        0,
-        0,
-        0
+        249,
+        242,
+        242
       ],
       "control_background": [
         0,
@@ -21,9 +24,9 @@
         0
       ],
       "frame": [
-        0,
-        0,
-        0
+        255,
+        255,
+        255
       ],
       "frame_inactive": [
         0,
@@ -32,9 +35,8 @@
       ],
       "frame_incognito": [
         255,
-        0,
-        0,
-        0
+        255,
+        255
       ],
       "frame_incognito_inactive": [
         0,
@@ -42,14 +44,14 @@
         0
       ],
       "ntp_background": [
-        0,
-        0,
-        0
+        255,
+        255,
+        255
       ],
       "ntp_header": [
-        0,
-        0,
-        0
+        252,
+        252,
+        252
       ],
       "ntp_link": [
         0,
@@ -92,51 +94,30 @@
         170
       ],
       "tab_text": [
-        166,
-        29,
-        13
+        37,
+        36,
+        39
       ],
       "toolbar": [
-        0,
-        0,
-        0,
-        0
+        252,
+        252,
+        252
       ]
     },
     "tints": {
       "buttons": [
-        0,
-        0,
-        0
-      ],
-      "frame": [
-        0,
-        0,
-        0
-      ],
-      "frame_inactive": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito_inactive": [
-        0,
-        0,
-        0
+        0.6488808184195053,
+        1,
+        -1
       ],
       "background_tab": [
-        0,
-        0,
-        0
+        0.9997857808939088,
+        1,
+        -1
       ]
     },
     "properties": {
-      "ntp_background_alignment": "center"
+      "ntp_background_alignment": "stretch"
     }
   },
   "manifest_version": 2

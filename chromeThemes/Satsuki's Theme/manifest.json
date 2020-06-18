@@ -3,7 +3,10 @@
   "version": "1.0",
   "description": "A light theme modeled after Satsuki from Kill la Kill",
   "theme": {
-    "images": {},
+    "images": {
+      "theme_ntp_background": "images/satsuki.png",
+      "theme_ntp_background_incognito": "images/satsuki.png"
+    },
     "colors": {
       "bookmark_text": [
         37,
@@ -11,9 +14,9 @@
         39
       ],
       "button_background": [
-        0,
-        0,
-        0
+        207,
+        207,
+        213
       ],
       "control_background": [
         0,
@@ -21,9 +24,9 @@
         0
       ],
       "frame": [
-        0,
-        0,
-        0
+        234,
+        233,
+        238
       ],
       "frame_inactive": [
         0,
@@ -31,10 +34,9 @@
         0
       ],
       "frame_incognito": [
-        255,
-        0,
-        0,
-        0
+        234,
+        233,
+        238
       ],
       "frame_incognito_inactive": [
         0,
@@ -42,14 +44,14 @@
         0
       ],
       "ntp_background": [
-        0,
-        0,
-        0
+        234,
+        233,
+        238
       ],
       "ntp_header": [
-        0,
-        0,
-        0
+        231,
+        230,
+        235
       ],
       "ntp_link": [
         0,
@@ -92,51 +94,30 @@
         170
       ],
       "tab_text": [
-        39,
-        90,
-        179
+        37,
+        36,
+        39
       ],
       "toolbar": [
-        0,
-        0,
-        0,
-        0
+        231,
+        230,
+        235
       ]
     },
     "tints": {
       "buttons": [
-        0,
-        0,
-        0
-      ],
-      "frame": [
-        0,
-        0,
-        0
-      ],
-      "frame_inactive": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito_inactive": [
-        0,
-        0,
-        0
+        0.1537277194099259,
+        1,
+        -1
       ],
       "background_tab": [
-        0,
-        0,
-        0
+        0.866651646295288,
+        1,
+        -1
       ]
     },
     "properties": {
-      "ntp_background_alignment": "center"
+      "ntp_background_alignment": "stretch"
     }
   },
   "manifest_version": 2

@@ -3,7 +3,10 @@
   "version": "1.0",
   "description": "A dark theme modeled after Ram from Re Zero",
   "theme": {
-    "images": {},
+    "images": {
+      "theme_ntp_background": "images/ram.png",
+      "theme_ntp_background_incognito": "images/ram.png"
+    },
     "colors": {
       "bookmark_text": [
         187,
@@ -11,9 +14,9 @@
         187
       ],
       "button_background": [
-        0,
-        0,
-        0
+        55,
+        50,
+        55
       ],
       "control_background": [
         0,
@@ -21,9 +24,9 @@
         0
       ],
       "frame": [
-        0,
-        0,
-        0
+        48,
+        41,
+        48
       ],
       "frame_inactive": [
         0,
@@ -31,10 +34,9 @@
         0
       ],
       "frame_incognito": [
-        255,
-        0,
-        0,
-        0
+        48,
+        41,
+        48
       ],
       "frame_incognito_inactive": [
         0,
@@ -42,14 +44,14 @@
         0
       ],
       "ntp_background": [
-        0,
-        0,
-        0
+        48,
+        41,
+        48
       ],
       "ntp_header": [
-        0,
-        0,
-        0
+        52,
+        47,
+        54
       ],
       "ntp_link": [
         0,
@@ -92,51 +94,30 @@
         121
       ],
       "tab_text": [
-        229,
-        148,
-        191
+        187,
+        187,
+        187
       ],
       "toolbar": [
-        0,
-        0,
-        0,
-        0
+        52,
+        47,
+        54
       ]
     },
     "tints": {
       "buttons": [
-        0,
-        0,
-        0
-      ],
-      "frame": [
-        0,
-        0,
-        0
-      ],
-      "frame_inactive": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito": [
-        0,
-        0,
-        0
-      ],
-      "frame_incognito_inactive": [
-        0,
-        0,
-        0
+        0.8968009887219065,
+        1,
+        -1
       ],
       "background_tab": [
-        0,
-        0,
-        0
+        0.23518724651260653,
+        1,
+        -1
       ]
     },
     "properties": {
-      "ntp_background_alignment": "center"
+      "ntp_background_alignment": "stretch"
     }
   },
   "manifest_version": 2

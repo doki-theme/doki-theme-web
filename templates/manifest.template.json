@@ -4,17 +4,19 @@
   "description": "Anime based themes for your chrome browser!",
   "theme": {
     "images" : {
+      "theme_ntp_background" : "",
+      "theme_ntp_background_incognito" : ""
     },
     "colors": {
       "bookmark_text": "&foregroundColor&",
-      "button_background": [0, 0, 0],
+      "button_background": "&buttonColor&",
       "control_background": [0, 0, 0],
       "frame": "&baseBackground&",
       "frame_inactive": [0, 0, 0],
       "frame_incognito": "&baseBackground&",
       "frame_incognito_inactive": [0, 0, 0],
-      "ntp_background": [0, 0, 0],
-      "ntp_header": [0, 0, 0],
+      "ntp_background": "&baseBackground&",
+      "ntp_header": "&textEditorBackground&",
       "ntp_link": [0, 0, 0],
       "ntp_link_underline": [0, 0, 0],
       "ntp_section": [0, 0, 0],
@@ -23,19 +25,15 @@
       "ntp_section_text": [0, 0, 0],
       "ntp_text": "&foregroundColor&",
       "tab_background_text": "&lineNumberColor&",
-      "tab_text": "&accentColor&",
-      "toolbar": [0, 0, 0, 0.0]
+      "tab_text": "&foregroundColor&",
+      "toolbar": "&textEditorBackground&"
     },
     "tints": {
-      "buttons": [0, 0, 0],
-      "frame": [0, 0, 0],
-      "frame_inactive": [0, 0, 0],
-      "frame_incognito": [0, 0, 0],
-      "frame_incognito_inactive": [0, 0, 0],
-      "background_tab": [0, 0, 0]
+      "buttons": "&accentColor&",
+      "background_tab": "&highlightColor&"
     },
     "properties" : {
-      "ntp_background_alignment" : "center"
+      "ntp_background_alignment" : "stretch"
     }
   },
   "manifest_version": 2
