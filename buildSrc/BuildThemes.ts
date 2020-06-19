@@ -1,5 +1,11 @@
 // @ts-ignore
-import {DokiThemeDefinitions, ManifestTemplate, MasterDokiThemeDefinition, StringDictonary} from './types';
+import {
+  DokiThemeDefinitions,
+  ManifestTemplate,
+  MasterDokiThemeDefinition,
+  StringDictonary,
+  ChromeDokiThemeDefinition
+} from './types';
 
 const path = require('path');
 
@@ -15,6 +21,18 @@ const masterThemeDefinitionDirectoryPath =
 const chromeTemplateDefinitionDirectoryPath = path.resolve(
   repoDirectory,
   "templates"
+);
+
+const templateDirectoryPath = path.resolve(
+  repoDirectory,
+  "themes",
+  "templates"
+);
+
+const chromeDefinitionDirectoryPath = path.resolve(
+  repoDirectory,
+  "themes",
+  "definitions"
 );
 
 
@@ -249,6 +267,7 @@ function hexToRGB(s: string | [number, number, number]): [number, number, number
 function buildChromeThemeManifest(
   dokiThemeDefinition: MasterDokiThemeDefinition,
   dokiTemplateDefinitions: DokiThemeDefinitions,
+  dokiThemeChromeDefinition: ChromeDokiThemeDefinition,
   manifestTemplate: ManifestTemplate,
 ): ManifestTemplate {
   const namedColors = constructNamedColorTemplate(
@@ -275,7 +294,14 @@ function buildChromeThemeManifest(
           const s = resolveColor(color, namedColors);
           return rgbToHsl(hexToRGB(s));
         }
-      )
+      ),
+      properties: {
+        ...manifestTheme.properties,
+        ntp_background_alignment: dokiThemeChromeDefinition.overrides.theme &&
+          dokiThemeChromeDefinition.overrides.theme.properties &&
+          dokiThemeChromeDefinition.overrides.theme.properties.ntp_background_alignment ||
+          manifestTheme.properties.ntp_background_alignment
+      }
     }
   };
 }
@@ -284,6 +310,7 @@ function createDokiTheme(
   dokiFileDefinitionPath: string,
   dokiThemeDefinition: MasterDokiThemeDefinition,
   dokiTemplateDefinitions: DokiThemeDefinitions,
+  dokiThemeChromeDefinition: ChromeDokiThemeDefinition,
   manifestTemplate: ManifestTemplate
 ) {
   try {
@@ -293,6 +320,7 @@ function createDokiTheme(
       manifest: buildChromeThemeManifest(
         dokiThemeDefinition,
         dokiTemplateDefinitions,
+        dokiThemeChromeDefinition,
         manifestTemplate
       ),
       theme: {}
@@ -367,30 +395,62 @@ const getStickers = (
 const jimp = require('jimp');
 
 console.log('Preparing to generate themes.');
-walkDir(path.resolve(masterThemeDefinitionDirectoryPath, 'templates'))
-  .then(readTemplates)
-  .then(dokiTemplateDefinitions => {
-    return walkDir(path.resolve(masterThemeDefinitionDirectoryPath, 'definitions'))
-      .then(files => files.filter(file => file.endsWith('master.definition.json')))
-      .then(dokiFileDefinitionPaths => {
-        return {
-          dokiTemplateDefinitions,
-          dokiFileDefinitionPaths
-        };
-      });
-  })
+walkDir(chromeDefinitionDirectoryPath)
+  .then((files) =>
+    files.filter((file) => file.endsWith("chrome.definition.json"))
+  )
+  .then((dokiThemeChromeDefinitionPaths) => {
+    return {
+      dokiThemeChromeDefinitions: dokiThemeChromeDefinitionPaths
+        .map((dokiThemeChromeDefinitionPath) =>
+          readJson<ChromeDokiThemeDefinition>(dokiThemeChromeDefinitionPath)
+        )
+        .reduce(
+          (accum: StringDictonary<ChromeDokiThemeDefinition>, def) => {
+            accum[def.id] = def;
+            return accum;
+          },
+          {}
+        ),
+    };
+  }).then(({dokiThemeChromeDefinitions}) =>
+  walkDir(path.resolve(masterThemeDefinitionDirectoryPath, 'templates'))
+    .then(readTemplates)
+    .then(dokiTemplateDefinitions => {
+      return walkDir(path.resolve(masterThemeDefinitionDirectoryPath, 'definitions'))
+        .then(files => files.filter(file => file.endsWith('master.definition.json')))
+        .then(dokiFileDefinitionPaths => {
+          return {
+            dokiThemeChromeDefinitions,
+            dokiTemplateDefinitions,
+            dokiFileDefinitionPaths
+          };
+        });
+    }))
   .then(templatesAndDefinitions => {
     const {
       dokiTemplateDefinitions,
+      dokiThemeChromeDefinitions,
       dokiFileDefinitionPaths
     } = templatesAndDefinitions;
     const manifestTemplate = readJson<ManifestTemplate>(path.resolve(chromeTemplateDefinitionDirectoryPath, 'manifest.template.json'))
     return dokiFileDefinitionPaths
-      .map(dokiFileDefinitionPath => ({
-        dokiFileDefinitionPath,
-        dokiThemeDefinition: readJson<MasterDokiThemeDefinition>(dokiFileDefinitionPath),
-        manifestTemplate,
-      }))
+      .map(dokiFileDefinitionPath => {
+        const dokiThemeDefinition = readJson<MasterDokiThemeDefinition>(dokiFileDefinitionPath);
+        const dokiThemeChromeDefinition =
+          dokiThemeChromeDefinitions[dokiThemeDefinition.id];
+        if (!dokiThemeChromeDefinition) {
+          throw new Error(
+            `${dokiThemeDefinition.displayName}'s theme does not have a Chrome Definition!!`
+          );
+        }
+        return ({
+          dokiFileDefinitionPath,
+          dokiThemeDefinition,
+          dokiThemeChromeDefinition,
+          manifestTemplate,
+        });
+      })
       .filter(pathAndDefinition =>
         (pathAndDefinition.dokiThemeDefinition.product === 'ultimate' &&
           process.env.PRODUCT === 'ultimate') ||
@@ -399,17 +459,18 @@ walkDir(path.resolve(masterThemeDefinitionDirectoryPath, 'templates'))
       .map(({
               dokiFileDefinitionPath,
               dokiThemeDefinition,
+        dokiThemeChromeDefinition,
               manifestTemplate
             }) =>
         createDokiTheme(
           dokiFileDefinitionPath,
           dokiThemeDefinition,
           dokiTemplateDefinitions,
+          dokiThemeChromeDefinition,
           manifestTemplate,
         )
       );
   }).then(dokiThemes => {
-
   // write things for extension
   return dokiThemes.reduce((accum, theme) =>
     accum.then(() => {

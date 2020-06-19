@@ -24,6 +24,22 @@ export interface Stickers {
   normal?: string;
 }
 
+export interface ChromeDokiThemeDefinition {
+  id: string;
+  overrides: {
+    theme: {
+      [key: string]: StringDictonary<string>
+    }
+  };
+  laf: {
+    extends: string;
+    ui: StringDictonary<string>;
+  };
+  syntax: {};
+  colors: {};
+}
+
+
 export interface ManifestTemplate {
   "name": string,
   "version": string,
