@@ -1,6 +1,6 @@
 module.exports = {
     "roots": [
-        "src"
+        "masterExtension/src"
     ],
     "transform": {
         "^.+\\.ts$": "ts-jest"

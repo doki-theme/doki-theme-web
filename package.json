@@ -27,8 +27,8 @@
     "jimp": "^0.13.0"
   },
   "scripts": {
-    "watch": "webpack --config webpack/webpack.dev.js --watch",
-    "build": "webpack --config webpack/webpack.prod.js",
+    "watch": "webpack --config masterExtension/webpack/webpack.dev.js --watch",
+    "build": "webpack --config masterExtension/webpack/webpack.prod.js",
     "clean": "rimraf dist",
     "buildThemes": "ts-node ./buildSrc/BuildThemes.ts",
     "test": "npx jest"

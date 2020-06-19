@@ -5,8 +5,8 @@ node_modules
 .vscode-test/
 *.vsix
 .vscode/
-src/DokiThemeDefinitions.ts
-src/ChangelogHtml.ts
+masterExtension/src/DokiThemeDefinitions.ts
+masterExtension/src/ChangelogHtml.ts
 generatedThemes/*.json
 
 /masterThemes
