@@ -5,7 +5,8 @@
   "theme": {
     "images": {
       "theme_ntp_background": "images/konata_light.png",
-      "theme_ntp_background_incognito": "images/konata_light.png"
+      "theme_ntp_background_incognito": "images/konata_light.png",
+      "theme_toolbar": "images/tab_highlight.png"
     },
     "colors": {
       "bookmark_text": [
@@ -83,6 +84,11 @@
         0,
         0
       ],
+      "theme_toolbar": [
+        124,
+        163,
+        243
+      ],
       "ntp_text": [
         243,
         237,
@@ -109,6 +115,31 @@
         0.33459595959595956,
         1,
         0.5529411764705883
+      ],
+      "frame": [
+        0,
+        1,
+        0
+      ],
+      "frame_inactive": [
+        0,
+        1,
+        0
+      ],
+      "frame_incognito": [
+        0,
+        1,
+        0
+      ],
+      "frame_incognito_inactive": [
+        0,
+        1,
+        0
+      ],
+      "background_tab": [
+        0,
+        1,
+        0
       ]
     },
     "properties": {

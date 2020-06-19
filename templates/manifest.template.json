@@ -5,7 +5,8 @@
   "theme": {
     "images" : {
       "theme_ntp_background" : "",
-      "theme_ntp_background_incognito" : ""
+      "theme_ntp_background_incognito" : "",
+      "theme_toolbar": "images/tab_highlight.png"
     },
     "colors": {
       "bookmark_text": "&foregroundColor&",
@@ -23,13 +24,19 @@
       "ntp_section_link": [0, 0, 0],
       "ntp_section_link_underline": [0, 0, 0],
       "ntp_section_text": [0, 0, 0],
+      "theme_toolbar": "&highlightColor&",
       "ntp_text": "&foregroundColor&",
       "tab_background_text": "&lineNumberColor&",
       "tab_text": "&foregroundColor&",
       "toolbar": "&textEditorBackground&"
     },
     "tints": {
-      "buttons": "&accentColor&"
+      "buttons": "&accentColor&",
+      "frame": [0, 0, 0],
+      "frame_inactive": [0, 0, 0],
+      "frame_incognito": [0, 0, 0],
+      "frame_incognito_inactive": [0, 0, 0],
+      "background_tab": [0, 0, 0]
     },
     "properties" : {
       "ntp_background_alignment" : "stretch"

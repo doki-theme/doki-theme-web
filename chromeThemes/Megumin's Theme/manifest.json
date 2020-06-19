@@ -5,7 +5,8 @@
   "theme": {
     "images": {
       "theme_ntp_background": "images/megumin.png",
-      "theme_ntp_background_incognito": "images/megumin.png"
+      "theme_ntp_background_incognito": "images/megumin.png",
+      "theme_toolbar": "images/tab_highlight.png"
     },
     "colors": {
       "bookmark_text": [
@@ -83,6 +84,11 @@
         0,
         0
       ],
+      "theme_toolbar": [
+        47,
+        52,
+        90
+      ],
       "ntp_text": [
         187,
         187,
@@ -109,6 +115,31 @@
         0.9929971988795518,
         1,
         0.4215686274509804
+      ],
+      "frame": [
+        0,
+        1,
+        0
+      ],
+      "frame_inactive": [
+        0,
+        1,
+        0
+      ],
+      "frame_incognito": [
+        0,
+        1,
+        0
+      ],
+      "frame_incognito_inactive": [
+        0,
+        1,
+        0
+      ],
+      "background_tab": [
+        0,
+        1,
+        0
       ]
     },
     "properties": {

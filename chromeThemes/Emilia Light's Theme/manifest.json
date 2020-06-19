@@ -5,7 +5,8 @@
   "theme": {
     "images": {
       "theme_ntp_background": "images/emilia_light.png",
-      "theme_ntp_background_incognito": "images/emilia_light.png"
+      "theme_ntp_background_incognito": "images/emilia_light.png",
+      "theme_toolbar": "images/tab_highlight.png"
     },
     "colors": {
       "bookmark_text": [
@@ -83,6 +84,11 @@
         0,
         0
       ],
+      "theme_toolbar": [
+        246,
+        224,
+        255
+      ],
       "ntp_text": [
         37,
         36,
@@ -109,6 +115,31 @@
         0.8441558441558441,
         1,
         0.3588235294117647
+      ],
+      "frame": [
+        0,
+        1,
+        0
+      ],
+      "frame_inactive": [
+        0,
+        1,
+        0
+      ],
+      "frame_incognito": [
+        0,
+        1,
+        0
+      ],
+      "frame_incognito_inactive": [
+        0,
+        1,
+        0
+      ],
+      "background_tab": [
+        0,
+        1,
+        0
       ]
     },
     "properties": {

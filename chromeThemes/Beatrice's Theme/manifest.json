@@ -5,7 +5,8 @@
   "theme": {
     "images": {
       "theme_ntp_background": "images/beatrice.png",
-      "theme_ntp_background_incognito": "images/beatrice.png"
+      "theme_ntp_background_incognito": "images/beatrice.png",
+      "theme_toolbar": "images/tab_highlight.png"
     },
     "colors": {
       "bookmark_text": [
@@ -83,6 +84,11 @@
         0,
         0
       ],
+      "theme_toolbar": [
+        247,
+        210,
+        232
+      ],
       "ntp_text": [
         0,
         0,
@@ -109,6 +115,31 @@
         0.6014492753623188,
         1,
         0.696078431372549
+      ],
+      "frame": [
+        0,
+        1,
+        0
+      ],
+      "frame_inactive": [
+        0,
+        1,
+        0
+      ],
+      "frame_incognito": [
+        0,
+        1,
+        0
+      ],
+      "frame_incognito_inactive": [
+        0,
+        1,
+        0
+      ],
+      "background_tab": [
+        0,
+        1,
+        0
       ]
     },
     "properties": {

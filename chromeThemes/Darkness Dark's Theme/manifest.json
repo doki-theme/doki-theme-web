@@ -5,7 +5,8 @@
   "theme": {
     "images": {
       "theme_ntp_background": "images/darkness_dark.png",
-      "theme_ntp_background_incognito": "images/darkness_dark.png"
+      "theme_ntp_background_incognito": "images/darkness_dark.png",
+      "theme_toolbar": "images/tab_highlight.png"
     },
     "colors": {
       "bookmark_text": [
@@ -83,6 +84,11 @@
         0,
         0
       ],
+      "theme_toolbar": [
+        43,
+        25,
+        14
+      ],
       "ntp_text": [
         195,
         195,
@@ -109,6 +115,31 @@
         0.08333333333333336,
         1,
         0.592156862745098
+      ],
+      "frame": [
+        0,
+        1,
+        0
+      ],
+      "frame_inactive": [
+        0,
+        1,
+        0
+      ],
+      "frame_incognito": [
+        0,
+        1,
+        0
+      ],
+      "frame_incognito_inactive": [
+        0,
+        1,
+        0
+      ],
+      "background_tab": [
+        0,
+        1,
+        0
       ]
     },
     "properties": {

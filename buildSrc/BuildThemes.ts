@@ -203,7 +203,7 @@ function replaceValues<T, R>(itemToReplace: T, valueConstructor: (value: string)
  * @param   Number  b       The blue color value
  * @return  Array           The HSL representation
  */
-function rgbToHsl([r, g, b]:[number, number, number]) {
+function rgbToHsl([r, g, b]: [number, number, number]) {
   r /= 255, g /= 255, b /= 255;
 
   var max = Math.max(r, g, b), min = Math.min(r, g, b);
@@ -216,15 +216,21 @@ function rgbToHsl([r, g, b]:[number, number, number]) {
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
 
     switch (max) {
-      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-      case g: h = (b - r) / d + 2; break;
-      case b: h = (r - g) / d + 4; break;
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        h = (b - r) / d + 2;
+        break;
+      case b:
+        h = (r - g) / d + 4;
+        break;
     }
     h = h || 0;
     h /= 6;
   }
 
-  return [ h, 1, l ];
+  return [h, 1, l];
 }
 
 function hexToRGB(s: string | [number, number, number]): [number, number, number] {
@@ -248,9 +254,6 @@ function buildChromeThemeManifest(
   const namedColors = constructNamedColorTemplate(
     dokiThemeDefinition, dokiTemplateDefinitions
   )
-  if (dokiThemeDefinition.id === '546e8fb8-6082-4ef5-a5e3-44790686f02f') {
-    // console.log(JSON.stringify(namedColors, null, 2))
-  }
   const manifestTheme = manifestTemplate.theme;
   return {
     ...manifestTemplate,
@@ -260,7 +263,7 @@ function buildChromeThemeManifest(
       ...manifestTheme,
       images: replaceValues(
         manifestTheme.images,
-        () => `images/${dokiThemeDefinition.stickers.default}`
+        (value) => value || `images/${dokiThemeDefinition.stickers.default}`
       ),
       colors: replaceValues(
         manifestTheme.colors,
@@ -361,6 +364,7 @@ const getStickers = (
   };
 };
 
+const jimp = require('jimp');
 
 console.log('Preparing to generate themes.');
 walkDir(path.resolve(masterThemeDefinitionDirectoryPath, 'templates'))
@@ -407,22 +411,58 @@ walkDir(path.resolve(masterThemeDefinitionDirectoryPath, 'templates'))
   }).then(dokiThemes => {
 
   // write things for extension
-  dokiThemes.forEach(theme => {
-    const themeDirectory = path.resolve(
-      generatedThemesDirectory,
-      `${theme.definition.name}'s Theme`
-    );
-    fs.mkdirSync(path.resolve(themeDirectory, 'images'), {recursive: true});
+  return dokiThemes.reduce((accum, theme) =>
+    accum.then(() => {
+      const themeDirectory = path.resolve(
+        generatedThemesDirectory,
+        `${theme.definition.name}'s Theme`
+      );
+      const backgroundDirectory = path.resolve(themeDirectory, 'images');
+      fs.mkdirSync(backgroundDirectory, {recursive: true});
 
-    // copy asset to directory
-    getStickers(theme.definition, theme)
+      const colors = theme.definition.colors;
+      const highlightColor = jimp.cssColorToHex(colors.highlightColor)
+      const accentColor = jimp.cssColorToHex(colors.accentColor)
+      return new Promise(((resolve, reject) => {
+        // @ts-ignore
+        new jimp(300, 120, (err, image) => {
+          const tabHeight = 30;
+          for (let i = 0; i < tabHeight; i++) {
+            for (let j = 0; j < 300; j++) {
+              image.setPixelColor(highlightColor, j, i);
+            }
+          }
+          for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 300; j++) {
+              image.setPixelColor(accentColor, j, i + tabHeight);
+            }
+          }
 
-    //write manifest
-    fs.writeFileSync(
-      path.resolve(themeDirectory, 'manifest.json'),
-      JSON.stringify(theme.manifest, null, 2)
-    )
-  });
+          image.rgba(true)
+          image.write(path.resolve(backgroundDirectory, 'tab_highlight.png'), (err : any)=> {
+            if(err) {
+              reject(err)
+            } else {
+              resolve()
+            }
+          })
+        });
+      })).then(() => {
+        // copy asset to directory
+        const stickers = getStickers(theme.definition, theme);
+        const backgroundName = stickers.default.name;
+        fs.copyFileSync(
+          path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', backgroundName),
+          path.resolve(backgroundDirectory, backgroundName)
+        )
+
+        //write manifest
+        fs.writeFileSync(
+          path.resolve(themeDirectory, 'manifest.json'),
+          JSON.stringify(theme.manifest, null, 2)
+        );
+      });
+    }), Promise.resolve());
 })
   .then(() => {
     console.log('Theme Generation Complete!');

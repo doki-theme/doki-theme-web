@@ -5,7 +5,8 @@
   "theme": {
     "images": {
       "theme_ntp_background": "images/yuri_dark.png",
-      "theme_ntp_background_incognito": "images/yuri_dark.png"
+      "theme_ntp_background_incognito": "images/yuri_dark.png",
+      "theme_toolbar": "images/tab_highlight.png"
     },
     "colors": {
       "bookmark_text": [
@@ -83,6 +84,11 @@
         0,
         0
       ],
+      "theme_toolbar": [
+        83,
+        54,
+        104
+      ],
       "ntp_text": [
         218,
         218,
@@ -109,6 +115,31 @@
         0.809116809116809,
         1,
         0.5078431372549019
+      ],
+      "frame": [
+        0,
+        1,
+        0
+      ],
+      "frame_inactive": [
+        0,
+        1,
+        0
+      ],
+      "frame_incognito": [
+        0,
+        1,
+        0
+      ],
+      "frame_incognito_inactive": [
+        0,
+        1,
+        0
+      ],
+      "background_tab": [
+        0,
+        1,
+        0
       ]
     },
     "properties": {
