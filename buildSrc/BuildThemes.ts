@@ -204,9 +204,9 @@ export const dictionaryReducer = <T>(
 };
 
 
-function replaceValues<T, R>(itemToReplace: T, valueConstructor: (value: string) => R): T {
+function replaceValues<T, R>(itemToReplace: T, valueConstructor: (key: string, value: string) => R): T {
   return toPairs(itemToReplace)
-    .map(([key, value]: [string, string]) => ([key, valueConstructor(value)]))
+    .map(([key, value]: [string, string]) => ([key, valueConstructor(key, value)]))
     .reduce(dictionaryReducer, {});
 }
 
@@ -274,6 +274,8 @@ function buildChromeThemeManifest(
     dokiThemeDefinition, dokiTemplateDefinitions
   )
   const manifestTheme = manifestTemplate.theme;
+  const colorsOverride = dokiThemeChromeDefinition.overrides.theme &&
+    dokiThemeChromeDefinition.overrides.theme.colors || {};
   return {
     ...manifestTemplate,
     name: `Doki Theme: ${dokiThemeDefinition.name}`,
@@ -282,18 +284,21 @@ function buildChromeThemeManifest(
       ...manifestTheme,
       images: replaceValues(
         manifestTheme.images,
-        (value) => value || `images/${
+        (_,value) => value || `images/${
           dokiThemeDefinition.stickers.secondary ||
           dokiThemeDefinition.stickers.default
         }`
       ),
       colors: replaceValues(
         manifestTheme.colors,
-        (color: string) => hexToRGB(resolveColor(color, namedColors))
+        (key: string, color: string) => hexToRGB(resolveColor(
+          colorsOverride[key] || color,
+          namedColors
+        ))
       ),
       tints: replaceValues(
         manifestTheme.tints,
-        (color: string) => {
+        (_, color: string) => {
           const s = resolveColor(color, namedColors);
           return rgbToHsl(hexToRGB(s));
         }

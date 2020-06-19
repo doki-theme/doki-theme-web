@@ -2,6 +2,9 @@
   "id": "35422aa4-1396-4e76-8ec6-c5560884df22",
   "overrides": {
     "theme": {
+        "colors": {
+          "omnibox_text": "&accentColorDarker&"
+        },
       "properties": {
         "ntp_background_alignment": "right"
       }
