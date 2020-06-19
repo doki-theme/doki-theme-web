@@ -4,8 +4,8 @@
   "description": "A light theme modeled after Natsuki from Literature Club",
   "theme": {
     "images": {
-      "theme_ntp_background": "images/natsuki.png",
-      "theme_ntp_background_incognito": "images/natsuki.png",
+      "theme_ntp_background": "images/natsuki_joy.png",
+      "theme_ntp_background_incognito": "images/natsuki_joy.png",
       "theme_toolbar": "images/tab_highlight.png",
       "theme_tab_background": "images/tab_inactive.png"
     },

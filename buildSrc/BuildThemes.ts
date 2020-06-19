@@ -282,7 +282,10 @@ function buildChromeThemeManifest(
       ...manifestTheme,
       images: replaceValues(
         manifestTheme.images,
-        (value) => value || `images/${dokiThemeDefinition.stickers.default}`
+        (value) => value || `images/${
+          dokiThemeDefinition.stickers.secondary ||
+          dokiThemeDefinition.stickers.default
+        }`
       ),
       colors: replaceValues(
         manifestTheme.colors,
@@ -535,7 +538,10 @@ walkDir(chromeDefinitionDirectoryPath)
         .then(() => {
           // copy asset to directory
           const stickers = getStickers(theme.definition, theme);
-          const backgroundName = stickers.default.name;
+          const backgroundName =
+            stickers.secondary &&
+            stickers.secondary.name ||
+            stickers.default.name;
           fs.copyFileSync(
             path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', backgroundName),
             path.resolve(backgroundDirectory, backgroundName)

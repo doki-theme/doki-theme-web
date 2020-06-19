@@ -4,8 +4,8 @@
   "description": "A dark theme modeled after Yuri from Literature Club",
   "theme": {
     "images": {
-      "theme_ntp_background": "images/yuri_dark.png",
-      "theme_ntp_background_incognito": "images/yuri_dark.png",
+      "theme_ntp_background": "images/yuri_dark_normal.png",
+      "theme_ntp_background_incognito": "images/yuri_dark_normal.png",
       "theme_toolbar": "images/tab_highlight.png",
       "theme_tab_background": "images/tab_inactive.png"
     },

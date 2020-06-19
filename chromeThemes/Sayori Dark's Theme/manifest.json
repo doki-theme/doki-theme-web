@@ -4,8 +4,8 @@
   "description": "A dark theme modeled after Š̸̘͚̼͎̯̙̣̱̎̋̐͒a̴̖̟̠̳̤͙̟͂̂͑̐͜ỷ̵̧̨̞̠̖̠o̴̧͍̗̬̎̓͆̔͝ͅr̴̡̮̟͈͠ͅi̴̡̨͓͈̬̗̺̍́̃̇̓ from Literature Club",
   "theme": {
     "images": {
-      "theme_ntp_background": "images/sayori_dark.png",
-      "theme_ntp_background_incognito": "images/sayori_dark.png",
+      "theme_ntp_background": "images/sayori_dark_normal.png",
+      "theme_ntp_background_incognito": "images/sayori_dark_normal.png",
       "theme_toolbar": "images/tab_highlight.png",
       "theme_tab_background": "images/tab_inactive.png"
     },

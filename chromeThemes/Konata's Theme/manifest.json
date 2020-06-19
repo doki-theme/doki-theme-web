@@ -4,8 +4,8 @@
   "description": "A light theme modeled after Konata from Lucky Star",
   "theme": {
     "images": {
-      "theme_ntp_background": "images/konata_light.png",
-      "theme_ntp_background_incognito": "images/konata_light.png",
+      "theme_ntp_background": "images/konata_light_secondary.png",
+      "theme_ntp_background_incognito": "images/konata_light_secondary.png",
       "theme_toolbar": "images/tab_highlight.png",
       "theme_tab_background": "images/tab_inactive.png"
     },

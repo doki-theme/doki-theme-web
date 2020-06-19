@@ -4,8 +4,8 @@
   "description": "A light theme modeled after Monika from Literature Club",
   "theme": {
     "images": {
-      "theme_ntp_background": "images/just_monika.png",
-      "theme_ntp_background_incognito": "images/just_monika.png",
+      "theme_ntp_background": "images/just_monika_joy.png",
+      "theme_ntp_background_incognito": "images/just_monika_joy.png",
       "theme_toolbar": "images/tab_highlight.png",
       "theme_tab_background": "images/tab_inactive.png"
     },
