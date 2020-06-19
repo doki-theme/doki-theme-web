@@ -104,7 +104,8 @@
       ]
     },
     "properties": {
-      "ntp_background_alignment": "right"
+      "ntp_background_alignment": "center",
+      "ntp_logo_alternate": 0
     }
   },
   "manifest_version": 2
