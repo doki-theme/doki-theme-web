@@ -6,7 +6,8 @@
     "images": {
       "theme_ntp_background": "images/emilia_light.png",
       "theme_ntp_background_incognito": "images/emilia_light.png",
-      "theme_toolbar": "images/tab_highlight.png"
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
     },
     "colors": {
       "bookmark_text": [
@@ -19,30 +20,25 @@
         216,
         238
       ],
-      "control_background": [
-        0,
-        0,
-        0
-      ],
       "frame": [
         252,
         243,
         255
       ],
       "frame_inactive": [
-        0,
-        0,
-        0
+        251,
+        240,
+        255
       ],
       "frame_incognito": [
-        252,
-        243,
+        251,
+        240,
         255
       ],
       "frame_incognito_inactive": [
-        0,
-        0,
-        0
+        252,
+        243,
+        255
       ],
       "ntp_background": [
         252,
@@ -54,35 +50,15 @@
         240,
         255
       ],
-      "ntp_link": [
-        0,
-        0,
-        0
+      "omnibox_background": [
+        250,
+        236,
+        255
       ],
-      "ntp_link_underline": [
-        0,
-        0,
-        0
-      ],
-      "ntp_section": [
-        0,
-        0,
-        0
-      ],
-      "ntp_section_link": [
-        0,
-        0,
-        0
-      ],
-      "ntp_section_link_underline": [
-        0,
-        0,
-        0
-      ],
-      "ntp_section_text": [
-        0,
-        0,
-        0
+      "omnibox_text": [
+        130,
+        53,
+        125
       ],
       "theme_toolbar": [
         246,
@@ -95,6 +71,11 @@
         39
       ],
       "tab_background_text": [
+        37,
+        36,
+        39
+      ],
+      "tab_background_text_inactive": [
         170,
         170,
         170
@@ -117,33 +98,13 @@
         0.3588235294117647
       ],
       "frame": [
-        0,
+        0.8441558441558441,
         1,
-        0
-      ],
-      "frame_inactive": [
-        0,
-        1,
-        0
-      ],
-      "frame_incognito": [
-        0,
-        1,
-        0
-      ],
-      "frame_incognito_inactive": [
-        0,
-        1,
-        0
-      ],
-      "background_tab": [
-        0,
-        1,
-        0
+        0.3588235294117647
       ]
     },
     "properties": {
-      "ntp_background_alignment": "stretch"
+      "ntp_background_alignment": "right"
     }
   },
   "manifest_version": 2

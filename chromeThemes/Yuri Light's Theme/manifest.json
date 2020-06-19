@@ -6,7 +6,8 @@
     "images": {
       "theme_ntp_background": "images/yuri.png",
       "theme_ntp_background_incognito": "images/yuri.png",
-      "theme_toolbar": "images/tab_highlight.png"
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
     },
     "colors": {
       "bookmark_text": [
@@ -19,30 +20,25 @@
         216,
         238
       ],
-      "control_background": [
-        0,
-        0,
-        0
-      ],
       "frame": [
         247,
         243,
         255
       ],
       "frame_inactive": [
-        0,
-        0,
-        0
+        243,
+        240,
+        255
       ],
       "frame_incognito": [
-        247,
         243,
+        240,
         255
       ],
       "frame_incognito_inactive": [
-        0,
-        0,
-        0
+        247,
+        243,
+        255
       ],
       "ntp_background": [
         247,
@@ -54,35 +50,15 @@
         240,
         255
       ],
-      "ntp_link": [
-        0,
-        0,
-        0
+      "omnibox_background": [
+        245,
+        236,
+        255
       ],
-      "ntp_link_underline": [
-        0,
-        0,
-        0
-      ],
-      "ntp_section": [
-        0,
-        0,
-        0
-      ],
-      "ntp_section_link": [
-        0,
-        0,
-        0
-      ],
-      "ntp_section_link_underline": [
-        0,
-        0,
-        0
-      ],
-      "ntp_section_text": [
-        0,
-        0,
-        0
+      "omnibox_text": [
+        171,
+        116,
+        203
       ],
       "theme_toolbar": [
         233,
@@ -95,6 +71,11 @@
         39
       ],
       "tab_background_text": [
+        37,
+        36,
+        39
+      ],
+      "tab_background_text_inactive": [
         170,
         170,
         170
@@ -117,33 +98,13 @@
         0.6254901960784314
       ],
       "frame": [
-        0,
+        0.7720306513409962,
         1,
-        0
-      ],
-      "frame_inactive": [
-        0,
-        1,
-        0
-      ],
-      "frame_incognito": [
-        0,
-        1,
-        0
-      ],
-      "frame_incognito_inactive": [
-        0,
-        1,
-        0
-      ],
-      "background_tab": [
-        0,
-        1,
-        0
+        0.6254901960784314
       ]
     },
     "properties": {
-      "ntp_background_alignment": "stretch"
+      "ntp_background_alignment": "right"
     }
   },
   "manifest_version": 2

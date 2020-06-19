@@ -426,42 +426,66 @@ walkDir(path.resolve(masterThemeDefinitionDirectoryPath, 'templates'))
       return new Promise(((resolve, reject) => {
         // @ts-ignore
         new jimp(300, 120, (err, image) => {
-          const tabHeight = 30;
+          const tabHeight = 31;
           for (let i = 0; i < tabHeight; i++) {
             for (let j = 0; j < 300; j++) {
               image.setPixelColor(highlightColor, j, i);
             }
           }
-          for (let i = 0; i < 3; i++) {
+          for (let i = 0; i < 2; i++) {
             for (let j = 0; j < 300; j++) {
               image.setPixelColor(accentColor, j, i + tabHeight);
             }
           }
 
           image.rgba(true)
-          image.write(path.resolve(backgroundDirectory, 'tab_highlight.png'), (err : any)=> {
-            if(err) {
+          image.write(path.resolve(backgroundDirectory, 'tab_highlight.png'), (err: any) => {
+            if (err) {
               reject(err)
             } else {
               resolve()
             }
           })
         });
-      })).then(() => {
-        // copy asset to directory
-        const stickers = getStickers(theme.definition, theme);
-        const backgroundName = stickers.default.name;
-        fs.copyFileSync(
-          path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', backgroundName),
-          path.resolve(backgroundDirectory, backgroundName)
-        )
+      }))
+        .then(() => {
+          const colors = theme.definition.colors;
+          const highlightColor = jimp.cssColorToHex(colors.baseBackground)
+          return new Promise(((resolve, reject) => {
+            // @ts-ignore
+            new jimp(300, 120, (err, image) => {
+              for (let i = 0; i < 33; i++) {
+                for (let j = 0; j < 300; j++) {
+                  image.setPixelColor(highlightColor, j, i);
+                }
+              }
 
-        //write manifest
-        fs.writeFileSync(
-          path.resolve(themeDirectory, 'manifest.json'),
-          JSON.stringify(theme.manifest, null, 2)
-        );
-      });
+              image.rgba(true)
+              image.write(path.resolve(backgroundDirectory, 'tab_inactive.png'), (err: any) => {
+                if (err) {
+                  reject(err)
+                } else {
+                  resolve()
+                }
+              })
+            });
+          }))
+        })
+        .then(() => {
+          // copy asset to directory
+          const stickers = getStickers(theme.definition, theme);
+          const backgroundName = stickers.default.name;
+          fs.copyFileSync(
+            path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', backgroundName),
+            path.resolve(backgroundDirectory, backgroundName)
+          )
+
+          //write manifest
+          fs.writeFileSync(
+            path.resolve(themeDirectory, 'manifest.json'),
+            JSON.stringify(theme.manifest, null, 2)
+          );
+        });
     }), Promise.resolve());
 })
   .then(() => {
