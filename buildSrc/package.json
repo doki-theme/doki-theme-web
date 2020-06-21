@@ -10,7 +10,6 @@
   "devDependencies": {
     "@types/chrome": "^0.0.115",
     "@types/jest": "^26.0.0",
-    "@types/jimp": "^0.2.28",
     "@types/lodash": "^4.14.155",
     "copy-webpack-plugin": "^6.0.2",
     "jest": "^26.0.1",
@@ -27,6 +26,6 @@
     "jimp": "^0.13.0"
   },
   "scripts": {
-    "buildThemes": "ts-node ./buildSrc/BuildThemes.ts",
+    "buildThemes": "ts-node ./buildSrc/BuildThemes.ts"
   }
 }
