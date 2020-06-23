@@ -8,5 +8,5 @@ node_modules
 masterExtension/src/DokiThemeDefinitions.ts
 masterExtension/src/ChangelogHtml.ts
 generatedThemes/*.json
-
+*.pak
 /masterThemes
