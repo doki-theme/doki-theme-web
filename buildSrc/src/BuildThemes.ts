@@ -9,7 +9,7 @@ import {
 
 const path = require('path');
 
-const repoDirectory = path.resolve(__dirname, '..');
+const repoDirectory = path.resolve(__dirname, '..', '..');
 
 const generatedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes');
 
@@ -20,6 +20,7 @@ const masterThemeDefinitionDirectoryPath =
 
 const chromeTemplateDefinitionDirectoryPath = path.resolve(
   repoDirectory,
+  "buildAssets",
   "templates"
 );
 
@@ -31,6 +32,7 @@ const templateDirectoryPath = path.resolve(
 
 const chromeDefinitionDirectoryPath = path.resolve(
   repoDirectory,
+  "buildAssets",
   "themes",
   "definitions"
 );
