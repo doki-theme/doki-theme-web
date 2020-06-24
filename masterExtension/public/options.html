@@ -3,10 +3,27 @@
 <head>
   <title>Doki Theme Options</title>
   <script src="js/vendor.js"></script>
+  <style>
+      body{
+          margin: 0;
+      }
+      #main {
+          position: fixed;
+          width: 100%;
+          height: 100%;
+          z-index: -2;
+      }
+
+      #backgroundImage {
+          z-index: -1;
+      }
+  </style>
 </head>
 
 <body>
-
+<div id="main">
+  <canvas id="backgroundImage" width="150" height="150"></canvas>
+</div>
 
 <div id="status"></div>
 <button id="save">Save</button>
