@@ -4,6 +4,9 @@
     "theme": {
       "colors": {
         "omnibox_text": "&selectionForeground&"
+      },
+      "properties": {
+        "ntp_background_alignment": "right"
       }
     }
   },

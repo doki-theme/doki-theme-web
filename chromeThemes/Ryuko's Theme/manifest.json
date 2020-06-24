@@ -104,7 +104,7 @@
       ]
     },
     "properties": {
-      "ntp_background_alignment": "center",
+      "ntp_background_alignment": "right",
       "ntp_logo_alternate": 0
     }
   },

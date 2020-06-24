@@ -549,8 +549,14 @@ walkDir(chromeDefinitionDirectoryPath)
             stickers.secondary &&
             stickers.secondary.name ||
             stickers.default.name;
+
+          const chromeTester = path.resolve("/home/alex/workspace/storage-shed/doki/backgrounds/chrome",
+            backgroundName);
+          const src = fs.existsSync(chromeTester) ?
+            chromeTester: path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', backgroundName);
+
           fs.copyFileSync(
-            path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', backgroundName),
+            src,
             path.resolve(backgroundDirectory, backgroundName)
           )
 
