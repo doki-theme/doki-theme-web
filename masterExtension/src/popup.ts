@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // @ts-ignore
       const color = element.target.value;
       chrome.tabs.query({currentWindow: true, active: true}, ([{id}]) => {
-        chrome.tabs.sendMessage(id || 69, {color},response => {})
+        console.log(`Sending color message ${color}`);
+        chrome.tabs.sendMessage(id || 69, {color})
       })
-    };
-
+    }
   }
 });

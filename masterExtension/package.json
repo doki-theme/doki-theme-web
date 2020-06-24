@@ -25,9 +25,8 @@
   },
   "dependencies": {},
   "scripts": {
-    "watch": "webpack --config masterExtension/webpack/webpack.dev.js --watch",
-    "build": "webpack --config masterExtension/webpack/webpack.prod.js",
-    "clean": "rimraf dist",
+    "watch": "webpack --config webpack/webpack.dev.js --watch",
+    "build": "webpack --config ebpack/webpack.prod.js",   "clean": "rimraf dist",
     "test": "npx jest"
   }
 }

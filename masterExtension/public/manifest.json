@@ -1,44 +1,36 @@
 {
   "name": "The Doki Theme",
   "version": "1.0",
-  "description": "Anime based themes for your chrome browser!",
-  "theme": {
-    "images" : {
-      "theme_ntp_background" : "images/emilia_light.png",
-      "theme_ntp_background_incognito" : "images/emilia_light.png"
+  "description": "Supports consistency for the the anime based themes.",
+  "permissions": [
+    "activeTab",
+    "declarativeContent",
+    "storage",
+    "<all_urls>"
+  ],
+  "options_page": "options.html",
+  "browser_action": {
+    "default_icon": {
+      "16": "images/favicon-16x16.png",
+      "32": "images/favicon-32x32.png",
+      "192": "images/android-chrome-192x192.png"
     },
-    "colors": {
-      "bookmark_text": [0, 0, 0],
-      "button_background": [0, 0, 0],
-      "control_background": [0, 0, 0],
-      "frame": [0, 0, 0],
-      "frame_inactive": [0, 0, 0],
-      "frame_incognito": [255, 0, 0, 0],
-      "frame_incognito_inactive": [0, 0, 0],
-      "ntp_background": [0, 0, 0],
-      "ntp_header": [0, 0, 0],
-      "ntp_link": [0, 0, 0],
-      "ntp_link_underline": [0, 0, 0],
-      "ntp_section": [0, 0, 0],
-      "ntp_section_link": [0, 0, 0],
-      "ntp_section_link_underline": [0, 0, 0],
-      "ntp_section_text": [0, 0, 0],
-      "ntp_text": [0, 0, 0],
-      "tab_background_text": [0, 0, 0],
-      "tab_text": [0, 0, 0],
-      "toolbar": [0, 0, 0, 0.0]
-    },
-    "tints": {
-      "buttons": [0, 0, 0],
-      "frame": [0, 0, 0],
-      "frame_inactive": [0, 0, 0],
-      "frame_incognito": [0, 0, 0],
-      "frame_incognito_inactive": [0, 0, 0],
-      "background_tab": [0, 0, 0]
-    },
-    "properties" : {
-      "ntp_background_alignment" : "center"
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/content_script.js"]
     }
+  ],
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "icons": {
+    "16": "images/favicon-16x16.png",
+    "32": "images/favicon-32x32.png",
+    "48": "images/favicon-48x48.png",
+    "192": "images/android-chrome-192x192.png"
   },
   "manifest_version": 2
 }
