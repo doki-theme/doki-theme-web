@@ -27,7 +27,9 @@ export const registerOptions = (onchange?: (newTheme: any) => void) => {
       // @ts-ignore
       const selectedTheme = DokiThemeDefinitions[currentThemeSelect.value];
       stylePopup(selectedTheme.colors)
-      onchange(selectedTheme)
+      if(onchange){
+        onchange(selectedTheme)
+      }
       chrome.storage.sync.set({currentTheme: currentThemeSelect.value}, () => {
         chrome.tabs.query({currentWindow: true, active: true}, ([{id}]) => {
           chrome.tabs.sendMessage(id || 69, {
@@ -72,7 +74,10 @@ const stylePopup = (colors: any) => {
      select:focus {
       border-color: ${colors.accentColor};
       outline: none;
-      
+    }
+    a, a:visited {
+    text-decoration: none;
+    color: ${colors.accentColor};
     }
         `;
   const previousStyle = document.getElementById(styleId);
