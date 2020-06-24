@@ -2,7 +2,7 @@ import DokiThemeDefinitions from "./DokiThemeDefinitions";
 
 const styleId = "doki-css";
 
-export const registerOptions = () => {
+export const registerOptions = (onchange?: (newTheme: any) => void) => {
   const currentThemeSelect = document.getElementById("current-theme") as HTMLSelectElement;
   if (currentThemeSelect) {
     Object.values(DokiThemeDefinitions)
@@ -18,12 +18,16 @@ export const registerOptions = () => {
         const currentThemeDefinition = DokiThemeDefinitions[currentTheme];
         currentThemeSelect.value = currentThemeDefinition.information.id
         stylePopup(currentThemeDefinition.colors)
+        if(onchange) {
+          onchange(currentThemeDefinition)
+        }
       }
     });
     currentThemeSelect.onchange = () => {
       // @ts-ignore
       const selectedTheme = DokiThemeDefinitions[currentThemeSelect.value];
       stylePopup(selectedTheme.colors)
+      onchange(selectedTheme)
       chrome.storage.sync.set({currentTheme: currentThemeSelect.value}, () => {
         chrome.tabs.query({currentWindow: true, active: true}, ([{id}]) => {
           chrome.tabs.sendMessage(id || 69, {

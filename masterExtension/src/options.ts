@@ -1,7 +1,7 @@
 import DokiThemeDefinitions from "./DokiThemeDefinitions";
 import {registerOptions} from "./ThemeUtils";
 
-function drawBackground() {
+function drawBackground(colors?: any) {
   const backgroundCanvas = document.getElementById(
     "backgroundImage"
   )!!;
@@ -27,16 +27,19 @@ function drawBackground() {
   ctx.quadraticCurveTo(w / 1.85, h, w, 0);
   ctx.lineTo(w, h);
   ctx.lineTo(0, h);
-  ctx.fillStyle = "#4c2e5c";
-  ctx.strokeStyle = "#4c2e5c";
+
+  const color = colors && colors.headerColor || '#4c2e5c'
+  ctx.fillStyle = color;
+  ctx.strokeStyle = color;
   ctx.fill();
   ctx.closePath();
   ctx.stroke();
 }
 
-
 document.addEventListener("DOMContentLoaded", () => {
-  registerOptions();
+  registerOptions(newTheme => {
+    drawBackground(newTheme.colors)
+  });
   drawBackground();
   window.addEventListener('resize', () => {
     drawBackground();
