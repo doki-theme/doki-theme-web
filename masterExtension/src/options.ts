@@ -1,4 +1,5 @@
 import DokiThemeDefinitions from "./DokiThemeDefinitions";
+import {registerOptions} from "./ThemeUtils";
 
 function drawBackground() {
   const backgroundCanvas = document.getElementById(
@@ -16,7 +17,7 @@ function drawBackground() {
   const w = boundingRect.width;
   const h = boundingRect.height;
 
-  backgroundCanvas.setAttribute('width',String(w));
+  backgroundCanvas.setAttribute('width', String(w));
   backgroundCanvas.setAttribute('height', String(h))
 
 
@@ -35,8 +36,9 @@ function drawBackground() {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  drawBackground()
-  window.addEventListener('resize', ()=>{
-    drawBackground()
+  registerOptions();
+  drawBackground();
+  window.addEventListener('resize', () => {
+    drawBackground();
   });
 })
