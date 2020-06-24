@@ -1,8 +1,9 @@
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  if (msg.color) {
+  const {colors} = msg;
+  if (colors) {
     const styles = `
-      ::-moz-selection { background: #a73035; color: #E2CB14; }
-      ::selection { background: #a73035; color: #E2CB14; }
+      ::-moz-selection { background: ${colors.selectionBackground}; color: ${colors.selectionForeground}; }
+      ::selection { background: ${colors.selectionBackground}; color: ${colors.selectionForeground}; }
 
       *::-webkit-scrollbar {
         width: 0.5em;
@@ -13,17 +14,13 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       }
 
       *::-webkit-scrollbar-thumb {
-        background-color: #a73035;
+        background-color: ${colors.accentColor};
      } 
         `
     const styleSheet = document.createElement("style");
     styleSheet.type = "text/css"
     styleSheet.innerText = styles;
     document.head.appendChild(styleSheet)
-
-    sendResponse(`Change color to ${msg.color}`);
-  } else {
-    sendResponse('Color message is none.');
   }
 });
 

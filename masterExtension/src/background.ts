@@ -1,15 +1,25 @@
+import DokiThemeDefinitions from "./DokiThemeDefinitions";
+
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({color: '#3aa757'}, () => {
-    console.log('The color is green.');
+  const currentTheme = '696de7c1-3a8e-4445-83ee-3eb7e9dca47f';
+  chrome.storage.sync.set({currentTheme}, () => {
+    console.log(`The theme is ${DokiThemeDefinitions[currentTheme].information.name}`);
   });
 });
 
 chrome.tabs.onUpdated.addListener(((tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete') {
-    const color = 'aoeu'
-    chrome.tabs.query({currentWindow: true, active: true}, ([{id}]) => {
-      console.log(`Sending color message`);
-      chrome.tabs.sendMessage(id || 69, {color})
-    })
+    chrome.storage.sync.get((storage) => {
+      const currentTheme = storage['currentTheme'];
+      if (currentTheme && DokiThemeDefinitions[currentTheme]) {
+        const dokiTheme = DokiThemeDefinitions[currentTheme];
+        chrome.tabs.query({currentWindow: true, active: true}, ([{id}]) => {
+          console.log(`Sending theme message ${dokiTheme.information.name}`);
+          chrome.tabs.sendMessage(id || 69, {
+            colors: dokiTheme.colors
+          });
+        });
+      }
+    });
   }
 }));
