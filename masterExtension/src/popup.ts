@@ -1,5 +1,7 @@
 import DokiThemeDefinitions from "./DokiThemeDefinitions";
 
+const styleId = "doki-css";
+
 document.addEventListener("DOMContentLoaded", () => {
   const currentThemeSelect = document.getElementById("current-theme") as HTMLSelectElement;
   if (currentThemeSelect) {
@@ -13,12 +15,15 @@ document.addEventListener("DOMContentLoaded", () => {
     chrome.storage.local.get(['currentTheme'], ({currentTheme}) => {
       if (currentTheme) {
         // @ts-ignore
-        currentThemeSelect.value = DokiThemeDefinitions[currentTheme].information.id
+        const currentThemeDefinition = DokiThemeDefinitions[currentTheme];
+        currentThemeSelect.value = currentThemeDefinition.information.id
+        stylePopup(currentThemeDefinition.colors)
       }
     });
     currentThemeSelect.onchange = () => {
       // @ts-ignore
       const selectedTheme = DokiThemeDefinitions[currentThemeSelect.value];
+      stylePopup(selectedTheme.colors)
       chrome.storage.local.set({currentTheme: currentThemeSelect.value}, () => {
         chrome.tabs.query({currentWindow: true, active: true}, ([{id}]) => {
           chrome.tabs.sendMessage(id || 69, {
@@ -29,3 +34,50 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+const stylePopup = (colors: any) => {
+
+  const styles = `
+      ::-moz-selection { background: ${colors.selectionBackground}; color: ${colors.selectionForeground}; }
+      ::selection { background: ${colors.selectionBackground}; color: ${colors.selectionForeground}; }
+
+      *::-webkit-scrollbar {
+        width: 0.5em;
+      }
+      
+      *::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.00);
+      }
+
+      *::-webkit-scrollbar-thumb {
+        background-color: ${colors.accentColor};
+     } 
+     
+     body {
+       padding: 0.5rem;
+       text-align: center;
+       background-color: ${colors.baseBackground};
+       color: ${colors.foregroundColor};
+     }
+     
+     select {
+       border: ${colors.accentColor} solid 1px;
+       color: ${colors.buttonFont};
+       background-color: ${colors.buttonColor};
+     }
+     select:focus {
+      border-color: ${colors.accentColor};
+      outline: none;
+      
+    }
+        `;
+  const previousStyle = document.getElementById(styleId);
+  if(previousStyle && previousStyle.parentNode) {
+    previousStyle.parentNode.removeChild(previousStyle)
+  }
+
+  const styleSheet = document.createElement("style");
+  styleSheet.id = styleId
+  styleSheet.type = "text/css"
+  styleSheet.innerText = styles;
+  document.head.appendChild(styleSheet)
+}
