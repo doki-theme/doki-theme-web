@@ -403,6 +403,7 @@ const getStickers = (
 };
 
 const jimp = require('jimp');
+const omit = require('lodash/omit');
 
 console.log('Preparing to generate themes.');
 walkDir(chromeDefinitionDirectoryPath)
@@ -566,7 +567,30 @@ walkDir(chromeDefinitionDirectoryPath)
             JSON.stringify(theme.manifest, null, 2)
           );
         });
-    }), Promise.resolve());
+    }), Promise.resolve())
+    .then(()=>{
+      // write things for extension
+      const dokiThemeDefinitions = dokiThemes.map(dokiTheme => {
+        const dokiDefinition = dokiTheme.definition;
+        return {
+          information: omit(dokiDefinition, [
+            'colors',
+            'overrides',
+            'ui',
+            'icons'
+          ]),
+          colors: dokiDefinition.colors,
+        };
+      }).reduce((accum: StringDictonary<any>, definition) => {
+        accum[definition.information.id] = definition;
+        return accum;
+      }, {});
+
+      const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions);
+      fs.writeFileSync(
+        path.resolve(repoDirectory,'masterExtension', 'src', 'DokiThemeDefinitions.ts'),
+        `export default ${finalDokiDefinitions};`);
+    });
 })
   .then(() => {
     console.log('Theme Generation Complete!');
