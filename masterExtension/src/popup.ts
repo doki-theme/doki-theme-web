@@ -10,8 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         option.value = themeDef.information.id
         currentThemeSelect.add(option)
       });
-    chrome.storage.sync.get(({currentTheme}) => {
-      console.log(currentTheme);
+    chrome.storage.local.get(['currentTheme'], ({currentTheme}) => {
       if (currentTheme) {
         // @ts-ignore
         currentThemeSelect.value = DokiThemeDefinitions[currentTheme].information.id
@@ -20,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentThemeSelect.onchange = () => {
       // @ts-ignore
       const selectedTheme = DokiThemeDefinitions[currentThemeSelect.value];
-      chrome.storage.sync.set({currentTheme: selectedTheme.id}, () => {
+      chrome.storage.local.set({currentTheme: currentThemeSelect.value}, () => {
         chrome.tabs.query({currentWindow: true, active: true}, ([{id}]) => {
           chrome.tabs.sendMessage(id || 69, {
             colors: selectedTheme.colors
