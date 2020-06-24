@@ -60,7 +60,6 @@ const stylePopup = (colors: any) => {
      } 
      
      body {
-       padding: 0.5rem;
        text-align: center;
        background-color: ${colors.baseBackground};
        color: ${colors.foregroundColor};
