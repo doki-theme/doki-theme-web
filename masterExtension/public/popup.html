@@ -1,19 +1,24 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Getting Started Extension's Popup</title>
-    <style>
+<head>
+  <meta charset="UTF-8">
+  <title>Doki Theme Options</title>
+  <style>
       body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
+          font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+          font-size: 100%;
       }
-    </style>
-    <script src="js/vendor.js"></script>
-  </head>
-  <body>
-    <button id="changeColor">change color</button>
-    <script src="js/popup.js"></script>
-  </body>
+  </style>
+  <script src="js/vendor.js"></script>
+</head>
+<body>
+<label>
+  Current theme:
+    <select id="current-theme">
+    </select>
+</label>
+
+<script src="js/popup.js"></script>
+</body>
 </html>
 

@@ -11,10 +11,11 @@ chrome.tabs.onUpdated.addListener(((tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete') {
     chrome.storage.sync.get((storage) => {
       const currentTheme = storage['currentTheme'];
+      // @ts-ignore
       if (currentTheme && DokiThemeDefinitions[currentTheme]) {
+        // @ts-ignore
         const dokiTheme = DokiThemeDefinitions[currentTheme];
         chrome.tabs.query({currentWindow: true, active: true}, ([{id}]) => {
-          console.log(`Sending theme message ${dokiTheme.information.name}`);
           chrome.tabs.sendMessage(id || 69, {
             colors: dokiTheme.colors
           });

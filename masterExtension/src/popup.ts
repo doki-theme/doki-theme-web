@@ -1,18 +1,32 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const changeColor = document.getElementById('changeColor');
-  if(changeColor){
-    chrome.storage.sync.get('color', function (data) {
-      changeColor.style.backgroundColor = data.color;
-      changeColor.setAttribute('value', data.color);
-    });
+import DokiThemeDefinitions from "./DokiThemeDefinitions";
 
-    changeColor.onclick = (element) => {
+document.addEventListener("DOMContentLoaded", () => {
+  const currentThemeSelect = document.getElementById("current-theme") as HTMLSelectElement;
+  if (currentThemeSelect) {
+    Object.values(DokiThemeDefinitions)
+      .forEach(themeDef => {
+        const option = document.createElement("option");
+        option.text = themeDef.information.name
+        option.value = themeDef.information.id
+        currentThemeSelect.add(option)
+      });
+    chrome.storage.sync.get(({currentTheme}) => {
+      console.log(currentTheme);
+      if (currentTheme) {
+        // @ts-ignore
+        currentThemeSelect.value = DokiThemeDefinitions[currentTheme].information.id
+      }
+    });
+    currentThemeSelect.onchange = () => {
       // @ts-ignore
-      const color = element.target.value;
-      chrome.tabs.query({currentWindow: true, active: true}, ([{id}]) => {
-        console.log(`Sending color message ${color}`);
-        chrome.tabs.sendMessage(id || 69, {color})
-      })
+      const selectedTheme = DokiThemeDefinitions[currentThemeSelect.value];
+      chrome.storage.sync.set({currentTheme: selectedTheme.id}, () => {
+        chrome.tabs.query({currentWindow: true, active: true}, ([{id}]) => {
+          chrome.tabs.sendMessage(id || 69, {
+            colors: selectedTheme.colors
+          });
+        });
+      });
     }
   }
 });
