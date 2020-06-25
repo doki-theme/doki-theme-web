@@ -1,7 +1,6 @@
-import DokiThemeDefinitions from "./DokiThemeDefinitions";
 import {registerOptions} from "./ThemeUtils";
 
-let previousListener;
+let previousListener: () => void;
 
 function drawBackground(colors?: any) {
   const backgroundCanvas = document.getElementById(
@@ -42,11 +41,11 @@ document.addEventListener("DOMContentLoaded", () => {
   registerOptions(newTheme => {
     drawBackground(newTheme.colors)
     window.removeEventListener('resize', previousListener)
-    const newListener = ()=>{
+    const newListener = () => {
       drawBackground(newTheme.colors);
     }
     previousListener = newListener
-    window.addEventListener('resize',newListener)
+    window.addEventListener('resize', newListener)
   });
   drawBackground();
   const listener = () => {
