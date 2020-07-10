@@ -13,6 +13,8 @@ const repoDirectory = path.resolve(__dirname, '..', '..');
 
 const generatedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes');
 
+const hiResGeneratedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes_2560x1440');
+
 const fs = require('fs');
 
 const masterThemeDefinitionDirectoryPath =
@@ -286,7 +288,7 @@ function buildChromeThemeManifest(
       ...manifestTheme,
       images: replaceValues(
         manifestTheme.images,
-        (_,value) => value || `images/${
+        (_, value) => value || `images/${
           dokiThemeDefinition.stickers.secondary ||
           dokiThemeDefinition.stickers.default
         }`
@@ -403,6 +405,7 @@ const getStickers = (
 };
 
 const jimp = require('jimp');
+const ncp = require('ncp').ncp;
 const omit = require('lodash/omit');
 
 console.log('Preparing to generate themes.');
@@ -470,7 +473,7 @@ walkDir(chromeDefinitionDirectoryPath)
       .map(({
               dokiFileDefinitionPath,
               dokiThemeDefinition,
-        dokiThemeChromeDefinition,
+              dokiThemeChromeDefinition,
               manifestTemplate
             }) =>
         createDokiTheme(
@@ -485,6 +488,8 @@ walkDir(chromeDefinitionDirectoryPath)
   // write things for extension
   return dokiThemes.reduce((accum, theme) =>
     accum.then(() => {
+      const chromeThemeName = `${theme.definition.name}'s Theme`;
+      const stickers = getStickers(theme.definition, theme);
       const themeDirectory = path.resolve(
         generatedThemesDirectory,
         `${theme.definition.name}'s Theme`
@@ -544,31 +549,56 @@ walkDir(chromeDefinitionDirectoryPath)
           }))
         })
         .then(() => {
-          // copy asset to directory
-          const stickers = getStickers(theme.definition, theme);
-          const backgroundName =
-            stickers.secondary &&
-            stickers.secondary.name ||
-            stickers.default.name;
-
-          const chromeTester = path.resolve("/home/alex/workspace/storage-shed/doki/backgrounds/chrome",
-            backgroundName);
-          const src = fs.existsSync(chromeTester) ?
-            chromeTester: path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', backgroundName);
-
-          fs.copyFileSync(
-            src,
-            path.resolve(backgroundDirectory, backgroundName)
-          )
-
           //write manifest
           fs.writeFileSync(
             path.resolve(themeDirectory, 'manifest.json'),
             JSON.stringify(theme.manifest, null, 2)
           );
+
+          // copy asset to directory
+          const storageShedPath = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome')
+          const highResTheme = [
+            path.resolve(storageShedPath, 'hi-res', stickers.secondary && stickers.secondary.name || 'not_real'),
+            path.resolve(storageShedPath, 'hi-res', stickers.default.name),
+          ].filter(hiResWaifu => fs.existsSync(hiResWaifu))[0];
+          if (highResTheme) {
+            const highResThemeDirectory = path.resolve(hiResGeneratedThemesDirectory, chromeThemeName);
+            return new Promise((resolve, reject) => {
+              ncp(themeDirectory, highResThemeDirectory, {
+                clobber: true,
+              }, (err: Error[] | null) => {
+                if (err) {
+                  console.log(err)
+                  reject(err)
+                } else {
+                  const highResbackgroundDirectory = path.resolve(highResThemeDirectory, 'images');
+                  fs.copyFileSync(
+                    highResTheme,
+                    path.resolve(highResbackgroundDirectory, path.basename(highResTheme))
+                  )
+                  resolve()
+                }
+              })
+            })
+          } else {
+            return Promise.resolve()
+          }
+        }).then(() => {
+          const backgroundName =
+            stickers.secondary &&
+            stickers.secondary.name ||
+            stickers.default.name;
+          const chromeLowRes = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome',
+            backgroundName);
+          const src = fs.existsSync(chromeLowRes) ?
+            chromeLowRes : path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', backgroundName);
+          fs.copyFileSync(
+            src,
+            path.resolve(backgroundDirectory, backgroundName)
+          )
         });
     }), Promise.resolve())
-    .then(()=>{
+    .then(() => {
       // write things for extension
       const dokiThemeDefinitions = dokiThemes.map(dokiTheme => {
         const dokiDefinition = dokiTheme.definition;
@@ -588,7 +618,7 @@ walkDir(chromeDefinitionDirectoryPath)
 
       const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions);
       fs.writeFileSync(
-        path.resolve(repoDirectory,'masterExtension', 'src', 'DokiThemeDefinitions.ts'),
+        path.resolve(repoDirectory, 'masterExtension', 'src', 'DokiThemeDefinitions.ts'),
         `export default ${finalDokiDefinitions};`);
     });
 })
