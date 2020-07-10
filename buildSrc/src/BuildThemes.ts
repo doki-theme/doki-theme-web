@@ -1,10 +1,10 @@
 // @ts-ignore
 import {
+  ChromeDokiThemeDefinition,
   DokiThemeDefinitions,
   ManifestTemplate,
   MasterDokiThemeDefinition,
-  StringDictonary,
-  ChromeDokiThemeDefinition
+  StringDictonary
 } from './types';
 
 const path = require('path');
@@ -12,6 +12,8 @@ const path = require('path');
 const repoDirectory = path.resolve(__dirname, '..', '..');
 
 const generatedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes');
+
+const edgeGeneratedThemesDirectory = path.resolve(repoDirectory, 'edgeThemes');
 
 const hiResGeneratedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes_2560x1440');
 
@@ -409,6 +411,91 @@ const ncp = require('ncp').ncp;
 const omit = require('lodash/omit');
 
 console.log('Preparing to generate themes.');
+
+function buildInactiveTabImage(theme: ChromeDokiTheme, backgroundDirectory: string): Promise<void> {
+  const colors = theme.definition.colors;
+  const highlightColor = jimp.cssColorToHex(colors.baseBackground)
+  return new Promise<void>(((resolve, reject) => {
+    // @ts-ignore
+    new jimp(300, 120, (err, image) => {
+      for (let i = 0; i < 33; i++) {
+        for (let j = 0; j < 300; j++) {
+          image.setPixelColor(highlightColor, j, i);
+        }
+      }
+
+      image.rgba(true)
+      image.write(path.resolve(backgroundDirectory, 'tab_inactive.png'), (err: any) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
+    });
+  }));
+}
+
+function buildActiveTabImage(tabHeight: number, highlightColor: number, accentColor: number, backgroundDirectory: string) {
+  return new Promise(((resolve, reject) => {
+    // @ts-ignore
+    new jimp(300, 120, (err, image) => {
+      for (let i = 0; i < tabHeight; i++) {
+        for (let j = 0; j < 300; j++) {
+          image.setPixelColor(highlightColor, j, i);
+        }
+      }
+      for (let i = 0; i < 2; i++) {
+        for (let j = 0; j < 300; j++) {
+          image.setPixelColor(accentColor, j, i + tabHeight);
+        }
+      }
+
+      image.rgba(true)
+      image.write(path.resolve(backgroundDirectory, 'tab_highlight.png'), (err: any) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
+    });
+  }));
+}
+
+type ChromeDokiTheme = { path: string; manifest: ManifestTemplate; definition: MasterDokiThemeDefinition; theme: {} }
+
+function buildThemeDirectoryStruct(
+    theme: ChromeDokiTheme,
+    tabHeight: number,
+    backgroundDirectory: string,
+    themeDirectory: string,
+    manifestDecorator: (manifest: ManifestTemplate) => ManifestTemplate = m => m
+): Promise<void> {
+
+  fs.mkdirSync(backgroundDirectory, {recursive: true});
+  //write manifest
+  fs.writeFileSync(
+      path.resolve(themeDirectory, 'manifest.json'),
+      JSON.stringify(manifestDecorator(theme.manifest), null, 2)
+  );
+
+  const colors = theme.definition.colors;
+  const highlightColor = jimp.cssColorToHex(colors.highlightColor)
+  const accentColor = jimp.cssColorToHex(colors.accentColor)
+  return buildActiveTabImage(
+      tabHeight,
+      highlightColor,
+      accentColor,
+      backgroundDirectory
+  )
+      .then(() => buildInactiveTabImage(theme, backgroundDirectory))
+}
+
+function getBackgroundDirectory(themeDirectory: string) {
+  return path.resolve(themeDirectory, 'images');
+}
+
 walkDir(chromeDefinitionDirectoryPath)
   .then((files) =>
     files.filter((file) => file.endsWith("chrome.definition.json"))
@@ -486,75 +573,44 @@ walkDir(chromeDefinitionDirectoryPath)
       );
   }).then(dokiThemes => {
   // write things for extension
-  return dokiThemes.reduce((accum, theme) =>
+  return dokiThemes.reduce((accum, theme: ChromeDokiTheme) =>
     accum.then(() => {
-      const chromeThemeName = `${theme.definition.name}'s Theme`;
+      const tabHeight = 31;
       const stickers = getStickers(theme.definition, theme);
+      const themeDirectoryName = `${theme.definition.name}'s Theme`;
       const themeDirectory = path.resolve(
-        generatedThemesDirectory,
-        `${theme.definition.name}'s Theme`
+          generatedThemesDirectory,
+          themeDirectoryName
       );
-      const backgroundDirectory = path.resolve(themeDirectory, 'images');
-      fs.mkdirSync(backgroundDirectory, {recursive: true});
+      const backgroundDirectory = getBackgroundDirectory(themeDirectory);
 
-      const colors = theme.definition.colors;
-      const highlightColor = jimp.cssColorToHex(colors.highlightColor)
-      const accentColor = jimp.cssColorToHex(colors.accentColor)
-      return new Promise(((resolve, reject) => {
-        // @ts-ignore
-        new jimp(300, 120, (err, image) => {
-          const tabHeight = 31;
-          for (let i = 0; i < tabHeight; i++) {
-            for (let j = 0; j < 300; j++) {
-              image.setPixelColor(highlightColor, j, i);
-            }
-          }
-          for (let i = 0; i < 2; i++) {
-            for (let j = 0; j < 300; j++) {
-              image.setPixelColor(accentColor, j, i + tabHeight);
-            }
-          }
-
-          image.rgba(true)
-          image.write(path.resolve(backgroundDirectory, 'tab_highlight.png'), (err: any) => {
-            if (err) {
-              reject(err)
-            } else {
-              resolve()
+      const edgeThemeDirectory = path.resolve(
+          edgeGeneratedThemesDirectory,
+          themeDirectoryName
+      )
+      return buildThemeDirectoryStruct(
+          theme,
+          tabHeight,
+          backgroundDirectory,
+          themeDirectory,
+      )
+        .then(() => buildThemeDirectoryStruct(
+          theme,
+          tabHeight - 2,
+          getBackgroundDirectory(edgeThemeDirectory),
+          edgeThemeDirectory,
+          manifest => ({
+            ...manifest,
+            theme: {
+              ...manifest.theme,
+              images: omit(
+                manifest.theme.images,
+                ['theme_ntp_background', 'theme_ntp_background_incognito']
+              )
             }
           })
-        });
-      }))
+        ))
         .then(() => {
-          const colors = theme.definition.colors;
-          const highlightColor = jimp.cssColorToHex(colors.baseBackground)
-          return new Promise(((resolve, reject) => {
-            // @ts-ignore
-            new jimp(300, 120, (err, image) => {
-              for (let i = 0; i < 33; i++) {
-                for (let j = 0; j < 300; j++) {
-                  image.setPixelColor(highlightColor, j, i);
-                }
-              }
-
-              image.rgba(true)
-              image.write(path.resolve(backgroundDirectory, 'tab_inactive.png'), (err: any) => {
-                if (err) {
-                  reject(err)
-                } else {
-                  resolve()
-                }
-              })
-            });
-          }))
-        })
-        .then(() => {
-          //write manifest
-          fs.writeFileSync(
-            path.resolve(themeDirectory, 'manifest.json'),
-            JSON.stringify(theme.manifest, null, 2)
-          );
-
           // copy asset to directory
           const storageShedPath = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome')
           const highResTheme = [
@@ -562,7 +618,7 @@ walkDir(chromeDefinitionDirectoryPath)
             path.resolve(storageShedPath, 'hi-res', stickers.default.name),
           ].filter(hiResWaifu => fs.existsSync(hiResWaifu))[0];
           if (highResTheme) {
-            const highResThemeDirectory = path.resolve(hiResGeneratedThemesDirectory, chromeThemeName);
+            const highResThemeDirectory = path.resolve(hiResGeneratedThemesDirectory, themeDirectoryName);
             return new Promise((resolve, reject) => {
               ncp(themeDirectory, highResThemeDirectory, {
                 clobber: true,

@@ -1,0 +1,110 @@
+{
+  "name": "Doki Theme: Ram",
+  "version": "1.0",
+  "description": "A dark theme modeled after Ram from Re Zero",
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        187,
+        187,
+        187
+      ],
+      "button_background": [
+        55,
+        50,
+        55
+      ],
+      "frame": [
+        48,
+        41,
+        48
+      ],
+      "frame_inactive": [
+        52,
+        47,
+        54
+      ],
+      "frame_incognito": [
+        52,
+        47,
+        54
+      ],
+      "frame_incognito_inactive": [
+        48,
+        41,
+        48
+      ],
+      "ntp_background": [
+        48,
+        41,
+        48
+      ],
+      "ntp_header": [
+        52,
+        47,
+        54
+      ],
+      "omnibox_background": [
+        55,
+        49,
+        57
+      ],
+      "omnibox_text": [
+        229,
+        148,
+        191
+      ],
+      "theme_toolbar": [
+        60,
+        53,
+        59
+      ],
+      "ntp_text": [
+        187,
+        187,
+        187
+      ],
+      "tab_background_text": [
+        187,
+        187,
+        187
+      ],
+      "tab_background_text_inactive": [
+        102,
+        104,
+        121
+      ],
+      "tab_text": [
+        187,
+        187,
+        187
+      ],
+      "toolbar": [
+        52,
+        47,
+        54
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.911522633744856,
+        1,
+        0.7392156862745098
+      ],
+      "frame": [
+        0.911522633744856,
+        1,
+        0.7392156862745098
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_logo_alternate": 0
+    }
+  },
+  "manifest_version": 2
+}
