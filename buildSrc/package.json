@@ -11,6 +11,7 @@
     "@types/chrome": "^0.0.115",
     "@types/jest": "^26.0.0",
     "@types/lodash": "^4.14.155",
+    "@types/ncp": "^2.0.4",
     "copy-webpack-plugin": "^6.0.2",
     "jest": "^26.0.1",
     "rimraf": "^3.0.2",
@@ -23,9 +24,10 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "jimp": "^0.13.0"
+    "jimp": "^0.13.0",
+    "ncp": "^2.0.0"
   },
   "scripts": {
-    "buildThemes": "ts-node ./buildSrc/BuildThemes.ts"
+    "buildThemes": "ts-node ./src/BuildThemes.ts"
   }
 }
