@@ -1,19 +1,10 @@
 # Feature Preview
 
-![Theme Usage](./screenshots/chrome_usage.gif)
+## Chrome
+![Megumin Chrome](./screenshots/backgrounds/megumin.png)
 
-> This process demonstrates local installation. 
-> You should be able to install these themes from the Chrome store soon!
-
-Steps: 
-1. Install Emilia Dark's theme.
-1. Use the Master Extension popup to change how CSS is altered github.
-1. See that scroll bar and selection colors are now themed.
-1. Install Rem's theme.
-1. Use the Master Extension options to change how CSS is altered.
-1. Demonstrate that old css alteration is still present.
-1. Refresh
-1. Observe that updated css alterations are now present.
+## Microsoft Edge
+![Rem Edge](./screenshots/backgrounds/rem_edge.png)
 
 ## Features
 
@@ -35,6 +26,21 @@ Things that are currently changed:
 - Scrollbars 
 
 # Installation
+
+![Theme Usage](./screenshots/chrome_usage.gif)
+
+> This process demonstrates local installation. 
+> You should be able to install these themes from the Chrome store soon!
+
+Steps: 
+1. Install Emilia Dark's theme.
+1. Use the Master Extension popup to change how CSS is altered github.
+1. See that scroll bar and selection colors are now themed.
+1. Install Rem's theme.
+1. Use the Master Extension options to change how CSS is altered.
+1. Demonstrate that old css alteration is still present.
+1. Refresh
+1. Observe that updated css alterations are now present.
 
 ## Chrome
 
@@ -58,7 +64,6 @@ Until then, you'll have to do a local install.
 ### Prerequisites
 
 - Edge v83.0.471.0 or above [consider downloading the canary/dev version](https://www.microsoftedgeinsider.com/en-us/download)
-- 
 
 ### Steps
 
