@@ -1,6 +1,10 @@
 Changelog
 ---
 
+# 2.0.0 [Full Edge Support]
+
+- While it is not automatic, you can get the full Doki Theme experience in Microsoft Edge now!
+
 ## 1.1.0 [High Resolution]
 
 - Added themes with 2560x1440 background images.
