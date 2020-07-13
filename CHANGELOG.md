@@ -1,6 +1,13 @@
 Changelog
 ---
 
+# 3.0.0 [Misato Katsuragi]
+
+- Added Neon Genesis Evangelion's `Misato Katsuragi` as a dark theme!
+- Actually adding all 2560x1440 background images rather than some of them.
+
+![The New Woman](https://doki.assets.unthrottled.io/misc/v9_girl.png?version=1)
+
 # 2.0.0 [Full Edge Support]
 
 - While it is not automatic, you can get the full Doki Theme experience in Microsoft Edge now!

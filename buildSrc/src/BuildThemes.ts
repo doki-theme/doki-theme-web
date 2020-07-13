@@ -466,37 +466,61 @@ function buildActiveTabImage(tabHeight: number, highlightColor: number, accentCo
 type ChromeDokiTheme = { path: string; manifest: ManifestTemplate; definition: MasterDokiThemeDefinition; theme: {} }
 
 function buildThemeDirectoryStruct(
-    theme: ChromeDokiTheme,
-    tabHeight: number,
-    backgroundDirectory: string,
-    themeDirectory: string,
-    manifestDecorator: (manifest: ManifestTemplate) => ManifestTemplate = m => m
+  theme: ChromeDokiTheme,
+  tabHeight: number,
+  backgroundDirectory: string,
+  themeDirectory: string,
+  manifestDecorator: (manifest: ManifestTemplate) => ManifestTemplate = m => m
 ): Promise<void> {
 
   fs.mkdirSync(backgroundDirectory, {recursive: true});
   //write manifest
   fs.writeFileSync(
-      path.resolve(themeDirectory, 'manifest.json'),
-      JSON.stringify(manifestDecorator(theme.manifest), null, 2)
+    path.resolve(themeDirectory, 'manifest.json'),
+    JSON.stringify(manifestDecorator(theme.manifest), null, 2)
   );
 
   const colors = theme.definition.colors;
   const highlightColor = jimp.cssColorToHex(colors.highlightColor)
   const accentColor = jimp.cssColorToHex(colors.accentColor)
   return buildActiveTabImage(
-      tabHeight,
-      highlightColor,
-      accentColor,
-      backgroundDirectory
+    tabHeight,
+    highlightColor,
+    accentColor,
+    backgroundDirectory
   )
-      .then(() => buildInactiveTabImage(theme, backgroundDirectory))
+    .then(() => buildInactiveTabImage(theme, backgroundDirectory))
 }
 
 function getBackgroundDirectory(themeDirectory: string) {
   return path.resolve(themeDirectory, 'images');
 }
 
-walkDir(chromeDefinitionDirectoryPath)
+function overrideVersion(masterExtensionPackageJson: string, masterVersion: any) {
+  fs.writeFileSync(
+    masterExtensionPackageJson,
+    JSON.stringify({
+      ...JSON.parse(fs.readFileSync(masterExtensionPackageJson, {encoding: 'utf-8'})),
+      version: masterVersion.version,
+    }, null, 2)
+  )
+}
+
+
+function preBuild(): Promise<void> {
+  // write versions
+  const masterVersion = JSON.parse(fs.readFileSync(path.resolve(repoDirectory, 'package.json'), {encoding: 'utf-8'}));
+  const themeManifestTemplate = path.resolve(chromeTemplateDefinitionDirectoryPath, 'manifest.template.json');
+  overrideVersion(themeManifestTemplate, masterVersion)
+  const masterExtensionPackageJson = path.resolve(repoDirectory, 'masterExtension', 'package.json');
+  overrideVersion(masterExtensionPackageJson, masterVersion);
+  const masterExtensionManifest = path.resolve(repoDirectory, 'masterExtension', 'public', 'manifest.json');
+  overrideVersion(masterExtensionManifest, masterVersion)
+  return Promise.resolve()
+}
+
+preBuild()
+  .then(() => walkDir(chromeDefinitionDirectoryPath))
   .then((files) =>
     files.filter((file) => file.endsWith("chrome.definition.json"))
   )
@@ -579,20 +603,20 @@ walkDir(chromeDefinitionDirectoryPath)
       const stickers = getStickers(theme.definition, theme);
       const themeDirectoryName = `${theme.definition.name}'s Theme`;
       const themeDirectory = path.resolve(
-          generatedThemesDirectory,
-          themeDirectoryName
+        generatedThemesDirectory,
+        themeDirectoryName
       );
       const backgroundDirectory = getBackgroundDirectory(themeDirectory);
 
       const edgeThemeDirectory = path.resolve(
-          edgeGeneratedThemesDirectory,
-          themeDirectoryName
+        edgeGeneratedThemesDirectory,
+        themeDirectoryName
       )
       return buildThemeDirectoryStruct(
-          theme,
-          tabHeight,
-          backgroundDirectory,
-          themeDirectory,
+        theme,
+        tabHeight,
+        backgroundDirectory,
+        themeDirectory,
       )
         .then(() => buildThemeDirectoryStruct(
           theme,
@@ -619,23 +643,27 @@ walkDir(chromeDefinitionDirectoryPath)
           ].filter(hiResWaifu => fs.existsSync(hiResWaifu))[0];
           if (highResTheme) {
             const highResThemeDirectory = path.resolve(hiResGeneratedThemesDirectory, themeDirectoryName);
-            return new Promise((resolve, reject) => {
-              ncp(themeDirectory, highResThemeDirectory, {
-                clobber: true,
-              }, (err: Error[] | null) => {
-                if (err) {
-                  console.log(err)
-                  reject(err)
-                } else {
-                  const highResbackgroundDirectory = path.resolve(highResThemeDirectory, 'images');
-                  fs.copyFileSync(
-                    highResTheme,
-                    path.resolve(highResbackgroundDirectory, path.basename(highResTheme))
-                  )
-                  resolve()
-                }
-              })
-            })
+            return walkDir(highResThemeDirectory)
+              .then(items => items.forEach(item => fs.unlinkSync(item)))
+              .then(() => new Promise((resolve, reject) => {
+                  ncp(themeDirectory, highResThemeDirectory, {
+                    clobber: false,
+                  }, (err: Error[] | null) => {
+                    if (err) {
+                      console.log(err)
+                      reject(err)
+                    } else {
+                      const highResBackgroundDirectory = path.resolve(highResThemeDirectory, 'images');
+                      const highResFile = path.resolve(highResBackgroundDirectory, path.basename(highResTheme));
+                      fs.copyFileSync(
+                        highResTheme,
+                        highResFile
+                      )
+                      resolve()
+                    }
+                  })
+                })
+              )
           } else {
             return Promise.resolve()
           }

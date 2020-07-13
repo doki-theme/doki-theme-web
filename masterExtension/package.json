@@ -1,6 +1,6 @@
 {
   "name": "doki-theme-chrome",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "Anime based themes for your chrome browser!",
   "main": "index.js",
   "repository": "git@github.com:doki-theme/doki-theme-chrome.git",
@@ -26,7 +26,7 @@
   "dependencies": {},
   "scripts": {
     "watch": "webpack --config webpack/webpack.dev.js --watch",
-    "build": "webpack --config webpack/webpack.prod.js",  
+    "build": "webpack --config webpack/webpack.prod.js",
     "clean": "rimraf dist",
     "test": "npx jest"
   }

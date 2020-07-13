@@ -1,6 +1,6 @@
 {
   "name": "The Doki Theme",
-  "version": "1.0",
+  "version": "3.0.0",
   "description": "Supports consistency for the the anime based themes.",
   "permissions": [
     "activeTab",
@@ -19,12 +19,19 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["js/content_script.js"]
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/content_script.js"
+      ]
     }
   ],
   "background": {
-    "scripts": ["js/background.js", "js/vendor.js"]
+    "scripts": [
+      "js/background.js",
+      "js/vendor.js"
+    ]
   },
   "icons": {
     "16": "images/favicon-16x16.png",
