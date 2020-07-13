@@ -619,31 +619,27 @@ walkDir(chromeDefinitionDirectoryPath)
           ].filter(hiResWaifu => fs.existsSync(hiResWaifu))[0];
           if (highResTheme) {
             const highResThemeDirectory = path.resolve(hiResGeneratedThemesDirectory, themeDirectoryName);
-            return new Promise((resolve, reject) => {
-              ncp(themeDirectory, highResThemeDirectory, {
-                clobber: false,
-              }, (err: Error[] | null) => {
-                if (err) {
-                  console.log(err)
-                  reject(err)
-                } else {
-                  const highResbackgroundDirectory = path.resolve(highResThemeDirectory, 'images');
-                  const dest = path.resolve(highResbackgroundDirectory, path.basename(highResTheme));
-                  if(fs.existsSync(dest)){
-                    fs.unlinkSync(dest);
-                  }
-                  if(theme.definition.id === '19b65ec8-133c-4655-a77b-13623d8e97d3'){
-                    console.log(highResTheme, dest);
-                  }
-
-                  fs.copyFileSync(
-                    highResTheme,
-                    dest
-                  )
-                  resolve()
-                }
-              })
-            })
+            return walkDir(highResThemeDirectory)
+              .then(items => items.forEach(item => fs.unlinkSync(item)))
+              .then(() => new Promise((resolve, reject) => {
+                  ncp(themeDirectory, highResThemeDirectory, {
+                    clobber: false,
+                  }, (err: Error[] | null) => {
+                    if (err) {
+                      console.log(err)
+                      reject(err)
+                    } else {
+                      const highResBackgroundDirectory = path.resolve(highResThemeDirectory, 'images');
+                      const highResFile = path.resolve(highResBackgroundDirectory, path.basename(highResTheme));
+                      fs.copyFileSync(
+                        highResTheme,
+                        highResFile
+                      )
+                      resolve()
+                    }
+                  })
+                })
+              )
           } else {
             return Promise.resolve()
           }
