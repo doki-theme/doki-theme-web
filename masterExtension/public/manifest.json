@@ -1,6 +1,6 @@
 {
   "name": "The Doki Theme",
-  "version": "9001",
+  "version": "3.0.0",
   "description": "Supports consistency for the the anime based themes.",
   "permissions": [
     "activeTab",
