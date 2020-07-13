@@ -1,106 +1,106 @@
 {
-  "name": "Doki Theme: Sayori Light",
+  "name": "Doki Theme: Misato Katsuragi",
   "version": "1.0",
-  "description": "A light theme modeled after Sayori from Literature Club",
+  "description": "A dark theme modeled after Misato from Evangelion",
   "theme": {
     "images": {
-      "theme_ntp_background": "images/sayori_joy.png",
-      "theme_ntp_background_incognito": "images/sayori_joy.png",
+      "theme_ntp_background": "images/misato_dark.png",
+      "theme_ntp_background_incognito": "images/misato_dark.png",
       "theme_toolbar": "images/tab_highlight.png",
       "theme_tab_background": "images/tab_inactive.png"
     },
     "colors": {
       "bookmark_text": [
-        37,
-        36,
-        39
+        181,
+        163,
+        176
       ],
       "button_background": [
-        216,
-        230,
-        238
+        52,
+        31,
+        45
       ],
       "frame": [
-        243,
-        250,
-        255
+        58,
+        35,
+        51
       ],
       "frame_inactive": [
-        240,
-        250,
-        255
+        56,
+        37,
+        54
       ],
       "frame_incognito": [
-        240,
-        250,
-        255
+        56,
+        37,
+        54
       ],
       "frame_incognito_inactive": [
-        243,
-        250,
-        255
+        58,
+        35,
+        51
       ],
       "ntp_background": [
-        243,
-        250,
-        255
+        58,
+        35,
+        51
       ],
       "ntp_header": [
-        240,
-        250,
-        255
+        56,
+        37,
+        54
       ],
       "omnibox_background": [
-        236,
-        251,
-        255
+        56,
+        38,
+        57
       ],
       "omnibox_text": [
-        255,
-        255,
-        255
+        189,
+        132,
+        221
       ],
       "theme_toolbar": [
-        224,
-        242,
-        255
+        64,
+        48,
+        70
       ],
       "ntp_text": [
-        37,
-        36,
-        39
+        181,
+        163,
+        176
       ],
       "tab_background_text": [
-        37,
-        36,
-        39
+        181,
+        163,
+        176
       ],
       "tab_background_text_inactive": [
-        170,
-        170,
-        170
+        102,
+        104,
+        121
       ],
       "tab_text": [
-        37,
-        36,
-        39
+        181,
+        163,
+        176
       ],
       "toolbar": [
-        240,
-        250,
-        255
+        56,
+        37,
+        54
       ]
     },
     "tints": {
       "buttons": [
-        0.5188679245283019,
+        0.9927536231884058,
         1,
-        0.41568627450980394
+        0.49019607843137253
       ],
       "frame": [
-        0.5188679245283019,
+        0.9927536231884058,
         1,
-        0.41568627450980394
+        0.49019607843137253
       ]
     },
     "properties": {
