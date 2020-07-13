@@ -621,16 +621,24 @@ walkDir(chromeDefinitionDirectoryPath)
             const highResThemeDirectory = path.resolve(hiResGeneratedThemesDirectory, themeDirectoryName);
             return new Promise((resolve, reject) => {
               ncp(themeDirectory, highResThemeDirectory, {
-                clobber: true,
+                clobber: false,
               }, (err: Error[] | null) => {
                 if (err) {
                   console.log(err)
                   reject(err)
                 } else {
                   const highResbackgroundDirectory = path.resolve(highResThemeDirectory, 'images');
+                  const dest = path.resolve(highResbackgroundDirectory, path.basename(highResTheme));
+                  if(fs.existsSync(dest)){
+                    fs.unlinkSync(dest);
+                  }
+                  if(theme.definition.id === '19b65ec8-133c-4655-a77b-13623d8e97d3'){
+                    console.log(highResTheme, dest);
+                  }
+
                   fs.copyFileSync(
                     highResTheme,
-                    path.resolve(highResbackgroundDirectory, path.basename(highResTheme))
+                    dest
                   )
                   resolve()
                 }
