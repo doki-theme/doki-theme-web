@@ -5,7 +5,7 @@ Changelog
 
 - Added Miss Kobayashi's Dragon Maid's `Kanna` as a dark theme!
 
-![The Girl](https://doki.assets.unthrottled.io/misc/v10_girl.png?version=1)
+![The New Girl](https://doki.assets.unthrottled.io/misc/v10_girl.png?version=1)
 
 # 3.0.0 [Misato Katsuragi]
 
