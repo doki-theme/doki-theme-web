@@ -643,8 +643,9 @@ preBuild()
           ].filter(hiResWaifu => fs.existsSync(hiResWaifu))[0];
           if (highResTheme) {
             const highResThemeDirectory = path.resolve(hiResGeneratedThemesDirectory, themeDirectoryName);
-            return walkDir(highResThemeDirectory)
-              .then(items => items.forEach(item => fs.unlinkSync(item)))
+            return (fs.existsSync(highResThemeDirectory) ?
+                walkDir(highResThemeDirectory)
+                  .then(items => items.forEach(item => fs.unlinkSync(item))) : Promise.resolve())
               .then(() => new Promise((resolve, reject) => {
                   ncp(themeDirectory, highResThemeDirectory, {
                     clobber: false,
