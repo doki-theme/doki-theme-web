@@ -1,6 +1,6 @@
 {
   "name": "Doki Theme: Yuri Dark",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "A dark theme modeled after Yuri from Literature Club",
   "theme": {
     "images": {
@@ -74,8 +74,8 @@
         218
       ],
       "tab_background_text_inactive": [
+        111,
         102,
-        104,
         121
       ],
       "tab_text": [

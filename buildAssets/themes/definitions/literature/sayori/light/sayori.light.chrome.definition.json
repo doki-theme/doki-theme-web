@@ -3,7 +3,7 @@
   "overrides": {
     "theme": {
       "colors": {
-        "omnibox_text": "&accentContrastColor&"
+        "omnibox_text": "&buttonFont&"
       }
     }
   },
