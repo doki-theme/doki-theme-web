@@ -1,6 +1,25 @@
 Changelog
 ---
 
+# 5.0.0 [Fate, Gate, Konosuba]
+
+## 5 New Themes!
+
+Girls from the Fate series:
+
+- Ishtar (Light/Dark)
+- Tohsaka Rin (Dark)
+
+From the Gate series:
+
+- Rory Mercury (Dark)
+
+Last addition to the Konosuba series:
+
+- Aqua (Dark)
+
+![v11 Girls](http://doki.assets.unthrottled.io/misc/v11_girls.png)
+
 # 4.0.0 [Kanna Kamui]
 
 - Added Miss Kobayashi's Dragon Maid's `Kanna` as a dark theme!
