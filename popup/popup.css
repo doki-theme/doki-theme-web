@@ -1,5 +1,6 @@
 *{
 	font-family:Tahoma, Arial, sans-serif;
+	text-align:center;
 }
 body{
 	background-color:whitesmoke;
@@ -9,20 +10,17 @@ header{
 	padding:0.15em 0;
 	color:white;
 }
-h1{
-	text-align:center;
-}
 img {
-	max-width: 100%;
+	display: block;
+	margin: 2em auto;
+	max-width: 70%;
 }
-h2 {
+h2,option {
 	color:midnightblue;
-	text-align:center;
 }
 select{
 	display:block;
-	margin:2em auto;
-	width:calc(100px+10vw);
-	text-align:center;
+	margin: 0 auto;
+	width:calc(80px + 10vw);
 	font-size:14px;
 }

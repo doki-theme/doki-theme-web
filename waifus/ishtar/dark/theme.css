@@ -1,0 +1,11 @@
+body:before {
+	content: "";
+	z-index: -1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: #f9a no-repeat url("ishtar_dark.png") center;
+	background-size: cover;
+	width: 100vw;
+	height: 100vh;
+}

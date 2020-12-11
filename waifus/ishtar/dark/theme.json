@@ -1,6 +1,6 @@
-const theme = {
+{
 	"images": {
-		"theme_frame": "frame.svg"
+		"theme_frame": "/waifus/ishtar/dark/frame.svg"
 	},
 	"colors": {
 		"bookmark_text": [
@@ -99,14 +99,4 @@ const theme = {
 			204
 		]
 	}
-};
-async function setTheme(){
-	browser.theme.update(theme);
-	console.log("Theme set!");
 }
-setTheme();
-
-
-
-
-
