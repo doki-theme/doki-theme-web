@@ -38,7 +38,7 @@ main{
     position: relative;
 }
 input {
-    background: white url("ddg.ico") 12px center no-repeat;
+    background: white url("doki.ico") 12px center no-repeat;
     background-size: 24px;
     border: solid 1px transparent;
     border-radius: 3px;
@@ -72,34 +72,4 @@ input:hover {
 .search-button:focus, .search-button:hover {
     background-color: rgba(12, 12, 13, 0.1);
     cursor: pointer;
-}
-/*Settings Button*/
-.icon.icon-settings {
-    background-image: url("settings.svg");
-}
-.prefs-button button {
-    background-color: transparent;
-    border: 0;
-    border-radius: 2px;
-    cursor: pointer;
-    inset-inline-end: 15px;
-    padding: 15px;
-    position: fixed;
-    top: 15px;
-    z-index: 1000;
-}
-.icon {
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 16px;
-    display: inline-block;
-    height: 16px;
-    vertical-align: middle;
-    width: 16px;
-}
-.prefs-button button:hover, .prefs-button button:focus {
-    background-color: #EDEDF0;
-}
-.prefs-button button:active {
-    background-color: rgba(215, 215, 219, 0.6);
 }

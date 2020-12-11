@@ -1,3 +1,4 @@
+/*Waifu Style*/
 body:before {
 	content: "";
 	z-index: -1;
