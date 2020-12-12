@@ -6,8 +6,10 @@ class WaifuThemes{
     /*Initialize Waifu Themes*/
     initThemes(){
         this.themes = {
+			aquaDark: new Theme("/waifus/aqua/dark/theme.json","/waifus/aqua/dark/index.html"),
+			asunaLight: new Theme("/waifus/asuna/light/theme.json","/waifus/asuna/light/index.html"),
             ishtarDark: new Theme("/waifus/ishtar/dark/theme.json","/waifus/ishtar/dark/index.html"),
-            ishtarLight: new Theme("","")
+            ishtarLight: new Theme("/waifus/ishtar/light/theme.json","/waifus/ishtar/light/index.html")
         }
     }
     /*Retrieve the custom Waifu Tab page resource*/
