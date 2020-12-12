@@ -15,6 +15,7 @@
 	],
 	"background": {
 		"scripts": [
+			"resources.js",
 			"background.js"
 		]
 	},
