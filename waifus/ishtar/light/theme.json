@@ -38,10 +38,10 @@
 			255,
 			252
 		],
-		"popup_border":[
-			211,
-			148,
-			37
+		"popup_text":[
+			140,
+			98,
+			25
 		],
 		"sidebar":[
 			255,
@@ -53,6 +53,11 @@
 			148,
 			37
 		],
+		"sidebar_text":[
+			140,
+			98,
+			25
+		],
 		"tab_loading":[
 			211,
 			148,
@@ -63,15 +68,25 @@
 			250,
 			232
 		],
+		"tab_background_text":[
+			194,
+			181,
+			141
+		],
 		"tab_text": [
-			96,
-			61,
-			0
+			211,
+			148,
+			37
+		],
+		"tab_line":[
+			252,
+			208,
+			76
 		],
 		"toolbar": [
 			255,
-			254,
-			251
+			250,
+			232
 		],
 		"toolbar_bottom_separator":[
 			245,
@@ -99,9 +114,9 @@
 			37
 		],
 		"toolbar_field_text":[
-			233,
-			158,
-			27
+			204,
+			169,
+			63
 		],
 		"toolbar_field_text_focus":[
 			211,
