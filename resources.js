@@ -19,6 +19,11 @@ class WaifuThemes{
 			kannaDark: new Theme("/waifus/kanna/dark/theme.json","/waifus/kanna/dark/index.html"),
 			konataLight: new Theme("/waifus/konata/light/theme.json","/waifus/konata/light/index.html"),
 			megumin: new Theme("/waifus/megumin/theme.json","/waifus/megumin/index.html"),
+			miodaIbukiDark: new Theme("/waifus/mioda-ibuki/dark/theme.json","/waifus/mioda-ibuki/dark/index.html"),
+			miodaIbukiLight: new Theme("/waifus/mioda-ibuki/light/theme.json","/waifus/mioda-ibuki/light/index.html"),
+			misatoKatsuragi: new Theme("/waifus/misato-katsuragi/theme.json","/waifus/misato-katsuragi/index.html"),
+			monikaDark: new Theme("/waifus/monika/dark/theme.json","/waifus/monika/dark/index.html"),
+			monikaLight: new Theme("/waifus/monika/light/theme.json","/waifus/monika/light/index.html"),
         }
     }
     /*Retrieve the custom Waifu Tab page resource*/
