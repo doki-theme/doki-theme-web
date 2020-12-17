@@ -11,7 +11,8 @@
 		"theme",
 		"tabs",
 		"activeTab",
-		"search"
+		"search",
+		"storage"
 	],
 	"background": {
 		"scripts": [
