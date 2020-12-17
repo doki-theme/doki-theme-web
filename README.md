@@ -85,6 +85,21 @@ Until then, you'll have to do a local install.
 ![Setting Background](./screenshots/edge_background.gif)
 1. Enjoy!
 
+## Mozilla Firefox
+
+### Prerequisites
+
+- Mozilla Firefox 63 or above
+
+### Steps
+1. Clone this repository
+1. Open Firefox
+1. Type in the search bar `about:debugging`
+1. Select *This Firefox* and click *Load Temporary Add-on...*
+1. Choose the *manifest.json* file in the Firefox directory
+1. Now, select the doki-theme icon on the toolbar & Choose a theme to load
+1. And that's it! 
+
 ## About the plugin!
 
 These Chrome extensions are for serious Otaku web surfers.
