@@ -1,5 +1,8 @@
 Changelog
 ---
+# 6.0.0 [Firefox Support]
+
+- You can now get the full Doki Theme experience in Mozilla Firefox!
 
 # 5.0.0 [Fate, Gate, Konosuba]
 
