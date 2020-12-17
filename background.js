@@ -1,9 +1,13 @@
 /// Local Storage to hold global variables
-let storage = {
-	waifu: "",
-	prevWaifu:"",
-	themes:new WaifuThemes()
-};
+const themes = new WaifuThemes();
+function initStorage(){
+	const storage = {
+		waifu: "",
+		prevWaifu: "",
+		themes:new WaifuThemes()
+	};
+	browser.storage.local.set(storage);
+}
 /*Sets the waifu browser theme*/
 function setTheme(json){
 	fetch(json)
@@ -34,11 +38,15 @@ function themePageSetup(tabID,page,json,setNewTab){
 }
 /*Activates a theme based on the chosen waifu.*/
 function activateTheme(tabID,setNewTab = true){
-	if(storage.themes.exists(storage.waifu)){
-		themePageSetup(tabID,storage.themes.getPage(storage.waifu),storage.themes.getJSON(storage.waifu),setNewTab);
-	}else{
-		browser.theme.reset();
-	}
+	browser.storage.local.get()
+		.then((storage)=>{
+			if(themes.exists(storage.waifu)){
+				themePageSetup(tabID,themes.getPage(storage.waifu),themes.getJSON(storage.waifu),setNewTab);
+			}else{
+				browser.theme.reset();
+			}
+		});
+
 }
 /*Replaces the original 'New Tab' pages with a custom themed one (Waifu Tab)*/
 function newTabPage(tab){
@@ -53,8 +61,11 @@ function newTabPage(tab){
 function liveUpdateTheme(){
 	browser.tabs.query({active:true})
 		.then((tabs)=>{
-			activateTheme(tabs[0].id,false);
-			storage.prevWaifu = storage.waifu;
+			browser.storage.local.get()
+				.then((storage)=>{
+					activateTheme(tabs[0].id,false);
+					browser.storage.local.set({prevWaifu:storage.waifu});
+				});
 		});
 }
 /*Replace all Firefox's New Tabs with a Waifu Tab*/
@@ -67,31 +78,42 @@ function setThemeForAllNewTabs(){
 				||tab.url.includes("about:newtab")
 				||tab.url.includes(browser.runtime.getURL("waifus"))
 			);
-			if(newTabs.length > 0 && storage.themes.exists(storage.waifu)){
-				// Update each new tab with the Waifu Tab
-				for(let tab of newTabs){
-					browser.tabs.update(tab.id,{
-						loadReplace: true,
-						url:storage.themes.getPage(storage.waifu)
-					});
-				}
-			}else if(!storage.themes.exists(storage.waifu)){
-				//Close all New Tabs
-				for(let tab of newTabs){
-					browser.tabs.remove(tab.id);
-				}
-			}
+			browser.storage.local.get()
+				.then((storage)=>{
+					if(newTabs.length > 0 && themes.exists(storage.waifu)){
+						// Update each new tab with the Waifu Tab
+						for(let tab of newTabs){
+							browser.tabs.update(tab.id,{
+								loadReplace: true,
+								url:themes.getPage(storage.waifu)
+							});
+						}
+					}else if(!themes.exists(storage.waifu)){
+						//Close all New Tabs
+						for(let tab of newTabs){
+							browser.tabs.remove(tab.id);
+						}
+					}
+				});
+
 		});
 }
 /*Receives the chosen waifu from the popup menu.
 * Set the theme based on the chosen waifu.*/
 function getWaifu(msg){
-	storage.waifu = msg.waifu;
-	if(storage.prevWaifu !== storage.waifu){
-		liveUpdateTheme();
-		setThemeForAllNewTabs();
-	}
+	browser.storage.local.get()
+		.then((storage)=>{
+			browser.storage.local.set({waifu:msg.waifu});
+			browser.storage.local.get()
+				.then((storage)=>{
+					if(storage.prevWaifu !== storage.waifu){
+						liveUpdateTheme();
+						setThemeForAllNewTabs();
+					}
+				});
+		});
 }
+initStorage();
 /*---Event Listeners---*/
 browser.runtime.onMessage.addListener(getWaifu);
 browser.tabs.onCreated.addListener(newTabPage);
