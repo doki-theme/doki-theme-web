@@ -1,0 +1,112 @@
+{
+	"images": {
+		"theme_frame": "frame.svg"
+	},
+	"colors": {
+		"bookmark_text": [
+			37,
+			36,
+			39
+		],
+		"icons": [
+			161,
+			64,
+			217
+		],
+		"icons_attention": [
+			161,
+			64,
+			217
+		],
+		"frame": [
+			247,
+			243,
+			255
+		],
+		"frame_inactive": [
+			243,
+			240,
+			255
+		],
+		"ntp_background": [
+			247,
+			243,
+			255
+		],
+		"ntp_text": [
+			37,
+			36,
+			39
+		],
+		"popup": [
+			243,
+			240,
+			255
+		],
+		"popup_text": [
+			161,
+			64,
+			217
+		],
+		"sidebar": [
+			243,
+			240,
+			255
+		],
+		"sidebar_text": [
+			161,
+			64,
+			217
+		],
+		"sidebar_border": [
+			171,
+			116,
+			203
+		],
+		"tab_background_text": [
+			130,
+			53,
+			125
+		],
+		"tab_text": [
+			130,
+			53,
+			125
+		],
+		"tab_selected": [
+			233,
+			224,
+			255
+		],
+		"tab_line": [
+			171,
+			116,
+			203
+		],
+		"tab_loading": [
+			245,
+			236,
+			255
+		],
+		"toolbar": [
+			243,
+			240,
+			255
+		],
+		"toolbar_field": [
+			245,
+			236,
+			255
+		],
+		"toolbar_field_text": [
+			130,
+			53,
+			125
+		],
+		"toolbar_field_border_focus": [
+			245,
+			236,
+			255
+		]
+	}
+}
