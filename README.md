@@ -98,7 +98,7 @@ Until then, you'll have to do a local install.
 1. Select *This Firefox* and click *Load Temporary Add-on...*
 1. Choose the *manifest.json* file in the Firefox directory
 1. Now, select the doki-theme icon on the toolbar & Choose a theme to load
-1. And that's it! 
+1. And that's it!
 
 ## About the plugin!
 
