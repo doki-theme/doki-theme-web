@@ -1,0 +1,30 @@
+/*Global Styles*/
+*{
+	font-family:Tahoma, Arial, sans-serif;
+	text-align:center;
+}
+body{
+	background-color:whitesmoke;
+}
+/*Title Styles*/
+header{
+	background: linear-gradient(to top left,#B24592,#F15F79);
+	padding:0.15em 0;
+	color:white;
+}
+/*Logo Styles*/
+img {
+	display: block;
+	margin: 1em auto;
+	max-width: 50%;
+}
+/*Waifu Option Styles*/
+option {
+	color:midnightblue;
+}
+select{
+	display:block;
+	margin: 1em auto;
+	width:calc(140px + 10vw);
+	font-size:14px;
+}
