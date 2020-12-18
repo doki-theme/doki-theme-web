@@ -29,8 +29,8 @@ function initChoice(){
 		.then((storage)=>{
 			const themes = storage.themes.themes;
 			const originalGroup = document.querySelector("optgroup[label='Original']");
-			const darkGroup = document.querySelector("optgroup[label='Dark']");
-			const lightGroup = document.querySelector("optgroup[label='Light']");
+			const darkGroup = document.querySelector("optgroup[label='Dark Variant']");
+			const lightGroup = document.querySelector("optgroup[label='Light Variant']");
 			for(const theme in themes){
 				let opt = document.createElement("option");
 				opt.setAttribute("value",theme);
