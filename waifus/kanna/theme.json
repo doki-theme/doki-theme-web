@@ -43,6 +43,31 @@
 			208,
 			208
 		],
+		"popup": [
+			26,
+			20,
+			38
+		],
+		"popup_text":  [
+			106,
+			173,
+			255
+		],
+		"sidebar": [
+			26,
+			20,
+			38
+		],
+		"sidebar_text":  [
+			106,
+			173,
+			255
+		],
+		"sidebar_border": [
+			3,
+			0,
+			204
+		],
 		"tab_background_text": [
 			106,
 			173,

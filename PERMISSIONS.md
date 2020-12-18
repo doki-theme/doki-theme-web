@@ -12,6 +12,8 @@
 - Search
     - Adds default search functionality to the input field on the New Tab pages
 
-- Storage 
+
+- Local Storage 
   - Allows for adding new Waifu Choices much easier in the backend. Less boilerplate code!
   - Adds all waifu choices in the popup menu dynamically
+  - All data are stored locally
