@@ -45,9 +45,11 @@ class WaifuThemes{
     getJSON(waifu){
         return this.themes[waifu].json;
     }
+    /*Retrieve location of the waifu image*/
     getImage(waifu){
     	return this.themes[waifu].image;
 	}
+	/*Retrieve the location of the Custom New Tab pag*/
 	getPage(waifu){
     	return this.themes[waifu].page;
 	}
