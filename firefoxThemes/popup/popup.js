@@ -28,7 +28,6 @@ function initChoice(){
 	browser.storage.local.get("themes")
 		.then((storage)=>{
 			const themes = storage.themes.themes;
-			const originalGroup = document.querySelector("optgroup[label='Original']");
 			const darkGroup = document.querySelector("optgroup[label='Dark Variant']");
 			const lightGroup = document.querySelector("optgroup[label='Light Variant']");
 			for(const theme in themes){
@@ -36,12 +35,10 @@ function initChoice(){
 				opt.setAttribute("value",theme);
 				const txtNode = document.createTextNode(themes[theme].name);
 				opt.append(txtNode);
-				if(themes[theme].json.includes("/dark/")){
+				if(themes[theme].isDark){
 					darkGroup.append(opt);
-				}else if(themes[theme].json.includes("/light/")){
+				}else {
 					lightGroup.append(opt);
-				}else{
-					originalGroup.append(opt);
 				}
 			}
 		});

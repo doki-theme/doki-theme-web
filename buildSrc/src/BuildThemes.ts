@@ -543,8 +543,16 @@ function preBuild(): Promise<void> {
   return Promise.resolve()
 }
 
-function getFireFoxThemeAssetDirectory(theme: ChromeDokiTheme) {
-  return theme.definition.name.replace(/ /g, '_');
+function getFireFoxThemeAssetDirectory(theme: MasterDokiThemeDefinition) {
+  return theme.name.replace(/ /g, '_');
+}
+
+const FIRE_FOX_EXTENSION_ASSET_DIRECTORY = 'waifus';
+
+type Sticker = { path: string; name: string };
+
+function getDefaultSticker(stickers: { default: Sticker, secondary?: Sticker }) {
+  return stickers.secondary || stickers.default
 }
 
 preBuild()
@@ -643,8 +651,8 @@ preBuild()
 
       const firefoxThemeDirectory = path.resolve(
         fireFoxGeneratedThemesDirectory,
-        'waifus',
-        getFireFoxThemeAssetDirectory(theme)
+        FIRE_FOX_EXTENSION_ASSET_DIRECTORY,
+        getFireFoxThemeAssetDirectory(theme.definition)
       )
 
       // build chrome directories
@@ -727,10 +735,7 @@ preBuild()
         })
 
         .then(() => {
-          const backgroundName =
-            stickers.secondary &&
-            stickers.secondary.name ||
-            stickers.default.name;
+          const backgroundName = getDefaultSticker(stickers).name;
           const chromeLowRes = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome',
             backgroundName);
           const src = fs.existsSync(chromeLowRes) ?
@@ -757,13 +762,23 @@ preBuild()
       // write things for firefox extension
       const dokiThemeDefinitions = dokiThemes.map(dokiTheme => {
         const dokiDefinition = dokiTheme.definition;
+        const defaultSticker = getDefaultSticker(getStickers(dokiDefinition, dokiTheme));
+        const relativeFireFoxAssetPath = `${FIRE_FOX_EXTENSION_ASSET_DIRECTORY}/${
+          getFireFoxThemeAssetDirectory(dokiDefinition)
+        }`
         return {
-          information: omit(dokiDefinition, [
-            'colors',
-            'overrides',
-            'ui',
-            'icons'
-          ]),
+          information: {
+            ...omit(dokiDefinition, [
+              'colors',
+              'overrides',
+              'ui',
+              'icons'
+            ]),
+            imagePath: `${relativeFireFoxAssetPath}/images/${
+              defaultSticker.name
+            }`,
+            jsonPath: `${relativeFireFoxAssetPath}/theme.json`,
+          },
           colors: dokiDefinition.colors,
         };
       }).reduce((accum: StringDictonary<any>, definition) => {
@@ -771,10 +786,10 @@ preBuild()
         return accum;
       }, {});
 
-      const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions);
+      const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions, null, 2);
       fs.writeFileSync(
         path.resolve(repoDirectory, 'firefoxThemes', 'DokiThemeDefinitions.js'),
-        `export default ${finalDokiDefinitions};`);
+        `const dokiThemeDefinitions = ${finalDokiDefinitions};`);
     })
 
     .then(() => {
