@@ -363,7 +363,8 @@ function createDokiTheme(
         dokiThemeChromeDefinition,
         fireFoxTemplate
       ),
-      theme: {}
+      theme: {},
+      chromeDefinition:dokiThemeChromeDefinition,
     };
   } catch (e) {
     throw new Error(`Unable to build ${dokiThemeDefinition.name}'s theme for reasons ${e}`);
@@ -809,13 +810,14 @@ preBuild()
             jsonPath: `${relativeFireFoxAssetPath}/theme.json`,
           },
           colors: dokiDefinition.colors,
+          overrides: dokiTheme.chromeDefinition.overrides
         };
       }).reduce((accum: StringDictonary<any>, definition) => {
         accum[definition.information.id] = definition;
         return accum;
       }, {});
 
-      const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions, null, 2);
+      const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions, );
       fs.writeFileSync(
         path.resolve(repoDirectory, 'firefoxThemes', 'DokiThemeDefinitions.js'),
         `const dokiThemeDefinitions = ${finalDokiDefinitions};`);
