@@ -1,3 +1,5 @@
+const selectTag = document.querySelector("select");
+
 function setCss(chosenTheme) {
   const {colors} = chosenTheme.definition
   const styles = `
@@ -46,9 +48,11 @@ function getRandomNumber(min, max) {
 /*Setup Waifu Choices for the popup menu
 * Also categorizes each theme based on their type (original/dark/light)*/
 function initChoice() {
-  browser.storage.local.get("themes")
-    .then((storage) => {
-      const themes = Object.values(storage.themes.themes)
+  browser.storage.local.get(["themes", "currentThemeId"])
+    .then(({
+             themes: themesObject, currentThemeId
+           }) => {
+      const themes = Object.values(themesObject.themes)
         .sort((a, b) => a.name.localeCompare(b.name));
       const darkGroup = document.querySelector("optgroup[label='Dark Variant']");
       const lightGroup = document.querySelector("optgroup[label='Light Variant']");
@@ -56,6 +60,7 @@ function initChoice() {
         const opt = document.createElement("option");
         const themeInformation = theme.definition.information;
         opt.setAttribute("value", themeInformation.id);
+        opt.id = themeInformation.id
         const txtNode = document.createTextNode(theme.name);
         opt.append(txtNode);
         if (themeInformation.dark) {
@@ -63,11 +68,17 @@ function initChoice() {
         } else {
           lightGroup.append(opt);
         }
-      })
+      });
+
+      if (currentThemeId) {
+        setCss(themesObject.themes[currentThemeId])
+        selectTag.options.selectedIndex =
+          selectTag.options.namedItem(currentThemeId).index
+      }
     });
 }
 
 initChoice();
 /*---Event Listeners---*/
-document.querySelector("select")
+selectTag
   .addEventListener("change", setTheme, true);

@@ -37,7 +37,6 @@ const chromeDefinitionDirectoryPath = path.resolve(
   "definitions"
 );
 
-//
 function walkDir(dir: string): Promise<string[]> {
   const values: Promise<string[]>[] = fs.readdirSync(dir)
     .map((file: string) => {
@@ -529,11 +528,10 @@ function buildFireFoxDirectoryStruct(
   theme: ChromeDokiTheme,
   backgroundDirectory: string,
   themeDirectory: string,
-  manifestDecorator: (manifest: ManifestTemplate) => ManifestTemplate = m => m
 ): Promise<void> {
 
   fs.mkdirSync(backgroundDirectory, {recursive: true});
-  //write manifest
+  //write theme file
   fs.writeFileSync(
     path.resolve(themeDirectory, 'theme.json'),
     JSON.stringify(theme.fireFoxTheme, null, 2)

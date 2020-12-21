@@ -6,6 +6,9 @@
 ## Microsoft Edge
 ![Rem Edge](./screenshots/backgrounds/rem_edge.png)
 
+## FireFox
+![Aqua FireFox](./screenshots/backgrounds/firefox_background.png)
+
 ## Features
 
 Due to limitations of the platform(s), the Doki Theme has been broken into 2 pieces.
@@ -99,6 +102,18 @@ Until then, you'll have to do a local install.
 1. Choose the *manifest.json* file in the Firefox directory
 1. Now, select the doki-theme icon on the toolbar & Choose a theme to load
 1. And that's it!
+
+### Issues
+
+**Light theme tab text**
+
+- [How to fix](https://github.com/doki-theme/doki-theme-chrome/wiki/Firefox-light-themes) issue
+
+| before | after |
+| --- | --- |
+| ![before fix](./screenshots/firefoxIssues/before.png) |![after fix](./screenshots/firefoxIssues/after.png) |
+
+
 
 ## About the plugin!
 
