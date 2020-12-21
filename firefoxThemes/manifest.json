@@ -17,6 +17,7 @@
 	],
 	"background": {
 		"scripts": [
+			"DokiThemeDefinitions.js",
 			"resources.js",
 			"background.js"
 		]

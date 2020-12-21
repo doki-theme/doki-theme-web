@@ -3,14 +3,14 @@ const themes = new WaifuThemes();
 
 function initStorage() {
   const storage = {
-    waifu: "",
-    prevWaifu: "",
+    currentThemeId: "",
+    previousThemeId: "",
     themes: new WaifuThemes()
   };
   browser.storage.local.set(storage);
 }
 
-/*Sets the waifu browser theme*/
+/*Sets the browser theme*/
 function setTheme(json) {
   fetch(json)
     .then((res) => {
@@ -41,12 +41,12 @@ function themePageSetup(tabID, page, json, setNewTab) {
   setTheme(json);
 }
 
-/*Activates a theme based on the chosen waifu.*/
+/*Activates a theme based on the chosen themeId.*/
 function activateTheme(tabID, setNewTab = true) {
   browser.storage.local.get()
     .then((storage) => {
-      if (themes.exists(storage.waifu)) {
-        themePageSetup(tabID, themes.getPage(storage.waifu), themes.getJSON(storage.waifu), setNewTab);
+      if (themes.exists(storage.currentThemeId)) {
+        themePageSetup(tabID, themes.getPage(storage.currentThemeId), themes.getJSON(storage.currentThemeId), setNewTab);
       } else {
         browser.theme.reset();
       }
@@ -64,14 +64,14 @@ function newTabPage(tab) {
   }
 }
 
-/*Update theme immediately after selecting a waifu*/
+/*Update theme immediately after selecting a themeId*/
 function liveUpdateTheme() {
   browser.tabs.query({active: true})
     .then((tabs) => {
       browser.storage.local.get()
         .then((storage) => {
           activateTheme(tabs[0].id, false);
-          browser.storage.local.set({prevWaifu: storage.waifu});
+          browser.storage.local.set({previousThemeId: storage.currentThemeId});
         });
     });
 }
@@ -84,19 +84,19 @@ function setThemeForAllNewTabs() {
         tab.url.includes("about:privatebrowsing")
         || tab.url.includes("about:home")
         || tab.url.includes("about:newtab")
-        || tab.url.includes(browser.runtime.getURL("waifus"))
+        || tab.url.includes(browser.runtime.getURL("themeIds"))
       );
       browser.storage.local.get()
         .then((storage) => {
-          if (newTabs.length > 0 && themes.exists(storage.waifu)) {
+          if (newTabs.length > 0 && themes.exists(storage.currentThemeId)) {
             // Update each new tab with the Waifu Tab
             for (let tab of newTabs) {
               browser.tabs.update(tab.id, {
                 loadReplace: true,
-                url: themes.getPage(storage.waifu)
+                url: themes.getPage(storage.currentThemeId)
               });
             }
-          } else if (!themes.exists(storage.waifu)) {
+          } else if (!themes.exists(storage.currentThemeId)) {
             //Close all New Tabs
             for (let tab of newTabs) {
               browser.tabs.remove(tab.id);
@@ -107,15 +107,15 @@ function setThemeForAllNewTabs() {
     });
 }
 
-/*Receives the chosen waifu from the popup menu.
-* Set the theme based on the chosen waifu.*/
-function getWaifu(msg) {
+/*Receives the chosen theme from the popup menu.
+* Set the theme based on the chosen themeId.*/
+function themeInstallationListener(msg) {
   browser.storage.local.get()
     .then((storage) => {
-      browser.storage.local.set({waifu: msg.waifu});
+      browser.storage.local.set({currentThemeId: msg.themeId});
       browser.storage.local.get()
         .then((storage) => {
-          if (storage.prevWaifu !== storage.waifu) {
+          if (storage.previousThemeId !== storage.currentThemeId) {
             liveUpdateTheme();
             setThemeForAllNewTabs();
           }
@@ -125,5 +125,5 @@ function getWaifu(msg) {
 
 initStorage();
 /*---Event Listeners---*/
-browser.runtime.onMessage.addListener(getWaifu);
+browser.runtime.onMessage.addListener(themeInstallationListener);
 browser.tabs.onCreated.addListener(newTabPage);

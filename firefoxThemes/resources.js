@@ -13,7 +13,7 @@ class WaifuThemes {
           dokiTheme.information.displayName,
           dokiTheme.information.imagePath,
           dokiTheme.information.jsonPath,
-          dokiTheme.information.dark,
+          dokiTheme,
         )
       }), {})
 
@@ -35,11 +35,11 @@ class WaifuThemes {
 }
 
 class Theme {
-  constructor(name, image, json, isDark) {
+  constructor(name, image, json, themeDefinition) {
     this.name = name;//Name of theme
     this.image = image;//Relative link to waifu image file
     this.json = json;//Relative link to browser theme file
-    this.isDark = isDark;
+    this.definition = themeDefinition;
     this.page = "/waifus/index.html";
   }
 }

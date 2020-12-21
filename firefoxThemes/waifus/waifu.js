@@ -1,9 +1,9 @@
 /*Adds Waifu to custom New Tab Page*/
 function addWaifu() {
-  browser.storage.local.get(["themes", "waifu"])
+  browser.storage.local.get(["themes", "currentThemeId"])
     .then((storage) => {
       const themes = storage.themes.themes;
-      return browser.runtime.getURL(`${themes[storage.waifu].image}`);
+      return browser.runtime.getURL(`${themes[storage.currentThemeId].image}`);
     })
     .then((waifuImageURL) => {
       const style = document.createTextNode("body:before {\n" +
