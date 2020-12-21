@@ -3,125 +3,160 @@
     "theme_frame": "frame.svg"
   },
   "colors": {
-    "bookmark_text": [
-      187,
-      187,
-      187
-    ],
-    "icons": [
-      87,
-      140,
-      218
-    ],
     "frame": [
-      40,
-      43,
-      66
-    ],
-    "frame_inactive": [
-      38,
-      41,
-      64
-    ],
-    "ntp_background": [
-      40,
-      43,
-      66
-    ],
-    "ntp_text": [
-      187,
-      187,
-      187
-    ],
-    "popup": [
-      38,
-      41,
-      64
-    ],
-    "popup_text": [
-      74,
-      201,
+      252,
+      243,
       255
-    ],
-    "sidebar": [
-      38,
-      41,
-      64
-    ],
-    "sidebar_text": [
-      74,
-      201,
-      255
-    ],
-    "sidebar_border": [
-      87,
-      140,
-      218
     ],
     "tab_background_text": [
-      120,
-      150,
-      194
+      136,
+      100,
+      172
     ],
     "tab_text": [
-      73,
-      193,
-      245
-    ],
-    "tab_selected": [
-      45,
-      48,
-      71
-    ],
-    "tab_line": [
-      95,
-      152,
-      237
-    ],
-    "tab_loading": [
-      43,
-      181,
-      231
+      130,
+      53,
+      125
     ],
     "toolbar": [
-      45,
-      48,
-      71
+      251,
+      240,
+      255
     ],
-    "toolbar_field": [
+    "bookmark_text": [
+      130,
+      53,
+      125
+    ],
+    "button_background_active": [
+      246,
+      224,
+      255
+    ],
+    "button_background_hover": [
+      246,
+      224,
+      255
+    ],
+    "icons": [
+      130,
+      53,
+      125
+    ],
+    "icons_attention": [
+      233,
+      132,
+      237
+    ],
+    "frame_inactive": [
+      241,
+      220,
+      247
+    ],
+    "popup": [
+      250,
+      236,
+      255
+    ],
+    "popup_border": [
+      130,
+      53,
+      125
+    ],
+    "popup_highlight": [
+      199,
+      160,
+      210
+    ],
+    "popup_highlight_text": [
+      57,
+      61,
+      69
+    ],
+    "popup_text": [
+      37,
       36,
-      41,
-      66
+      39
     ],
-    "toolbar_field_text": [
-      92,
-      147,
-      229
+    "tab_background_separator": [
+      233,
+      216,
+      246
     ],
-    "toolbar_field_text_focus": [
-      73,
-      193,
-      245
+    "tab_line": [
+      130,
+      53,
+      125
     ],
-    "toolbar_field_separator": [
-      43,
-      181,
-      231
+    "tab_loading": [
+      130,
+      53,
+      125
     ],
-    "toolbar_field_border_focus": [
-      99,
-      173,
-      229
+    "tab_selected": [
+      246,
+      224,
+      255
     ],
     "toolbar_bottom_separator": [
-      87,
-      140,
-      218
+      233,
+      216,
+      246
+    ],
+    "toolbar_field": [
+      251,
+      240,
+      255
+    ],
+    "toolbar_field_focus": [
+      251,
+      240,
+      255
+    ],
+    "toolbar_field_border": [
+      233,
+      216,
+      246
+    ],
+    "toolbar_field_border_focus": [
+      130,
+      53,
+      125
+    ],
+    "toolbar_field_highlight": [
+      199,
+      160,
+      210
+    ],
+    "toolbar_field_highlight_text": [
+      57,
+      61,
+      69
+    ],
+    "toolbar_field_separator": [
+      233,
+      216,
+      246
+    ],
+    "toolbar_field_text": [
+      136,
+      100,
+      172
+    ],
+    "toolbar_field_text_focus": [
+      130,
+      53,
+      125
+    ],
+    "toolbar_text": [
+      130,
+      53,
+      125
     ],
     "toolbar_top_separator": [
-      87,
-      140,
-      218
+      233,
+      216,
+      246
     ]
   }
 }

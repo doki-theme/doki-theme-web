@@ -37,7 +37,7 @@ const chromeDefinitionDirectoryPath = path.resolve(
   "definitions"
 );
 
-
+//
 function walkDir(dir: string): Promise<string[]> {
   const values: Promise<string[]>[] = fs.readdirSync(dir)
     .map((file: string) => {
