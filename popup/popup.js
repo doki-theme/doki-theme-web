@@ -1,3 +1,5 @@
+/*Global Variables*/
+const selectTag = document.querySelector("select");
 /*Retrieve the selected waifu.
 Afterwards, send the chosen waifu to the background script.*/
 function chooseWaifu(e){
@@ -25,7 +27,8 @@ function getRandomNumber(min,max){
 /*Setup Waifu Choices for the popup menu
 * Also categorizes each theme based on their type (original/dark/light)*/
 function initChoice(){
-	browser.storage.local.get("themes")
+
+	browser.storage.local.get(["themes","waifu"])
 		.then((storage)=>{
 			const themes = storage.themes.themes;
 			const originalGroup = document.querySelector("optgroup[label='Original']");
@@ -34,6 +37,7 @@ function initChoice(){
 			for(const theme in themes){
 				let opt = document.createElement("option");
 				opt.setAttribute("value",theme);
+				opt.id = theme;
 				const txtNode = document.createTextNode(themes[theme].name);
 				opt.append(txtNode);
 				if(themes[theme].json.includes("/dark/")){
@@ -44,8 +48,12 @@ function initChoice(){
 					originalGroup.append(opt);
 				}
 			}
+			//Set the previous waifu choice in the popup menu
+			if(storage.waifu){
+				selectTag.options.selectedIndex = selectTag.options.namedItem(storage.waifu).index
+			}
 		});
 }
 initChoice();
 /*---Event Listeners---*/
-document.querySelector("select").addEventListener("change",chooseWaifu,true);
+selectTag.addEventListener("change",chooseWaifu,true);
