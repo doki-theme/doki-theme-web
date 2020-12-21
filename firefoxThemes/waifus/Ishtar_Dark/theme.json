@@ -8,15 +8,20 @@
       13,
       14
     ],
+    "ntp_background": [
+      15,
+      13,
+      14
+    ],
     "tab_background_text": [
       134,
       110,
       69
     ],
     "tab_text": [
-      245,
-      196,
-      67
+      194,
+      194,
+      194
     ],
     "toolbar": [
       13,
@@ -59,9 +64,9 @@
       6
     ],
     "popup_border": [
-      245,
-      196,
-      67
+      26,
+      26,
+      0
     ],
     "popup_highlight": [
       85,
@@ -154,6 +159,11 @@
       67
     ],
     "toolbar_top_separator": [
+      26,
+      26,
+      0
+    ],
+    "toolbar_vertical_separator": [
       26,
       26,
       0

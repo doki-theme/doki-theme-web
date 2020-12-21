@@ -38,7 +38,7 @@ main{
     position: relative;
 }
 input {
-    background: white url("doki.ico") 12px center no-repeat;
+    background: white url("doki.png") 12px center no-repeat;
     background-size: 24px;
     border: solid 1px transparent;
     border-radius: 3px;
