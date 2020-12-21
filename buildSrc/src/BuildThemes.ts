@@ -1,7 +1,7 @@
 // @ts-ignore
 import {
   ChromeDokiThemeDefinition,
-  DokiThemeDefinitions,
+  DokiThemeDefinitions, FireFoxTheme,
   ManifestTemplate,
   MasterDokiThemeDefinition,
   StringDictonary
@@ -27,12 +27,6 @@ const masterThemeDefinitionDirectoryPath =
 const chromeTemplateDefinitionDirectoryPath = path.resolve(
   repoDirectory,
   "buildAssets",
-  "templates"
-);
-
-const templateDirectoryPath = path.resolve(
-  repoDirectory,
-  "themes",
   "templates"
 );
 
@@ -322,12 +316,36 @@ function buildChromeThemeManifest(
   };
 }
 
+function buildFireFoxTheme(
+  dokiThemeDefinition: MasterDokiThemeDefinition,
+  dokiTemplateDefinitions: DokiThemeDefinitions,
+  dokiThemeChromeDefinition: ChromeDokiThemeDefinition,
+  manifestTemplate: FireFoxTheme,
+): FireFoxTheme {
+  const namedColors = constructNamedColorTemplate(
+    dokiThemeDefinition, dokiTemplateDefinitions
+  )
+  const colorsOverride = dokiThemeChromeDefinition.overrides.theme &&
+    dokiThemeChromeDefinition.overrides.theme.colors || {};
+  return {
+    ...manifestTemplate,
+      colors: replaceValues(
+        manifestTemplate.colors,
+        (key: string, color: string) => hexToRGB(resolveColor(
+          colorsOverride[key] || color,
+          namedColors
+        ))
+      ),
+  };
+}
+
 function createDokiTheme(
   dokiFileDefinitionPath: string,
   dokiThemeDefinition: MasterDokiThemeDefinition,
   dokiTemplateDefinitions: DokiThemeDefinitions,
   dokiThemeChromeDefinition: ChromeDokiThemeDefinition,
-  manifestTemplate: ManifestTemplate
+  manifestTemplate: ManifestTemplate,
+  fireFoxTemplate: FireFoxTheme
 ) {
   try {
     return {
@@ -338,6 +356,12 @@ function createDokiTheme(
         dokiTemplateDefinitions,
         dokiThemeChromeDefinition,
         manifestTemplate
+      ),
+      fireFoxTheme: buildFireFoxTheme(
+        dokiThemeDefinition,
+        dokiTemplateDefinitions,
+        dokiThemeChromeDefinition,
+        fireFoxTemplate
       ),
       theme: {}
     };
@@ -469,7 +493,8 @@ type ChromeDokiTheme = {
   path: string;
   manifest: ManifestTemplate;
   definition: MasterDokiThemeDefinition;
-  theme: {}
+  theme: {};
+  fireFoxTheme: FireFoxTheme;
 }
 
 function buildThemeDirectoryStruct(
@@ -509,8 +534,8 @@ function buildFireFoxDirectoryStruct(
   fs.mkdirSync(backgroundDirectory, {recursive: true});
   //write manifest
   fs.writeFileSync(
-    path.resolve(themeDirectory, 'manifest.json'),
-    JSON.stringify(theme.manifest, null, 2)
+    path.resolve(themeDirectory, 'theme.json'),
+    JSON.stringify(theme.fireFoxTheme, null, 2)
   );
 
   return Promise.resolve()
@@ -594,6 +619,7 @@ preBuild()
       dokiThemeChromeDefinitions,
       dokiFileDefinitionPaths
     } = templatesAndDefinitions;
+    const fireFoxTemplate = readJson<FireFoxTheme>(path.resolve(chromeTemplateDefinitionDirectoryPath, 'firefox.theme.template.json'))
     const manifestTemplate = readJson<ManifestTemplate>(path.resolve(chromeTemplateDefinitionDirectoryPath, 'manifest.template.json'))
     return dokiFileDefinitionPaths
       .map(dokiFileDefinitionPath => {
@@ -610,6 +636,7 @@ preBuild()
           dokiThemeDefinition,
           dokiThemeChromeDefinition,
           manifestTemplate,
+          fireFoxTemplate,
         });
       })
       .filter(pathAndDefinition =>
@@ -621,7 +648,8 @@ preBuild()
               dokiFileDefinitionPath,
               dokiThemeDefinition,
               dokiThemeChromeDefinition,
-              manifestTemplate
+              manifestTemplate,
+              fireFoxTemplate
             }) =>
         createDokiTheme(
           dokiFileDefinitionPath,
@@ -629,6 +657,7 @@ preBuild()
           dokiTemplateDefinitions,
           dokiThemeChromeDefinition,
           manifestTemplate,
+          fireFoxTemplate,
         )
       );
   }).then(dokiThemes => {

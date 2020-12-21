@@ -7,7 +7,6 @@ class WaifuThemes {
   /*Initialize Waifu Themes*/
   initThemes() {
     this.themes =
-      // "waifus/darkness/light/darkness_light.png", "waifus/darkness/light/theme.json"
       Object.entries(dokiThemeDefinitions).reduce((accum, [themeId, dokiTheme]) => ({
         ...accum,
         [themeId]: new Theme(
@@ -40,7 +39,7 @@ class Theme {
     this.name = name;//Name of theme
     this.image = image;//Relative link to waifu image file
     this.json = json;//Relative link to browser theme file
-    this.isDark = isDark
+    this.isDark = isDark;
     this.page = "/waifus/index.html";
   }
 }
