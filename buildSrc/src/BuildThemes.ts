@@ -543,6 +543,10 @@ function preBuild(): Promise<void> {
   return Promise.resolve()
 }
 
+function getFireFoxThemeAssetDirectory(theme: ChromeDokiTheme) {
+  return theme.definition.name.replace(/ /g, '_');
+}
+
 preBuild()
   .then(() => walkDir(chromeDefinitionDirectoryPath))
   .then((files) =>
@@ -639,8 +643,8 @@ preBuild()
 
       const firefoxThemeDirectory = path.resolve(
         fireFoxGeneratedThemesDirectory,
-        'themes',
-        themeDirectoryName
+        'waifus',
+        getFireFoxThemeAssetDirectory(theme)
       )
 
       // build chrome directories
