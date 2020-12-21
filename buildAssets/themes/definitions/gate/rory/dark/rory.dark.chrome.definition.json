@@ -3,7 +3,8 @@
   "overrides": {
     "theme": {
       "colors": {
-        "omnibox_text": "&classNameColor&"
+        "omnibox_text": "&classNameColor&",
+        "tab_background_text": "&disabledColor&"
       }
     }
   },

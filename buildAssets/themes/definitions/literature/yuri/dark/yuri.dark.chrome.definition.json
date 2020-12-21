@@ -3,7 +3,8 @@
   "overrides": {
     "theme": {
       "colors": {
-        "omnibox_text": "&selectionForeground&"
+        "omnibox_text": "&selectionForeground&",
+        "tab_background_text": "&disabledColor&"
       }
     }
   },

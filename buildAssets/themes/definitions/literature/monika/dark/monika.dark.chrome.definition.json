@@ -3,10 +3,10 @@
   "overrides": {
     "theme": {
       "colors": {
-        "omnibox_text": "&startColor&"
+        "omnibox_text": "&startColor&",
+        "tab_background_text": "&lineNumberColor&"
       }
     }
-
   },
   "laf": {},
   "syntax": {},

@@ -20,7 +20,6 @@ function addWaifu() {
     })
     .then(({waifuImageURL, theme}) => {
       const anchoring = getAnchoring(theme);
-      console.log(anchoring)
       const style = document.createTextNode("body:before {\n" +
         "\tcontent: \"\";\n" +
         "\tz-index: -1;\n" +

@@ -6,7 +6,8 @@
         "omnibox_text": "&selectionForeground&",
         "button_background_active": "#563136",
         "button_background_hover": "#563136",
-        "tab_selected": "#563136"
+        "tab_selected": "#563136",
+        "tab_background_text": "&lineNumberColor&"
       }
     }
   },
