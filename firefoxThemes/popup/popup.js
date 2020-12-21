@@ -30,7 +30,8 @@ function getRandomNumber(min, max) {
 function initChoice() {
   browser.storage.local.get("themes")
     .then((storage) => {
-      const themes = Object.values(storage.themes.themes);
+      const themes = Object.values(storage.themes.themes)
+        .sort((a, b)=>a.name.localeCompare(b.name));
       const darkGroup = document.querySelector("optgroup[label='Dark Variant']");
       const lightGroup = document.querySelector("optgroup[label='Light Variant']");
       themes.forEach(theme => {
