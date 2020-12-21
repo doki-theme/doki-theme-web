@@ -39,11 +39,21 @@ function addWaifu() {
 
 }
 
+function removeStyles() {
+  let styleTag = document.querySelector("style");
+  styleTag.parentElement.removeChild(styleTag);//Removes <style> from <head>
+}
+
 /*Removes Waifu from custom New Tab Page*/
 function removeWaifu(updateInfo) {
   if (!updateInfo.theme.colors) {
-    let styleTag = document.querySelector("style");
-    styleTag.parentElement.removeChild(styleTag);//Removes <style> from <head>
+    removeStyles();
+  } else {
+    browser.storage.local.get()
+      .then(() => {
+          removeStyles();
+          addWaifu();
+      });
   }
 }
 
