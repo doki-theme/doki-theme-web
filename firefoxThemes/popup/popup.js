@@ -1,3 +1,20 @@
+function setCss(chosenTheme) {
+  const {colors} = chosenTheme.definition
+  const styles = `
+.popup-header {
+background-color: ${colors.headerColor};
+}
+
+.popup-body {
+background-color: ${colors.baseBackground};
+}
+        `
+  const styleSheet = document.createElement("style");
+  styleSheet.type = "text/css"
+  styleSheet.innerText = styles;
+  document.head.appendChild(styleSheet)
+}
+
 /*Retrieve the selected waifu.
 Afterwards, send the chosen waifu to the background script.*/
 function setTheme(e) {
@@ -8,6 +25,7 @@ function setTheme(e) {
       if (chosenThemeId === "random") {
         chosenThemeId = getRandomTheme(storage.themes.themes);
       }
+      setCss(storage.themes.themes[chosenThemeId])
       browser.runtime.sendMessage({themeId: chosenThemeId});
     });
 
@@ -31,7 +49,7 @@ function initChoice() {
   browser.storage.local.get("themes")
     .then((storage) => {
       const themes = Object.values(storage.themes.themes)
-        .sort((a, b)=>a.name.localeCompare(b.name));
+        .sort((a, b) => a.name.localeCompare(b.name));
       const darkGroup = document.querySelector("optgroup[label='Dark Variant']");
       const lightGroup = document.querySelector("optgroup[label='Light Variant']");
       themes.forEach(theme => {

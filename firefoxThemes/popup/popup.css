@@ -4,13 +4,13 @@
 	text-align:center;
 }
 body{
-	background-color:whitesmoke;
+	background-color: #2f363c;
 }
 /*Title Styles*/
 header{
-	background: linear-gradient(to top left,#B24592,#F15F79);
+	background: #2b3238;
 	padding:0.15em 0;
-	color:white;
+	color:#bbbbbb;
 }
 /*Logo Styles*/
 img {
