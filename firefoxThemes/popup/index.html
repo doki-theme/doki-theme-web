@@ -4,6 +4,7 @@
 		<meta charset="utf-8">
 		<title>Doki Theme</title>
 		<link rel="stylesheet" href="popup.css"/>
+		<!--Popup Script-->
 		<script src="popup.js" defer></script>
 	</head>
 	<body>
@@ -11,8 +12,9 @@
 			<h1>Doki Theme</h1>
 		</header>
 		<img src="images/symbol.png" alt="doki theme's inspirational logo"/>
-		<select name="waifus">
-			<option>&hearts; Choose a waifu &hearts;</option>
+		<label for="waifus"></label>
+		<select id="waifus" name="waifus">
+			<option value="none">&hearts; Choose a waifu &hearts;</option>
 			<option value="random">&#63; Random &iquest;</option>
 			<optgroup label="Original"></optgroup>
 			<optgroup label="Light Variant"></optgroup>

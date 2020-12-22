@@ -10,13 +10,17 @@ body{
 header{
 	background: linear-gradient(to top left,#B24592,#F15F79);
 	padding:0.15em 0;
+	margin:0;
 	color:white;
+}
+h1{
+	font-size:14px;
 }
 /*Logo Styles*/
 img {
 	display: block;
 	margin: 1em auto;
-	max-width: 50%;
+	max-width: 40%;
 }
 /*Waifu Option Styles*/
 option {

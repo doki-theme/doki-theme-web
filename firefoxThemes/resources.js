@@ -1,4 +1,5 @@
-/*Location to retrieve resources for each waifu theme*/
+/*---CLASSES---*/
+/*Class Goal: Holds theme data about all waifus*/
 class WaifuThemes{
     constructor(){
         this.initThemes();
@@ -24,10 +25,12 @@ class WaifuThemes{
 			misatoKatsuragi: new Theme("Misato Katsuragi","waifus/misato-katsuragi/misato.png","waifus/misato-katsuragi/theme.json"),
 			monikaDark: new Theme("Monika","waifus/monika/dark/monika_dark.png","waifus/monika/dark/theme.json"),
 			monikaLight: new Theme("Monika","waifus/monika/light/monika_light.png","waifus/monika/light/theme.json"),
-			natsukiHappyDark: new Theme("Natsuki-Happy","waifus/natsuki/dark/natsuki_happy_dark.png","waifus/natsuki/dark/theme.json"),
-			natsukiSadDark: new Theme("Natsuki-Sad","waifus/natsuki/dark/natsuki_sad_dark.png","waifus/natsuki/dark/theme.json"),
-			natsukiHappyLight: new Theme("Natsuki-Happy","waifus/natsuki/light/natsuki_happy_light.png","waifus/natsuki/light/theme.json"),
-			natsukiSadLight: new Theme("Natsuki-Sad","waifus/natsuki/light/natsuki_sad_light.png","waifus/natsuki/light/theme.json"),
+			monikaDarkJoy: new Theme("Monika (Joy)","waifus/monika/dark/monika_dark_joy.png","waifus/monika/dark/theme.json"),
+			monikaLightJoy: new Theme("Monika (Joy)","waifus/monika/light/monika_light_joy.png","waifus/monika/light/theme.json"),
+			natsukiDark: new Theme("Natsuki","waifus/natsuki/dark/natsuki_dark.png","waifus/natsuki/dark/theme.json"),
+			natsukiLight: new Theme("Natsuki","waifus/natsuki/light/natsuki_light.png","waifus/natsuki/light/theme.json"),
+			natsukiDarkJoy: new Theme("Natsuki (Joy)","waifus/natsuki/dark/natsuki_dark_joy.png","waifus/natsuki/dark/theme.json"),
+			natsukiLightJoy: new Theme("Natsuki (Joy)","waifus/natsuki/light/natsuki_light_joy.png","waifus/natsuki/light/theme.json"),
 			ram: new Theme("Ram","waifus/ram/ram.png","waifus/ram/theme.json"),
 			rem: new Theme("Rem","waifus/rem/rem.png","waifus/rem/theme.json"),
 			rias: new Theme("Rias","waifus/rias/rias.png","waifus/rias/theme.json"),
@@ -41,28 +44,86 @@ class WaifuThemes{
 			yuriLight: new Theme("Yuri","waifus/yuri/light/yuri_light.png","waifus/yuri/light/theme.json"),
         }
     }
-    /*Retrieve browser theme for Waifu*/
-    getJSON(waifu){
-        return this.themes[waifu].json;
-    }
-    /*Retrieve location of the waifu image*/
-    getImage(waifu){
-    	return this.themes[waifu].image;
-	}
-	/*Retrieve the location of the Custom New Tab pag*/
-	getPage(waifu){
-    	return this.themes[waifu].page;
-	}
-    /*Determine if waifu exists*/
-    exists(waifu){
-        return Object.keys(this.themes).includes(waifu);
-    }
 }
+/*Class Goal: Holds data about a theme*/
 class Theme {
-    constructor(name,image,json){
+    constructor(name,image,json,page = "/waifus/index.html"){
     	this.name = name;//Name of theme
 		this.image = image;//Relative link to waifu image file
         this.json = json;//Relative link to browser theme file
-		this.page = "/waifus/index.html";
+		this.page = page;//Relative link to custom new tab page
     }
 }
+/*---FUNCTIONS---*/
+/*Initialize Local Storage & custom new tab page*/
+function initPage(){
+	browser.storage.local.get("waifu")
+		.then((storage)=>{
+			const initStorage = {
+				waifuThemes: new WaifuThemes()
+			};
+			//Retrieve all themes if none exists in local storage
+			browser.storage.local.set(initStorage);
+			console.log("Waifu: "+storage.waifu);
+			//Load browser theme
+			if(storage.waifu){
+				loadTheme(initStorage.waifuThemes.themes,storage.waifu);
+			}
+			//When the browser first opens, redirect to custom new tab page
+			browser.tabs.update({loadReplace:true,url:"waifus/index.html"});
+		});
+}
+/*Update all new tabs with new waifu theme*/
+function updateTabs(msg){
+	browser.tabs.query({title: "New Tab"})
+		.then((newTabs)=>{
+			browser.storage.local.get(["waifuThemes","waifu"])
+				.then((storage)=>{
+					const themes = storage.waifuThemes.themes;
+					//Store chosen waifu in storage
+					browser.storage.local.set({waifu: msg.waifu});
+
+					if(newTabs.length > 0 && Object.keys(themes).includes(msg.waifu)){
+						// Update each new tab with the Waifu Tab
+						for(let tab of newTabs){
+							browser.tabs.update(tab.id,{
+								loadReplace: true,
+								url:themes[msg.waifu].page
+							});
+						}
+						loadTheme(themes,msg.waifu);
+					}else if(!Object.keys(themes).includes(msg.waifu)){
+						//Removes the previous waifu's theme from all New Tabs if the currently selected waifu
+						// does not have a theme.
+						for(let tab of newTabs){
+							browser.tabs.update(
+								tab.id,
+								{
+									loadReplace: true,
+									url:"waifus/index.html"
+								}
+							);
+						}
+						browser.storage.local.set({waifu:undefined});
+						browser.theme.reset();
+					}else{
+						loadTheme(themes,msg.waifu);
+					}
+				});
+		});
+}
+/*Set the browser theme for chosen waifu*/
+async function loadTheme(themes,waifu){
+	const json = themes[waifu].json;
+	fetch(json)
+		.then((res)=>{
+			return res.json();
+		})
+		.then((theme)=>{
+			browser.theme.update(theme);
+		});
+}
+//Initialize Storage
+initPage();
+/*---EventListeners---*/
+browser.runtime.onMessage.addListener(updateTabs);
