@@ -1,44 +1,45 @@
 {
-	"name": "Doki Theme: Firefox Edition",
-	"short_name": "Doki Theme",
-	"version": "5.0.0",
-	"description": "A theme collection of girls from various anime, manga, and visual novels series.",
-	"manifest_version": 2,
-	"icons": {
-		"48": "icons/doki-theme-logo@48.png",
-		"96": "icons/doki-theme-logo@96.png"
-	},
-	"permissions": [
-		"theme",
-		"tabs",
-		"activeTab",
-		"search",
-		"storage"
-	],
-	"browser_action": {
-		"browser_style": true,
-		"default_icon": {
-			"16": "icons/doki-theme-logo@16.png",
-			"32": "icons/doki-theme-logo@32.png",
-			"64": "icons/doki-theme-logo@64.png"
-		},
-		"default_popup": "popup/index.html",
-		"default_title": "Doki Theme"
-	},
-	"background": {
-		"scripts": [
-			"resources.js"
-		]
-	},
-	"chrome_url_overrides": {
-		"newtab": "waifus/index.html"
-	},
-	"chrome_settings_overrides": {
-		"homepage": "waifus/index.html"
-	},
-	"browser_specific_settings": {
-		"gecko": {
-			"strict_min_version": "63"
-		}
-	}
+  "name": "Doki Theme: Firefox Edition",
+  "short_name": "Doki Theme",
+  "version": "6.1.0",
+  "description": "A theme collection of girls from various anime, manga, and visual novels series.",
+  "manifest_version": 2,
+  "icons": {
+    "48": "icons/doki-theme-logo@48.png",
+    "96": "icons/doki-theme-logo@96.png"
+  },
+  "permissions": [
+    "theme",
+    "tabs",
+    "activeTab",
+    "search",
+    "storage"
+  ],
+  "background": {
+    "scripts": [
+      "DokiThemeDefinitions.js",
+      "resources.js"
+    ]
+  },
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": {
+      "16": "icons/doki-theme-logo@16.png",
+      "32": "icons/doki-theme-logo@32.png",
+      "64": "icons/doki-theme-logo@64.png"
+    },
+    "default_popup": "popup/index.html",
+    "default_title": "Doki Theme"
+  },
+  "chrome_url_overrides": {
+    "newtab": "waifus/index.html"
+  },
+  "chrome_settings_overrides": {
+    "homepage": "waifus/index.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "63"
+    }
+  }
 }

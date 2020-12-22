@@ -1,6 +1,12 @@
 {
   "id": "a7e0aa28-739a-4671-80ae-3980997e6b71",
-  "overrides": {},
+  "overrides": {
+    "theme": {
+      "colors": {
+        "tab_background_text": "&buttonFont&"
+      }
+    }
+  },
   "laf": {},
   "syntax": {},
   "colors": {}

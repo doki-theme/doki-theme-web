@@ -1,6 +1,6 @@
 {
   "name": "Doki Theme: Rory Mercury",
-  "version": "5.0.1",
+  "version": "6.0.0",
   "description": "A dark theme modeled after Rory from Gate",
   "theme": {
     "images": {
@@ -69,9 +69,9 @@
         195
       ],
       "tab_background_text": [
-        195,
-        195,
-        195
+        111,
+        111,
+        111
       ],
       "tab_background_text_inactive": [
         121,

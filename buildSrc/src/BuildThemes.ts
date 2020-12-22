@@ -1,7 +1,7 @@
 // @ts-ignore
 import {
   ChromeDokiThemeDefinition,
-  DokiThemeDefinitions,
+  DokiThemeDefinitions, FireFoxTheme,
   ManifestTemplate,
   MasterDokiThemeDefinition,
   StringDictonary
@@ -14,6 +14,8 @@ const repoDirectory = path.resolve(__dirname, '..', '..');
 const generatedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes');
 
 const edgeGeneratedThemesDirectory = path.resolve(repoDirectory, 'edgeThemes');
+
+const fireFoxGeneratedThemesDirectory = path.resolve(repoDirectory, 'firefoxThemes');
 
 const hiResGeneratedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes_2560x1440');
 
@@ -28,19 +30,12 @@ const chromeTemplateDefinitionDirectoryPath = path.resolve(
   "templates"
 );
 
-const templateDirectoryPath = path.resolve(
-  repoDirectory,
-  "themes",
-  "templates"
-);
-
 const chromeDefinitionDirectoryPath = path.resolve(
   repoDirectory,
   "buildAssets",
   "themes",
   "definitions"
 );
-
 
 function walkDir(dir: string): Promise<string[]> {
   const values: Promise<string[]>[] = fs.readdirSync(dir)
@@ -320,12 +315,36 @@ function buildChromeThemeManifest(
   };
 }
 
+function buildFireFoxTheme(
+  dokiThemeDefinition: MasterDokiThemeDefinition,
+  dokiTemplateDefinitions: DokiThemeDefinitions,
+  dokiThemeChromeDefinition: ChromeDokiThemeDefinition,
+  manifestTemplate: FireFoxTheme,
+): FireFoxTheme {
+  const namedColors = constructNamedColorTemplate(
+    dokiThemeDefinition, dokiTemplateDefinitions
+  )
+  const colorsOverride = dokiThemeChromeDefinition.overrides.theme &&
+    dokiThemeChromeDefinition.overrides.theme.colors || {};
+  return {
+    ...manifestTemplate,
+      colors: replaceValues(
+        manifestTemplate.colors,
+        (key: string, color: string) => hexToRGB(resolveColor(
+          colorsOverride[key] || color,
+          namedColors
+        ))
+      ),
+  };
+}
+
 function createDokiTheme(
   dokiFileDefinitionPath: string,
   dokiThemeDefinition: MasterDokiThemeDefinition,
   dokiTemplateDefinitions: DokiThemeDefinitions,
   dokiThemeChromeDefinition: ChromeDokiThemeDefinition,
-  manifestTemplate: ManifestTemplate
+  manifestTemplate: ManifestTemplate,
+  fireFoxTemplate: FireFoxTheme
 ) {
   try {
     return {
@@ -337,7 +356,14 @@ function createDokiTheme(
         dokiThemeChromeDefinition,
         manifestTemplate
       ),
-      theme: {}
+      fireFoxTheme: buildFireFoxTheme(
+        dokiThemeDefinition,
+        dokiTemplateDefinitions,
+        dokiThemeChromeDefinition,
+        fireFoxTemplate
+      ),
+      theme: {},
+      chromeDefinition:dokiThemeChromeDefinition,
     };
   } catch (e) {
     throw new Error(`Unable to build ${dokiThemeDefinition.name}'s theme for reasons ${e}`);
@@ -463,7 +489,13 @@ function buildActiveTabImage(tabHeight: number, highlightColor: number, accentCo
   }));
 }
 
-type ChromeDokiTheme = { path: string; manifest: ManifestTemplate; definition: MasterDokiThemeDefinition; theme: {} }
+type ChromeDokiTheme = {
+  path: string;
+  manifest: ManifestTemplate;
+  definition: MasterDokiThemeDefinition;
+  theme: {};
+  fireFoxTheme: FireFoxTheme;
+}
 
 function buildThemeDirectoryStruct(
   theme: ChromeDokiTheme,
@@ -492,6 +524,22 @@ function buildThemeDirectoryStruct(
     .then(() => buildInactiveTabImage(theme, backgroundDirectory))
 }
 
+function buildFireFoxDirectoryStruct(
+  theme: ChromeDokiTheme,
+  backgroundDirectory: string,
+  themeDirectory: string,
+): Promise<void> {
+
+  fs.mkdirSync(backgroundDirectory, {recursive: true});
+  //write theme file
+  fs.writeFileSync(
+    path.resolve(themeDirectory, 'theme.json'),
+    JSON.stringify(theme.fireFoxTheme, null, 2)
+  );
+
+  return Promise.resolve()
+}
+
 function getBackgroundDirectory(themeDirectory: string) {
   return path.resolve(themeDirectory, 'images');
 }
@@ -517,6 +565,18 @@ function preBuild(): Promise<void> {
   const masterExtensionManifest = path.resolve(repoDirectory, 'masterExtension', 'public', 'manifest.json');
   overrideVersion(masterExtensionManifest, masterVersion)
   return Promise.resolve()
+}
+
+function getFireFoxThemeAssetDirectory(theme: MasterDokiThemeDefinition) {
+  return theme.name.replace(/ /g, '_');
+}
+
+const FIRE_FOX_EXTENSION_ASSET_DIRECTORY = 'waifus';
+
+type Sticker = { path: string; name: string };
+
+function getDefaultSticker(stickers: { default: Sticker, secondary?: Sticker }) {
+  return stickers.secondary || stickers.default
 }
 
 preBuild()
@@ -558,6 +618,7 @@ preBuild()
       dokiThemeChromeDefinitions,
       dokiFileDefinitionPaths
     } = templatesAndDefinitions;
+    const fireFoxTemplate = readJson<FireFoxTheme>(path.resolve(chromeTemplateDefinitionDirectoryPath, 'firefox.theme.template.json'))
     const manifestTemplate = readJson<ManifestTemplate>(path.resolve(chromeTemplateDefinitionDirectoryPath, 'manifest.template.json'))
     return dokiFileDefinitionPaths
       .map(dokiFileDefinitionPath => {
@@ -574,6 +635,7 @@ preBuild()
           dokiThemeDefinition,
           dokiThemeChromeDefinition,
           manifestTemplate,
+          fireFoxTemplate,
         });
       })
       .filter(pathAndDefinition =>
@@ -585,7 +647,8 @@ preBuild()
               dokiFileDefinitionPath,
               dokiThemeDefinition,
               dokiThemeChromeDefinition,
-              manifestTemplate
+              manifestTemplate,
+              fireFoxTemplate
             }) =>
         createDokiTheme(
           dokiFileDefinitionPath,
@@ -593,6 +656,7 @@ preBuild()
           dokiTemplateDefinitions,
           dokiThemeChromeDefinition,
           manifestTemplate,
+          fireFoxTemplate,
         )
       );
   }).then(dokiThemes => {
@@ -612,12 +676,22 @@ preBuild()
         edgeGeneratedThemesDirectory,
         themeDirectoryName
       )
+
+      const firefoxThemeDirectory = path.resolve(
+        fireFoxGeneratedThemesDirectory,
+        FIRE_FOX_EXTENSION_ASSET_DIRECTORY,
+        getFireFoxThemeAssetDirectory(theme.definition)
+      )
+
+      // build chrome directories
       return buildThemeDirectoryStruct(
         theme,
         tabHeight,
         backgroundDirectory,
         themeDirectory,
       )
+
+        // build edge directories
         .then(() => buildThemeDirectoryStruct(
           theme,
           tabHeight - 2,
@@ -634,6 +708,14 @@ preBuild()
             }
           })
         ))
+
+        // build firefox
+        .then(() => buildFireFoxDirectoryStruct(
+          theme,
+          getBackgroundDirectory(firefoxThemeDirectory),
+          firefoxThemeDirectory
+        ))
+
         .then(() => {
           // copy asset to directory
           const storageShedPath = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome')
@@ -644,8 +726,8 @@ preBuild()
           if (highResTheme) {
             const highResThemeDirectory = path.resolve(hiResGeneratedThemesDirectory, themeDirectoryName);
             return (fs.existsSync(highResThemeDirectory) ?
-                walkDir(highResThemeDirectory)
-                  .then(items => items.forEach(item => fs.unlinkSync(item))) : Promise.resolve())
+              walkDir(highResThemeDirectory)
+                .then(items => items.forEach(item => fs.unlinkSync(item))) : Promise.resolve())
               .then(() => new Promise((resolve, reject) => {
                   ncp(themeDirectory, highResThemeDirectory, {
                     clobber: false,
@@ -654,12 +736,22 @@ preBuild()
                       console.log(err)
                       reject(err)
                     } else {
-                      const highResBackgroundDirectory = path.resolve(highResThemeDirectory, 'images');
-                      const highResFile = path.resolve(highResBackgroundDirectory, path.basename(highResTheme));
+                      // copy high res image to chrome
+                      const highResChromeBackgroundDirectory = path.resolve(highResThemeDirectory, 'images');
+                      const highResFile = path.resolve(highResChromeBackgroundDirectory, path.basename(highResTheme));
                       fs.copyFileSync(
                         highResTheme,
                         highResFile
                       )
+
+                      // copy high res image to firefox
+                      const highResFireFoxBackgroundDirectory = path.resolve(firefoxThemeDirectory, 'images');
+                      const highResFireFox = path.resolve(highResFireFoxBackgroundDirectory, path.basename(highResTheme));
+                      fs.copyFileSync(
+                        highResTheme,
+                        highResFireFox
+                      )
+
                       resolve()
                     }
                   })
@@ -668,11 +760,10 @@ preBuild()
           } else {
             return Promise.resolve()
           }
-        }).then(() => {
-          const backgroundName =
-            stickers.secondary &&
-            stickers.secondary.name ||
-            stickers.default.name;
+        })
+
+        .then(() => {
+          const backgroundName = getDefaultSticker(stickers).name;
           const chromeLowRes = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome',
             backgroundName);
           const src = fs.existsSync(chromeLowRes) ?
@@ -681,10 +772,57 @@ preBuild()
             src,
             path.resolve(backgroundDirectory, backgroundName)
           )
+
+          // back fill any firefox images that don't have
+          // high res.
+          const lowResFirefoxPath = path.resolve
+          (getBackgroundDirectory(firefoxThemeDirectory),
+            backgroundName)
+          if (!fs.existsSync(lowResFirefoxPath)) {
+            fs.copyFileSync(src, lowResFirefoxPath)
+          }
+
         });
     }), Promise.resolve())
+
+
     .then(() => {
-      // write things for extension
+      // write things for firefox extension
+      const dokiThemeDefinitions = dokiThemes.map(dokiTheme => {
+        const dokiDefinition = dokiTheme.definition;
+        const defaultSticker = getDefaultSticker(getStickers(dokiDefinition, dokiTheme));
+        const relativeFireFoxAssetPath = `${FIRE_FOX_EXTENSION_ASSET_DIRECTORY}/${
+          getFireFoxThemeAssetDirectory(dokiDefinition)
+        }`
+        return {
+          information: {
+            ...omit(dokiDefinition, [
+              'colors',
+              'overrides',
+              'ui',
+              'icons'
+            ]),
+            imagePath: `${relativeFireFoxAssetPath}/images/${
+              defaultSticker.name
+            }`,
+            jsonPath: `${relativeFireFoxAssetPath}/theme.json`,
+          },
+          colors: dokiDefinition.colors,
+          overrides: dokiTheme.chromeDefinition.overrides
+        };
+      }).reduce((accum: StringDictonary<any>, definition) => {
+        accum[definition.information.id] = definition;
+        return accum;
+      }, {});
+
+      const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions, );
+      fs.writeFileSync(
+        path.resolve(repoDirectory, 'firefoxThemes', 'DokiThemeDefinitions.js'),
+        `const dokiThemeDefinitions = ${finalDokiDefinitions};`);
+    })
+
+    .then(() => {
+      // write things for master extension
       const dokiThemeDefinitions = dokiThemes.map(dokiTheme => {
         const dokiDefinition = dokiTheme.definition;
         return {

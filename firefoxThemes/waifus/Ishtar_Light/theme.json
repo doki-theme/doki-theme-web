@@ -1,0 +1,172 @@
+{
+  "images": {
+    "theme_frame": "frame.svg"
+  },
+  "colors": {
+    "frame": [
+      255,
+      255,
+      252
+    ],
+    "ntp_background": [
+      255,
+      255,
+      252
+    ],
+    "tab_background_text": [
+      80,
+      120,
+      165
+    ],
+    "tab_text": [
+      37,
+      36,
+      39
+    ],
+    "toolbar": [
+      255,
+      254,
+      251
+    ],
+    "bookmark_text": [
+      245,
+      168,
+      33
+    ],
+    "button_background_active": [
+      255,
+      250,
+      232
+    ],
+    "button_background_hover": [
+      255,
+      250,
+      232
+    ],
+    "icons": [
+      245,
+      168,
+      33
+    ],
+    "icons_attention": [
+      236,
+      8,
+      30
+    ],
+    "frame_inactive": [
+      255,
+      250,
+      237
+    ],
+    "popup": [
+      252,
+      252,
+      250
+    ],
+    "popup_border": [
+      238,
+      238,
+      238
+    ],
+    "popup_highlight": [
+      255,
+      245,
+      199
+    ],
+    "popup_highlight_text": [
+      57,
+      61,
+      69
+    ],
+    "popup_text": [
+      37,
+      36,
+      39
+    ],
+    "tab_background_separator": [
+      238,
+      238,
+      238
+    ],
+    "tab_line": [
+      245,
+      168,
+      33
+    ],
+    "tab_loading": [
+      245,
+      168,
+      33
+    ],
+    "tab_selected": [
+      255,
+      250,
+      232
+    ],
+    "toolbar_bottom_separator": [
+      238,
+      238,
+      238
+    ],
+    "toolbar_field": [
+      255,
+      254,
+      251
+    ],
+    "toolbar_field_focus": [
+      255,
+      254,
+      251
+    ],
+    "toolbar_field_border": [
+      238,
+      238,
+      238
+    ],
+    "toolbar_field_border_focus": [
+      245,
+      168,
+      33
+    ],
+    "toolbar_field_highlight": [
+      255,
+      245,
+      199
+    ],
+    "toolbar_field_highlight_text": [
+      57,
+      61,
+      69
+    ],
+    "toolbar_field_separator": [
+      238,
+      238,
+      238
+    ],
+    "toolbar_field_text": [
+      80,
+      120,
+      165
+    ],
+    "toolbar_field_text_focus": [
+      245,
+      168,
+      33
+    ],
+    "toolbar_text": [
+      245,
+      168,
+      33
+    ],
+    "toolbar_top_separator": [
+      238,
+      238,
+      238
+    ],
+    "toolbar_vertical_separator": [
+      238,
+      238,
+      238
+    ]
+  }
+}
