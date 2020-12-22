@@ -3,16 +3,15 @@ const selectTag = document.querySelector("select");
 /*Retrieve the selected waifu.
 Afterwards, send the chosen waifu to the background script.*/
 function chooseWaifu(e){
-	browser.storage.local.get("themes")
+	browser.storage.local.get("waifuThemes")
 		.then((storage)=>{
 			let waifuChoice = e.target.value;
 
 			if(waifuChoice === "random"){
-				waifuChoice = getRandomTheme(storage.themes.themes);
+				waifuChoice = getRandomTheme(storage.waifuThemes.themes);
 			}
 			browser.runtime.sendMessage({waifu:waifuChoice});
 		});
-
 }
 /*Selects a waifu at random*/
 function getRandomTheme(themes){
@@ -26,14 +25,14 @@ function getRandomNumber(min,max){
 }
 /*Setup Waifu Choices for the popup menu
 * Also categorizes each theme based on their type (original/dark/light)*/
-function initChoice(){
-
-	browser.storage.local.get(["themes","waifu"])
+function initChoices(){
+	browser.storage.local.get(["waifuThemes","waifu"])
 		.then((storage)=>{
-			const themes = storage.themes.themes;
 			const originalGroup = document.querySelector("optgroup[label='Original']");
 			const darkGroup = document.querySelector("optgroup[label='Dark Variant']");
 			const lightGroup = document.querySelector("optgroup[label='Light Variant']");
+			const themes = storage.waifuThemes.themes;
+			//Set waifu options for popup menu
 			for(const theme in themes){
 				let opt = document.createElement("option");
 				opt.setAttribute("value",theme);
@@ -50,10 +49,13 @@ function initChoice(){
 			}
 			//Set the previous waifu choice in the popup menu
 			if(storage.waifu){
-				selectTag.options.selectedIndex = selectTag.options.namedItem(storage.waifu).index
+				const index = selectTag.options.namedItem(storage.waifu).index;
+				if(index >= 0){
+					selectTag.options.selectedIndex = index;
+				}
 			}
 		});
 }
-initChoice();
+initChoices();
 /*---Event Listeners---*/
 selectTag.addEventListener("change",chooseWaifu,true);
