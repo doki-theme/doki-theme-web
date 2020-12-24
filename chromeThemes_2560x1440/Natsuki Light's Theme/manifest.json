@@ -1,0 +1,112 @@
+{
+  "name": "Doki Theme: Natsuki Light",
+  "version": "6.0.0",
+  "description": "A light theme modeled after Natsuki from Literature Club",
+  "theme": {
+    "images": {
+      "theme_ntp_background": "images/natsuki_joy.png",
+      "theme_ntp_background_incognito": "images/natsuki_joy.png",
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        0,
+        0,
+        0
+      ],
+      "button_background": [
+        229,
+        194,
+        209
+      ],
+      "frame": [
+        255,
+        228,
+        241
+      ],
+      "frame_inactive": [
+        255,
+        229,
+        241
+      ],
+      "frame_incognito": [
+        255,
+        229,
+        241
+      ],
+      "frame_incognito_inactive": [
+        255,
+        228,
+        241
+      ],
+      "ntp_background": [
+        255,
+        228,
+        241
+      ],
+      "ntp_header": [
+        255,
+        229,
+        241
+      ],
+      "omnibox_background": [
+        243,
+        207,
+        224
+      ],
+      "omnibox_text": [
+        37,
+        36,
+        39
+      ],
+      "theme_toolbar": [
+        247,
+        210,
+        232
+      ],
+      "ntp_text": [
+        0,
+        0,
+        0
+      ],
+      "tab_background_text": [
+        0,
+        0,
+        0
+      ],
+      "tab_background_text_inactive": [
+        170,
+        170,
+        170
+      ],
+      "tab_text": [
+        0,
+        0,
+        0
+      ],
+      "toolbar": [
+        255,
+        229,
+        241
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.9345603271983639,
+        1,
+        0.5941176470588235
+      ],
+      "frame": [
+        0.9345603271983639,
+        1,
+        0.5941176470588235
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_logo_alternate": 0
+    }
+  },
+  "manifest_version": 2
+}
