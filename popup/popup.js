@@ -1,5 +1,11 @@
 /*Global Variables*/
 const selectTag = document.querySelector("select");
+//Enum for the different Mixed option states
+const mixedStates = {
+    NONE:0,
+    INITIAL:1,
+    TAB_CREATED:2
+};
 /*Set color of popup menu based on theme*/
 function setCss(chosenTheme) {
     const {colors} = chosenTheme.definition
@@ -17,23 +23,24 @@ background-color: ${colors.baseBackground};
     document.head.appendChild(styleSheet)
 }
 
-/*Retrieve the selected waifu.
+/*EVENT: Retrieve the selected waifu.
 Afterwards, send the chosen waifu to the background script.*/
 function setTheme(e) {
     browser.storage.local.get("waifuThemes")
         .then((storage) => {
             let chosenThemeId = e.target.value;
-
-            if (chosenThemeId === "random") {
-                chosenThemeId = getRandomTheme(storage.waifuThemes.themes);
+            let currentMix = chosenThemeId === "mixed" ? mixedStates.INITIAL : mixedStates.NONE;
+            if(currentMix === mixedStates.NONE){
+                if (chosenThemeId === "random") {
+                    chosenThemeId = getRandomTheme(storage.waifuThemes.themes);
+                }
+                if(storage.waifuThemes.themes[chosenThemeId]){
+                    setCss(storage.waifuThemes.themes[chosenThemeId]);
+                }
             }
-            if(storage.waifuThemes.themes[chosenThemeId]){
-                setCss(storage.waifuThemes.themes[chosenThemeId]);
-            }
-            browser.runtime.sendMessage({currentThemeId: chosenThemeId});
+            browser.runtime.sendMessage({currentThemeId: chosenThemeId,mixState:currentMix});
         });
 }
-
 /*Selects a waifu at random*/
 function getRandomTheme(themes) {
     themes = Object.keys(themes);
@@ -70,9 +77,14 @@ function initChoice() {
             });
 
             if (storage.currentThemeId) {
-                setCss(storage.waifuThemes.themes[storage.currentThemeId])
+                let themeId = storage.currentThemeId;
+                let themes = storage.waifuThemes.themes;
+                if(storage.currentThemeId === "mixed"){
+                    themeId = getRandomTheme(themes);
+                }
+                setCss(themes[themeId]);
                 selectTag.options.selectedIndex =
-                    selectTag.options.namedItem(storage.currentThemeId).index
+                    selectTag.options.namedItem(themeId).index;
             }
         });
 }

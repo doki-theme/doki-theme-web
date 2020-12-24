@@ -1,3 +1,11 @@
+/*Globals*/
+//Enum for the different Mixed option states
+const mixedStates = {
+    NONE:0,
+    INITIAL:1,
+    TAB_CREATED:2
+};
+let mixedTabs;//Keep a record of each theme used on each tab
 /*---CLASSES---*/
 /*Class Goal: Holds theme data about all waifus*/
 class WaifuThemes {
@@ -46,9 +54,95 @@ function initStorage() {
             browser.tabs.update({loadReplace: true, url: "waifus/index.html"});
         });
 }
-
 /*Update all new tabs with new waifu theme*/
 function updateTabs(msg) {
+    switch (msg.mixState){
+        case mixedStates.INITIAL:
+            SetupMixedUpdate();
+            break;
+        case mixedStates.TAB_CREATED:
+            MixedUpdate(msg);
+            break;
+        default:
+            MixTabCleanup();
+            NormalUpdate(msg);
+            break;
+    }
+}
+/*Initialize the Mixed feature*/
+function SetupMixedUpdate(){
+    browser.tabs.query({title:"New Tab"})
+        .then((tabs)=>{
+            browser.storage.local.get("waifuThemes")
+                .then((storage)=>{
+                    if(!mixedTabs){
+                        mixedTabs = new Map();//Create a new mixed tab list
+                    }
+                    //Activate event listeners
+                    browser.tabs.onCreated.addListener(MixTabCreated);//When a tab is created
+                    browser.tabs.onActivated.addListener(MixTabActivated);//When the active tab has been switched
+                    browser.tabs.onRemoved.addListener(MixTabClosed);//When a tab has been closed
+                    const themes = storage.waifuThemes.themes;
+                    let currentThemeId = getRandomTheme(themes);
+                    for(let tab of tabs) {
+                        browser.storage.local.set({currentThemeId:currentThemeId});
+                        mixedTabs.set(tab.id,currentThemeId);//Add a default theme to the mixed tab list
+                        //Initialize each tab with the default waifu
+                        browser.tabs.update(tab.id, {
+                            loadReplace: true,
+                            url: themes[currentThemeId].page
+                        });
+                    }
+                    loadTheme(themes,currentThemeId);
+                });
+        });
+}
+/*EVENT: When a new tab is created add a random theme to it*/
+function MixTabCreated(tab){
+    if(tab.title === "New Tab"){
+        browser.storage.local.get("waifuThemes")
+            .then((storage) => {
+                const chosenThemeId = getRandomTheme(storage.waifuThemes.themes);
+                MixedUpdate(tab,chosenThemeId,storage.waifuThemes.themes);
+            });
+    }
+}
+/*EVENT: Set the theme for the current active tab*/
+function MixTabActivated(activeInfo){
+    browser.storage.local.get("waifuThemes")
+        .then((storage)=>{
+            let currentThemeId = mixedTabs.get(activeInfo.tabId);
+            loadTheme(storage.waifuThemes.themes,currentThemeId);
+        });
+
+}
+/*EVENT: When a tab is closed delete the saved data for it*/
+function MixTabClosed(tabId,removeInfo){
+    mixedTabs.delete(tabId);
+}
+/*Updates the new tab with a new waifu theme*/
+function MixedUpdate(tab,themeId,themes){
+    browser.storage.local.set({currentThemeId:themeId});
+    mixedTabs.set(tab.id,themeId);//Adds the created tab to the list of mixed tabs
+    //Update the tab with theme
+    browser.tabs.update(tab.id, {
+        loadReplace: true,
+        url: themes[themeId].page
+    });
+    //Load browser theme
+    loadTheme(themes,themeId);
+}
+/*Cleans up all things relating to the Mixed tab option*/
+function MixTabCleanup(){
+    //Removes all listeners
+    if(browser.tabs.onCreated.hasListener(MixTabCreated)){
+        browser.tabs.onCreated.removeListener(MixTabCreated);
+        browser.tabs.onActivated.removeListener(MixTabActivated);
+        browser.tabs.onRemoved.removeListener(MixTabClosed);
+    }
+    mixedTabs.clear();//Removes all theme Ids from mixed tab list
+}
+function NormalUpdate(msg){
     browser.tabs.query({title: "New Tab"})
         .then((newTabs) => {
             browser.storage.local.get(["waifuThemes", "currentThemeId"])
@@ -86,7 +180,6 @@ function updateTabs(msg) {
                 });
         });
 }
-
 /*Set the browser theme for chosen waifu*/
 async function loadTheme(themes, themeId) {
     const json = themes[themeId].json;
@@ -99,6 +192,17 @@ async function loadTheme(themes, themeId) {
         });
 }
 
+/*Selects a waifu at random*/
+function getRandomTheme(themes) {
+    themes = Object.keys(themes);
+    let randNum = getRandomNumber(0, themes.length);
+    return themes[randNum];
+}
+
+/*Retrieves a random number from min(inclusive) to max(exclusive)*/
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 //Initialize Storage
 initStorage();
 /*---EventListeners---*/

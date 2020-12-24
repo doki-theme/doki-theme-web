@@ -30,7 +30,9 @@ img {
 option {
     color: midnightblue;
 }
-
+option[value=mixed]{
+    font-family: "Comic Sans MS","Georgia", fantasy;
+}
 select {
     display: block;
     margin: 1em auto;
