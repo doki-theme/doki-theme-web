@@ -38,7 +38,7 @@ class Theme {
 }
 /*---FUNCTIONS---*/
 /*Initialize Local Storage & custom new tab page*/
-function initStorage() {
+async function startStorage() {
     browser.storage.local.get("currentThemeId")
         .then((storage) => {
             const initStorage = {
@@ -133,7 +133,7 @@ function MixedUpdate(tab,themeId,themes){
     loadTheme(themes,themeId);
 }
 /*Cleans up all things relating to the Mixed tab option*/
-function MixTabCleanup(){
+async function MixTabCleanup(){
     //Removes all listeners
     if(browser.tabs.onCreated.hasListener(MixTabCreated)){
         browser.tabs.onCreated.removeListener(MixTabCreated);
@@ -204,6 +204,6 @@ function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 //Initialize Storage
-initStorage();
+startStorage();
 /*---EventListeners---*/
 browser.runtime.onMessage.addListener(updateTabs);
