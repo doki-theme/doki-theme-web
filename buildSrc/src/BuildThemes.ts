@@ -720,7 +720,7 @@ preBuild()
           firefoxThemeDirectory
         ))
 
-        .then(() => isBuildDefs ? Promise.resolve(): Promise.reject("Shouldn't copy assets"))
+        .then(() => !isBuildDefs ? Promise.resolve(): Promise.reject("Shouldn't copy assets"))
 
         .then(() => {
           // copy asset to directory

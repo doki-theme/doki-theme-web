@@ -1,106 +1,106 @@
 {
-  "name": "Doki Theme: Konata",
+  "name": "Doki Theme: Echidna",
   "version": "6.0.0",
-  "description": "A dark theme modeled after Konata from Lucky Star",
+  "description": "A dark theme modeled after Echidna from Re Zero",
   "theme": {
     "images": {
-      "theme_ntp_background": "images/konata_dark_secondary.png",
-      "theme_ntp_background_incognito": "images/konata_dark_secondary.png",
+      "theme_ntp_background": "images/echidna_dark.png",
+      "theme_ntp_background_incognito": "images/echidna_dark.png",
       "theme_toolbar": "images/tab_highlight.png",
       "theme_tab_background": "images/tab_inactive.png"
     },
     "colors": {
       "bookmark_text": [
-        243,
-        237,
-        255
+        168,
+        168,
+        168
       ],
       "button_background": [
-        78,
-        96,
-        141
+        33,
+        36,
+        37
       ],
       "frame": [
-        51,
-        76,
-        125
+        20,
+        18,
+        22
       ],
       "frame_inactive": [
-        53,
-        80,
-        130
+        18,
+        16,
+        20
       ],
       "frame_incognito": [
-        53,
-        80,
-        130
+        18,
+        16,
+        20
       ],
       "frame_incognito_inactive": [
-        51,
-        76,
-        125
+        20,
+        18,
+        22
       ],
       "ntp_background": [
-        51,
-        76,
-        125
+        20,
+        18,
+        22
       ],
       "ntp_header": [
-        53,
-        80,
-        130
+        18,
+        16,
+        20
       ],
       "omnibox_background": [
-        52,
-        77,
-        130
+        17,
+        15,
+        19
       ],
       "omnibox_text": [
-        75,
-        207,
-        76
+        236,
+        236,
+        236
       ],
       "theme_toolbar": [
-        82,
-        100,
-        149
+        25,
+        30,
+        28
       ],
       "ntp_text": [
-        243,
-        237,
-        255
+        168,
+        168,
+        168
       ],
       "tab_background_text": [
-        243,
-        237,
-        255
+        168,
+        168,
+        168
       ],
       "tab_background_text_inactive": [
-        255,
-        255,
-        255
+        111,
+        119,
+        121
       ],
       "tab_text": [
-        243,
-        237,
-        255
+        168,
+        168,
+        168
       ],
       "toolbar": [
-        53,
-        80,
-        130
+        18,
+        16,
+        20
       ]
     },
     "tints": {
       "buttons": [
-        0.33459595959595956,
+        0,
         1,
-        0.5529411764705883
+        0.9254901960784314
       ],
       "frame": [
-        0.33459595959595956,
+        0,
         1,
-        0.5529411764705883
+        0.9254901960784314
       ]
     },
     "properties": {
