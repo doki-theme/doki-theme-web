@@ -28,6 +28,7 @@
     "ncp": "^2.0.0"
   },
   "scripts": {
-    "buildThemes": "ts-node ./src/BuildThemes.ts"
+    "buildThemes": "ts-node ./src/BuildThemes.ts",
+    "buildDefinitions": "ts-node ./src/BuildThemes.ts defs"
   }
 }

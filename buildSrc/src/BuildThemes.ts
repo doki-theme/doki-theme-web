@@ -579,6 +579,10 @@ function getDefaultSticker(stickers: { default: Sticker, secondary?: Sticker }) 
   return stickers.secondary || stickers.default
 }
 
+// Begin theme construction
+
+const isBuildDefs = process.argv[2] === "defs"
+
 preBuild()
   .then(() => walkDir(chromeDefinitionDirectoryPath))
   .then((files) =>
@@ -716,6 +720,8 @@ preBuild()
           firefoxThemeDirectory
         ))
 
+        .then(() => isBuildDefs ? Promise.resolve(): Promise.reject("Shouldn't copy assets"))
+
         .then(() => {
           // copy asset to directory
           const storageShedPath = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome')
@@ -781,7 +787,9 @@ preBuild()
           if (!fs.existsSync(lowResFirefoxPath)) {
             fs.copyFileSync(src, lowResFirefoxPath)
           }
-
+        })
+        .catch(()=>{
+          // skipping asset copies
         });
     }), Promise.resolve())
 

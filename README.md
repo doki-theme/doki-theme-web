@@ -114,7 +114,6 @@ Until then, you'll have to do a local install.
 | ![before fix](./screenshots/firefoxIssues/before.png) |![after fix](./screenshots/firefoxIssues/after.png) |
 
 
-
 ## About the plugin!
 
 These Chrome extensions are for serious Otaku web surfers.
@@ -137,6 +136,10 @@ So you can choose themes from various, Anime, Manga, or Visual Novels:
 
 The Chrome platform is has a fairly limited feature set.
 However, I'll do my best to accommodate, so submit [an issue](https://github.com/doki-theme/doki-theme-chrome/issues/new).
+
+## Dev Setup
+
+Please see the [contributing](./CONTRIBUTING.md) file for development concepts and setup.
 
 ## Enjoying the plugin and want more people to use it?
 

@@ -1,5 +1,11 @@
 Changelog
 ---
+
+# Unreleased
+
+- Added definition only build step
+- Added contributing documentation
+
 # 6.0.0 [Firefox Support]
 
 - You can now get the full Doki Theme experience in Mozilla Firefox!
