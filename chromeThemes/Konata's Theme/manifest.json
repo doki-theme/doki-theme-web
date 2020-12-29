@@ -1,11 +1,11 @@
 {
   "name": "Doki Theme: Konata",
   "version": "6.0.0",
-  "description": "A light theme modeled after Konata from Lucky Star",
+  "description": "A dark theme modeled after Konata from Lucky Star",
   "theme": {
     "images": {
-      "theme_ntp_background": "images/konata_light_secondary.png",
-      "theme_ntp_background_incognito": "images/konata_light_secondary.png",
+      "theme_ntp_background": "images/konata_dark_secondary.png",
+      "theme_ntp_background_incognito": "images/konata_dark_secondary.png",
       "theme_toolbar": "images/tab_highlight.png",
       "theme_tab_background": "images/tab_inactive.png"
     },
@@ -16,54 +16,54 @@
         255
       ],
       "button_background": [
-        131,
-        160,
-        238
+        78,
+        96,
+        141
       ],
       "frame": [
-        97,
-        146,
-        238
+        51,
+        76,
+        125
       ],
       "frame_inactive": [
-        96,
-        142,
-        233
+        53,
+        80,
+        130
       ],
       "frame_incognito": [
-        96,
-        142,
-        233
+        53,
+        80,
+        130
       ],
       "frame_incognito_inactive": [
-        97,
-        146,
-        238
+        51,
+        76,
+        125
       ],
       "ntp_background": [
-        97,
-        146,
-        238
+        51,
+        76,
+        125
       ],
       "ntp_header": [
-        96,
-        142,
-        233
+        53,
+        80,
+        130
       ],
       "omnibox_background": [
-        92,
-        137,
-        232
+        52,
+        77,
+        130
       ],
       "omnibox_text": [
-        0,
-        0,
-        0
+        75,
+        207,
+        76
       ],
       "theme_toolbar": [
-        124,
-        163,
-        243
+        82,
+        100,
+        149
       ],
       "ntp_text": [
         243,
@@ -86,9 +86,9 @@
         255
       ],
       "toolbar": [
-        96,
-        142,
-        233
+        53,
+        80,
+        130
       ]
     },
     "tints": {
