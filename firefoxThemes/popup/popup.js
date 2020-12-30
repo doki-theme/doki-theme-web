@@ -55,7 +55,7 @@ function getRandomNumber(min, max) {
 
 /*Setup Waifu Choices for the popup menu
 * Also categorizes each theme based on their type (dark/light)*/
-async function initChoice() {
+function initChoice() {
     browser.storage.local.get(["waifuThemes", "currentThemeId"])
         .then((storage) => {
             const themes = Object.values(storage.waifuThemes.themes)
