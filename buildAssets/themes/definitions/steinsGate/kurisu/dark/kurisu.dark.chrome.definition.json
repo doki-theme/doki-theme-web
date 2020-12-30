@@ -1,0 +1,13 @@
+{
+  "id": "d39df813-8701-463b-a964-b8cb7714d1cc",
+  "overrides": {
+    "theme": {
+      "colors": {
+        "omnibox_text": "&keywordColor&"
+      }
+    }
+  },
+  "laf": {},
+  "syntax": {},
+  "colors": {}
+}

@@ -1,14 +1,14 @@
 {
   "colors": {
     "frame": [
-      97,
-      146,
-      238
+      51,
+      76,
+      125
     ],
     "ntp_background": [
-      97,
-      146,
-      238
+      51,
+      76,
+      125
     ],
     "tab_background_text": [
       173,
@@ -21,9 +21,9 @@
       255
     ],
     "toolbar": [
-      97,
-      143,
-      235
+      49,
+      73,
+      120
     ],
     "bookmark_text": [
       75,
@@ -31,14 +31,14 @@
       76
     ],
     "button_background_active": [
-      124,
-      163,
-      243
+      82,
+      100,
+      149
     ],
     "button_background_hover": [
-      124,
-      163,
-      243
+      82,
+      100,
+      149
     ],
     "icons": [
       75,
@@ -51,24 +51,24 @@
       61
     ],
     "frame_inactive": [
-      108,
-      149,
-      238
+      61,
+      93,
+      150
     ],
     "popup": [
-      92,
-      137,
-      232
+      52,
+      77,
+      130
     ],
     "popup_border": [
-      90,
-      134,
-      220
+      62,
+      93,
+      153
     ],
     "popup_highlight": [
-      89,
-      165,
-      178
+      58,
+      108,
+      117
     ],
     "popup_highlight_text": [
       231,
@@ -81,9 +81,9 @@
       255
     ],
     "tab_background_separator": [
-      90,
-      134,
-      220
+      62,
+      93,
+      153
     ],
     "tab_line": [
       75,
@@ -96,29 +96,29 @@
       76
     ],
     "tab_selected": [
-      124,
-      163,
-      243
+      82,
+      100,
+      149
     ],
     "toolbar_bottom_separator": [
-      90,
-      134,
-      220
+      62,
+      93,
+      153
     ],
     "toolbar_field": [
-      96,
-      142,
-      233
+      53,
+      80,
+      130
     ],
     "toolbar_field_focus": [
-      96,
-      142,
-      233
+      53,
+      80,
+      130
     ],
     "toolbar_field_border": [
-      90,
-      134,
-      220
+      62,
+      93,
+      153
     ],
     "toolbar_field_border_focus": [
       75,
@@ -126,9 +126,9 @@
       76
     ],
     "toolbar_field_highlight": [
-      89,
-      165,
-      178
+      58,
+      108,
+      117
     ],
     "toolbar_field_highlight_text": [
       231,
@@ -136,9 +136,9 @@
       255
     ],
     "toolbar_field_separator": [
-      90,
-      134,
-      220
+      62,
+      93,
+      153
     ],
     "toolbar_field_text": [
       173,
@@ -156,14 +156,14 @@
       76
     ],
     "toolbar_top_separator": [
-      90,
-      134,
-      220
+      62,
+      93,
+      153
     ],
     "toolbar_vertical_separator": [
-      90,
-      134,
-      220
+      62,
+      93,
+      153
     ]
   }
 }
