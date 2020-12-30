@@ -31,7 +31,8 @@ Addition to the Sword Art Online series:
 
 ### Updates
 
-- Konata's theme is now a bit darker to aid in usability
+- Konata's theme is now a bit darker to aid in usability.
+- Updated Asuna's light background image.
 
 ### Miscellaneous
 
