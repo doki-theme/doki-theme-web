@@ -328,13 +328,13 @@ function buildFireFoxTheme(
     dokiThemeChromeDefinition.overrides.theme.colors || {};
   return {
     ...manifestTemplate,
-      colors: replaceValues(
-        manifestTemplate.colors,
-        (key: string, color: string) => hexToRGB(resolveColor(
-          colorsOverride[key] || color,
-          namedColors
-        ))
-      ),
+    colors: replaceValues(
+      manifestTemplate.colors,
+      (key: string, color: string) => hexToRGB(resolveColor(
+        colorsOverride[key] || color,
+        namedColors
+      ))
+    ),
   };
 }
 
@@ -363,7 +363,7 @@ function createDokiTheme(
         fireFoxTemplate
       ),
       theme: {},
-      chromeDefinition:dokiThemeChromeDefinition,
+      chromeDefinition: dokiThemeChromeDefinition,
     };
   } catch (e) {
     throw new Error(`Unable to build ${dokiThemeDefinition.name}'s theme for reasons ${e}`);
@@ -720,7 +720,7 @@ preBuild()
           firefoxThemeDirectory
         ))
 
-        .then(() => isBuildDefs ? Promise.resolve(): Promise.reject("Shouldn't copy assets"))
+        .then(() => !isBuildDefs ? Promise.resolve() : Promise.reject("Shouldn't copy assets"))
 
         .then(() => {
           // copy asset to directory
@@ -788,7 +788,7 @@ preBuild()
             fs.copyFileSync(src, lowResFirefoxPath)
           }
         })
-        .catch(()=>{
+        .catch(() => {
           // skipping asset copies
         });
     }), Promise.resolve())
@@ -823,7 +823,7 @@ preBuild()
         return accum;
       }, {});
 
-      const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions, );
+      const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions,);
       fs.writeFileSync(
         path.resolve(repoDirectory, 'firefoxThemes', 'DokiThemeDefinitions.js'),
         `const dokiThemeDefinitions = ${finalDokiDefinitions};`);
