@@ -8,7 +8,7 @@ function getAnchoring(theme) {
     return "center";
 }
 /*Adds Waifu to custom New Tab Page*/
-async function addWaifu(storage){
+function addWaifu(storage){
     const themes = storage.waifuThemes.themes;
     //Retrieve path to the image file
     const currentTheme = themes[storage.currentThemeId];
@@ -30,7 +30,7 @@ async function addWaifu(storage){
     document.head.append(styleTag);
 }
 /*Apply Theme */
-async function applyTheme(){
+function applyTheme(){
     browser.storage.local.get(["waifuThemes","currentThemeId"])
         .then((storage)=>{
             if(Object.keys(storage.waifuThemes.themes).includes(storage.currentThemeId)){

@@ -38,7 +38,7 @@ class Theme {
 }
 /*---FUNCTIONS---*/
 /*Initialize Local Storage & custom new tab page*/
-async function startStorage() {
+function startStorage() {
     browser.storage.local.get("currentThemeId")
         .then((storage) => {
             const initStorage = {
