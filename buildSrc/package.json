@@ -1,9 +1,9 @@
 {
-  "name": "doki-theme-chrome-build",
+  "name": "doki-theme-web-build",
   "version": "1.0.0",
   "description": "Anime based themes for your chrome browser!",
   "main": "index.js",
-  "repository": "git@github.com:doki-theme/doki-theme-chrome.git",
+  "repository": "git@github.com:doki-theme/doki-theme-web.git",
   "author": "Alex Simons <alex@unthrottled.io>",
   "license": "MIT",
   "private": false,
