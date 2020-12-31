@@ -78,12 +78,14 @@ function initChoice() {
             browser.tabs.query({active:true})
                 .then((tabs)=>{
                     const activeTab = tabs[0];
+                    const themes = storage.waifuThemes.themes;
                     if(activeTab && storage.mixedTabs){
-                        const themes = storage.waifuThemes.themes;
                         const tabThemeId = storage.mixedTabs.get(activeTab.id);
                         setCss(themes[tabThemeId]);
                         selectTag.options.selectedIndex =
                             selectTag.options.namedItem(tabThemeId).index;
+                    }else if(activeTab){
+                      setCss(themes[storage.currentThemeId]);
                     }
                 })
         });

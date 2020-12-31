@@ -7,8 +7,12 @@
 body {
     background-color: #2f363c;
     overflow: hidden;
+    opacity:0.5;
+    transition: opacity 1s;
 }
-
+body:hover{
+  opacity: 1.0;
+}
 /*Title Styles*/
 header {
     background: #2b3238;
