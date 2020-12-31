@@ -1,9 +1,9 @@
 {
-  "name": "doki-theme-chrome",
-  "version": "7.0.0",
+  "name": "doki-theme-web",
+  "version": "7.0.1",
   "description": "Browse the web with your waifu",
   "main": "index.js",
-  "repository": "git@github.com:doki-theme/doki-theme-chrome.git",
+  "repository": "git@github.com:doki-theme/doki-theme-web.git",
   "author": "DATBOI <alexsimons9999@gmail.com>",
   "license": "MIT",
   "private": false
