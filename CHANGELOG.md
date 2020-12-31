@@ -3,6 +3,8 @@ Changelog
 
 # Unreleased
 
+# 7.0.0 [New Themes & Firefox Update]
+
 ## 5 New Themes!
 
 Love Live! series:
@@ -34,8 +36,12 @@ Addition to the Sword Art Online series:
 - Konata's theme is now a bit darker to aid in usability.
 - Updated Asuna's light background image.
 
-### Miscellaneous
+### Firefox changes
+- Smoother Firefox theme loading experience!
+- The popup menu is now smaller. A small change, but a bigger difference.
+- A new feature has been added to the mix. When enabled, this feature displays a random doki theme everytime a new tab is created. Each tab has its own theme attach to them and are completely independent of each other.
 
+### Miscellaneous
 - "Last Name First Name"'d Misato.
 - Added definition only build step
 - Added contributing documentation
