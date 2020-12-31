@@ -75,7 +75,7 @@ function initChoice() {
                 }
             });
             /*Set the theme of the popup menu based on current tab color*/
-            browser.tabs.query({title:"New Tab",active:true})
+            browser.tabs.query({active:true})
                 .then((tabs)=>{
                     const activeTab = tabs[0];
                     if(activeTab && storage.mixedTabs){
