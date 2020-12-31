@@ -2,6 +2,9 @@ Changelog
 ---
 
 # Unreleased
+# 7.0.2 [Firefox: Popup Menu fix]
+
+- Popup menu can now change colors on pages other than _New Tab_ pages in **mix mode**
 
 # 7.0.1 [Rename Repository]
 
