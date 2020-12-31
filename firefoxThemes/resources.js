@@ -183,8 +183,7 @@ async function MixTabCleanup(){
                 browser.tabs.onRemoved.removeListener(MixTabClosed);
             }
             if(storage.mixedTabs){
-                storage.mixedTabs.clear();//Removes all theme Ids from mixed tab list
-                browser.storage.local.set({mixedTabs:storage.mixedTabs});
+                browser.storage.local.set({mixedTabs:undefined});
             }
         });
 
