@@ -84,7 +84,7 @@ Until then, you'll have to do a local install.
 1. Select the settings in the upper right-hand corner.
 1. Choose `Custom` layout.
 1. Choose `Your own image` and upload your chosen background.
-    - You can find background images in the `chromeThemes` directory [here is Rem's 1920x1080.](https://github.com/doki-theme/doki-theme-chrome/blob/master/chromeThemes/Rem's%20Theme/images/rem.png)
+    - You can find background images in the `chromeThemes` directory [here is Rem's 1920x1080.](https://github.com/doki-theme/doki-theme-web/blob/master/chromeThemes/Rem's%20Theme/images/rem.png)
 ![Setting Background](./screenshots/edge_background.gif)
 1. Enjoy!
 
@@ -107,7 +107,7 @@ Until then, you'll have to do a local install.
 
 **Light theme tab text**
 
-- [How to fix](https://github.com/doki-theme/doki-theme-chrome/wiki/Firefox-light-themes) issue
+- [How to fix](https://github.com/doki-theme/doki-theme-web/wiki/Firefox-light-themes) issue
 
 | before | after |
 | --- | --- |
@@ -135,7 +135,7 @@ So you can choose themes from various, Anime, Manga, or Visual Novels:
 # Got Contributions, fun ideas, or issues?
 
 The Chrome platform is has a fairly limited feature set.
-However, I'll do my best to accommodate, so submit [an issue](https://github.com/doki-theme/doki-theme-chrome/issues/new).
+However, I'll do my best to accommodate, so submit [an issue](https://github.com/doki-theme/doki-theme-web/issues/new).
 
 ## Dev Setup
 
@@ -149,7 +149,7 @@ Be sure to share it with others who also may enjoy it as well!
 
 ## Not your thing or something bothering you?
 
-Feel free to submit your feedback as [an issue](https://github.com/doki-theme/doki-theme-chrome/issues/new).
+Feel free to submit your feedback as [an issue](https://github.com/doki-theme/doki-theme-web/issues/new).
 Help make these extensions better!
 
 ---

@@ -3,6 +3,10 @@ Changelog
 
 # Unreleased
 
+# 7.0.1 [Rename Repository]
+
+- Updated links to reflect new repository name.
+
 # 7.0.0 [New Themes & Firefox Update]
 
 ## 5 New Themes!
