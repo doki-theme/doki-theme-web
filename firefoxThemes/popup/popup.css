@@ -6,6 +6,7 @@
 
 body {
     background-color: #2f363c;
+    overflow: hidden;
 }
 
 /*Title Styles*/
@@ -20,10 +21,19 @@ h1 {
 }
 
 /*Logo Styles*/
+@keyframes bounce{
+    from{
+        top:0.5em;
+    }
+    to{
+        top:2.5em;
+    }
+}
 img {
-    display: block;
+    position: relative;
     margin: 1em auto;
-    max-width: 40%;
+    max-width: 30%;
+    animation: bounce 1.2s ease-in-out infinite alternate;
 }
 
 /*Waifu Option Styles*/
@@ -33,9 +43,8 @@ option {
 option[value=mixed]{
     font-family: "Comic Sans MS","Georgia", fantasy;
 }
-select {
-    display: block;
-    margin: 1em auto;
+select{
+    margin: 2.5em auto;
     width: calc(140px + 10vw);
     font-size: 14px;
 }
