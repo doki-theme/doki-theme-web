@@ -55,7 +55,7 @@ function getRandomNumber(min, max) {
 /*Setup Waifu Choices for the popup menu
 * Also categorizes each theme based on their type (dark/light)*/
 function initChoice() {
-    browser.storage.local.get(["waifuThemes", "currentThemeId"])
+    browser.storage.local.get(["waifuThemes", "currentThemeId","mixedTabs"])
         .then((storage) => {
             const themes = Object.values(storage.waifuThemes.themes)
                 .sort((a, b) => a.name.localeCompare(b.name));
@@ -75,10 +75,10 @@ function initChoice() {
                 }
             });
             /*Set the theme of the popup menu based on current tab color*/
-            browser.tabs.query({active:true})
+            browser.tabs.query({title:"New Tab",active:true})
                 .then((tabs)=>{
                     const activeTab = tabs[0];
-                    if(activeTab){
+                    if(activeTab && storage.mixedTabs){
                         const themes = storage.waifuThemes.themes;
                         const tabThemeId = storage.mixedTabs.get(activeTab.id);
                         setCss(themes[tabThemeId]);
