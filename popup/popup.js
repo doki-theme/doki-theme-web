@@ -74,13 +74,18 @@ function initChoice() {
                     lightGroup.append(opt);
                 }
             });
-
-            if (storage.currentThemeId) {
-                let themes = storage.waifuThemes.themes;
-                setCss(themes[storage.currentThemeId]);
-                selectTag.options.selectedIndex =
-                    selectTag.options.namedItem(storage.currentThemeId).index;
-            }
+            /*Set the theme of the popup menu based on current tab color*/
+            browser.tabs.query({active:true})
+                .then((tabs)=>{
+                    const activeTab = tabs[0];
+                    if(activeTab){
+                        const themes = storage.waifuThemes.themes;
+                        const tabThemeId = storage.mixedTabs.get(activeTab.id);
+                        setCss(themes[tabThemeId]);
+                        selectTag.options.selectedIndex =
+                            selectTag.options.namedItem(tabThemeId).index;
+                    }
+                })
         });
 }
 initChoice();
