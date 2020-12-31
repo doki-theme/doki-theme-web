@@ -1,30 +1,41 @@
 /*Global Styles*/
-*{
-	font-family:Tahoma, Arial, sans-serif;
-	text-align:center;
+* {
+    font-family: Tahoma, Arial, sans-serif;
+    text-align: center;
 }
-body{
-	background-color: #2f363c;
+
+body {
+    background-color: #2f363c;
 }
+
 /*Title Styles*/
-header{
-	background: #2b3238;
-	padding:0.15em 0;
-	color:#bbbbbb;
+header {
+    background: #2b3238;
+    padding: 0.15em 0;
+    color: #bbbbbb;
 }
+
+h1 {
+    font-size: 14px;
+}
+
 /*Logo Styles*/
 img {
-	display: block;
-	margin: 1em auto;
-	max-width: 50%;
+    display: block;
+    margin: 1em auto;
+    max-width: 40%;
 }
+
 /*Waifu Option Styles*/
 option {
-	color:midnightblue;
+    color: midnightblue;
 }
-select{
-	display:block;
-	margin: 1em auto;
-	width:calc(140px + 10vw);
-	font-size:14px;
+option[value=mixed]{
+    font-family: "Comic Sans MS","Georgia", fantasy;
+}
+select {
+    display: block;
+    margin: 1em auto;
+    width: calc(140px + 10vw);
+    font-size: 14px;
 }
