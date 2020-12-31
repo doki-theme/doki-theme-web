@@ -81,7 +81,7 @@ function SetupMixedUpdate(){
                         const themes = storage.waifuThemes.themes;
                         let currentThemeId = getRandomTheme(themes);
                         const lastTab = keepLastTab(tabs);//Closes all New Tab tabs except the last
-                        storage.mixedTabs.set(lastTab.id,currentThemeId);//Adds a starting theme to the mixed tab list
+                        storage.mixedTabs.set(lastTab.id,currentThemeId);//Add a default theme to the mixed tab list
                         browser.storage.local.set({currentThemeId:currentThemeId,mixedTabs:storage.mixedTabs});
                         //Initialize each tab with the default waifu
                         browser.tabs.update(lastTab.id, {
@@ -123,10 +123,7 @@ function MixTabActivated(activeInfo){
             if(currentThemeId){
                 loadTheme(storage.waifuThemes.themes,currentThemeId);
             }
-
-
         });
-
 }
 /*EVENT: When a tab is closed delete the saved data for it*/
 function MixTabClosed(tabId,removeInfo){
@@ -135,7 +132,6 @@ function MixTabClosed(tabId,removeInfo){
             storage.mixedTabs.delete(tabId);
             browser.storage.local.set({mixedTabs:storage.mixedTabs});
         });
-
 }
 /*Updates the new tab with a new waifu theme*/
 function MixedUpdate(tab,themeId,themes){
@@ -151,8 +147,6 @@ function MixedUpdate(tab,themeId,themes){
             //Load browser theme
             loadTheme(themes,themeId);
         });
-
-
 }
 /*Cleans up all things relating to the Mixed tab option*/
 async function MixTabCleanup(){
