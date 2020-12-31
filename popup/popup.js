@@ -3,8 +3,7 @@ const selectTag = document.querySelector("select");
 //Enum for the different Mixed option states
 const mixedStates = {
     NONE:0,
-    INITIAL:1,
-    TAB_CREATED:2
+    INITIAL:1
 };
 /*Set color of popup menu based on theme*/
 function setCss(chosenTheme) {
@@ -77,14 +76,10 @@ function initChoice() {
             });
 
             if (storage.currentThemeId) {
-                let themeId = storage.currentThemeId;
                 let themes = storage.waifuThemes.themes;
-                if(storage.currentThemeId === "mixed"){
-                    themeId = getRandomTheme(themes);
-                }
-                setCss(themes[themeId]);
+                setCss(themes[storage.currentThemeId]);
                 selectTag.options.selectedIndex =
-                    selectTag.options.namedItem(themeId).index;
+                    selectTag.options.namedItem(storage.currentThemeId).index;
             }
         });
 }
