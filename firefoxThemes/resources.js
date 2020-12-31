@@ -4,7 +4,6 @@ const mixedStates = {
     NONE:0,
     INITIAL:1
 };
-let mixedTabs;//Keep a record of each theme used on each tab
 /*---CLASSES---*/
 /*Class Goal: Holds theme data about all waifus*/
 class WaifuThemes {
@@ -69,10 +68,10 @@ function updateTabs(msg) {
 function SetupMixedUpdate(){
     browser.tabs.query({title:"New Tab"})
         .then((tabs)=>{
-            browser.storage.local.get("waifuThemes")
+            browser.storage.local.get(["waifuThemes","mixedTabs"])
                 .then((storage)=>{
-                    if(!mixedTabs){
-                        mixedTabs = new Map();//Create a new mixed tab list
+                    if(!storage.mixedTabs){
+                        storage.mixedTabs = new Map();//Create a new mixed tab list
                     }
                     //Activate event listeners
                     browser.tabs.onCreated.addListener(MixTabCreated);//When a tab is created
@@ -82,8 +81,8 @@ function SetupMixedUpdate(){
                         const themes = storage.waifuThemes.themes;
                         let currentThemeId = getRandomTheme(themes);
                         const lastTab = keepLastTab(tabs);//Closes all New Tab tabs except the last
-                        mixedTabs.set(lastTab.id,currentThemeId);//Add a default theme to the mixed tab list
-                        browser.storage.local.set({currentThemeId:currentThemeId});
+                        storage.mixedTabs.set(lastTab.id,currentThemeId);//Add a default theme to the mixed tab list
+                        browser.storage.local.set({currentThemeId:currentThemeId,mixedTabs:storage.mixedTabs});
                         //Initialize each tab with the default waifu
                         browser.tabs.update(lastTab.id, {
                             loadReplace: true,
@@ -118,9 +117,9 @@ function MixTabCreated(tab){
 }
 /*EVENT: Set the theme for the current active tab*/
 function MixTabActivated(activeInfo){
-    browser.storage.local.get("waifuThemes")
+    browser.storage.local.get(["waifuThemes","mixedTabs"])
         .then((storage)=>{
-            const currentThemeId = mixedTabs.get(activeInfo.tabId);
+            const currentThemeId = storage.mixedTabs.get(activeInfo.tabId);
             if(currentThemeId){
                 loadTheme(storage.waifuThemes.themes,currentThemeId);
             }
@@ -131,31 +130,46 @@ function MixTabActivated(activeInfo){
 }
 /*EVENT: When a tab is closed delete the saved data for it*/
 function MixTabClosed(tabId,removeInfo){
-    mixedTabs.delete(tabId);
+    browser.storage.local.get()
+        .then((storage)=>{
+            storage.mixedTabs.delete(tabId);
+            browser.storage.local.set({mixedTabs:storage.mixedTabs});
+        });
+
 }
 /*Updates the new tab with a new waifu theme*/
 function MixedUpdate(tab,themeId,themes){
-    browser.storage.local.set({currentThemeId:themeId});
-    mixedTabs.set(tab.id,themeId);//Adds the created tab to the list of mixed tabs
-    //Update the tab with theme
-    browser.tabs.update(tab.id, {
-        loadReplace: true,
-        url: themes[themeId].page
-    });
-    //Load browser theme
-    loadTheme(themes,themeId);
+    browser.storage.local.get()
+        .then((storage)=>{
+            storage.mixedTabs.set(tab.id,themeId);//Adds the created tab to the list of mixed tabs
+            browser.storage.local.set({currentThemeId:themeId,mixedTabs:storage.mixedTabs});
+            //Update the tab with theme
+            browser.tabs.update(tab.id, {
+                loadReplace: true,
+                url: themes[themeId].page
+            });
+            //Load browser theme
+            loadTheme(themes,themeId);
+        });
+
+
 }
 /*Cleans up all things relating to the Mixed tab option*/
 async function MixTabCleanup(){
-    //Removes all listeners
-    if(browser.tabs.onCreated.hasListener(MixTabCreated)){
-        browser.tabs.onCreated.removeListener(MixTabCreated);
-        browser.tabs.onActivated.removeListener(MixTabActivated);
-        browser.tabs.onRemoved.removeListener(MixTabClosed);
-    }
-    if(mixedTabs){
-        mixedTabs.clear();//Removes all theme Ids from mixed tab list
-    }
+    browser.storage.local.get("mixedTabs")
+        .then((storage)=>{
+            //Removes all listeners
+            if(browser.tabs.onCreated.hasListener(MixTabCreated)){
+                browser.tabs.onCreated.removeListener(MixTabCreated);
+                browser.tabs.onActivated.removeListener(MixTabActivated);
+                browser.tabs.onRemoved.removeListener(MixTabClosed);
+            }
+            if(storage.mixedTabs){
+                storage.mixedTabs.clear();//Removes all theme Ids from mixed tab list
+                browser.storage.local.set({mixedTabs:storage.mixedTabs});
+            }
+        });
+
 }
 /*Update the tabs with a selected theme*/
 function NormalUpdate(msg){
