@@ -1,0 +1,16 @@
+{
+  "name": "doki-theme-firefox",
+  "version": "7.0.0",
+  "description": "A theme collection of girls from various anime, manga, and visual novels series.",
+  "main": "index.js",
+  "repository": "https://github.com/doki-theme/doki-theme-chrome",
+  "author": "Doki-Theme",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start:firefox": "web-ext run --source-dir ."
+  },
+  "dependencies": {
+    "web-ext": "^5.4.1"
+  }
+}
