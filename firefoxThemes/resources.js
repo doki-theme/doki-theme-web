@@ -66,7 +66,7 @@ function updateTabs(msg) {
 }
 /*Initialize the Mixed feature*/
 function SetupMixedUpdate(){
-    browser.tabs.query({title:"New Tab"})
+    browser.tabs.query({})
         .then((tabs)=>{
             browser.storage.local.get(["waifuThemes","mixedTabs"])
                 .then((storage)=>{
@@ -80,7 +80,9 @@ function SetupMixedUpdate(){
                     if(tabs.length > 0){
                         const themes = storage.waifuThemes.themes;
                         let currentThemeId = getRandomTheme(themes);
-                        const lastTab = keepLastTab(tabs);//Closes all New Tab tabs except the last
+                        const [newTabs,otherTabs] = separateTabs(tabs);
+                        storage.mixedTabs = addOtherTabsToMix(otherTabs,storage.mixedTabs,themes);
+                        const lastTab = keepLastTab(newTabs);//Closes all New Tab tabs except the last
                         storage.mixedTabs.set(lastTab.id,currentThemeId);//Add a default theme to the mixed tab list
                         browser.storage.local.set({currentThemeId:currentThemeId,mixedTabs:storage.mixedTabs});
                         //Initialize each tab with the default waifu
@@ -93,6 +95,28 @@ function SetupMixedUpdate(){
 
                 });
         });
+}
+/*Separate the New Tab pages from the other types of pages*/
+function separateTabs(tabs){
+    let newTabs = [];
+    let otherTabs = [];
+    for(const tab of tabs){
+        if(tab.title === "New Tab"){
+            newTabs.push(tab);
+        }else{
+            otherTabs.push(tab);
+        }
+    }
+    return [newTabs,otherTabs];
+}
+/*Add all tabs that are not a new tab into the mix collection*/
+function addOtherTabsToMix(tabs,mixList,themes){
+    if(tabs.length > 0){
+        for(const tab of tabs){
+            mixList.set(tab.id,getRandomTheme(themes));
+        }
+    }
+    return mixList;
 }
 /*Closes all but the last tab*/
 function keepLastTab(tabs){
@@ -123,10 +147,7 @@ function MixTabActivated(activeInfo){
             if(currentThemeId){
                 loadTheme(storage.waifuThemes.themes,currentThemeId);
             }
-
-
         });
-
 }
 /*EVENT: When a tab is closed delete the saved data for it*/
 function MixTabClosed(tabId,removeInfo){
@@ -135,7 +156,6 @@ function MixTabClosed(tabId,removeInfo){
             storage.mixedTabs.delete(tabId);
             browser.storage.local.set({mixedTabs:storage.mixedTabs});
         });
-
 }
 /*Updates the new tab with a new waifu theme*/
 function MixedUpdate(tab,themeId,themes){
@@ -151,8 +171,6 @@ function MixedUpdate(tab,themeId,themes){
             //Load browser theme
             loadTheme(themes,themeId);
         });
-
-
 }
 /*Cleans up all things relating to the Mixed tab option*/
 async function MixTabCleanup(){
@@ -165,8 +183,7 @@ async function MixTabCleanup(){
                 browser.tabs.onRemoved.removeListener(MixTabClosed);
             }
             if(storage.mixedTabs){
-                storage.mixedTabs.clear();//Removes all theme Ids from mixed tab list
-                browser.storage.local.set({mixedTabs:storage.mixedTabs});
+                browser.storage.local.set({mixedTabs:undefined});
             }
         });
 

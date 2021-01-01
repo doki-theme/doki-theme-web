@@ -10,11 +10,12 @@ function setCss(chosenTheme) {
     const {colors} = chosenTheme.definition
     const styles = `
 .popup-header {
-background-color: ${colors.headerColor};
+  background-color: ${colors.headerColor};
+  color: ${colors.infoForeground};
 }
 
 .popup-body {
-background-color: ${colors.baseBackground};
+  background-color: ${colors.baseBackground};
 }
         `
     const styleSheet = document.createElement("style");
@@ -75,15 +76,17 @@ function initChoice() {
                 }
             });
             /*Set the theme of the popup menu based on current tab color*/
-            browser.tabs.query({title:"New Tab",active:true})
+            browser.tabs.query({active:true})
                 .then((tabs)=>{
                     const activeTab = tabs[0];
+                    const themes = storage.waifuThemes.themes;
                     if(activeTab && storage.mixedTabs){
-                        const themes = storage.waifuThemes.themes;
                         const tabThemeId = storage.mixedTabs.get(activeTab.id);
                         setCss(themes[tabThemeId]);
                         selectTag.options.selectedIndex =
                             selectTag.options.namedItem(tabThemeId).index;
+                    }else if(activeTab){
+                      setCss(themes[storage.currentThemeId]);
                     }
                 })
         });
