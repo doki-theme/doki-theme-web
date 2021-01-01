@@ -10,11 +10,12 @@ function setCss(chosenTheme) {
     const {colors} = chosenTheme.definition
     const styles = `
 .popup-header {
-background-color: ${colors.headerColor};
+  background-color: ${colors.headerColor};
+  color: ${colors.infoForeground};
 }
 
 .popup-body {
-background-color: ${colors.baseBackground};
+  background-color: ${colors.baseBackground};
 }
         `
     const styleSheet = document.createElement("style");
