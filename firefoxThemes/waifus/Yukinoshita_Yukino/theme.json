@@ -61,9 +61,9 @@
       41
     ],
     "popup_border": [
-      32,
-      34,
-      39
+      43,
+      45,
+      50
     ],
     "popup_highlight": [
       45,
@@ -81,9 +81,9 @@
       187
     ],
     "tab_background_separator": [
-      32,
-      34,
-      39
+      43,
+      45,
+      50
     ],
     "tab_line": [
       45,
@@ -101,9 +101,9 @@
       57
     ],
     "toolbar_bottom_separator": [
-      32,
-      34,
-      39
+      43,
+      45,
+      50
     ],
     "toolbar_field": [
       31,
@@ -116,9 +116,9 @@
       38
     ],
     "toolbar_field_border": [
-      32,
-      34,
-      39
+      43,
+      45,
+      50
     ],
     "toolbar_field_border_focus": [
       45,
@@ -136,9 +136,9 @@
       251
     ],
     "toolbar_field_separator": [
-      32,
-      34,
-      39
+      43,
+      45,
+      50
     ],
     "toolbar_field_text": [
       69,
@@ -156,14 +156,14 @@
       130
     ],
     "toolbar_top_separator": [
-      32,
-      34,
-      39
+      43,
+      45,
+      50
     ],
     "toolbar_vertical_separator": [
-      32,
-      34,
-      39
+      43,
+      45,
+      50
     ]
   }
 }
