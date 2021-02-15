@@ -2,6 +2,21 @@ Changelog
 ---
 
 # Unreleased
+
+# 8.0.0
+
+## 4 New Themes
+
+From the Darling in the Franxx series:
+
+- Zero Two (Dark/light)
+
+From the Rascal does not dream of bunny girl senpai series:
+
+- Sakurajima Mai (Dark/light)
+
+![v13 Girls](https://doki.assets.unthrottled.io/misc/v13_girls.png)
+
 # 7.0.2 [Firefox: Popup Menu fix]
 
 - Popup menu can now change colors on pages other than _New Tab_ pages in **mix mode**
