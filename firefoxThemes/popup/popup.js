@@ -7,6 +7,7 @@ const mixedStates = {
 };
 /*Set color of popup menu based on theme*/
 function setCss(chosenTheme) {
+    if(!chosenTheme) return
     const {colors} = chosenTheme.definition
     const styles = `
 .popup-header {
@@ -14,9 +15,29 @@ function setCss(chosenTheme) {
   color: ${colors.infoForeground};
 }
 
+* {
+ color: ${colors.foregroundColor};
+}
+
+.slider {
+  background-color: ${colors.baseIconColor};
+}
+
+.slider:before {
+  background-color: ${colors.accentColor};
+}
+
 .popup-body {
   background-color: ${colors.baseBackground};
 }
+
+input:checked + .slider {
+  background-color: ${colors.accentColor}44;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px ${colors.accentColor}44;
+
         `
     const styleSheet = document.createElement("style");
     styleSheet.innerText = styles;

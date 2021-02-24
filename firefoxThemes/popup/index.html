@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Doki Theme</title>
+  <link rel="stylesheet" href="popup.css"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <!--Popup Script-->
   <script defer src="popup.js"></script>
@@ -20,12 +21,13 @@
   <optgroup label="Light Variant"></optgroup>
   <optgroup label="Dark Variant"></optgroup>
 </select>
-<div class="settings">
-  <form>
-    <input type="radio" id="primary" name="gender" value="primary">
-    <label for="primary">Primary</label><br>
-    <input type="radio" id="secondary" name="gender" value="secondary">
-    <label for="secondary">Secondary</label><br>
+<div class="settings-container">
+  <form class="settings">
+    <label for="backgroundType">Secondary Background</label><br>
+    <label class="switch">
+      <input id="backgroundType" type="checkbox" checked>
+      <span class="slider round"></span>
+    </label>
   </form>
 </div>
 </body>
