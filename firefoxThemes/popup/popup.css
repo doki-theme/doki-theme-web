@@ -1,8 +1,3 @@
-/*Global Styles*/
-* {
-    font-family: Tahoma, Arial, sans-serif;
-    text-align: center;
-}
 
 body {
     background-color: #2f363c;
@@ -51,4 +46,13 @@ select{
     margin: 2.5em auto;
     width: calc(140px + 10vw);
     font-size: 14px;
+}
+
+.popup-header {
+  text-align: center;
+}
+
+.settings {
+  text-align: left !important;
+  margin-right: 1rem;
 }

@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html lang="en-US">
-	<head>
-		<meta charset="utf-8">
-		<title>Doki Theme</title>
-		<link rel="stylesheet" href="popup.css"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<!--Popup Script-->
-		<script src="popup.js" defer></script>
-	</head>
-	<body class="popup-body">
-		<header class="popup-header">
-			<h1>Doki Theme</h1>
-		</header>
-		<img src="images/symbol.png" alt="doki theme's inspirational logo"/>
-		<label for="waifus"></label>
-		<select id="waifus" name="waifus">
-			<option value="none">&hearts; Choose a waifu &hearts;</option>
-			<option value="random">&#63; Random &iquest;</option>
-			<option value="mixed">&raquo;&raquo;Mixed&laquo;&laquo;</option>
-			<optgroup label="Light Variant"></optgroup>
-			<optgroup label="Dark Variant"></optgroup>
-		</select>
-	</body>
+<head>
+  <meta charset="utf-8">
+  <title>Doki Theme</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <!--Popup Script-->
+  <script defer src="popup.js"></script>
+</head>
+<body class="popup-body">
+<header class="popup-header">
+  <h1>Doki Theme</h1>
+</header>
+<img alt="doki theme's inspirational logo" src="images/symbol.png"/>
+<label for="waifus"></label>
+<select id="waifus" name="waifus">
+  <option value="none">&hearts; Choose a waifu &hearts;</option>
+  <option value="random">&#63; Random &iquest;</option>
+  <option value="mixed">&raquo;&raquo;Mixed&laquo;&laquo;</option>
+  <optgroup label="Light Variant"></optgroup>
+  <optgroup label="Dark Variant"></optgroup>
+</select>
+<div class="settings">
+  <form>
+    <input type="radio" id="primary" name="gender" value="primary">
+    <label for="primary">Primary</label><br>
+    <input type="radio" id="secondary" name="gender" value="secondary">
+    <label for="secondary">Secondary</label><br>
+  </form>
+</div>
+</body>
 </html>
