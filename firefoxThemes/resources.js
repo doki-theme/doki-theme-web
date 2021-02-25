@@ -17,7 +17,7 @@ class WaifuThemes {
                 ...accum,
                 [themeId]: new Theme(
                     dokiTheme.information.displayName,
-                    dokiTheme.information.imagePath,
+                    dokiTheme.information.backgrounds,
                     dokiTheme.information.jsonPath,
                     dokiTheme,
                 )
@@ -26,9 +26,9 @@ class WaifuThemes {
 }
 /*Location to retrieve resources for each waifu theme*/
 class Theme {
-    constructor(name, image, json, themeDefinition) {
+    constructor(name, backgrounds, json, themeDefinition) {
         this.name = name;//Name of theme
-        this.image = image;//Relative link to waifu image file
+        this.backgrounds = backgrounds;//Relative links to each themes backgrounds
         this.json = json;//Relative link to browser theme file
         this.definition = themeDefinition;
         this.page = "/waifus/index.html";
