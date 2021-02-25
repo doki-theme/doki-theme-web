@@ -1,6 +1,7 @@
 /*Global Variables*/
 const selectTag = document.querySelector("select");
 const backgroundSwitch = document.querySelector("#backgroundType");
+const showSearchSwitch = document.querySelector("#hideSearch");
 
 //Enum for the different Mixed option states
 const mixedStates = {
@@ -61,6 +62,15 @@ const setBackground = async () => {
   browser.runtime.sendMessage({currentThemeId});
 }
 
+const setHideWidget = async () => {
+  await browser.storage.local.set({
+    showWidget: showSearchSwitch.checked
+  });
+
+  const {currentThemeId} = await browser.storage.local.get(["currentThemeId"])
+  browser.runtime.sendMessage({currentThemeId});
+}
+
 /*EVENT: Retrieve the selected waifu.
 Afterwards, send the chosen waifu to the background script.*/
 function setTheme(e) {
@@ -95,9 +105,10 @@ function getRandomNumber(min, max) {
 /*Setup Waifu Choices for the popup menu
 * Also categorizes each theme based on their type (dark/light)*/
 function initChoice() {
-  browser.storage.local.get(["waifuThemes", "currentThemeId", "mixedTabs", "backgroundType"])
+  browser.storage.local.get(["waifuThemes", "currentThemeId", "mixedTabs", "backgroundType", 'showWidget'])
     .then((storage) => {
       backgroundSwitch.checked = !!storage.backgroundType;
+      showSearchSwitch.checked = storage.showWidget === undefined || storage.showWidget;
       const themes = Object.values(storage.waifuThemes.themes)
         .sort((a, b) => a.name.localeCompare(b.name));
       const darkGroup = document.querySelector("optgroup[label='Dark Variant']");
@@ -136,3 +147,4 @@ initChoice();
 /*---Event Listeners---*/
 selectTag.addEventListener("change", setTheme, true);
 backgroundSwitch.addEventListener("change", setBackground, true);
+showSearchSwitch.addEventListener("change", setHideWidget, true);

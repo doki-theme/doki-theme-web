@@ -38,10 +38,28 @@ function addWaifu(storage) {
 
 /*Apply Theme */
 function applyTheme() {
-  browser.storage.local.get(["waifuThemes", "currentThemeId", "backgroundType"])
+  browser.storage.local.get(["waifuThemes", "currentThemeId", "backgroundType", "showWidget"])
     .then((storage) => {
       if (Object.keys(storage.waifuThemes.themes).includes(storage.currentThemeId)) {
         addWaifu(storage);
+      }
+
+      if(storage.showWidget === undefined || storage.showWidget) {
+        document.querySelector("body").innerHTML =
+          `
+    <main>
+    <div class="logo-and-wordmark">
+        <div class="logo"></div>
+        <div class="wordmark"></div>
+    </div>
+    <div class="search-inner-wrapper">
+        <input aria-controls="searchSuggestionTable" aria-expanded="false" aria-label="Search the Web"
+               maxlength="256"
+               placeholder="Search the Web" title="Search the Web" type="search" autofocus/>
+        <button class="search-button" aria-label="Search" title="Search"></button>
+    </div>
+</main>
+`
       }
     });
 }
