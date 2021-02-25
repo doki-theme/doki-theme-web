@@ -92,8 +92,9 @@ function getRandomNumber(min, max) {
 /*Setup Waifu Choices for the popup menu
 * Also categorizes each theme based on their type (dark/light)*/
 function initChoice() {
-  browser.storage.local.get(["waifuThemes", "currentThemeId", "mixedTabs"])
+  browser.storage.local.get(["waifuThemes", "currentThemeId", "mixedTabs", "backgroundType"])
     .then((storage) => {
+      backgroundSwitch.checked = !!storage.backgroundType;
       const themes = Object.values(storage.waifuThemes.themes)
         .sort((a, b) => a.name.localeCompare(b.name));
       const darkGroup = document.querySelector("optgroup[label='Dark Variant']");
