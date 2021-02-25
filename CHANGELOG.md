@@ -3,6 +3,13 @@ Changelog
 
 # Unreleased
 
+# 8.1.0
+
+## FireFox
+
+- Added support for [Primary and Secondary Backgrounds](https://github.com/doki-theme/doki-theme-web/issues/21)
+- Added the ability to show/hide the new tab search widget.
+
 # 8.0.0
 
 ## 4 New Themes
