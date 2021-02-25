@@ -1,7 +1,8 @@
 // @ts-ignore
 import {
   ChromeDokiThemeDefinition,
-  DokiThemeDefinitions, FireFoxTheme,
+  DokiThemeDefinitions,
+  FireFoxTheme,
   ManifestTemplate,
   MasterDokiThemeDefinition,
   StringDictonary
@@ -798,7 +799,7 @@ preBuild()
       // write things for firefox extension
       const dokiThemeDefinitions = dokiThemes.map(dokiTheme => {
         const dokiDefinition = dokiTheme.definition;
-        const defaultSticker = getDefaultSticker(getStickers(dokiDefinition, dokiTheme));
+        const stickers = getStickers(dokiDefinition, dokiTheme);
         const relativeFireFoxAssetPath = `${FIRE_FOX_EXTENSION_ASSET_DIRECTORY}/${
           getFireFoxThemeAssetDirectory(dokiDefinition)
         }`
@@ -810,9 +811,16 @@ preBuild()
               'ui',
               'icons'
             ]),
-            imagePath: `${relativeFireFoxAssetPath}/images/${
-              defaultSticker.name
-            }`,
+            backgrounds: {
+              primary: `${relativeFireFoxAssetPath}/images/${
+                stickers.default.name
+              }`,
+              ...(stickers.secondary ? {
+                secondary: `${relativeFireFoxAssetPath}/images/${
+                  stickers.secondary.name
+                }`
+              } : {})
+            },
             jsonPath: `${relativeFireFoxAssetPath}/theme.json`,
           },
           colors: dokiDefinition.colors,

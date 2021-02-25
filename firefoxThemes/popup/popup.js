@@ -52,10 +52,13 @@ input:focus + .slider {
   document.head.appendChild(styleSheet)
 }
 
-const setBackground = () => {
-  browser.storage.local.set({
+const setBackground = async () => {
+  await browser.storage.local.set({
     backgroundType: backgroundSwitch.checked ? backgroundTypes.SECONDARY : backgroundTypes.PRIMARY
-  })
+  });
+
+  const {currentThemeId} = await browser.storage.local.get(["currentThemeId"])
+  browser.runtime.sendMessage({currentThemeId});
 }
 
 /*EVENT: Retrieve the selected waifu.

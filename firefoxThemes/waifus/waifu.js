@@ -13,8 +13,12 @@ function addWaifu(storage) {
   const themes = storage.waifuThemes.themes;
   //Retrieve path to the image file
   const currentTheme = themes[storage.currentThemeId];
-  console.log(storage.backgroundType)
-  const waifuImageURL = currentTheme ? `url(${browser.runtime.getURL(currentTheme.image)})` : "";
+
+  const primaryBackgroundRelativeUrl = currentTheme.backgrounds.primary;
+  const backgroundImageUrl = !storage.backgroundType ? primaryBackgroundRelativeUrl :
+    currentTheme.backgrounds.secondary || primaryBackgroundRelativeUrl
+
+  const waifuImageURL = currentTheme ? `url(${browser.runtime.getURL(backgroundImageUrl)})` : "";
   const anchoring = getAnchoring(currentTheme);
   const style = document.createTextNode("body:before {\n" +
     "\tcontent: \"\";\n" +
@@ -27,7 +31,7 @@ function addWaifu(storage) {
     "\twidth: 100vw;\n" +
     "\theight: 100vh;\n" +
     "}");
-  let styleTag = document.createElement("style");
+  const styleTag = document.createElement("style");
   styleTag.append(style);//Add CSS styles to <style>
   document.head.append(styleTag);
 }
