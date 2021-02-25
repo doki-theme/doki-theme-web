@@ -726,10 +726,11 @@ preBuild()
         .then(() => {
           // copy asset to directory
           const storageShedPath = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome')
-          const highResTheme = [
+          const highResThemes = [
             path.resolve(storageShedPath, 'hi-res', stickers.secondary && stickers.secondary.name || 'not_real'),
             path.resolve(storageShedPath, 'hi-res', stickers.default.name),
-          ].filter(hiResWaifu => fs.existsSync(hiResWaifu))[0];
+          ].filter(hiResWaifu => fs.existsSync(hiResWaifu));
+          const highResTheme = highResThemes[0];
           if (highResTheme) {
             const highResThemeDirectory = path.resolve(hiResGeneratedThemesDirectory, themeDirectoryName);
             return (fs.existsSync(highResThemeDirectory) ?
@@ -753,11 +754,13 @@ preBuild()
 
                       // copy high res image to firefox
                       const highResFireFoxBackgroundDirectory = path.resolve(firefoxThemeDirectory, 'images');
-                      const highResFireFox = path.resolve(highResFireFoxBackgroundDirectory, path.basename(highResTheme));
-                      fs.copyFileSync(
-                        highResTheme,
-                        highResFireFox
-                      )
+                      highResThemes.forEach(hiResTheme => {
+                        const highResFireFox = path.resolve(highResFireFoxBackgroundDirectory, path.basename(hiResTheme));
+                        fs.copyFileSync(
+                          hiResTheme,
+                          highResFireFox
+                        )
+                      });
 
                       resolve()
                     }
@@ -782,12 +785,22 @@ preBuild()
 
           // back fill any firefox images that don't have
           // high res.
-          const lowResFirefoxPath = path.resolve
-          (getBackgroundDirectory(firefoxThemeDirectory),
-            backgroundName)
-          if (!fs.existsSync(lowResFirefoxPath)) {
-            fs.copyFileSync(src, lowResFirefoxPath)
-          }
+          const bkNames = Object.values(stickers)
+            .map(sticker => sticker.name)
+          bkNames.forEach(bkName => {
+            const chromeLowerRes = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome',
+              bkName);
+            const lowResFallback = fs.existsSync(chromeLowerRes) ?
+              chromeLowerRes : path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', bkName);
+
+            const lowResFirefoxPath = path.resolve(
+              getBackgroundDirectory(firefoxThemeDirectory),
+              bkName
+            )
+            if (!fs.existsSync(lowResFirefoxPath)) {
+              fs.copyFileSync(lowResFallback, lowResFirefoxPath)
+            }
+          })
         })
         .catch(() => {
           // skipping asset copies
