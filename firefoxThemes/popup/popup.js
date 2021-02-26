@@ -2,6 +2,7 @@
 const selectTag = document.querySelector("select");
 const backgroundSwitch = document.querySelector("#backgroundType");
 const showSearchSwitch = document.querySelector("#hideSearch");
+const darkModeSwitch = document.querySelector("#darkMode");
 
 //Enum for the different Mixed option states
 const mixedStates = {
@@ -25,11 +26,11 @@ function setCss(chosenTheme) {
 }
 
 * {
- color: ${colors.foregroundColor};
+ color: ${colors.lineNumberColor};
 }
 
 .slider {
-  background-color: ${colors.baseIconColor};
+  background-color: ${colors.selectionInactive};
 }
 
 .slider:before {
@@ -71,22 +72,57 @@ const setHideWidget = async () => {
   browser.runtime.sendMessage({currentThemeId});
 }
 
+const setDarkMode = async () => {
+  await browser.storage.local.set({
+    darkMode: darkModeSwitch.checked
+  });
+
+  const {currentThemeId, waifuThemes} = await browser.storage.local.get(["currentThemeId", "waifuThemes"]);
+
+  const currentTheme = waifuThemes.themes[currentThemeId];
+
+  if(currentTheme) {
+    const newTheme = Object.values(waifuThemes.themes)
+      .find(dokiTheme =>
+        dokiTheme.displayName === currentTheme.displayName &&
+      dokiTheme.id !== currentThemeId) || currentTheme
+    const newThemeId = newTheme.id;
+    setCss(newTheme);
+    await browser.storage.local.set({currentThemeId: newThemeId})
+    browser.runtime.sendMessage({currentThemeId: newThemeId});
+  }
+}
+
 /*EVENT: Retrieve the selected waifu.
 Afterwards, send the chosen waifu to the background script.*/
 function setTheme(e) {
-  browser.storage.local.get("waifuThemes")
+  browser.storage.local.get([ "darkMode", "waifuThemes"])
     .then((storage) => {
-      let chosenThemeId = e.target.value;
-      let currentMix = chosenThemeId === "mixed" ? mixedStates.INITIAL : mixedStates.NONE;
+      const chosenThemeName = e.target.value;
+      const currentMix = chosenThemeName === "mixed" ? mixedStates.INITIAL : mixedStates.NONE;
+      let chosenThemeId;
       if (currentMix === mixedStates.NONE) {
-        if (chosenThemeId === "random") {
+        if (chosenThemeName === "random") {
           chosenThemeId = getRandomTheme(storage.waifuThemes.themes);
         }
-        if (storage.waifuThemes.themes[chosenThemeId]) {
-          setCss(storage.waifuThemes.themes[chosenThemeId]);
+        const themes = Object.values(storage.waifuThemes.themes)
+          .filter(dokiTheme => dokiTheme.displayName === chosenThemeName)
+
+        const isDark = storage.darkMode !== undefined && storage.darkMode;
+        const theme = themes.find(dokiTheme =>
+          dokiTheme.dark === isDark)
+
+        darkModeSwitch.disabled = themes.length < 2;
+
+        const usableTheme = theme || themes[0]
+        darkModeSwitch.checked = usableTheme.dark
+
+        if (usableTheme) {
+          setCss(usableTheme);
+          chosenThemeId = usableTheme.id
         }
       }
-      browser.runtime.sendMessage({currentThemeId: chosenThemeId, mixState: currentMix});
+      browser.runtime.sendMessage({currentThemeId: chosenThemeId || 'mixed', mixState: currentMix});
     });
 }
 
@@ -105,26 +141,36 @@ function getRandomNumber(min, max) {
 /*Setup Waifu Choices for the popup menu
 * Also categorizes each theme based on their type (dark/light)*/
 function initChoice() {
-  browser.storage.local.get(["waifuThemes", "currentThemeId", "mixedTabs", "backgroundType", 'showWidget'])
+  browser.storage.local.get([
+    "waifuThemes",
+    "currentThemeId",
+    "mixedTabs",
+    "backgroundType",
+    'showWidget',
+    "darkMode"
+  ])
     .then((storage) => {
       backgroundSwitch.checked = !!storage.backgroundType;
+      darkModeSwitch.checked = storage.darkMode;
       showSearchSwitch.checked = storage.showWidget === undefined || storage.showWidget;
-      const themes = Object.values(storage.waifuThemes.themes)
-        .sort((a, b) => a.name.localeCompare(b.name));
-      const darkGroup = document.querySelector("optgroup[label='Dark Variant']");
-      const lightGroup = document.querySelector("optgroup[label='Light Variant']");
-      themes.forEach(theme => {
-        const opt = document.createElement("option");
-        const themeInformation = theme.definition.information;
-        opt.setAttribute("value", themeInformation.id);
-        opt.id = themeInformation.id
-        const txtNode = document.createTextNode(theme.name);
-        opt.append(txtNode);
-        if (themeInformation.dark) {
-          darkGroup.append(opt);
-        } else {
-          lightGroup.append(opt);
-        }
+      const themesGroupedByName = Object.values(storage.waifuThemes.themes)
+        .reduce((accum, dokiTheme) => ({
+          ...accum,
+          [dokiTheme.displayName]: [
+            ...(accum[dokiTheme.displayName] || []),
+            dokiTheme
+          ]
+        }), {});
+      const themes = Object.keys(themesGroupedByName)
+        .sort((a, b) => a.localeCompare(b));
+      const waifuGroup = document.querySelector("#waifus");
+      themes.forEach(themeName => {
+        const themeOption = document.createElement("option");
+        themeOption.setAttribute("value", themeName);
+        themeOption.id = themeName
+        const txtNode = document.createTextNode(themeName);
+        themeOption.append(txtNode);
+        waifuGroup.append(themeOption);
       });
       /*Set the theme of the popup menu based on current tab color*/
       browser.tabs.query({active: true})
@@ -148,3 +194,4 @@ initChoice();
 selectTag.addEventListener("change", setTheme, true);
 backgroundSwitch.addEventListener("change", setBackground, true);
 showSearchSwitch.addEventListener("change", setHideWidget, true);
+darkModeSwitch.addEventListener("change", setDarkMode, true);
