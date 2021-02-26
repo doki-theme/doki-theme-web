@@ -108,8 +108,9 @@ function setTheme(e) {
         const themes = Object.values(storage.waifuThemes.themes)
           .filter(dokiTheme => dokiTheme.displayName === chosenThemeName)
 
+        const isDark = storage.darkMode !== undefined && storage.darkMode;
         const theme = themes.find(dokiTheme =>
-          dokiTheme.dark === storage.darkMode)
+          dokiTheme.dark === isDark)
 
         darkModeSwitch.disabled = themes.length < 2;
 
