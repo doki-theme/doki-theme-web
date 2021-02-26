@@ -31,6 +31,7 @@ class Theme {
         this.backgrounds = backgrounds;//Relative links to each themes backgrounds
         this.json = json;//Relative link to browser theme file
         this.definition = themeDefinition;
+        Object.assign(this, themeDefinition.information)
         this.page = "/waifus/index.html";
     }
 }

@@ -73,7 +73,6 @@ const setHideWidget = async () => {
 }
 
 const setDarkMode = async () => {
-  console.log('setting dark mode')
   await browser.storage.local.set({
     darkMode: darkModeSwitch.checked
   });
@@ -85,9 +84,9 @@ const setDarkMode = async () => {
   if(currentTheme) {
     const newTheme = Object.values(waifuThemes.themes)
       .find(dokiTheme =>
-        dokiTheme.definition.information.displayName === currentTheme.definition.information.displayName &&
-      dokiTheme.definition.information.id !== currentThemeId) || currentTheme
-    const newThemeId = newTheme.definition.information.id;
+        dokiTheme.displayName === currentTheme.displayName &&
+      dokiTheme.id !== currentThemeId) || currentTheme
+    const newThemeId = newTheme.id;
     setCss(newTheme);
     await browser.storage.local.set({currentThemeId: newThemeId})
     browser.runtime.sendMessage({currentThemeId: newThemeId});
@@ -107,19 +106,19 @@ function setTheme(e) {
           chosenThemeId = getRandomTheme(storage.waifuThemes.themes);
         }
         const themes = Object.values(storage.waifuThemes.themes)
-          .filter(dokiTheme => dokiTheme.definition.information.displayName === chosenThemeName)
+          .filter(dokiTheme => dokiTheme.displayName === chosenThemeName)
 
         const theme = themes.find(dokiTheme =>
-          dokiTheme.definition.information.dark === storage.darkMode)
+          dokiTheme.dark === storage.darkMode)
 
         darkModeSwitch.disabled = themes.length < 2;
 
         const usableTheme = theme || themes[0]
-        darkModeSwitch.checked = usableTheme.definition.information.dark
+        darkModeSwitch.checked = usableTheme.dark
 
         if (usableTheme) {
           setCss(usableTheme);
-          chosenThemeId = usableTheme.definition.information.id
+          chosenThemeId = usableTheme.id
         }
       }
       browser.runtime.sendMessage({currentThemeId: chosenThemeId || 'mixed', mixState: currentMix});
@@ -156,8 +155,8 @@ function initChoice() {
       const themesGroupedByName = Object.values(storage.waifuThemes.themes)
         .reduce((accum, dokiTheme) => ({
           ...accum,
-          [dokiTheme.definition.information.displayName]: [
-            ...(accum[dokiTheme.definition.information.displayName] || []),
+          [dokiTheme.displayName]: [
+            ...(accum[dokiTheme.displayName] || []),
             dokiTheme
           ]
         }), {});
