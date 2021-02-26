@@ -21,7 +21,15 @@ function keyConfirm(e){
         confirmSearch();
     }
 }
+// todo: fix these
 /*---Event Listeners---*/
-document.querySelector("input[type='search']").addEventListener("input",searchQuery,true);
-document.querySelector("input[type='search']").addEventListener("keydown",keyConfirm,true);
-document.querySelector(".search-button").addEventListener("click",confirmSearch,false);
+const input = document.querySelector("input[type='search']");
+if(input) {
+  input.addEventListener("input",searchQuery,true);
+  input.addEventListener("keydown",keyConfirm,true);
+}
+
+const searchButton = document.querySelector(".search-button");
+if(searchButton){
+  searchButton.addEventListener("click",confirmSearch,false);
+}
