@@ -2,7 +2,7 @@
 * {
   font-family: Tahoma, Arial, sans-serif;
   text-align: center;
-  color: #bbbbbb;
+  color: #666879;
 }
 
 body {
@@ -60,16 +60,14 @@ select {
 }
 
 .settings-container {
-  text-align: left;
-  margin: 1rem 0 1rem 1rem;
+  margin: 1rem;
 }
 
-form > label {
-  margin: auto 0;
+form > label > input {
+  margin-bottom: 1rem;
 }
 
 .settings {
-  text-align: left;
 }
 
 .switch {
@@ -93,7 +91,7 @@ form > label {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #717981;
+  background-color: #292e34;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -105,7 +103,7 @@ form > label {
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: #717981;
+  background-color: #a73035;
   -webkit-transition: .4s;
   transition: .4s;
 }

@@ -26,11 +26,11 @@ function setCss(chosenTheme) {
 }
 
 * {
- color: ${colors.foregroundColor};
+ color: ${colors.lineNumberColor};
 }
 
 .slider {
-  background-color: ${colors.baseIconColor};
+  background-color: ${colors.selectionInactive};
 }
 
 .slider:before {
