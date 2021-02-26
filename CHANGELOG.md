@@ -3,6 +3,12 @@ Changelog
 
 # Unreleased
 
+# 8.2.0
+
+## FireFox
+
+- Added the ability to choose between light/dark mode from the current Waifu you chose.
+
 # 8.1.0
 
 ## FireFox
