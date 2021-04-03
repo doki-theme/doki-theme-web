@@ -22,7 +22,7 @@ const path = require('path');
 
 const {
   repoDirectory,
-  templateDirectoryPath,
+  appTemplatesDirectoryPath,
 } = resolvePaths(__dirname)
 
 const generatedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes');
@@ -309,7 +309,7 @@ function overrideVersion(masterExtensionPackageJson: string, masterVersion: any)
 function preBuild(): Promise<void> {
   // write versions
   const masterVersion = JSON.parse(fs.readFileSync(path.resolve(repoDirectory, 'package.json'), {encoding: 'utf-8'}));
-  const themeManifestTemplate = path.resolve(templateDirectoryPath, 'manifest.template.json');
+  const themeManifestTemplate = path.resolve(appTemplatesDirectoryPath, 'manifest.template.json');
   overrideVersion(themeManifestTemplate, masterVersion)
   const masterExtensionPackageJson = path.resolve(repoDirectory, 'masterExtension', 'package.json');
   overrideVersion(masterExtensionPackageJson, masterVersion);
@@ -319,7 +319,7 @@ function preBuild(): Promise<void> {
 }
 
 function getFireFoxThemeAssetDirectory(theme: MasterDokiThemeDefinition) {
-  return theme.name.replace(/ /g, '_');
+  return getName(theme).replace(/ /g, '_');
 }
 
 const FIRE_FOX_EXTENSION_ASSET_DIRECTORY = 'waifus';
@@ -336,8 +336,8 @@ const isBuildDefs = process.argv[2] === "defs"
 
 preBuild()
   .then(() => {
-    const fireFoxTemplate = readJson<FireFoxTheme>(path.resolve(templateDirectoryPath, 'firefox.theme.template.json'))
-    const manifestTemplate = readJson<ManifestTemplate>(path.resolve(templateDirectoryPath, 'manifest.template.json'))
+    const fireFoxTemplate = readJson<FireFoxTheme>(path.resolve(appTemplatesDirectoryPath, 'firefox.theme.template.json'))
+    const manifestTemplate = readJson<ManifestTemplate>(path.resolve(appTemplatesDirectoryPath, 'manifest.template.json'))
     return evaluateTemplates(
       {
         appName: 'chrome',
@@ -346,8 +346,10 @@ preBuild()
       ((
         dokiFileDefinitionPath,
         dokiThemeDefinition,
+        _,
+        dokiThemeAppDefinition,
         dokiTemplateDefinitions,
-        dokiThemeAppDefinition) =>
+) =>
           createDokiTheme(
             dokiFileDefinitionPath,
             dokiThemeDefinition,
@@ -364,7 +366,7 @@ preBuild()
     accum.then(() => {
       const tabHeight = 31;
       const stickers = getStickers(theme.definition, theme);
-      const themeDirectoryName = `${theme.definition.name}'s Theme`;
+      const themeDirectoryName = `${getName(theme.definition)}'s Theme`;
       const themeDirectory = path.resolve(
         generatedThemesDirectory,
         themeDirectoryName
@@ -571,3 +573,7 @@ preBuild()
   .then(() => {
     console.log('Theme Generation Complete!');
   });
+
+function getName(dokiDefinition: MasterDokiThemeDefinition) {
+  return dokiDefinition.name.replace(':', '');
+}
