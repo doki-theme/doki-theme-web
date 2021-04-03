@@ -1,0 +1,15 @@
+{
+  "id": "930c70c8-474e-4e2d-a223-d1e2b9da4fb1",
+  "overrides": {
+    "theme": {
+      "colors": {
+      },
+      "properties": {
+        "ntp_background_alignment": "right"
+      }
+    }
+  },
+  "laf": {},
+  "syntax": {},
+  "colors": {}
+}

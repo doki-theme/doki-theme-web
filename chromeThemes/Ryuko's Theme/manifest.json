@@ -1,6 +1,6 @@
 {
   "name": "Doki Theme: Ryuko",
-  "version": "8.2.0",
+  "version": "9.0.0",
   "description": "A dark theme modeled after Ryuko from Kill la Kill",
   "theme": {
     "images": {
@@ -61,9 +61,9 @@
         20
       ],
       "theme_toolbar": [
-        47,
-        52,
-        90
+        87,
+        50,
+        56
       ],
       "ntp_text": [
         187,
