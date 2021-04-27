@@ -28,20 +28,47 @@ h1 {
 }
 
 /*Logo Styles*/
-@keyframes bounce {
-  from {
-    top: 0.5em;
+@keyframes heartbeat {
+  0% {
+    transform: scale(1.5);
   }
-  to {
-    top: 2.5em;
+  10%{
+    transform:scale(1);
+  }
+  15%{
+    transform:scale(1.5);
+  }
+  25% {
+    transform:scale(1);
+  }
+  30% {
+    transform:scale(1.5);
+  }
+  45% {
+    transform:scale(1);
+  }
+  50% {
+    transform:scale(1.5);
+  }
+  80%{
+    transform:scale(1);
+  }
+  90%{
+    transform:scale(1.5);
+  }
+  95%{
+    transform:scale(1);
+  }
+  100%{
+    transform:scale(1.5);
   }
 }
 
 img {
   position: relative;
-  margin: 1em auto;
+  margin: 1em auto 0 auto;
   max-width: 30%;
-  animation: bounce 1.2s ease-in-out infinite alternate;
+  animation: heartbeat 6s linear infinite;
 }
 
 /*Waifu Option Styles*/
@@ -57,6 +84,7 @@ select {
   margin: 2.5em auto 1rem auto;
   width: calc(140px + 10vw);
   font-size: 14px;
+  border-radius: 50px;
 }
 
 .settings-container {
@@ -67,15 +95,12 @@ form > label > input {
   margin-bottom: 1rem;
 }
 
-.settings {
-}
-
 .switch {
   margin-top: 0.5rem;
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 54px;
+  height: 28px;
 }
 
 .switch input {
@@ -99,8 +124,8 @@ form > label > input {
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
+  height: 20px;
+  width: 20px;
   left: 4px;
   bottom: 4px;
   background-color: #a73035;
