@@ -147,6 +147,13 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+/*Switch labels*/
+label[for="backgroundType"],
+label[for="darkMode"],
+label[for="hideSearch"]
+{
+  color:#bbb;
+}
 /* Rounded sliders */
 .slider.round {
   border-radius: 34px;
