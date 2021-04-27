@@ -2,10 +2,16 @@ Changelog
 ---
 
 # Unreleased
-# 7.0.2 [Firefox: Popup Menu fix]
 
-- Popup menu can now change colors on pages other than _New Tab_ pages in **mix mode**
-- Adds animations to popup menu
+# 9.0.1 
+## Firefox: Small Cosmetic Changes
+
+- Removes extra *Rias* folder.
+- Changes ordering of switches
+- Reduces size of switches
+- Adds small changes to dropdown menu on idle state
+- Changes animation from *bouncing* to *heartbeat*
+- Brightens switch labels
 
 # 9.0.0 [Astolfo, Maika, Rias, & Rei]
 
