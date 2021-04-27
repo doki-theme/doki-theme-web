@@ -1,54 +1,132 @@
 /*Global Styles*/
 * {
-    font-family: Tahoma, Arial, sans-serif;
-    text-align: center;
+  font-family: Tahoma, Arial, sans-serif;
+  text-align: center;
+  color: #666879;
 }
 
 body {
-    background-color: #2f363c;
-    overflow: hidden;
-    opacity:0.5;
-    transition: opacity 1s;
+  background-color: #2f363c;
+  overflow: hidden;
+  opacity: 0.5;
+  transition: opacity 1s;
 }
-body:hover{
+
+body:hover {
   opacity: 1.0;
 }
+
 /*Title Styles*/
 header {
-    background: #2b3238;
-    padding: 0.15em 0;
-    color: #bbbbbb;
+  background: #2b3238;
+  padding: 0.15em 0;
+  color: #bbbbbb;
 }
 
 h1 {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 /*Logo Styles*/
-@keyframes bounce{
-    from{
-        top:0.5em;
-    }
-    to{
-        top:2.5em;
-    }
+@keyframes bounce {
+  from {
+    top: 0.5em;
+  }
+  to {
+    top: 2.5em;
+  }
 }
+
 img {
-    position: relative;
-    margin: 1em auto;
-    max-width: 30%;
-    animation: bounce 1.2s ease-in-out infinite alternate;
+  position: relative;
+  margin: 1em auto;
+  max-width: 30%;
+  animation: bounce 1.2s ease-in-out infinite alternate;
 }
 
 /*Waifu Option Styles*/
 option {
-    color: midnightblue;
+  color: midnightblue;
 }
-option[value=mixed]{
-    font-family: "Comic Sans MS","Georgia", fantasy;
+
+option[value=mixed] {
+  font-family: "Comic Sans MS", "Georgia", fantasy;
 }
-select{
-    margin: 2.5em auto;
-    width: calc(140px + 10vw);
-    font-size: 14px;
+
+select {
+  margin: 2.5em auto 1rem auto;
+  width: calc(140px + 10vw);
+  font-size: 14px;
+}
+
+.settings-container {
+  margin: 1rem;
+}
+
+form > label > input {
+  margin-bottom: 1rem;
+}
+
+.settings {
+}
+
+.switch {
+  margin-top: 0.5rem;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #292e34;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #a73035;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #a7303544;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #a7303544;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }

@@ -1,15 +1,29 @@
-// @ts-ignore
 import {
-  ChromeDokiThemeDefinition,
-  DokiThemeDefinitions, FireFoxTheme,
-  ManifestTemplate,
+  BaseAppDokiThemeDefinition,
+  DokiThemeDefinitions,
+  evaluateTemplates,
   MasterDokiThemeDefinition,
-  StringDictonary
-} from './types';
+  resolvePaths,
+  StringDictionary,
+  walkDir,
+  dictionaryReducer,
+  constructNamedColorTemplate,
+  resolveColor,
+  toRGBArray,
+  rgbToHsl,
+  resolveStickerPath,
+  readJson
+} from 'doki-build-source';
+import {FireFoxTheme, ManifestTemplate,} from './types';
+
+type ChromeDokiThemeDefinition = BaseAppDokiThemeDefinition;
 
 const path = require('path');
 
-const repoDirectory = path.resolve(__dirname, '..', '..');
+const {
+  repoDirectory,
+  appTemplatesDirectoryPath,
+} = resolvePaths(__dirname)
 
 const generatedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes');
 
@@ -20,190 +34,7 @@ const fireFoxGeneratedThemesDirectory = path.resolve(repoDirectory, 'firefoxThem
 const hiResGeneratedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes_2560x1440');
 
 const fs = require('fs');
-
-const masterThemeDefinitionDirectoryPath =
-  path.resolve(repoDirectory, 'masterThemes');
-
-const chromeTemplateDefinitionDirectoryPath = path.resolve(
-  repoDirectory,
-  "buildAssets",
-  "templates"
-);
-
-const chromeDefinitionDirectoryPath = path.resolve(
-  repoDirectory,
-  "buildAssets",
-  "themes",
-  "definitions"
-);
-
-function walkDir(dir: string): Promise<string[]> {
-  const values: Promise<string[]>[] = fs.readdirSync(dir)
-    .map((file: string) => {
-      const dirPath: string = path.join(dir, file);
-      const isDirectory = fs.statSync(dirPath).isDirectory();
-      if (isDirectory) {
-        return walkDir(dirPath);
-      } else {
-        return Promise.resolve([path.join(dir, file)]);
-      }
-    });
-  return Promise.all(values)
-    .then((scannedDirectories) => scannedDirectories
-      .reduce((accum, files) => accum.concat(files), []));
-}
-
-const LAF_TYPE = 'laf';
-const SYNTAX_TYPE = 'syntax';
-const NAMED_COLOR_TYPE = 'colorz';
-
-function getTemplateType(templatePath: string) {
-  if (templatePath.endsWith('laf.template.json')) {
-    return LAF_TYPE;
-  } else if (templatePath.endsWith('syntax.template.json')) {
-    return SYNTAX_TYPE;
-  } else if (templatePath.endsWith('colors.template.json')) {
-    return NAMED_COLOR_TYPE;
-  }
-  return undefined;
-}
-
-
-function resolveTemplate<T, R>(
-  childTemplate: T,
-  templateNameToTemplate: StringDictonary<T>,
-  attributeResolver: (t: T) => R,
-  parentResolver: (t: T) => string,
-): R {
-  if (!parentResolver(childTemplate)) {
-    return attributeResolver(childTemplate);
-  } else {
-    const parent = templateNameToTemplate[parentResolver(childTemplate)];
-    const resolvedParent = resolveTemplate(
-      parent,
-      templateNameToTemplate,
-      attributeResolver,
-      parentResolver
-    );
-    return {
-      ...resolvedParent,
-      ...attributeResolver(childTemplate)
-    };
-  }
-}
-
-
-function resolveColor(
-  color: string,
-  namedColors: StringDictonary<string>
-): string {
-  const startingTemplateIndex = color.indexOf('&');
-  if (startingTemplateIndex > -1) {
-    const lastDelimiterIndex = color.lastIndexOf('&');
-    const namedColor =
-      color.substring(startingTemplateIndex + 1, lastDelimiterIndex);
-    const namedColorValue = namedColors[namedColor];
-    if (!namedColorValue) {
-      throw new Error(`Named color: '${namedColor}' is not present!`);
-    }
-
-    // todo: check for cyclic references
-    if (color === namedColorValue) {
-      throw new Error(`Very Cheeky, you set ${namedColor} to resolve to itself 😒`);
-    }
-
-    const resolvedNamedColor = resolveColor(namedColorValue, namedColors);
-    if (!resolvedNamedColor) {
-      throw new Error(`Cannot find named color '${namedColor}'.`);
-    }
-    return resolvedNamedColor + color.substring(lastDelimiterIndex + 1) || '';
-  }
-
-  return color;
-}
-
-function applyNamedColors(
-  objectWithNamedColors: StringDictonary<string>,
-  namedColors: StringDictonary<string>,
-): StringDictonary<string> {
-  return Object.keys(objectWithNamedColors)
-    .map(key => {
-      const color = objectWithNamedColors[key];
-      const resolvedColor = resolveColor(
-        color,
-        namedColors
-      );
-      return {
-        key,
-        value: resolvedColor
-      };
-    }).reduce((accum: StringDictonary<string>, kv) => {
-      accum[kv.key] = kv.value;
-      return accum;
-    }, {});
-}
-
-function constructNamedColorTemplate(
-  dokiThemeTemplateJson: MasterDokiThemeDefinition,
-  dokiTemplateDefinitions: DokiThemeDefinitions
-) {
-  const lafTemplates = dokiTemplateDefinitions[NAMED_COLOR_TYPE];
-  const lafTemplate =
-    (dokiThemeTemplateJson.dark ?
-      lafTemplates.dark : lafTemplates.light);
-
-  const resolvedColorTemplate =
-    resolveTemplate(
-      lafTemplate, lafTemplates,
-      template => template.colors,
-      template => template.extends
-    );
-
-  const resolvedNameColors = resolveNamedColors(
-    dokiTemplateDefinitions,
-    dokiThemeTemplateJson
-  );
-
-  // do not really need to resolve, as there are no
-  // &someName& colors, but what ever.
-  const resolvedColors =
-    applyNamedColors(resolvedColorTemplate, resolvedNameColors);
-  return {
-    ...resolvedColors,
-    ...resolvedColorTemplate,
-    ...resolvedNameColors,
-  };
-}
-
-function resolveNamedColors(
-  dokiTemplateDefinitions: DokiThemeDefinitions,
-  dokiThemeTemplateJson: MasterDokiThemeDefinition
-) {
-  const colorTemplates = dokiTemplateDefinitions[NAMED_COLOR_TYPE];
-  return resolveTemplate(
-    dokiThemeTemplateJson,
-    colorTemplates,
-    template => template.colors,
-    // @ts-ignore
-    template => template.extends ||
-      template.dark !== undefined && (dokiThemeTemplateJson.dark ?
-        'dark' : 'light'));
-}
-
 const toPairs = require('lodash/toPairs');
-
-export interface StringDictionary<T> {
-  [key: string]: T;
-}
-
-export const dictionaryReducer = <T>(
-  accum: StringDictionary<T>,
-  [key, value]: [string, T],
-) => {
-  accum[key] = value;
-  return accum;
-};
-
 
 function replaceValues<T, R>(itemToReplace: T, valueConstructor: (key: string, value: string) => R): T {
   return toPairs(itemToReplace)
@@ -211,59 +42,6 @@ function replaceValues<T, R>(itemToReplace: T, valueConstructor: (key: string, v
     .reduce(dictionaryReducer, {});
 }
 
-/**
- * Converts an RGB color value to HSL. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- * Assumes r, g, and b are contained in the set [0, 255] and
- * returns h, s, and l in the set [0, 1].
- *
- * @param   Number  r       The red color value
- * @param   Number  g       The green color value
- * @param   Number  b       The blue color value
- * @return  Array           The HSL representation
- */
-function rgbToHsl([r, g, b]: [number, number, number]) {
-  r /= 255, g /= 255, b /= 255;
-
-  var max = Math.max(r, g, b), min = Math.min(r, g, b);
-  var h, s, l = (max + min) / 2;
-
-  if (max == min) {
-    h = s = 0; // achromatic
-  } else {
-    var d = max - min;
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-
-    switch (max) {
-      case r:
-        h = (g - b) / d + (g < b ? 6 : 0);
-        break;
-      case g:
-        h = (b - r) / d + 2;
-        break;
-      case b:
-        h = (r - g) / d + 4;
-        break;
-    }
-    h = h || 0;
-    h /= 6;
-  }
-
-  return [h, 1, l];
-}
-
-function hexToRGB(s: string | [number, number, number]): [number, number, number] {
-  if (typeof s === 'string') {
-    const hex = parseInt(s.substr(1), 16)
-    return [
-      (hex & 0xFF0000) >> 16,
-      (hex & 0xFF00) >> 8,
-      (hex & 0xFF)
-    ]
-  }
-  return s;
-
-}
 
 function buildChromeThemeManifest(
   dokiThemeDefinition: MasterDokiThemeDefinition,
@@ -292,7 +70,7 @@ function buildChromeThemeManifest(
       ),
       colors: replaceValues(
         manifestTheme.colors,
-        (key: string, color: string) => hexToRGB(resolveColor(
+        (key: string, color: string) => toRGBArray(resolveColor(
           colorsOverride[key] || color,
           namedColors
         ))
@@ -301,7 +79,7 @@ function buildChromeThemeManifest(
         manifestTheme.tints,
         (_, color: string) => {
           const s = resolveColor(color, namedColors);
-          return rgbToHsl(hexToRGB(s));
+          return rgbToHsl(toRGBArray(s));
         }
       ),
       properties: {
@@ -330,7 +108,7 @@ function buildFireFoxTheme(
     ...manifestTemplate,
     colors: replaceValues(
       manifestTemplate.colors,
-      (key: string, color: string) => hexToRGB(resolveColor(
+      (key: string, color: string) => toRGBArray(resolveColor(
         colorsOverride[key] || color,
         namedColors
       ))
@@ -370,46 +148,6 @@ function createDokiTheme(
   }
 }
 
-const readJson = <T>(jsonPath: string): T =>
-  JSON.parse(fs.readFileSync(jsonPath, 'utf-8'));
-
-type TemplateTypes = StringDictonary<StringDictonary<string>>;
-
-const isTemplate = (filePath: string): boolean =>
-  !!getTemplateType(filePath);
-
-const readTemplates = (templatePaths: string[]): TemplateTypes => {
-  return templatePaths
-    .filter(isTemplate)
-    .map(templatePath => {
-      return {
-        type: getTemplateType(templatePath)!!,
-        template: readJson<any>(templatePath)
-      };
-    })
-    .reduce((accum: TemplateTypes, templateRepresentation) => {
-      accum[templateRepresentation.type][templateRepresentation.template.name] =
-        templateRepresentation.template;
-      return accum;
-    }, {
-      [SYNTAX_TYPE]: {},
-      [LAF_TYPE]: {},
-      [NAMED_COLOR_TYPE]: {},
-    });
-};
-
-function resolveStickerPath(
-  themeDefinitionPath: string,
-  sticker: string,
-) {
-  const stickerPath = path.resolve(
-    path.resolve(themeDefinitionPath, '..'),
-    sticker
-  );
-  return stickerPath.substr(masterThemeDefinitionDirectoryPath.length + '/definitions'.length);
-}
-
-
 const getStickers = (
   dokiDefinition: MasterDokiThemeDefinition,
   dokiTheme: any
@@ -418,13 +156,21 @@ const getStickers = (
     dokiDefinition.stickers.secondary || dokiDefinition.stickers.normal;
   return {
     default: {
-      path: resolveStickerPath(dokiTheme.path, dokiDefinition.stickers.default),
+      path: resolveStickerPath(
+        dokiTheme.path,
+        dokiDefinition.stickers.default,
+        __dirname
+      ),
       name: dokiDefinition.stickers.default,
     },
     ...(secondary
       ? {
         secondary: {
-          path: resolveStickerPath(dokiTheme.path, secondary),
+          path: resolveStickerPath(
+            dokiTheme.path,
+            secondary,
+            __dirname
+          ),
           name: secondary,
         },
       }
@@ -462,7 +208,12 @@ function buildInactiveTabImage(theme: ChromeDokiTheme, backgroundDirectory: stri
   }));
 }
 
-function buildActiveTabImage(tabHeight: number, highlightColor: number, accentColor: number, backgroundDirectory: string) {
+function buildActiveTabImage(
+  tabHeight: number,
+  highlightColor: number,
+  accentColor: number,
+  backgroundDirectory: string
+) {
   return new Promise(((resolve, reject) => {
     // @ts-ignore
     new jimp(300, 120, (err, image) => {
@@ -558,7 +309,7 @@ function overrideVersion(masterExtensionPackageJson: string, masterVersion: any)
 function preBuild(): Promise<void> {
   // write versions
   const masterVersion = JSON.parse(fs.readFileSync(path.resolve(repoDirectory, 'package.json'), {encoding: 'utf-8'}));
-  const themeManifestTemplate = path.resolve(chromeTemplateDefinitionDirectoryPath, 'manifest.template.json');
+  const themeManifestTemplate = path.resolve(appTemplatesDirectoryPath, 'manifest.template.json');
   overrideVersion(themeManifestTemplate, masterVersion)
   const masterExtensionPackageJson = path.resolve(repoDirectory, 'masterExtension', 'package.json');
   overrideVersion(masterExtensionPackageJson, masterVersion);
@@ -568,7 +319,7 @@ function preBuild(): Promise<void> {
 }
 
 function getFireFoxThemeAssetDirectory(theme: MasterDokiThemeDefinition) {
-  return theme.name.replace(/ /g, '_');
+  return getName(theme).replace(/ /g, '_');
 }
 
 const FIRE_FOX_EXTENSION_ASSET_DIRECTORY = 'waifus';
@@ -584,92 +335,38 @@ function getDefaultSticker(stickers: { default: Sticker, secondary?: Sticker }) 
 const isBuildDefs = process.argv[2] === "defs"
 
 preBuild()
-  .then(() => walkDir(chromeDefinitionDirectoryPath))
-  .then((files) =>
-    files.filter((file) => file.endsWith("chrome.definition.json"))
-  )
-  .then((dokiThemeChromeDefinitionPaths) => {
-    return {
-      dokiThemeChromeDefinitions: dokiThemeChromeDefinitionPaths
-        .map((dokiThemeChromeDefinitionPath) =>
-          readJson<ChromeDokiThemeDefinition>(dokiThemeChromeDefinitionPath)
-        )
-        .reduce(
-          (accum: StringDictonary<ChromeDokiThemeDefinition>, def) => {
-            accum[def.id] = def;
-            return accum;
-          },
-          {}
-        ),
-    };
-  }).then(({dokiThemeChromeDefinitions}) =>
-  walkDir(path.resolve(masterThemeDefinitionDirectoryPath, 'templates'))
-    .then(readTemplates)
-    .then(dokiTemplateDefinitions => {
-      return walkDir(path.resolve(masterThemeDefinitionDirectoryPath, 'definitions'))
-        .then(files => files.filter(file => file.endsWith('master.definition.json')))
-        .then(dokiFileDefinitionPaths => {
-          return {
-            dokiThemeChromeDefinitions,
+  .then(() => {
+    const fireFoxTemplate = readJson<FireFoxTheme>(path.resolve(appTemplatesDirectoryPath, 'firefox.theme.template.json'))
+    const manifestTemplate = readJson<ManifestTemplate>(path.resolve(appTemplatesDirectoryPath, 'manifest.template.json'))
+    return evaluateTemplates(
+      {
+        appName: 'chrome',
+        currentWorkingDirectory: __dirname,
+      },
+      ((
+        dokiFileDefinitionPath,
+        dokiThemeDefinition,
+        _,
+        dokiThemeAppDefinition,
+        dokiTemplateDefinitions,
+) =>
+          createDokiTheme(
+            dokiFileDefinitionPath,
+            dokiThemeDefinition,
             dokiTemplateDefinitions,
-            dokiFileDefinitionPaths
-          };
-        });
-    }))
-  .then(templatesAndDefinitions => {
-    const {
-      dokiTemplateDefinitions,
-      dokiThemeChromeDefinitions,
-      dokiFileDefinitionPaths
-    } = templatesAndDefinitions;
-    const fireFoxTemplate = readJson<FireFoxTheme>(path.resolve(chromeTemplateDefinitionDirectoryPath, 'firefox.theme.template.json'))
-    const manifestTemplate = readJson<ManifestTemplate>(path.resolve(chromeTemplateDefinitionDirectoryPath, 'manifest.template.json'))
-    return dokiFileDefinitionPaths
-      .map(dokiFileDefinitionPath => {
-        const dokiThemeDefinition = readJson<MasterDokiThemeDefinition>(dokiFileDefinitionPath);
-        const dokiThemeChromeDefinition =
-          dokiThemeChromeDefinitions[dokiThemeDefinition.id];
-        if (!dokiThemeChromeDefinition) {
-          throw new Error(
-            `${dokiThemeDefinition.displayName}'s theme does not have a Chrome Definition!!`
-          );
-        }
-        return ({
-          dokiFileDefinitionPath,
-          dokiThemeDefinition,
-          dokiThemeChromeDefinition,
-          manifestTemplate,
-          fireFoxTemplate,
-        });
-      })
-      .filter(pathAndDefinition =>
-        (pathAndDefinition.dokiThemeDefinition.product === 'ultimate' &&
-          process.env.PRODUCT === 'ultimate') ||
-        pathAndDefinition.dokiThemeDefinition.product !== 'ultimate'
+            dokiThemeAppDefinition,
+            manifestTemplate,
+            fireFoxTemplate,
+          )
       )
-      .map(({
-              dokiFileDefinitionPath,
-              dokiThemeDefinition,
-              dokiThemeChromeDefinition,
-              manifestTemplate,
-              fireFoxTemplate
-            }) =>
-        createDokiTheme(
-          dokiFileDefinitionPath,
-          dokiThemeDefinition,
-          dokiTemplateDefinitions,
-          dokiThemeChromeDefinition,
-          manifestTemplate,
-          fireFoxTemplate,
-        )
-      );
+    )
   }).then(dokiThemes => {
   // write things for extension
   return dokiThemes.reduce((accum, theme: ChromeDokiTheme) =>
     accum.then(() => {
       const tabHeight = 31;
       const stickers = getStickers(theme.definition, theme);
-      const themeDirectoryName = `${theme.definition.name}'s Theme`;
+      const themeDirectoryName = `${getName(theme.definition)}'s Theme`;
       const themeDirectory = path.resolve(
         generatedThemesDirectory,
         themeDirectoryName
@@ -725,10 +422,11 @@ preBuild()
         .then(() => {
           // copy asset to directory
           const storageShedPath = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome')
-          const highResTheme = [
+          const highResThemes = [
             path.resolve(storageShedPath, 'hi-res', stickers.secondary && stickers.secondary.name || 'not_real'),
             path.resolve(storageShedPath, 'hi-res', stickers.default.name),
-          ].filter(hiResWaifu => fs.existsSync(hiResWaifu))[0];
+          ].filter(hiResWaifu => fs.existsSync(hiResWaifu));
+          const highResTheme = highResThemes[0];
           if (highResTheme) {
             const highResThemeDirectory = path.resolve(hiResGeneratedThemesDirectory, themeDirectoryName);
             return (fs.existsSync(highResThemeDirectory) ?
@@ -752,11 +450,13 @@ preBuild()
 
                       // copy high res image to firefox
                       const highResFireFoxBackgroundDirectory = path.resolve(firefoxThemeDirectory, 'images');
-                      const highResFireFox = path.resolve(highResFireFoxBackgroundDirectory, path.basename(highResTheme));
-                      fs.copyFileSync(
-                        highResTheme,
-                        highResFireFox
-                      )
+                      highResThemes.forEach(hiResTheme => {
+                        const highResFireFox = path.resolve(highResFireFoxBackgroundDirectory, path.basename(hiResTheme));
+                        fs.copyFileSync(
+                          hiResTheme,
+                          highResFireFox
+                        )
+                      });
 
                       resolve()
                     }
@@ -781,12 +481,22 @@ preBuild()
 
           // back fill any firefox images that don't have
           // high res.
-          const lowResFirefoxPath = path.resolve
-          (getBackgroundDirectory(firefoxThemeDirectory),
-            backgroundName)
-          if (!fs.existsSync(lowResFirefoxPath)) {
-            fs.copyFileSync(src, lowResFirefoxPath)
-          }
+          const bkNames = Object.values(stickers)
+            .map(sticker => sticker.name)
+          bkNames.forEach(bkName => {
+            const chromeLowerRes = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome',
+              bkName);
+            const lowResFallback = fs.existsSync(chromeLowerRes) ?
+              chromeLowerRes : path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', bkName);
+
+            const lowResFirefoxPath = path.resolve(
+              getBackgroundDirectory(firefoxThemeDirectory),
+              bkName
+            )
+            if (!fs.existsSync(lowResFirefoxPath)) {
+              fs.copyFileSync(lowResFallback, lowResFirefoxPath)
+            }
+          })
         })
         .catch(() => {
           // skipping asset copies
@@ -798,7 +508,7 @@ preBuild()
       // write things for firefox extension
       const dokiThemeDefinitions = dokiThemes.map(dokiTheme => {
         const dokiDefinition = dokiTheme.definition;
-        const defaultSticker = getDefaultSticker(getStickers(dokiDefinition, dokiTheme));
+        const stickers = getStickers(dokiDefinition, dokiTheme);
         const relativeFireFoxAssetPath = `${FIRE_FOX_EXTENSION_ASSET_DIRECTORY}/${
           getFireFoxThemeAssetDirectory(dokiDefinition)
         }`
@@ -810,15 +520,22 @@ preBuild()
               'ui',
               'icons'
             ]),
-            imagePath: `${relativeFireFoxAssetPath}/images/${
-              defaultSticker.name
-            }`,
+            backgrounds: {
+              primary: `${relativeFireFoxAssetPath}/images/${
+                stickers.default.name
+              }`,
+              ...(stickers.secondary ? {
+                secondary: `${relativeFireFoxAssetPath}/images/${
+                  stickers.secondary.name
+                }`
+              } : {})
+            },
             jsonPath: `${relativeFireFoxAssetPath}/theme.json`,
           },
           colors: dokiDefinition.colors,
           overrides: dokiTheme.chromeDefinition.overrides
         };
-      }).reduce((accum: StringDictonary<any>, definition) => {
+      }).reduce((accum: StringDictionary<any>, definition) => {
         accum[definition.information.id] = definition;
         return accum;
       }, {});
@@ -842,7 +559,7 @@ preBuild()
           ]),
           colors: dokiDefinition.colors,
         };
-      }).reduce((accum: StringDictonary<any>, definition) => {
+      }).reduce((accum: StringDictionary<any>, definition) => {
         accum[definition.information.id] = definition;
         return accum;
       }, {});
@@ -856,3 +573,7 @@ preBuild()
   .then(() => {
     console.log('Theme Generation Complete!');
   });
+
+function getName(dokiDefinition: MasterDokiThemeDefinition) {
+  return dokiDefinition.name.replace(':', '');
+}

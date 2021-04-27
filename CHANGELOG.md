@@ -7,6 +7,63 @@ Changelog
 - Popup menu can now change colors on pages other than _New Tab_ pages in **mix mode**
 - Adds animations to popup menu
 
+# 9.0.0 [Astolfo, Maika, Rias, & Rei]
+
+## 4 New Themes
+
+From the Fate series:
+
+- Astolfo (Dark)
+
+From the Highschool DxD series:
+
+- Rias: Onyx (a darker theme)
+  - 2 Backgrounds:
+    - A Cute One
+    - A Cultured One
+
+From the Blend S series:
+
+- Sakuranomiya Maika (Dark)
+
+From the Neon Genesis Evangelion series:
+
+- Ayanami Rei (Dark)
+
+![v14 Girls](https://doki.assets.unthrottled.io/misc/v14_girls.png)
+
+# 8.2.0
+
+## FireFox
+
+- Added the ability to choose between light/dark mode from the current Waifu you chose.
+
+# 8.1.0
+
+## FireFox
+
+- Added support for [Primary and Secondary Backgrounds](https://github.com/doki-theme/doki-theme-web/issues/21)
+- Added the ability to show/hide the new tab search widget.
+
+# 8.0.0
+
+## 4 New Themes
+
+From the Darling in the Franxx series:
+
+- Zero Two (Dark/light)
+
+From the Rascal does not dream of bunny girl senpai series:
+
+- Sakurajima Mai (Dark/light)
+
+![v13 Girls](https://doki.assets.unthrottled.io/misc/v13_girls.png)
+
+# 7.0.2 [Firefox: Popup Menu fix]
+
+- Popup menu can now change colors on pages other than _New Tab_ pages in **mix mode**
+- Adds animations to popup menu
+
 # 7.0.1 [Rename Repository]
 
 - Updated links to reflect new repository name.

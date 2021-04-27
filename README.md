@@ -11,6 +11,24 @@
 
 ## Features
 
+### Suggestive Content
+
+<div align="center">
+    <img src="https://doki.assets.unthrottled.io/misc/suggestive/cultured.gif" ></img>
+</div>
+
+So I thought it was a good idea to add a bit of culture to this plugin.
+<sup><sup>Ya boi is horny on main.</sup></sup>
+
+I will give you a bit of a warning before you install suggestive content.
+Some of us are professional Otaku, who want to remain, well...professional.
+Don't worry if you choose to continue, I won't ask you again for that specific theme.
+
+Applies for the following content:
+
+- Rias Onyx: Secondary Content
+
+
 Due to limitations of the platform(s), the Doki Theme has been broken into 2 pieces.
 
 ### Theme
