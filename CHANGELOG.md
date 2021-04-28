@@ -12,6 +12,7 @@ Changelog
 - Adds small changes to dropdown menu on idle state
 - Changes animation from *bouncing* to *heartbeat*
 - Brightens switch labels
+- Switch labels are now themed
 
 # 9.0.0 [Astolfo, Maika, Rias, & Rei]
 
