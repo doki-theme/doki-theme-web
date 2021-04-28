@@ -47,7 +47,13 @@ input:checked + .slider {
 
 input:focus + .slider {
   box-shadow: 0 0 1px ${colors.accentColor}44;
-
+}
+label[for="backgroundType"],
+label[for="darkMode"],
+label[for="hideSearch"]
+{
+  color:${colors.infoForeground};
+}
         `
   const styleSheet = document.createElement("style");
   styleSheet.innerText = styles;
