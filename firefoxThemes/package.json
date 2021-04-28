@@ -11,6 +11,6 @@
     "start": "web-ext run --source-dir ."
   },
   "dependencies": {
-    "web-ext": "^5.4.1"
+    "web-ext": "^6.1.0"
   }
 }

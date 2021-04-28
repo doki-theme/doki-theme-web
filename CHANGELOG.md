@@ -3,6 +3,17 @@ Changelog
 
 # Unreleased
 
+# 9.0.1 
+## Firefox: Small Cosmetic Changes
+
+- Removes extra *Rias* folder.
+- Changes ordering of switches
+- Reduces size of switches
+- Adds small changes to dropdown menu on idle state
+- Changes animation from *bouncing* to *heartbeat*
+- Brightens switch labels
+- Switch labels are now themed
+
 # 9.0.0 [Astolfo, Maika, Rias, & Rei]
 
 ## 4 New Themes

@@ -47,7 +47,13 @@ input:checked + .slider {
 
 input:focus + .slider {
   box-shadow: 0 0 1px ${colors.accentColor}44;
-
+}
+label[for="backgroundType"],
+label[for="darkMode"],
+label[for="hideSearch"]
+{
+  color:${colors.infoForeground};
+}
         `
   const styleSheet = document.createElement("style");
   styleSheet.innerText = styles;
@@ -85,7 +91,7 @@ const setDarkMode = async () => {
     const newTheme = Object.values(waifuThemes.themes)
       .find(dokiTheme =>
         dokiTheme.displayName === currentTheme.displayName &&
-      dokiTheme.id !== currentThemeId) || currentTheme
+        dokiTheme.id !== currentThemeId) || currentTheme
     const newThemeId = newTheme.id;
     setCss(newTheme);
     await browser.storage.local.set({currentThemeId: newThemeId})
