@@ -37,6 +37,11 @@ function setCss(chosenTheme) {
   background-color: ${colors.accentColor};
 }
 
+select {
+  background-color: ${colors.buttonColor};
+  color: ${colors.buttonFont};
+}
+
 .popup-body {
   background-color: ${colors.baseBackground};
 }
