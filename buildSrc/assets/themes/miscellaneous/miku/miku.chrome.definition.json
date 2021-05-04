@@ -5,7 +5,7 @@
       "colors": {
       },
       "properties": {
-        "ntp_background_alignment": "right"
+        "ntp_background_alignment_secondary": "right"
       }
     }
   },
