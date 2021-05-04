@@ -6,6 +6,7 @@ export const registerOptions = (onchange?: (newTheme: any) => void) => {
   const currentThemeSelect = document.getElementById("current-theme") as HTMLSelectElement;
   if (currentThemeSelect) {
     Object.values(DokiThemeDefinitions)
+      .sort((a, b) => a.information.name.localeCompare(b.information.name))
       .forEach(themeDef => {
         const option = document.createElement("option");
         option.text = themeDef.information.name

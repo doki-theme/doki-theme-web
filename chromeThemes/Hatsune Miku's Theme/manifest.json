@@ -1,6 +1,6 @@
 {
   "name": "Doki Theme: Hatsune Miku",
-  "version": "9.0.0",
+  "version": "10.0.0",
   "description": "A dark theme modeled after Miku from Vocaloid",
   "theme": {
     "images": {
@@ -104,7 +104,7 @@
       ]
     },
     "properties": {
-      "ntp_background_alignment": "center",
+      "ntp_background_alignment": "right",
       "ntp_logo_alternate": 0
     }
   },
