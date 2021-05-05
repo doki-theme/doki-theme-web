@@ -27,6 +27,7 @@ Addition to Miss Kobayashi's Dragon Maid:
 ## Other stuff
 
 - Added a secondary background for [Hatsune Miku](https://github.com/doki-theme/doki-master-theme/issues/62)!
+- Master extension selection menu is now sorted.
 
 ![v15 Girls](https://doki.assets.unthrottled.io/misc/v15_girls.png)
 

@@ -172,8 +172,9 @@ function initChoice() {
         .reduce((accum, dokiTheme) => {
           const displayName = dokiTheme.displayName;
           const themeByDisplayName = accum[displayName];
-          const hasConflicts = !!themeByDisplayName && themeByDisplayName[0].group !== dokiTheme.group;
-          const key = hasConflicts ? dokiTheme.name : dokiTheme.displayName;
+          const hasConflicts = !!themeByDisplayName &&
+            themeByDisplayName[0].group !== dokiTheme.group;
+          const themeKey = hasConflicts ? dokiTheme.name : dokiTheme.displayName;
 
           // update existing collisions
           if (hasConflicts) {
@@ -183,8 +184,8 @@ function initChoice() {
 
           return {
             ...accum,
-            [key]: [
-              ...(accum[key] || []),
+            [themeKey]: [
+              ...(accum[themeKey] || []),
               dokiTheme
             ]
           };
