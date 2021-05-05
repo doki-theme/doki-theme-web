@@ -8,6 +8,17 @@ function getAnchoring(theme) {
   return "center";
 }
 
+function getSecondaryAnchoring(theme) {
+  if (
+    theme.definition.overrides &&
+    theme.definition.overrides.theme &&
+    theme.definition.overrides.theme.properties &&
+    theme.definition.overrides.theme.properties.ntp_background_alignment_secondary) {
+    return theme.definition.overrides.theme.properties.ntp_background_alignment_secondary;
+  }
+  return getAnchoring(theme);
+}
+
 /*Adds Waifu to custom New Tab Page*/
 function addWaifu(storage) {
   const themes = storage.waifuThemes.themes;
@@ -15,11 +26,12 @@ function addWaifu(storage) {
   const currentTheme = themes[storage.currentThemeId];
 
   const primaryBackgroundRelativeUrl = currentTheme.backgrounds.primary;
-  const backgroundImageUrl = !storage.backgroundType ? primaryBackgroundRelativeUrl :
+  const isPrimaryBackground = !storage.backgroundType;
+  const backgroundImageUrl = isPrimaryBackground ? primaryBackgroundRelativeUrl :
     currentTheme.backgrounds.secondary || primaryBackgroundRelativeUrl
 
   const waifuImageURL = currentTheme ? `url(${browser.runtime.getURL(backgroundImageUrl)})` : "";
-  const anchoring = getAnchoring(currentTheme);
+  const anchoring = isPrimaryBackground ? getAnchoring(currentTheme) : getSecondaryAnchoring(currentTheme);
   const style = document.createTextNode("body:before {\n" +
     "\tcontent: \"\";\n" +
     "\tz-index: -1;\n" +

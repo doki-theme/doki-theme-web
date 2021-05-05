@@ -1,7 +1,7 @@
 {
   "name": "Doki Theme: Hatsune Miku",
-  "version": "9.0.0",
-  "description": "A dark theme modeled after Miku from Miscellaneous",
+  "version": "10.0.0",
+  "description": "A dark theme modeled after Miku from Vocaloid",
   "theme": {
     "images": {
       "theme_toolbar": "images/tab_highlight.png",
