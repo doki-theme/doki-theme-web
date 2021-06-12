@@ -1,0 +1,16 @@
+{
+  "id": "dfd05a73-c189-4622-87c7-573fbb3a46b9",
+  "overrides": {
+    "theme": {
+      "colors": {
+        "omnibox_text": "&keyColor&"
+      },
+      "properties": {
+        "ntp_background_alignment": "right"
+      }
+    }
+  },
+  "laf": {},
+  "syntax": {},
+  "colors": {}
+}
