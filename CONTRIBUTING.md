@@ -29,6 +29,9 @@ more familiar with the process as a whole.
 
 - Yarn package manager
 - Node 14
+- Firefox
+- Chrome
+- Microsoft Edge
 
 ## Initial Setup
 
