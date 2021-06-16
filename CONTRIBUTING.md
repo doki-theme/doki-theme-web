@@ -215,7 +215,7 @@ yarn generateTemplates
 
 The code defined in the `buildSrc/src` directory is part of the common Doki Theme construction suite. All other plugins
 work the same way, just some details change for each plugin (especially for this plugin). This group of code exposes
-a `buildThemes` node script.
+a `buildDefinitions` node script (**NOTE** you can't run `buildThemes` only I can, sorry!).
 
 This script does all the annoying tedious stuff such as:
 
