@@ -111,8 +111,8 @@ Inside the `buildSrc` directory, there will be 2 directories:
     values. Some cases, they also contain templates for evaluating things such as look and feel, colors, and other
     things.
 
-The `buildSrc` directory houses a `buildThemes` script that generates the application specific files necessary for apply
-the Doki Theme Suite.
+The `buildSrc` directory houses a `buildDefinitions` script that generates the application specific files necessary for apply
+the Doki Theme Suite. (**NOTE** you can't run `buildThemes` only I can, sorry!)
 
 ### Web specifics
 
