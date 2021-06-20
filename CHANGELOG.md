@@ -3,6 +3,10 @@ Changelog
 
 # Unreleased
 
+# 11.0.1 [FireFox Updates]
+
+- Updated the default option foreground color.
+
 # 11.0.0 [Hanekawa, Shima Rin, Nagatoro, Yumeko, & Yuno]
 
 ## 5 New Themes
