@@ -25,6 +25,7 @@ function setCss(chosenTheme) {
   color: ${colors.infoForeground};
 }
 
+
 * {
  color: ${colors.lineNumberColor};
 }
@@ -39,6 +40,10 @@ function setCss(chosenTheme) {
 
 select {
   background-color: ${colors.buttonColor};
+  color: ${colors.buttonFont};
+}
+
+option {
   color: ${colors.buttonFont};
 }
 
