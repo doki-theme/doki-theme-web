@@ -108,6 +108,14 @@ Until then, you'll have to do a local install.
 
 ## Mozilla Firefox
 
+### Add-on
+
+You can find the extension on the [FireFox addon marketplace.](https://addons.mozilla.org/en-US/firefox/addon/doki-theme-for-firefox/)
+
+### Manual
+
+If you don't feel like downloading the addon from the store, then follow the below steps.
+
 ### Prerequisites
 
 - Mozilla Firefox 63 or above
