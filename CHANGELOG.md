@@ -3,6 +3,10 @@ Changelog
 
 # Unreleased
 
+# 12.1.0 [2560x1440 Emilia Light]
+
+- Added the higher res Emilia Light Chrome theme.
+
 # 12.0.0 [NekoPara Release]
 
 ## 3 New Themes!!
