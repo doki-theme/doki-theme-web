@@ -15,6 +15,10 @@
     "search",
     "storage"
   ],
+  "options_ui": {
+    "page": "options.html",
+    "browser_style":true
+  },
   "background": {
     "scripts": [
       "DokiThemeDefinitions.js",
