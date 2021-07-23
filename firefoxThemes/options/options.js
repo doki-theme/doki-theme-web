@@ -1,6 +1,6 @@
 const loadOnStartCheckbox = document.querySelector("#loadOnStart");
 
-/*Set color of popup menu based on theme*/
+/*Set color of options menu based on theme*/
 function setCss(chosenTheme) {
   if (!chosenTheme) return
   const { colors } = chosenTheme.definition
