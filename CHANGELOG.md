@@ -3,6 +3,11 @@ Changelog
 
 # Unreleased
 
+# 12.2.0 [Firefox new tab on start]
+
+- Adds an `Options` menu in the extension configuration.
+- Allows user to choose if a new empty tab should be opened on startup. Fixes [#51](https://github.com/doki-theme/doki-theme-web/issues/51)
+
 # 12.1.0 [2560x1440 Emilia Light]
 
 - Added the higher res Emilia Light Chrome theme.
