@@ -1,55 +1,44 @@
+const loadOnStartCheckbox = document.querySelector("#loadOnStart");
 
-function drawBackground(colors) {
-  const backgroundCanvas = document.getElementById(
-    "backgroundImage"
-  );
-  const ctx = backgroundCanvas.getContext("2d");
-  if (!ctx) return;
-  const mainCanvas = document.getElementById("main");
-  if (!mainCanvas) {
-    return;
-  }
-
-  const boundingRect = mainCanvas.getBoundingClientRect();
-  const w = boundingRect.width;
-  const h = boundingRect.height;
-
-  backgroundCanvas.setAttribute('width', String(w));
-  backgroundCanvas.setAttribute('height', String(h))
-
-
-  ctx.clearRect(0, 0, w, h);
-  ctx.beginPath();
-  ctx.moveTo(0, h * 0.85);
-  ctx.quadraticCurveTo(w / 1.85, h, w, h / 2);
-  ctx.lineTo(w, h);
-  ctx.lineTo(0, h);
-
-  const color = colors && colors.headerColor || '#4c2e5c'
-  ctx.fillStyle = color;
-  ctx.strokeStyle = color;
-  ctx.fill();
-  ctx.closePath();
-  ctx.stroke();
+/*Set color of popup menu based on theme*/
+function setCss(chosenTheme) {
+  if (!chosenTheme) return
+  const { colors } = chosenTheme.definition
+  const styles = `
+body, html {
+  background-color: ${colors.headerColor};
+  color: ${colors.foregroundColor};
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  browser.storage.local.get(["waifuThemes","currentThemeId"])
-  .then(({
-    waifuThemes, currentThemeId,
-  })=> {
-    const dokiTheme = waifuThemes.themes.find(
-      theme => theme.id === currentThemeId
-    );
+* {
+  background-color: ${colors.baseBackground};
+ color: ${colors.foregroundColor};
+}
 
-    if (!dokiTheme) return;
+input:checked {
+  background-color: ${colors.accentColor}44;
+}
 
-    const colors = dokiTheme.definition.colors;
-    drawBackground(colors)
-    const newListener = () => {
-      drawBackground(colors);
-    }
-    window.addEventListener('resize', newListener)
+label[for="loadOnStart"]
+{
+  color:${colors.foregroundColor};
+}
+        `
+  const styleSheet = document.createElement("style");
+  styleSheet.innerText = styles;
+  document.head.appendChild(styleSheet)
+}
 
+browser.storage.local.get(['loadOnStart', 'waifuThemes', 'currentThemeId'])
+  .then((storage) => {
+    loadOnStartCheckbox.checked = !!storage.loadOnStart;
+    setCss(storage.waifuThemes.themes[storage.currentThemeId])
+  });
+
+const onLoadSwitchChange = async () => {
+  await browser.storage.local.set({
+    loadOnStart: loadOnStartCheckbox.checked,
   })
-})
+};
+
+loadOnStartCheckbox.addEventListener('change', onLoadSwitchChange, true)
