@@ -3,6 +3,7 @@ const selectTag = document.querySelector("select");
 const backgroundSwitch = document.querySelector("#backgroundType");
 const showSearchSwitch = document.querySelector("#hideSearch");
 const darkModeSwitch = document.querySelector("#darkMode");
+const dokiHeart = document.querySelector("#doki_heart");
 
 //Enum for the different Mixed option states
 const mixedStates = {
@@ -126,20 +127,22 @@ function setTheme(e) {
           .filter(dokiTheme => (
             dokiTheme.displayName === chosenThemeName ||
             dokiTheme.name === chosenThemeName
-          ))
+          ));
 
         const isDark = storage.darkMode !== undefined && storage.darkMode;
         const theme = themes.find(dokiTheme =>
-          dokiTheme.dark === isDark)
+          dokiTheme.dark === isDark);
 
         darkModeSwitch.disabled = themes.length < 2;
 
-        const usableTheme = theme || themes[0]
-        darkModeSwitch.checked = usableTheme.dark
+        if (chosenThemeName !== 'random') {
+          const usableTheme = theme || themes[0];
+          darkModeSwitch.checked = usableTheme.dark;
 
-        if (usableTheme) {
-          setCss(usableTheme);
-          chosenThemeId = usableTheme.id
+          if (usableTheme) {
+            setCss(usableTheme);
+            chosenThemeId = usableTheme.id;
+          }
         }
       }
       browser.runtime.sendMessage({currentThemeId: chosenThemeId || 'mixed', mixState: currentMix});
@@ -157,7 +160,10 @@ function getRandomTheme(themes) {
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
-
+/*Navigate to options page*/
+function optionsPage(){
+  browser.runtime.openOptionsPage();
+}
 /*Setup Waifu Choices for the popup menu
 * Also categorizes each theme based on their type (dark/light)*/
 function initChoice() {
@@ -229,3 +235,4 @@ selectTag.addEventListener("change", setTheme, true);
 backgroundSwitch.addEventListener("change", setBackground, true);
 showSearchSwitch.addEventListener("change", setHideWidget, true);
 darkModeSwitch.addEventListener("change", setDarkMode, true);
+dokiHeart.addEventListener('click',optionsPage,true);

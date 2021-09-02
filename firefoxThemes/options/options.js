@@ -1,9 +1,11 @@
-const loadOnStartCheckbox = document.querySelector("#loadOnStart");
+const loadOnStartCheckbox = document.querySelector("input[name=loadOnStart]");
+const textSelectionCheckbox = document.querySelector("input[name=textSelection]");
+const scrollbarCheckbox = document.querySelector("input[name=scrollbar]");
 
 /*Set color of options menu based on theme*/
 function setCss(chosenTheme) {
   if (!chosenTheme) return
-  const { colors } = chosenTheme.definition
+  const {colors} = chosenTheme.definition
   const styles = `
 body, html {
   background-color: ${colors.headerColor};
@@ -29,16 +31,24 @@ label[for="loadOnStart"]
   document.head.appendChild(styleSheet)
 }
 
-browser.storage.local.get(['loadOnStart', 'waifuThemes', 'currentThemeId'])
-  .then((storage) => {
-    loadOnStartCheckbox.checked = !!storage.loadOnStart;
-    setCss(storage.waifuThemes.themes[storage.currentThemeId])
-  });
+function initContent() {
+  browser.storage.local.get(['loadOnStart', 'textSelection', 'scrollbar', 'waifuThemes', 'currentThemeId'])
+    .then((storage) => {
+      loadOnStartCheckbox.checked = !!storage.loadOnStart;
+      textSelectionCheckbox.checked = !!storage.textSelection;
+      scrollbarCheckbox.checked = !!storage.scrollbar;
+      setCss(storage.waifuThemes.themes[storage.currentThemeId])
+    });
+}
 
-const onLoadSwitchChange = async () => {
-  await browser.storage.local.set({
-    loadOnStart: loadOnStartCheckbox.checked,
-  })
+const onChangeCheckEvents = async (e) => {
+  await browser.runtime.sendMessage({
+    optionName: e.target.name,
+    optionValue: e.target.checked
+  });
 };
 
-loadOnStartCheckbox.addEventListener('change', onLoadSwitchChange, true)
+initContent();
+loadOnStartCheckbox.addEventListener('change', onChangeCheckEvents, true);
+textSelectionCheckbox.addEventListener('change', onChangeCheckEvents, true);
+scrollbarCheckbox.addEventListener('change', onChangeCheckEvents, true);

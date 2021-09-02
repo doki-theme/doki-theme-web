@@ -2,6 +2,12 @@ Changelog
 ---
 
 # Unreleased
+# 13.1.0 [Scrollbars & Text Marking]
+
+- Scrollbar & text selection are now themed!
+- Fix `Random` mode
+- Add shortcut to *options page* by clicking on Doki heartbeat
+- Update styles to Doki heartbeat in popup menu
 
 # 13.0.0 [NekoPara OneeSan Vol.]
 

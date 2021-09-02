@@ -19,8 +19,8 @@ function getSecondaryAnchoring(theme) {
   return getAnchoring(theme);
 }
 
-/*Adds Waifu to custom New Tab Page*/
-function addWaifu(storage) {
+/*Prepares the Waifu to be displayed on webpage*/
+function getWaifu(storage) {
   const themes = storage.waifuThemes.themes;
   //Retrieve path to the image file
   const currentTheme = themes[storage.currentThemeId];
@@ -32,7 +32,7 @@ function addWaifu(storage) {
 
   const waifuImageURL = currentTheme ? `url(${browser.runtime.getURL(backgroundImageUrl)})` : "";
   const anchoring = isPrimaryBackground ? getAnchoring(currentTheme) : getSecondaryAnchoring(currentTheme);
-  const style = document.createTextNode("body:before {\n" +
+  return document.createTextNode("body:before {\n" +
     "\tcontent: \"\";\n" +
     "\tz-index: -1;\n" +
     "\tposition: fixed;\n" +
@@ -43,17 +43,20 @@ function addWaifu(storage) {
     "\twidth: 100vw;\n" +
     "\theight: 100vh;\n" +
     "}");
+
+}
+/*Load Doki Theme to webpage*/
+function loadDokiTheme(storage){
   const styleTag = document.createElement("style");
-  styleTag.append(style);//Add CSS styles to <style>
+  styleTag.append(getWaifu(storage));//Add CSS styles to <style>
   document.head.append(styleTag);
 }
-
 /*Apply Theme */
 function applyTheme() {
   browser.storage.local.get(["waifuThemes", "currentThemeId", "backgroundType"])
     .then((storage) => {
       if (Object.keys(storage.waifuThemes.themes).includes(storage.currentThemeId)) {
-        addWaifu(storage);
+        loadDokiTheme(storage);
       }
     });
 }

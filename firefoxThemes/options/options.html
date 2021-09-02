@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="utf-8"/>
   <title>Doki Theme Options</title>
+
+  <script src="options.js" defer></script>
   <style>
     html, body {
       font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
@@ -11,17 +13,31 @@
       padding: 1rem;
       height: 500px;
     }
+    section{
+      margin-top:2em;
+    }
   </style>
 </head>
-
 <body>
-
   <div class="options-container">
-    <label>
-      Load New Tab on start
-      <input type="checkbox" id="loadOnStart" />
-    </label>
+    <section>
+      <label>
+        Load New Tab on new window:
+        <input name="loadOnStart" type="checkbox"/>
+      </label>
+    </section>
+    <section>
+      <label>
+        Activate/Deactivate text selection:
+        <input name="textSelection" type="checkbox" checked/>
+      </label>
+    </section>
+    <section>
+      <label>
+        Activate/Deactivate scrollbar:
+        <input name="scrollbar" type="checkbox" checked/>
+      </label>
+    </section>
   </div>
-  <script src="options.js"></script>
 </body>
 </html>

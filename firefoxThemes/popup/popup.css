@@ -69,8 +69,14 @@ img {
   margin: 1em auto 0 auto;
   max-width: 30%;
   animation: heartbeat 6s linear infinite;
+  filter: hue-rotate(0deg) drop-shadow(3px 3px 5px #111);
+  -moz-transition: filter 1.3s;
+  transition:filter 1.3s;
 }
-
+img:hover{
+  filter: hue-rotate(90deg) drop-shadow(3px 3px 10px #000);
+  cursor:pointer;
+}
 /*Waifu Option Styles*/
 option {
   color: #47494b;
