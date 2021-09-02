@@ -12,8 +12,8 @@ async function getColorDefinition(){
 async function applyScrollbar(){
   const {accentColor} = await getColorDefinition();
   const style = `:root{
-  scrollbar-color: ${accentColor} rgba(0, 0, 0, 0);
-  scrollbar-width: thin;
+  scrollbar-color: ${accentColor} rgba(0, 0, 0, 0) !important;
+  scrollbar-width: thin !important;
 }`;
   const styleText = document.createTextNode(style);
   const styleTag = document.createElement('style');

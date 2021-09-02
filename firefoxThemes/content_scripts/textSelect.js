@@ -12,11 +12,11 @@ async function getColorDefinition(){
 async function applyTextSelection(){
   const {caretRow,selectionForeground,selectionBackground} = await getColorDefinition();
   const style = `:root{
-  caret-color: ${caretRow}; 
+  caret-color: ${caretRow} !important; 
 }
 ::selection{
-  color: ${selectionForeground};
-  background-color: ${selectionBackground};
+  color: ${selectionForeground} !important;
+  background-color: ${selectionBackground} !important;
 }
 `;
   /*Add style to HTML document*/
