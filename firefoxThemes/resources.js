@@ -38,7 +38,7 @@ class Theme {
 /*---FUNCTIONS---*/
 /*Initialize Local Storage & custom new tab page*/
 function startStorage() {
-    browser.storage.local.get("currentThemeId")
+    browser.storage.local.get(["currentThemeId", "loadOnStart"])
         .then((storage) => {
             const initStorage = {
                 waifuThemes: new WaifuThemes()
@@ -49,8 +49,10 @@ function startStorage() {
             if (storage.currentThemeId) {
                 loadTheme(initStorage.waifuThemes.themes, storage.currentThemeId);
             }
-            //When the browser first opens, redirect to custom new tab page
-            browser.tabs.update({loadReplace: true, url: "waifus/index.html"});
+            if (storage.loadOnStart) {
+                //When the browser first opens, redirect to custom new tab page
+                browser.tabs.update({loadReplace: true, url: "waifus/index.html"});
+            }
         });
 }
 /*Update all new tabs with new waifu theme*/

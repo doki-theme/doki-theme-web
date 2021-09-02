@@ -3,6 +3,7 @@
 ## Prerequisites
 
 - [Yarn Package Manager](https://classic.yarnpkg.com/en/docs/install/#debian-stable)
+- Node 14
 - [Firefox web browser](https://www.mozilla.org/en-US/firefox/new/)
 
 ## First time setup

@@ -1,6 +1,6 @@
 # Feature Preview
 
-## Chrome
+## Google Chrome
 ![Megumin Chrome](./screenshots/backgrounds/megumin.png)
 
 ## Microsoft Edge
@@ -8,6 +8,12 @@
 
 ## FireFox
 ![Aqua FireFox](./screenshots/backgrounds/firefox_background.png)
+
+# Browser Docs
+
+- [Chrome](#chrome)
+- [Edge](#microsoft-edge)
+- [FireFox](#mozilla-firefox)
 
 ## Features
 
@@ -80,7 +86,7 @@ Until then, you'll have to do a local install.
     1. To install the master extension, go to `masterExtension` and just select the `installable_extension` directory and `open` or confirm.
 1. Enjoy!
 
-## Microsoft Edge
+## Edge
 
 ### Prerequisites
 
@@ -108,6 +114,14 @@ Until then, you'll have to do a local install.
 
 ## Mozilla Firefox
 
+### Add-on
+
+You can find the extension on the [FireFox addon marketplace.](https://addons.mozilla.org/en-US/firefox/addon/doki-theme-for-firefox/)
+
+### Manual
+
+If you don't feel like downloading the addon from the store, then follow the below steps.
+
 ### Prerequisites
 
 - Mozilla Firefox 63 or above
@@ -120,6 +134,20 @@ Until then, you'll have to do a local install.
 1. Choose the *manifest.json* file in the Firefox directory
 1. Now, select the doki-theme icon on the toolbar & Choose a theme to load
 1. And that's it!
+
+### Configuration
+
+You can configure the extension by:
+
+1. Right-click the extension in the toolbar.
+2. Manage Extension
+3. Under Doki Theme for Firefox choose `Options`
+
+**Load New Tab on start** is not enabled by default. 
+When enabled, when the browser will first open, it will open a tab with your Waifu in the background.
+There is a know issue with session restoration on re-open though. [See GitHub issue for more details](https://github.com/doki-theme/doki-theme-web/issues/51).
+
+![Firefox settings](./screenshots/firefox_config.png)
 
 ### Issues
 

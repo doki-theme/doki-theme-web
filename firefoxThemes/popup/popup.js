@@ -25,6 +25,7 @@ function setCss(chosenTheme) {
   color: ${colors.infoForeground};
 }
 
+
 * {
  color: ${colors.lineNumberColor};
 }
@@ -35,6 +36,15 @@ function setCss(chosenTheme) {
 
 .slider:before {
   background-color: ${colors.accentColor};
+}
+
+select {
+  background-color: ${colors.buttonColor};
+  color: ${colors.buttonFont};
+}
+
+option {
+  color: ${colors.buttonFont};
 }
 
 .popup-body {
@@ -87,10 +97,11 @@ const setDarkMode = async () => {
 
   const currentTheme = waifuThemes.themes[currentThemeId];
 
-  if(currentTheme) {
+  if (currentTheme) {
     const newTheme = Object.values(waifuThemes.themes)
       .find(dokiTheme =>
-        dokiTheme.displayName === currentTheme.displayName &&
+        (dokiTheme.displayName === currentTheme.displayName ||
+          dokiTheme.name === currentTheme.name) &&
         dokiTheme.id !== currentThemeId) || currentTheme
     const newThemeId = newTheme.id;
     setCss(newTheme);
@@ -102,7 +113,7 @@ const setDarkMode = async () => {
 /*EVENT: Retrieve the selected waifu.
 Afterwards, send the chosen waifu to the background script.*/
 function setTheme(e) {
-  browser.storage.local.get([ "darkMode", "waifuThemes"])
+  browser.storage.local.get(["darkMode", "waifuThemes"])
     .then((storage) => {
       const chosenThemeName = e.target.value;
       const currentMix = chosenThemeName === "mixed" ? mixedStates.INITIAL : mixedStates.NONE;
@@ -112,7 +123,10 @@ function setTheme(e) {
           chosenThemeId = getRandomTheme(storage.waifuThemes.themes);
         }
         const themes = Object.values(storage.waifuThemes.themes)
-          .filter(dokiTheme => dokiTheme.displayName === chosenThemeName)
+          .filter(dokiTheme => (
+            dokiTheme.displayName === chosenThemeName ||
+            dokiTheme.name === chosenThemeName
+          ))
 
         const isDark = storage.darkMode !== undefined && storage.darkMode;
         const theme = themes.find(dokiTheme =>
@@ -160,13 +174,27 @@ function initChoice() {
       darkModeSwitch.checked = storage.darkMode;
       showSearchSwitch.checked = storage.showWidget === undefined || storage.showWidget;
       const themesGroupedByName = Object.values(storage.waifuThemes.themes)
-        .reduce((accum, dokiTheme) => ({
-          ...accum,
-          [dokiTheme.displayName]: [
-            ...(accum[dokiTheme.displayName] || []),
-            dokiTheme
-          ]
-        }), {});
+        .reduce((accum, dokiTheme) => {
+          const displayName = dokiTheme.displayName;
+          const themeByDisplayName = accum[displayName];
+          const hasConflicts = !!themeByDisplayName &&
+            themeByDisplayName[0].group !== dokiTheme.group;
+          const themeKey = hasConflicts ? dokiTheme.name : dokiTheme.displayName;
+
+          // update existing collisions
+          if (hasConflicts) {
+            delete accum[displayName]
+            accum[themeByDisplayName[0].name] = themeByDisplayName;
+          }
+
+          return {
+            ...accum,
+            [themeKey]: [
+              ...(accum[themeKey] || []),
+              dokiTheme
+            ]
+          };
+        }, {});
       const themes = Object.keys(themesGroupedByName)
         .sort((a, b) => a.localeCompare(b));
       const waifuGroup = document.querySelector("#waifus");

@@ -3,6 +3,96 @@ Changelog
 
 # Unreleased
 
+# 13.0.0 [NekoPara OneeSan Vol.]
+
+## 4 New Themes!!
+
+- Maple (Light/Dark)
+- Cinnamon (Dark)
+- Azuki (Dark)
+
+![v18 Girls](https://doki.assets.unthrottled.io/misc/v18_girls.png)
+
+
+# 12.2.0 [Firefox new tab on start]
+
+- Adds an `Options` menu in the extension configuration.
+- Allows user to choose if a new empty tab should be opened on startup. Fixes [#51](https://github.com/doki-theme/doki-theme-web/issues/51)
+
+# 12.1.0 [2560x1440 Emilia Light]
+
+- Added the higher res Emilia Light Chrome theme.
+
+# 12.0.0 [NekoPara Release]
+
+## 3 New Themes!!
+
+- Chocola (Dark)
+- Vanilla (Dark)
+- Coconut (Dark)
+
+![v17 Girls](https://doki.assets.unthrottled.io/misc/v17_girls.png)
+
+# 11.0.1 [FireFox Updates]
+
+- Updated the default option foreground color.
+
+# 11.0.0 [Hanekawa, Shima Rin, Nagatoro, Yumeko, & Yuno]
+
+## 5 New Themes
+
+From the Monogatari series:
+
+- Hanekawa Tsubasa (Dark)
+
+From the Yuru Camp series:
+
+- Shima Rin (Dark)
+
+From the Don't Toy With Me, Miss Nagatoro series:
+
+- Hayase Nagatoro (Dark)
+
+From the Kakegurui Series:
+
+- Jabami Yumeko (Dark)
+
+From the Future Diary Series
+
+- Gasai Yuno (Dark)
+
+![v16 Girls](https://doki.assets.unthrottled.io/misc/v16_girls.png)
+
+
+# 10.0.0 [Nino, Nakano Miku, Gray, Miia, & Tohru]
+
+## 5 New Themes
+
+From the Quintessential Quintuplets series:
+
+- Nakano Nino (Dark)
+- Nakano Miku (Dark)
+
+From the Lord El-Melloi II Case Files series:
+
+- Gray (Dark)
+
+From the Daily Life with a Monster girl series:
+
+- Miia (Dark)
+
+Addition to Miss Kobayashi's Dragon Maid:
+
+- Tohru (Light)
+
+## Other stuff
+
+- Added a secondary background for [Hatsune Miku](https://github.com/doki-theme/doki-master-theme/issues/62)!
+- Master extension selection menu is now sorted.
+
+![v15 Girls](https://doki.assets.unthrottled.io/misc/v15_girls.png)
+
+
 # 9.0.1 
 ## Firefox: Small Cosmetic Changes
 

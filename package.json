@@ -1,6 +1,6 @@
 {
   "name": "doki-theme-web",
-  "version": "9.0.0",
+  "version": "13.0.0",
   "description": "Browse the web with your waifu",
   "main": "index.js",
   "repository": "git@github.com:doki-theme/doki-theme-web.git",
