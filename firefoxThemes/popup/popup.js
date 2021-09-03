@@ -148,14 +148,22 @@ function setTheme(e) {
       const currentMix = chosenThemeName === "mixed" ? mixedStates.INITIAL : mixedStates.NONE;
       let chosenThemeId;
       if (currentMix === mixedStates.NONE) {
+        let themes;
         if (chosenThemeName === "random") {
           chosenThemeId = getRandomTheme(storage.waifuThemes.themes);
+          const chosenRandom = storage.waifuThemes.themes[chosenThemeId]
+          themes = Object.values(storage.waifuThemes.themes)
+            .filter(dokiTheme => (
+              dokiTheme.displayName === chosenRandom.displayName ||
+              dokiTheme.name === chosenRandom.name
+            ));
+        }else{
+          themes = Object.values(storage.waifuThemes.themes)
+            .filter(dokiTheme => (
+              dokiTheme.displayName === chosenThemeName ||
+              dokiTheme.name === chosenThemeName
+            ));
         }
-        const themes = Object.values(storage.waifuThemes.themes)
-          .filter(dokiTheme => (
-            dokiTheme.displayName === chosenThemeName ||
-            dokiTheme.name === chosenThemeName
-          ));
 
         const isDark = (storage.darkMode) && storage.darkMode.isDarkNow;
         const theme = themes.find(dokiTheme =>
