@@ -1,7 +1,7 @@
-async function getColorDefinition(){
+async function getColorDefinition() {
   const storage = await browser.storage.local.get(["waifuThemes", "currentThemeId"]);
   const themes = storage.waifuThemes.themes;
-//Retrieve path to the image file
+
   const currentTheme = themes[storage.currentThemeId];
 
   const {colors} = currentTheme.definition;
@@ -9,8 +9,8 @@ async function getColorDefinition(){
   return colors;
 }
 
-async function applyTextSelection(){
-  const {caretRow,selectionForeground,selectionBackground} = await getColorDefinition();
+async function applyTextSelection() {
+  const {caretRow, selectionForeground, selectionBackground} = await getColorDefinition();
   const style = `:root{
   caret-color: ${caretRow} !important; 
 }
@@ -26,4 +26,5 @@ async function applyTextSelection(){
   styleTag.append(styleText);
   document.head.append(styleTag);
 }
+
 applyTextSelection();

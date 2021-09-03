@@ -45,12 +45,14 @@ function getWaifu(storage) {
     "}");
 
 }
+
 /*Load Doki Theme to webpage*/
-function loadDokiTheme(storage){
+function loadDokiTheme(storage) {
   const styleTag = document.createElement("style");
   styleTag.append(getWaifu(storage));//Add CSS styles to <style>
   document.head.append(styleTag);
 }
+
 /*Apply Theme */
 function applyTheme() {
   browser.storage.local.get(["waifuThemes", "currentThemeId", "backgroundType"])

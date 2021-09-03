@@ -32,35 +32,35 @@ h1 {
   0% {
     transform: scale(1.5);
   }
-  10%{
-    transform:scale(1);
+  10% {
+    transform: scale(1);
   }
-  15%{
-    transform:scale(1.5);
+  15% {
+    transform: scale(1.5);
   }
   25% {
-    transform:scale(1);
+    transform: scale(1);
   }
   30% {
-    transform:scale(1.5);
+    transform: scale(1.5);
   }
   45% {
-    transform:scale(1);
+    transform: scale(1);
   }
   50% {
-    transform:scale(1.5);
+    transform: scale(1.5);
   }
-  80%{
-    transform:scale(1);
+  80% {
+    transform: scale(1);
   }
-  90%{
-    transform:scale(1.5);
+  90% {
+    transform: scale(1.5);
   }
-  95%{
-    transform:scale(1);
+  95% {
+    transform: scale(1);
   }
-  100%{
-    transform:scale(1.5);
+  100% {
+    transform: scale(1.5);
   }
 }
 
@@ -69,14 +69,14 @@ img {
   margin: 1em auto 0 auto;
   max-width: 30%;
   animation: heartbeat 6s linear infinite;
-  filter: hue-rotate(0deg) drop-shadow(3px 3px 5px #111);
-  -moz-transition: filter 1.3s;
-  transition:filter 1.3s;
+  -moz-transition: filter 1.2s;
+  transition: filter 1.2s;
 }
-img:hover{
-  filter: hue-rotate(90deg) drop-shadow(3px 3px 10px #000);
-  cursor:pointer;
+
+img:hover {
+  cursor: pointer;
 }
+
 /*Waifu Option Styles*/
 option {
   color: #47494b;
@@ -122,7 +122,6 @@ form > label > input {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #292e34;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -153,13 +152,17 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+input:disabled + .slider {
+  filter: blur(3px);
+}
+
 /*Switch labels*/
 label[for="backgroundType"],
 label[for="darkMode"],
-label[for="hideSearch"]
-{
-  color:#bbb;
+label[for="hideSearch"] {
+  color: #bbb;
 }
+
 /* Rounded sliders */
 .slider.round {
   border-radius: 34px;

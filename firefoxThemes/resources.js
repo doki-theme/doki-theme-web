@@ -290,9 +290,9 @@ const registerOpt = {};
 async function registerTheme(name, shouldSet) {
   const applyName = name + 'Register';
   if (shouldSet) {
-    await registerContentScripts(name, applyName);
+    registerContentScripts(name, applyName);
   } else {
-    await unregisterContentScripts(name, applyName);
+    unregisterContentScripts(name, applyName);
   }
 }
 
@@ -335,8 +335,11 @@ function getContentScripts(name) {
 
 /*Reload all tabs*/
 async function reloadAllTabs(includeActive) {
-  const tabs = await browser.tabs.query({active: !!includeActive});
-  for (const tab of tabs) {
+  const tabs = await browser.tabs.query({
+    active: !!includeActive,
+    url: '*://*/'
+  });
+  for await(const tab of tabs) {
     browser.tabs.reload(tab.id);
   }
 }

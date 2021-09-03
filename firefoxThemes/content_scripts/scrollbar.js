@@ -1,4 +1,4 @@
-async function getColorDefinition(){
+async function getColorDefinition() {
   const storage = await browser.storage.local.get(["waifuThemes", "currentThemeId"]);
   const themes = storage.waifuThemes.themes;
 
@@ -9,7 +9,7 @@ async function getColorDefinition(){
   return colors;
 }
 
-async function applyScrollbar(){
+async function applyScrollbar() {
   const {accentColor} = await getColorDefinition();
   const style = `:root{
   scrollbar-color: ${accentColor} rgba(0, 0, 0, 0) !important;
