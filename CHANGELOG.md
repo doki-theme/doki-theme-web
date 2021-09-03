@@ -4,7 +4,7 @@ Changelog
 # Unreleased
 # 13.1.0 [Scrollbars & Text Selection]
 
-- Scrollbar, text selection, & caret are now themed! [#52](https://github.com/doki-theme/doki-theme-web/issues/59)
+- Scrollbar, text selection, & caret are now themed! [#59](https://github.com/doki-theme/doki-theme-web/issues/59)
 - Fix `Random` mode
 - Add shortcut to *options page* by clicking on Doki heartbeat
 - Update styles in popup menu
