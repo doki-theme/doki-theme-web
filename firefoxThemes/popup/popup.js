@@ -17,7 +17,7 @@ const backgroundTypes = {
 };
 
 /*Set color of popup menu based on theme*/
-function setCss(chosenTheme) {
+function setCSS(chosenTheme) {
   if (!chosenTheme) return
   const {colors, information} = chosenTheme.definition;
   const switchShadowColor = information.dark ? 'white' : 'black';
@@ -114,7 +114,7 @@ async function setDarkMode(shouldDisable) {
 
 /*Stores whether or not the current theme has a secondary theme*/
 function setHasSecondary(currentTheme) {
-  const hasSecondaryMode = !!currentTheme.backgrounds.secondary;
+  const hasSecondaryMode = currentTheme && !!currentTheme.backgrounds.secondary;
   backgroundSwitch.disabled = !hasSecondaryMode;
   browser.storage.local.set({hasSecondaryMode});
 }
@@ -133,7 +133,7 @@ const setOpposingTheme = async () => {
           dokiTheme.name === currentTheme.name) &&
         dokiTheme.id !== currentThemeId) || currentTheme;
     const newThemeId = newTheme.id;
-    setCss(newTheme);
+    setCSS(newTheme);
     await browser.storage.local.set({currentThemeId: newThemeId});
     browser.runtime.sendMessage({currentThemeId: newThemeId});
   }
@@ -165,15 +165,17 @@ function setTheme(e) {
         darkModeSwitch.disabled = disableDarkSwitch;
         setDarkMode(disableDarkSwitch);
 
-
         if (chosenThemeName !== 'random') {
           const usableTheme = theme || themes[0];
           darkModeSwitch.checked = !!usableTheme.dark;
 
           if (usableTheme) {
-            setCss(usableTheme);
+            setCSS(usableTheme);
             chosenThemeId = usableTheme.id;
           }
+        }else{
+          setCSS(storage.waifuThemes.themes[chosenThemeId]);
+          selectTag.value = 'none';
         }
       }
       setHasSecondary(storage.waifuThemes.themes[chosenThemeId]);
@@ -266,11 +268,11 @@ function initChoice() {
           const themes = storage.waifuThemes.themes;
           if (activeTab && storage.mixedTabs) {
             const tabThemeId = storage.mixedTabs.get(activeTab.id);
-            setCss(themes[tabThemeId]);
+            setCSS(themes[tabThemeId]);
             selectTag.options.selectedIndex =
               selectTag.options.namedItem(tabThemeId).index;
           } else if (activeTab) {
-            setCss(themes[storage.currentThemeId]);
+            setCSS(themes[storage.currentThemeId]);
           }
         })
     });
