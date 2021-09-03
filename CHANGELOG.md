@@ -9,6 +9,7 @@ Changelog
 - Add shortcut to *options page* by clicking on Doki heartbeat
 - Update styles in popup menu
 - Fix switches in popup menu not disabling properly for both secondary and dark
+- Fixes Popup menu not changing to appropriate theme color when selected
 
 # 13.0.0 [NekoPara OneeSan Vol.]
 
