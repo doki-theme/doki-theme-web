@@ -334,9 +334,8 @@ function getContentScripts(name) {
 }
 
 /*Reload all tabs*/
-async function reloadAllTabs(includeActive) {
+async function reloadAllTabs() {
   const tabs = await browser.tabs.query({
-    active: !!includeActive,
     url: '*://*/*'
   });
   for await(const tab of tabs) {
