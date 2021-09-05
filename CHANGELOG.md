@@ -5,6 +5,7 @@ Changelog
 # 13.2.0 [Marketplace Conformance]
 
 - Updated plugin to conform to the Firefox addon rules and guidelines when using registered trademarks.
+- *Browser action* button now changes logo color based on currently selected theme.
 
 # 13.1.0 [Scrollbars & Text Selection]
 

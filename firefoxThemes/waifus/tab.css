@@ -1,6 +1,7 @@
 :root {
   --accent-color: inherit;
   --base-background-color: inherit;
+  --search-border-radius: 12px;
 }
 
 body {
@@ -42,10 +43,10 @@ main{
     margin: 0 auto;
     position: relative;
 }
-input {
+input[type=search] {
     background-size: 24px;
     border: solid 1px transparent;
-    border-radius: 3px;
+    border-radius: var(--search-border-radius);
     box-shadow: 0 1px 4px 0 rgba(12, 12, 13, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.15);
     font-size: 15px;
     padding: 0;
@@ -64,7 +65,7 @@ input:hover {
     background: url("forward.svg") no-repeat center center;
     background-size: 16px 16px;
     border: 0;
-    border-radius: 0 3px 3px 0;
+    border-radius: 0 var(--search-border-radius) var(--search-border-radius) 0;
     height: 100%;
     inset-inline-end: 0;
     position: absolute;
