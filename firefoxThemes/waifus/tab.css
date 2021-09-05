@@ -1,3 +1,8 @@
+:root {
+  --accent-color: inherit;
+  --base-background-color: inherit;
+}
+
 body {
     background-color: #F9F9FA;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;;
@@ -21,6 +26,11 @@ main{
 .logo-and-wordmark .wordmark {
     display: inline-block;
     font-size: 3rem;
+    color: var(--accent-color);
+    text-shadow: 1px 0 0 var(--base-background-color),
+                0 1px 0 var(--base-background-color),
+                -1px 0 0 var(--base-background-color),
+                0 -1px 0 var(--base-background-color);
     margin-inline-start: 15px;
 }
 /*Search Bar*/
