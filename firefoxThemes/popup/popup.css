@@ -29,6 +29,10 @@
   color: var(--line-number-color);
 }
 
+:root {
+  --accent-color: red;
+}
+
 body {
   background-color: #2f363c;
   overflow: hidden;
