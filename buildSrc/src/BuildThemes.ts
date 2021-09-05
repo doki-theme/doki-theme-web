@@ -1,18 +1,18 @@
 import {
   BaseAppDokiThemeDefinition,
+  constructNamedColorTemplate,
+  dictionaryReducer,
   DokiThemeDefinitions,
   evaluateTemplates,
   MasterDokiThemeDefinition,
-  resolvePaths,
-  StringDictionary,
-  walkDir,
-  dictionaryReducer,
-  constructNamedColorTemplate,
+  readJson,
   resolveColor,
-  toRGBArray,
-  rgbToHsl,
+  resolvePaths,
   resolveStickerPath,
-  readJson
+  rgbToHsl,
+  StringDictionary,
+  toRGBArray,
+  walkDir
 } from 'doki-build-source';
 import {FireFoxTheme, ManifestTemplate,} from './types';
 
@@ -42,6 +42,29 @@ function replaceValues<T, R>(itemToReplace: T, valueConstructor: (key: string, v
     .reduce(dictionaryReducer, {});
 }
 
+function buildColors(
+  dokiThemeDefinition: MasterDokiThemeDefinition,
+  dokiTemplateDefinitions: DokiThemeDefinitions,
+  dokiThemeChromeDefinition: ChromeDokiThemeDefinition,
+): StringDictionary<string> {
+  const namedColors = constructNamedColorTemplate(
+    dokiThemeDefinition, dokiTemplateDefinitions
+  )
+  const themeOverrides = dokiThemeChromeDefinition.overrides.theme &&
+    dokiThemeChromeDefinition.overrides.theme.colors || {};
+  const colorsOverride: StringDictionary<string> = {
+    ...namedColors,
+    ...themeOverrides,
+    ...dokiThemeChromeDefinition.colors,
+  }
+  return Object.entries<string>(colorsOverride).reduce(
+    (accum, [colorName, colorValue]) => ({
+      ...accum,
+      [colorName]: resolveColor(colorValue, namedColors),
+    }),
+    {}
+  );
+}
 
 function buildChromeThemeManifest(
   dokiThemeDefinition: MasterDokiThemeDefinition,
@@ -53,8 +76,12 @@ function buildChromeThemeManifest(
     dokiThemeDefinition, dokiTemplateDefinitions
   )
   const manifestTheme = manifestTemplate.theme;
-  const colorsOverride = dokiThemeChromeDefinition.overrides.theme &&
+  const themeOverrides = dokiThemeChromeDefinition.overrides.theme &&
     dokiThemeChromeDefinition.overrides.theme.colors || {};
+  const colorsOverride: StringDictionary<string> = {
+    ...themeOverrides,
+    ...dokiThemeChromeDefinition.colors,
+  }
   return {
     ...manifestTemplate,
     name: `Doki Theme: ${dokiThemeDefinition.name}`,
@@ -127,7 +154,10 @@ function createDokiTheme(
   try {
     return {
       path: dokiFileDefinitionPath,
-      definition: dokiThemeDefinition,
+      definition: {
+        ...dokiThemeDefinition,
+        colors: buildColors(dokiThemeDefinition, dokiTemplateDefinitions, dokiThemeChromeDefinition)
+      },
       manifest: buildChromeThemeManifest(
         dokiThemeDefinition,
         dokiTemplateDefinitions,
@@ -344,12 +374,12 @@ preBuild()
         currentWorkingDirectory: __dirname,
       },
       ((
-        dokiFileDefinitionPath,
-        dokiThemeDefinition,
-        _,
-        dokiThemeAppDefinition,
-        dokiTemplateDefinitions,
-) =>
+          dokiFileDefinitionPath,
+          dokiThemeDefinition,
+          _,
+          dokiThemeAppDefinition,
+          dokiTemplateDefinitions,
+        ) =>
           createDokiTheme(
             dokiFileDefinitionPath,
             dokiThemeDefinition,

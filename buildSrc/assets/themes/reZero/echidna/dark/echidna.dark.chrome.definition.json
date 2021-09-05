@@ -3,5 +3,8 @@
   "overrides": {},
   "laf": {},
   "syntax": {},
-  "colors": {}
+  "colors": {
+    "iconContrastColor": "&headerColor&",
+    "linkColor": "&htmlTagColor&"
+  }
 }

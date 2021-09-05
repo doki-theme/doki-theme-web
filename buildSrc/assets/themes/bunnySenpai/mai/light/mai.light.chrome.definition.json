@@ -10,5 +10,7 @@
   },
   "laf": {},
   "syntax": {},
-  "colors": {}
+  "colors": {
+    "iconContrastColor": "&headerColor&"
+  }
 }
