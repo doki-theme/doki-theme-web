@@ -1,8 +1,32 @@
+:root {
+  --info-foreground-color: #bbbbbb;
+  --header-color: #2b3238;
+  --line-number-color: #666879;
+  --selection-inactive-color: #292e34;
+  --primary-accent-color: #a73035;
+  --secondary-accent-color: #a7303544;
+  --button-color: white;
+  --button-font-color: #47494b;
+  --base-background-color: #2f363c;
+  --switch-shadow-color: #777;
+  --doki-shadow: '11px #fff';
+}
+
+/*Classes*/
+.popup-header {
+  background-color: var(--header-color);
+  color: var(--info-foreground-color);
+}
+
+.popup-body {
+  background-color: var(--base-background-color);
+}
+
 /*Global Styles*/
 * {
   font-family: Tahoma, Arial, sans-serif;
   text-align: center;
-  color: #666879;
+  color: var(--line-number-color);
 }
 
 body {
@@ -75,11 +99,12 @@ img {
 
 img:hover {
   cursor: pointer;
+  filter: hue-rotate(90deg) drop-shadow(0px 0px var(--doki-shadow));
 }
 
 /*Waifu Option Styles*/
 option {
-  color: #47494b;
+  color: var(--button-font-color);
 }
 
 option[value=mixed] {
@@ -91,6 +116,9 @@ select {
   width: calc(140px + 10vw);
   font-size: 14px;
   border-radius: 50px;
+  background-color: var(--button-color);
+  color: var(--button-font-color);
+
 }
 
 .settings-container {
@@ -123,6 +151,7 @@ form > label > input {
   right: 0;
   bottom: 0;
   -webkit-transition: .4s;
+  background-color: var(--selection-inactive-color);
   transition: .4s;
 }
 
@@ -133,17 +162,17 @@ form > label > input {
   width: 20px;
   left: 4px;
   bottom: 4px;
-  background-color: #a73035;
+  background-color: var(--primary-accent-color);
   -webkit-transition: .4s;
   transition: .4s;
 }
 
 input:checked + .slider {
-  background-color: #a7303544;
+  background-color: var(--secondary-accent-color);
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #a7303544;
+  box-shadow: 0 0 1px var(--secondary-accent-color);
 }
 
 input:checked + .slider:before {
@@ -156,11 +185,15 @@ input:disabled + .slider {
   filter: blur(3px);
 }
 
+input:not(:checked):not(:disabled) + .slider {
+  filter: drop-shadow(0 0 3px var(--switch-shadow-color));
+}
+
 /*Switch labels*/
 label[for="backgroundType"],
 label[for="darkMode"],
 label[for="hideSearch"] {
-  color: #bbb;
+  color: var(--info-foreground-color);
 }
 
 /* Rounded sliders */

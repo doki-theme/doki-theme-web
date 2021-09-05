@@ -1,13 +1,32 @@
+:root{
+  --header-color: inherit;
+  --foreground-color:inherit;
+  --base-background-color:inherit;
+  --primary-accent-color:inherit;
+}
+*{
+  background-color: var(--base-background-color);
+  color: var(--foreground-color);
+}
 html, body {
   font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
   font-size: 100%;
   margin: 0;
   padding: 1rem;
   height: 500px;
+  background-color: var(--header-color);
+  color: var(--foreground-color);
 }
 section{
   margin-top:2em;
 }
 h1{
   text-align:center;
+}
+label[for="loadOnStart"]
+{
+  color: var(--foreground-color);
+}
+input:checked {
+  background-color: var(--primary-accent-color);
 }

@@ -4,6 +4,7 @@ const backgroundSwitch = document.querySelector("#backgroundType");
 const showSearchSwitch = document.querySelector("#hideSearch");
 const darkModeSwitch = document.querySelector("#darkMode");
 const dokiHeart = document.querySelector("#doki_heart");
+const root = document.querySelector(":root");
 
 //Enum for the different Mixed option states
 const mixedStates = {
@@ -20,68 +21,18 @@ const backgroundTypes = {
 function setCSS(chosenTheme) {
   if (!chosenTheme) return
   const {colors, information} = chosenTheme.definition;
-  const switchShadowColor = information.dark ? 'white' : 'black';
-  const dokiShadowProps = information.dark ? '11px #fff' : '11px #000';
+  root.style.setProperty('--switch-shadow-color',information.dark ? 'white' : 'black');
+  root.style.setProperty('--doki-shadow',information.dark ? '11px #fff' : '11px #000');
+  root.style.setProperty('--info-foreground-color',colors.infoForeground);
+  root.style.setProperty('--header-color',colors.headerColor);
+  root.style.setProperty('--line-number-color',colors.lineNumberColor);
+  root.style.setProperty('--selection-inactive-color',colors.selectionInactive);
+  root.style.setProperty('--primary-accent-color',colors.accentColor);
+  root.style.setProperty('--secondary-accent-color',colors.accentColor+'44');
+  root.style.setProperty('--button-color',colors.buttonColor);
+  root.style.setProperty('--button-font-color',colors.buttonFont);
+  root.style.setProperty('--base-background-color',colors.baseBackground);
 
-  const styles = `
-.popup-header {
-  background-color: ${colors.headerColor};
-  color: ${colors.infoForeground};
-}
-
-* {
- color: ${colors.lineNumberColor};
-}
-
-.slider {
-  background-color: ${colors.selectionInactive};
-}
-
-.slider:before {
-  background-color: ${colors.accentColor};
-}
-
-select {
-  background-color: ${colors.buttonColor};
-  color: ${colors.buttonFont};
-}
-
-option {
-  color: ${colors.buttonFont};
-}
-
-.popup-body {
-  background-color: ${colors.baseBackground};
-}
-
-input:checked + .slider {
-  background-color: ${colors.accentColor}44;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px ${colors.accentColor}44;
-}
-
-input:not(:checked):not(:disabled) + .slider
-{
-  filter: drop-shadow(0 0 3px ${switchShadowColor});
-}
-
-label[for="backgroundType"],
-label[for="darkMode"],
-label[for="hideSearch"]
-{
-  color:${colors.infoForeground};
-}
-
-img:hover{
-  filter: hue-rotate(90deg) drop-shadow(0px 0px ${dokiShadowProps});
-}
-`;
-  const styleTag = document.createElement("style");
-  const styleText = document.createTextNode(styles);
-  styleTag.append(styleText);
-  document.head.append(styleTag);
 }
 
 const setBackground = async () => {

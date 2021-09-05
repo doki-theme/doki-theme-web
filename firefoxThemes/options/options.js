@@ -1,34 +1,16 @@
+/*DOM Elements*/
 const loadOnStartCheckbox = document.querySelector("input[name=loadOnStart]");
 const textSelectionCheckbox = document.querySelector("input[name=textSelection]");
 const scrollbarCheckbox = document.querySelector("input[name=scrollbar]");
-
+const root = document.querySelector(':root');
 /*Set color of options menu based on theme*/
 function setCss(chosenTheme) {
   if (!chosenTheme) return
   const {colors} = chosenTheme.definition
-  const styles = `
-body, html {
-  background-color: ${colors.headerColor};
-  color: ${colors.foregroundColor};
-}
-
-* {
-  background-color: ${colors.baseBackground};
- color: ${colors.foregroundColor};
-}
-
-input:checked {
-  background-color: ${colors.accentColor}44;
-}
-
-label[for="loadOnStart"]
-{
-  color:${colors.foregroundColor};
-}
-        `
-  const styleSheet = document.createElement("style");
-  styleSheet.innerText = styles;
-  document.head.appendChild(styleSheet)
+  root.style.setProperty('--header-color',colors.headerColor);
+  root.style.setProperty('--foreground-color',colors.foregroundColor);
+  root.style.setProperty('--base-background-color',colors.baseBackground);
+  root.style.setProperty('--accent-color',colors.accentColor+'44');
 }
 
 function initContent() {
