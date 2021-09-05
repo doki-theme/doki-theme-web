@@ -99,6 +99,30 @@ function setFavicon(currentTheme) {
   });
 }
 
+function setSearchIcon(currentTheme) {
+  const searchOptions = {width: 24, height: 24};
+  const searchSVG = buildSVG(currentTheme, searchOptions)
+  svgToPng(searchSVG, searchOptions, (imgData) => {
+    const pngImage = document.createElement('img');
+    pngImage.src = imgData;
+    const style = `input { background: white url(${pngImage.src}) 12px center no-repeat; }`
+    const styleTag = document.createElement("style");
+    styleTag.append(style);
+    document.head.append(styleTag);
+  });
+}
+
+function setAboutIcon(currentTheme) {
+  const aboutOptions = {width: 96, height: 96};
+  const aboutSVG = buildSVG(currentTheme, aboutOptions)
+  svgToPng(aboutSVG, aboutOptions, (imgData) => {
+    const logo = document.querySelector("div[class='logo']")
+    const pngImage = document.createElement('img');
+    logo.appendChild(pngImage);
+    pngImage.src = imgData;
+  });
+}
+
 function applyTabListeners() {
   browser.storage.local.get(["showWidget", "waifuThemes", "currentThemeId"])
     .then((storage) => {
@@ -124,26 +148,10 @@ function applyTabListeners() {
     </div>
 </main>
 `
+        // set themed icons
         setFavicon(currentTheme);
-        const searchOptions = {width: 24, height: 24};
-        const searchSVG = buildSVG(currentTheme, searchOptions)
-        svgToPng(searchSVG, searchOptions, (imgData) => {
-          const pngImage = document.createElement('img');
-          pngImage.src = imgData;
-          const style = `input { background: white url(${pngImage.src}) 12px center no-repeat; }`
-          const styleTag = document.createElement("style");
-          styleTag.append(style);
-          document.head.append(styleTag);
-        });
-
-        const aboutOptions = {width: 96, height: 96};
-        const aboutSVG = buildSVG(currentTheme, aboutOptions)
-        svgToPng(aboutSVG, aboutOptions, (imgData) => {
-          const logo = document.querySelector("div[class='logo']")
-          const pngImage = document.createElement('img');
-          logo.appendChild(pngImage);
-          pngImage.src = imgData;
-        });
+        setSearchIcon(currentTheme);
+        setAboutIcon(currentTheme);
 
         /*---Event Listeners---*/
         const input = document.querySelector("input[type='search']");
