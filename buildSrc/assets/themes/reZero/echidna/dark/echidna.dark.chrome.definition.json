@@ -4,7 +4,6 @@
   "laf": {},
   "syntax": {},
   "colors": {
-    "iconContrastColor": "&headerColor&",
-    "linkColor": "&htmlTagColor&"
+    "iconContrastColor": "&headerColor&"
   }
 }

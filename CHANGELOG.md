@@ -13,6 +13,10 @@ Changelog
 - Custom checkboxes in *options page*
 - *Options page* now changes with current Doki Theme
 
+# 13.2.0 [Marketplace Conformance]
+
+- Updated plugin to conform to the Firefox addon rules and guidelines when using registered trademarks.
+
 # 13.0.0 [NekoPara OneeSan Vol.]
 
 ## 4 New Themes!!
