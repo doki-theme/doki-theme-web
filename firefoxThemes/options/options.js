@@ -7,6 +7,11 @@ const root = document.querySelector(':root');
 function setCss(chosenTheme) {
   if (!chosenTheme) return;
   const {colors} = chosenTheme.definition;
+  root.style.setProperty('--checkbox-color',colors.accentColor);
+  root.style.setProperty('--foreground-color',colors.foregroundColor);
+  root.style.setProperty('--checkbox-border-color',colors.foregroundColor+70);
+  root.style.setProperty('--header-color',colors.headerColor);
+  root.style.setProperty('--checkmark-color',colors.classNameColor);
 }
 
 function initContent() {

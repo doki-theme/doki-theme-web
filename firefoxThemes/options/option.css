@@ -1,7 +1,7 @@
 * {
-  background-color: var(--base-background-color);
   color: var(--foreground-color);
 }
+
 html, body {
   font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
   font-size: 100%;
@@ -11,42 +11,49 @@ html, body {
   background-color: var(--header-color);
   color: var(--foreground-color);
 }
+
 section {
   position: relative;
   margin-top: 2em;
 }
+
 h1 {
   text-align: center;
 }
+
 label {
   color: var(--foreground-color);
 }
+
 /*Custom Checkbox*/
 span {
-  position:relative;
-  top:5px;
+  position: relative;
+  top: 5px;
   display: inline-block;
   width: 12px;
   height: 12px;
-  border: 2pt solid #00000070;
+  border: 2pt solid var(--checkbox-border-color,#00000070);
   border-radius: 3px;
 }
 
-span:hover{
+span:hover {
   border: 2pt solid #666879;
 }
 
-span:active{
+span:active {
   background-color: #9999;
   border: 2pt solid #888888;
 }
-.checked{
-  background-color: var(--checkbox-color,red);
+
+.checked {
+  background-color: var(--checkbox-color, red);
 }
-.checked::after{
-  content: var(--checkmark,"✓");
-  position:relative;
-  bottom:5px;
-  font-weight:bold;
-  color:var(--checkmark-color,white);
+
+.checked::after {
+  content: "♥";
+  position: relative;
+  bottom: 5px;
+  font-weight: bold;
+  color: var(--checkmark-color, white);
+  text-shadow: 1pt 1pt 2pt black;
 }

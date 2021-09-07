@@ -258,6 +258,8 @@ function updateTabs(msg) {
       NormalUpdate(msg);
       break;
   }
+  /*Refreshes options page to apply theme*/
+  reloadTabs({title:'Add-ons Manager'});
 }
 
 /*Update all theme components*/
@@ -281,7 +283,8 @@ function updateOptions(element) {
     registerTheme(element.optionName, false);
     registerTheme(element.optionName, true);
   }
-  reloadAllTabs();
+  /*Update pages with new theme*/
+  reloadTabs({url:'*://*/*'});
 }
 
 const registerOpt = {};
@@ -333,11 +336,9 @@ function getContentScripts(name) {
   });
 }
 
-/*Reload all tabs*/
-async function reloadAllTabs() {
-  const tabs = await browser.tabs.query({
-    url: '*://*/*'
-  });
+/*Reload all tabs based on filter*/
+async function reloadTabs(obj) {
+  const tabs = await browser.tabs.query(obj);
   for await(const tab of tabs) {
     browser.tabs.reload(tab.id);
   }
