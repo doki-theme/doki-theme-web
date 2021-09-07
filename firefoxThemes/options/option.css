@@ -1,10 +1,4 @@
-:root{
-  --header-color: inherit;
-  --foreground-color:inherit;
-  --base-background-color:inherit;
-  --primary-accent-color:inherit;
-}
-*{
+* {
   background-color: var(--base-background-color);
   color: var(--foreground-color);
 }
@@ -17,16 +11,42 @@ html, body {
   background-color: var(--header-color);
   color: var(--foreground-color);
 }
-section{
-  margin-top:2em;
+section {
+  position: relative;
+  margin-top: 2em;
 }
-h1{
-  text-align:center;
+h1 {
+  text-align: center;
 }
-label[for="loadOnStart"]
-{
+label {
   color: var(--foreground-color);
 }
-input:checked {
-  background-color: var(--primary-accent-color);
+/*Custom Checkbox*/
+span {
+  position:relative;
+  top:5px;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2pt solid #00000070;
+  border-radius: 3px;
+}
+
+span:hover{
+  border: 2pt solid #666879;
+}
+
+span:active{
+  background-color: #9999;
+  border: 2pt solid #888888;
+}
+.checked{
+  background-color: var(--checkbox-color,red);
+}
+.checked::after{
+  content: var(--checkmark,"✓");
+  position:relative;
+  bottom:5px;
+  font-weight:bold;
+  color:var(--checkmark-color,white);
 }

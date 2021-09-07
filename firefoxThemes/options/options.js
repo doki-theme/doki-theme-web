@@ -1,36 +1,42 @@
 /*DOM Elements*/
-const loadOnStartCheckbox = document.querySelector("input[name=loadOnStart]");
-const textSelectionCheckbox = document.querySelector("input[name=textSelection]");
-const scrollbarCheckbox = document.querySelector("input[name=scrollbar]");
+const loadOnStartCheckbox = document.querySelector("#loadOnStart");
+const textSelectionCheckbox = document.querySelector("#textSelection");
+const scrollbarCheckbox = document.querySelector("#scrollbar");
 const root = document.querySelector(':root');
 /*Set color of options menu based on theme*/
 function setCss(chosenTheme) {
-  if (!chosenTheme) return
-  const {colors} = chosenTheme.definition
-  root.style.setProperty('--header-color',colors.headerColor);
-  root.style.setProperty('--foreground-color',colors.foregroundColor);
-  root.style.setProperty('--base-background-color',colors.baseBackground);
-  root.style.setProperty('--accent-color',colors.accentColor+'44');
+  if (!chosenTheme) return;
+  const {colors} = chosenTheme.definition;
 }
 
 function initContent() {
   browser.storage.local.get(['loadOnStart', 'textSelection', 'scrollbar', 'waifuThemes', 'currentThemeId'])
     .then((storage) => {
-      loadOnStartCheckbox.checked = !!storage.loadOnStart;
-      textSelectionCheckbox.checked = !!storage.textSelection;
-      scrollbarCheckbox.checked = !!storage.scrollbar;
+      initCheckbox(loadOnStartCheckbox,!!storage.loadOnStart);
+      initCheckbox(textSelectionCheckbox,!!storage.textSelection);
+      initCheckbox(scrollbarCheckbox,!!storage.scrollbar);
       setCss(storage.waifuThemes.themes[storage.currentThemeId])
     });
 }
 
 const onChangeCheckEvents = async (e) => {
+  changeCheckboxState(e);
   await browser.runtime.sendMessage({
-    optionName: e.target.name,
-    optionValue: e.target.checked
+    optionName: e.target.id,
+    optionValue: e.target.className
   });
 };
+/*Initialize checkbox state*/
+function initCheckbox(el,state){
+  el.className = state ? 'checked': '';
+}
+/*Changes checkbox state*/
+function changeCheckboxState(e){
+  const el = e.target;
+  el.className = el.className !== 'checked' ? "checked":'';
+}
 
 initContent();
-loadOnStartCheckbox.addEventListener('change', onChangeCheckEvents, true);
-textSelectionCheckbox.addEventListener('change', onChangeCheckEvents, true);
-scrollbarCheckbox.addEventListener('change', onChangeCheckEvents, true);
+loadOnStartCheckbox.addEventListener('click', onChangeCheckEvents, true);
+textSelectionCheckbox.addEventListener('click', onChangeCheckEvents, true);
+scrollbarCheckbox.addEventListener('click', onChangeCheckEvents, true);

@@ -19,7 +19,7 @@ const backgroundTypes = {
 
 /*Set color of popup menu based on theme*/
 function setCSS(chosenTheme) {
-  if (!chosenTheme) return
+  if (!chosenTheme) return;
   const {colors, information} = chosenTheme.definition;
   root.style.setProperty('--switch-shadow-color',information.dark ? 'white' : 'black');
   root.style.setProperty('--doki-shadow',information.dark ? '11px #fff' : '11px #000');
@@ -102,11 +102,12 @@ function setTheme(e) {
         let themes;
         if (chosenThemeName === "random") {
           chosenThemeId = getRandomTheme(storage.waifuThemes.themes);
-          const chosenRandom = storage.waifuThemes.themes[chosenThemeId]
+          const chosenRandom = storage.waifuThemes.themes[chosenThemeId];
           themes = Object.values(storage.waifuThemes.themes)
             .filter(dokiTheme => (
-              dokiTheme.displayName === chosenRandom.displayName ||
-              dokiTheme.name === chosenRandom.name
+              (dokiTheme.name === chosenRandom.name
+                || dokiTheme.displayName === chosenRandom.displayName)
+              && dokiTheme.group === chosenRandom.group
             ));
         }else{
           themes = Object.values(storage.waifuThemes.themes)
