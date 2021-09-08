@@ -28,7 +28,6 @@ label {
 /*Custom Checkbox*/
 span {
   position: relative;
-  top: 5px;
   display: inline-block;
   width: 12px;
   height: 12px;
@@ -52,7 +51,7 @@ span:active {
 .checked::after {
   content: "♥";
   position: relative;
-  bottom: 5px;
+  bottom: 50%;
   font-weight: bold;
   color: var(--checkmark-color, white);
   text-shadow: 1pt 1pt 2pt black;
