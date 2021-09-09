@@ -99,7 +99,7 @@ img {
 
 img:hover {
   cursor: pointer;
-  filter: hue-rotate(90deg) drop-shadow(0px 0px var(--doki-shadow));
+  filter: drop-shadow(0px 0px var(--doki-shadow));
 }
 
 /*Waifu Option Styles*/

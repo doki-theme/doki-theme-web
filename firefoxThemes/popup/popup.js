@@ -85,15 +85,15 @@ const backgroundTypes = {
 function setCSS(chosenTheme) {
   if (!chosenTheme) return;
   themeDokiLogo(chosenTheme);
-  const {colors, information} = chosenTheme.definition;
-  root.style.setProperty('--switch-shadow-color',information.dark ? 'white' : 'black');
-  root.style.setProperty('--doki-shadow',information.dark ? '11px #fff' : '11px #000');
+  const {colors} = chosenTheme.definition;
+  root.style.setProperty('--switch-shadow-color',colors.accentColor);
+  root.style.setProperty('--doki-shadow', `11px ${colors.accentColor}`);
   root.style.setProperty('--info-foreground-color',colors.infoForeground);
   root.style.setProperty('--header-color',colors.headerColor);
   root.style.setProperty('--line-number-color',colors.lineNumberColor);
   root.style.setProperty('--selection-inactive-color',colors.selectionInactive);
   root.style.setProperty('--primary-accent-color',colors.accentColor);
-  root.style.setProperty('--secondary-accent-color',colors.accentColor+'44');
+  root.style.setProperty('--secondary-accent-color',colors.accentColorTransparent);
   root.style.setProperty('--button-color',colors.buttonColor);
   root.style.setProperty('--button-font-color',colors.buttonFont);
   root.style.setProperty('--base-background-color',colors.baseBackground);
@@ -159,7 +159,7 @@ function themeDokiLogo(currentTheme) {
   const searchOptions = {width: 75, height: 75};
   const searchSVG = buildSVG(currentTheme, searchOptions)
   svgToPng(searchSVG, searchOptions, (imgData) => {
-    dokiHeartIcon.src = imgData
+    dokiHeart.src = imgData
   });
 }
 
@@ -244,7 +244,7 @@ function prepareSwitches(storage) {
     darkModeSwitch.checked = false;
     darkModeSwitch.disabled = true;
   }
-  showSearchSwitch.checked = !!storage.showWidget;
+  showSearchSwitch.checked = storage.showWidget === undefined || storage.showWidget;
 }
 
 /*Setup Waifu Choices for the popup menu

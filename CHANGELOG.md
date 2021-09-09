@@ -2,6 +2,10 @@ Changelog
 ---
 
 # Unreleased
+# 13.2.0 [Marketplace Conformance]
+
+- Updated plugin to conform to the Firefox addon rules and guidelines when using registered trademarks.
+
 # 13.1.0 [Scrollbars & Text Selection]
 
 - Scrollbar, text selection, & caret are now themed! [#59](https://github.com/doki-theme/doki-theme-web/issues/59)
@@ -13,9 +17,6 @@ Changelog
 - Custom checkboxes in *options page*
 - *Options page* now changes with current Doki Theme
 
-# 13.2.0 [Marketplace Conformance]
-
-- Updated plugin to conform to the Firefox addon rules and guidelines when using registered trademarks.
 
 # 13.0.0 [NekoPara OneeSan Vol.]
 

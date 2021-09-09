@@ -9,7 +9,7 @@ function setCss(chosenTheme) {
   const {colors} = chosenTheme.definition;
   root.style.setProperty('--checkbox-color',colors.accentColor);
   root.style.setProperty('--foreground-color',colors.foregroundColor);
-  root.style.setProperty('--checkbox-border-color',colors.foregroundColor+70);
+  root.style.setProperty('--checkbox-border-color',colors.baseIconColor);
   root.style.setProperty('--header-color',colors.headerColor);
   root.style.setProperty('--checkmark-color',colors.classNameColor);
 }
