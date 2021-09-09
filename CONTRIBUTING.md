@@ -83,7 +83,7 @@ yarn
 
 ### Set up build source
 
-Navigate to the root of the `buildSource` directory and run the following command.
+Navigate to the `buildSource` directory and run the following command.
 
 ```shell
 yarn
@@ -116,8 +116,8 @@ the Doki Theme Suite. (**NOTE** you can't run `buildThemes` only I can, sorry!)
 
 ### Web specifics
 
-There two files that ar important, they can be found in `buildSrc/assets/templates`. Those filesare the  `*.template`,
-which is the template for the common CSS that used for all themes.
+There are two files of importance. They can be found in `buildSrc/assets/templates`. The files, `*.template`, are
+the templates for common CSS that used for all themes.
 
 These templates are evaluated as part of the theme building process. When you run this command in the `buildSrc`
 directory:
@@ -132,13 +132,13 @@ This will:
 - Create the tab images for the chrome themes
 - Build the `DokiThemeDefinitions.ts` for both the `masterExtension` and Firefox extension.
 
-Sometimes a particular theme has something that is just a bit off. Thankfully there is a way to fix small one off
+Sometimes a particular theme has something that is just a bit off. Thankfully, there is a way to fix small one-off
 issues.
 
 In the `buildAssets/themes/definitions` directory lives all the chrome definitions. These are used to override the
 defaults provided by the `masterThemes`
 
-Here is an example that overrides:
+Here is an example that overrides the following:
 
 - The background placement
 - Search bar text color
@@ -162,7 +162,7 @@ Here is an example that overrides:
 }
 ```
 
-Once changes are made you can run the command below inside the `buildSrc` directory.
+Once changes are made, you can run the command below inside the `buildSrc` directory.
 
 ```shell
 yarn buildDefinitions
@@ -196,13 +196,13 @@ This part is mostly automated, for the most part. There is only one script you'l
 ### Application specific templates
 
 Once you have a new master theme definitions merged into the default branch, it's now time to generate the application
-specific templates, which allow us to control individual theme specific settings.
+specific templates, which allows us to control individual theme specific settings.
 
 You'll want to edit the function used by `buildApplicationTemplate`
 and `appName` [defined here](https://github.com/doki-theme/doki-master-theme/blob/596bbe7b258c65e485257a14887ee9b4e0e8b659/buildSrc/AppThemeTemplateGenerator.ts#L79)
 in your `masterThemes` directory.
 
-In the case of this plugin the `buildApplicationsTemplate` should use the `chromeTemplate` and `appName` should
+In the case of this plugin, the `buildApplicationsTemplate` should use the `chromeTemplate` and `appName` should
 be `chrome`.
 
 We need run the `generateTemplates` script. Which will walk the master theme definitions and create the new templates in

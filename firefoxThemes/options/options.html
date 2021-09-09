@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="utf-8"/>
   <title>Doki Theme Options</title>
-  <style>
-    html, body {
-      font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-      font-size: 100%;
-      margin: 0;
-      padding: 1rem;
-      height: 500px;
-    }
-  </style>
+
+  <script src="options.js" defer></script>
+  <link rel="stylesheet" href="option.css"/>
 </head>
-
 <body>
-
-  <div class="options-container">
-    <label>
-      Load New Tab on start
-      <input type="checkbox" id="loadOnStart" />
-    </label>
-  </div>
-  <script src="options.js"></script>
+<div class="options-container">
+  <section>
+    <span id="loadOnStart" role="checkbox"></span>
+    <label for="loadOnStart">Load New Tab on new window</label>
+  </section>
+  <section>
+    <span id="textSelection" class="checked" role="checkbox"></span>
+    <label for="textSelection">Text Selection</label>
+  </section>
+  <section>
+    <span id="scrollbar" class="checked" role="checkbox"></span>
+    <label for="scrollbar">Scrollbar</label>
+  </section>
+</div>
 </body>
 </html>

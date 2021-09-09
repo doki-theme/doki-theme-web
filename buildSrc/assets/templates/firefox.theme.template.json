@@ -27,7 +27,6 @@
     "toolbar_field_border_focus": "&accentColor&",
     "toolbar_field_highlight": "&selectionBackground&",
     "toolbar_field_highlight_text": "&selectionForeground&",
-    "toolbar_field_separator": "&borderColor&",
     "toolbar_field_text": "&infoForeground&",
     "toolbar_field_text_focus": "&accentColor&",
     "toolbar_text": "&accentColor&",

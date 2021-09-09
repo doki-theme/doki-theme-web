@@ -2,6 +2,16 @@ Changelog
 ---
 
 # Unreleased
+# 13.1.0 [Scrollbars & Text Selection]
+
+- Scrollbar, text selection, & caret are now themed! [#59](https://github.com/doki-theme/doki-theme-web/issues/59)
+- Fix `Random` mode
+- Add shortcut to *options page* by clicking on **Doki Heart** beat
+- Update styles in *popup menu*
+- Fix switches in *popup menu* not disabling properly for both secondary and dark
+- Fixes *popup menu* not changing to appropriate theme color when selected
+- Custom checkboxes in *options page*
+- *Options page* now changes with current Doki Theme
 
 # 13.0.0 [NekoPara OneeSan Vol.]
 

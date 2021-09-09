@@ -1,0 +1,58 @@
+* {
+  color: var(--foreground-color);
+}
+
+html, body {
+  font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+  font-size: 100%;
+  margin: 0;
+  padding: 1rem;
+  height: 500px;
+  background-color: var(--header-color);
+  color: var(--foreground-color);
+}
+
+section {
+  position: relative;
+  margin-top: 2em;
+}
+
+h1 {
+  text-align: center;
+}
+
+label {
+  color: var(--foreground-color);
+}
+
+/*Custom Checkbox*/
+span {
+  position: relative;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2pt solid var(--checkbox-border-color,#00000070);
+  border-radius: 3px;
+}
+
+span:hover {
+  border: 2pt solid #666879;
+}
+
+span:active {
+  background-color: #9999;
+  border: 2pt solid #888888;
+}
+
+.checked {
+  background-color: var(--checkbox-color, red);
+}
+
+.checked::after {
+  content: "♥";
+  position: relative;
+  bottom: 50%;
+  font-weight: bold;
+  color: var(--checkmark-color, white);
+  text-shadow: 1pt 1pt 2pt black;
+}
