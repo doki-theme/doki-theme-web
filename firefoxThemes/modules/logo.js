@@ -58,7 +58,8 @@ const svgToPng = (svg, options, callback) => {
 
 /*Update the browser action logo to match current theme color*/
 function updateBrowserLogo(ctxCanvas, image) {
-  const imageData = ctxCanvas.getImageData(0, 0, image.width, image.height);
+  let width = image.width === 60 ? 74: image.width;
+  const imageData = ctxCanvas.getImageData(0, 0, width, width);
   browser.browserAction.setIcon({
     imageData
   });
