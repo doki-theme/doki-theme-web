@@ -1,4 +1,3 @@
-import {buildSVG,svgToPng} from "../modules/logo.js";
 /*Global Variables*/
 const selectTag = document.querySelector("select");
 const backgroundSwitch = document.querySelector("#backgroundType");

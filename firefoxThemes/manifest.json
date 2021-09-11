@@ -22,6 +22,7 @@
   },
   "background": {
     "scripts": [
+      "modules/logo.js",
       "DokiThemeDefinitions.js",
       "resources.js"
     ]

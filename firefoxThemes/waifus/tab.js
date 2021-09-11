@@ -1,5 +1,3 @@
-import {buildSVG,svgToPng} from "../modules/logo.js";
-
 let query = "";//the search query
 /*Record the keywords to search for.
 * These keywords will be delegated to the default search engine.*/
@@ -68,7 +66,7 @@ function applyTabListeners() {
   browser.storage.local.get(["showWidget", "waifuThemes", "currentThemeId"])
     .then((storage) => {
       const currentTheme = storage.waifuThemes.themes[storage.currentThemeId] ||
-        storage.waifuThemes.themes["19b65ec8-133c-4655-a77b-13623d8e97d3"];
+        storage.waifuThemes.themes["19b65ec8-133c-4655-a77b-13623d8e97d3"]; // Ryuko Dark
       const root = document.querySelector(':root');
       root.style.setProperty('--accent-color', currentTheme.definition.colors.accentColor);
       root.style.setProperty('--base-background-color', currentTheme.definition.colors.baseBackground);

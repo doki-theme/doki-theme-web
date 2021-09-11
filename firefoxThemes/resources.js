@@ -235,9 +235,23 @@ function NormalUpdate(msg) {
     });
 }
 
+// Theme the extension button in the toolbar
+function themeExtensionIconInToolBar(dokiTheme) {
+  const extensionIconOptions = {width: 74, height: 74, useCanvasData: true};
+  const extensionSVG = buildSVG(dokiTheme, extensionIconOptions)
+  svgToPng(extensionSVG, extensionIconOptions, (imageData) => {
+    browser.browserAction.setIcon({
+      imageData
+    });
+  });
+}
+
+
 /*Set the browser theme for chosen waifu*/
 async function loadTheme(themes, themeId) {
-  const json = themes[themeId].json;
+  const dokiTheme = themes[themeId];
+  themeExtensionIconInToolBar(dokiTheme);
+  const json = dokiTheme.json;
   fetch(json)
     .then((res) => {
       return res.json();
@@ -259,7 +273,7 @@ function updateTabs(msg) {
       break;
   }
   /*Refreshes options page to apply theme*/
-  reloadTabs({title:'Add-ons Manager'});
+  reloadTabs({title: 'Add-ons Manager'});
 }
 
 /*Update all theme components*/
@@ -284,7 +298,7 @@ function updateOptions(element) {
     registerTheme(element.optionName, true);
   }
   /*Update pages with new theme*/
-  reloadTabs({url:'*://*/*'});
+  reloadTabs({url: '*://*/*'});
 }
 
 const registerOpt = {};

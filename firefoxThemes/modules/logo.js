@@ -27,6 +27,7 @@ const buildSVG = (dokiTheme, {width, height}) =>
   <path fill="${dokiTheme.definition.colors.accentColor}" d="m36.389 16.03c-0.73241-0.0059-1.5153 0.08021-2.3462 0.26994-3.8445 0.87789-6.4758 2.6125-7.256 3.0412h-4.68e-4c-0.78043-0.42872-3.4117-2.1633-7.256-3.0412-8.8633-2.0229-12.27 7.7493-7.0439 15.118 4.67 5.3617 9.5165 7.8246 14.3 10.997 4.7843-3.1725 9.6306-5.6353 14.3-10.997 4.7362-6.6786 2.3824-15.331-4.6976-15.388z" stroke-width=".11241" style="paint-order:stroke fill markers"/>
   <path fill="${shadeHexColor(dokiTheme.definition.colors.accentColor, -0.1)}" d="m40.514 17.321c-3.7651 6.6533-11.568 14.871-26.43 15.814 4.1721 4.2098 8.4613 6.4686 12.702 9.2806 4.7843-3.1725 9.6306-5.6353 14.3-10.997 3.6403-5.1332 3.0907-11.431-0.57249-14.097z" stroke-width=".2383" style="paint-order:stroke fill markers"/>
 </svg>`;
+
 /*Add logo to home page*/
 const svgUrlToPng = (svgUrl, options, callback) => {
   const svgImage = document.createElement('img');
@@ -37,13 +38,16 @@ const svgUrlToPng = (svgUrl, options, callback) => {
     canvas.height = options.height;
     const canvasCtx = canvas.getContext('2d');
     canvasCtx.drawImage(svgImage, 0, 0);
-    updateBrowserLogo(canvasCtx, svgImage);
-    const imgData = canvas.toDataURL('image/png');
+    const imgData =
+      options.useCanvasData ?
+      canvasCtx.getImageData(0, 0, options.width, options.height) :
+      canvas.toDataURL('image/png');
     callback(imgData);
     svgImage.remove();
   };
   svgImage.src = svgUrl;
 };
+
 /*Retrieve logo blob url*/
 const getSvgUrl = svg =>
   URL.createObjectURL(new Blob([svg], {type: 'image/svg+xml'}));
@@ -55,14 +59,3 @@ const svgToPng = (svg, options, callback) => {
     URL.revokeObjectURL(url);
   });
 };
-
-/*Update the browser action logo to match current theme color*/
-function updateBrowserLogo(ctxCanvas, image) {
-  let width = image.width === 60 ? 74: image.width;
-  const imageData = ctxCanvas.getImageData(0, 0, width, width);
-  browser.browserAction.setIcon({
-    imageData
-  });
-}
-
-export {buildSVG, svgToPng};
