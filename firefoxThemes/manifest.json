@@ -21,11 +21,7 @@
     "browser_style": false
   },
   "background": {
-    "scripts": [
-      "modules/logo.js",
-      "DokiThemeDefinitions.js",
-      "resources.js"
-    ]
+    "page": "resources.html"
   },
   "browser_action": {
     "browser_style": true,

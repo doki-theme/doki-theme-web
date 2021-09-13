@@ -59,3 +59,5 @@ const svgToPng = (svg, options, callback) => {
     URL.revokeObjectURL(url);
   });
 };
+
+export {svgToPng,buildSVG};

@@ -1,3 +1,7 @@
+import {svgToPng, buildSVG} from "../modules/logo.js";
+import {getRandomThemeId} from "../modules/random.js";
+import {mixedStates,backgroundTypes} from "../modules/states.js";
+
 /*Global Variables*/
 const selectTag = document.querySelector("select");
 const backgroundSwitch = document.querySelector("#backgroundType");
@@ -7,34 +11,22 @@ const dokiHeart = document.querySelector("#doki_heart");
 const root = document.querySelector(":root");
 
 
-//Enum for the different Mixed option states
-const mixedStates = {
-  NONE: 0,
-  INITIAL: 1,
-  RESET:2
-};
-
-const backgroundTypes = {
-  PRIMARY: 0,
-  SECONDARY: 1
-};
-
 /*Set color of popup menu based on theme*/
 function setCSS(chosenTheme) {
   if (!chosenTheme) return;
   themeDokiLogo(chosenTheme);
   const {colors} = chosenTheme.definition;
-  root.style.setProperty('--switch-shadow-color',colors.accentColor);
+  root.style.setProperty('--switch-shadow-color', colors.accentColor);
   root.style.setProperty('--doki-shadow', colors.accentColor);
-  root.style.setProperty('--info-foreground-color',colors.infoForeground);
-  root.style.setProperty('--header-color',colors.headerColor);
-  root.style.setProperty('--line-number-color',colors.lineNumberColor);
-  root.style.setProperty('--selection-inactive-color',colors.selectionInactive);
-  root.style.setProperty('--primary-accent-color',colors.accentColor);
-  root.style.setProperty('--secondary-accent-color',colors.accentColorTransparent);
-  root.style.setProperty('--button-color',colors.buttonColor);
-  root.style.setProperty('--button-font-color',colors.buttonFont);
-  root.style.setProperty('--base-background-color',colors.baseBackground);
+  root.style.setProperty('--info-foreground-color', colors.infoForeground);
+  root.style.setProperty('--header-color', colors.headerColor);
+  root.style.setProperty('--line-number-color', colors.lineNumberColor);
+  root.style.setProperty('--selection-inactive-color', colors.selectionInactive);
+  root.style.setProperty('--primary-accent-color', colors.accentColor);
+  root.style.setProperty('--secondary-accent-color', colors.accentColorTransparent);
+  root.style.setProperty('--button-color', colors.buttonColor);
+  root.style.setProperty('--button-font-color', colors.buttonFont);
+  root.style.setProperty('--base-background-color', colors.baseBackground);
 }
 
 const setBackground = async () => {
@@ -103,15 +95,15 @@ function themeDokiLogo(currentTheme) {
 /*EVENT: Retrieve the selected waifu.
 Afterwards, send the chosen waifu to the background script.*/
 function setTheme(e) {
-  browser.storage.local.get(["darkMode", "waifuThemes","mixedTabs"])
+  browser.storage.local.get(["darkMode", "waifuThemes", "mixedTabs"])
     .then((storage) => {
       const chosenThemeName = e.target.value;
-      const currentMix = getMixState(chosenThemeName,storage.mixedTabs);
+      const currentMix = getMixState(chosenThemeName, storage.mixedTabs);
       let chosenThemeId;
       if (currentMix === mixedStates.NONE) {
         let themes;
         if (chosenThemeName === "random") {
-          chosenThemeId = getRandomTheme(storage.waifuThemes.themes);
+          chosenThemeId = getRandomThemeId(storage.waifuThemes.themes);
           const chosenRandom = storage.waifuThemes.themes[chosenThemeId];
           themes = Object.values(storage.waifuThemes.themes)
             .filter(dokiTheme => (
@@ -119,8 +111,12 @@ function setTheme(e) {
                 || dokiTheme.displayName === chosenRandom.displayName)
               && dokiTheme.group === chosenRandom.group
             ));
-        }else{
-          themes = Object.values(storage.waifuThemes.themes);
+        } else {
+          themes = Object.values(storage.waifuThemes.themes)
+            .filter(dokiTheme => (
+              dokiTheme.displayName === chosenThemeName ||
+              dokiTheme.name === chosenThemeName
+            ));
         }
 
         const isDark = (storage.darkMode) && storage.darkMode.isDarkNow;
@@ -139,35 +135,31 @@ function setTheme(e) {
             setCSS(usableTheme);
             chosenThemeId = usableTheme.id;
           }
-        }else{
-          if(chosenThemeId){
+        } else {
+          if (chosenThemeId) {
             setCSS(storage.waifuThemes.themes[chosenThemeId]);
           }
-          selectTag.value = 'none';
         }
+        setHasSecondary(storage.waifuThemes.themes[chosenThemeId]);
+      } else {
+        let themes = storage.waifuThemes.themes;
+        chosenThemeId = getRandomThemeId(themes);
+        setDarkMode(true);
+        setHasSecondary(false);
+        setCSS(themes[chosenThemeId]);
       }
-      setHasSecondary(storage.waifuThemes.themes[chosenThemeId]);
-      browser.runtime.sendMessage({currentThemeId: chosenThemeId || 'mixed', mixState: currentMix});
+      selectTag.value = 'none';// Reset option back to 'choose a waifu'
+      browser.runtime.sendMessage({currentThemeId: chosenThemeId, mixState: currentMix});
     });
 }
-function getMixState(name,mixTabs){
-  if(name === "mixed" && mixTabs){
+
+function getMixState(name, mixTabs) {
+  if (name === "mixed" && mixTabs) {
     return mixedStates.RESET;
-  }else if(name === "mixed"){
+  } else if (name === "mixed") {
     return mixedStates.INITIAL;
   }
   return mixedStates.NONE;
-}
-/*Selects a waifu at random*/
-function getRandomTheme(themes) {
-  themes = Object.keys(themes);
-  const randNum = getRandomNumber(0, themes.length);
-  return themes[randNum];
-}
-
-/*Retrieves a random number from min(inclusive) to max(exclusive)*/
-function getRandomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 /*Navigate to options page*/
@@ -244,9 +236,11 @@ function initChoice() {
           if (activeTab && storage.mixedTabs) {
             const tabThemeId = storage.mixedTabs.get(activeTab.id);
             let currentTheme = themes[tabThemeId];
-            setCSS(currentTheme);
-            selectTag.options.selectedIndex =
-              selectTag.options.namedItem(currentTheme.displayName).index;
+            if (currentTheme) {
+              setCSS(currentTheme);
+              let option = selectTag.options.namedItem(currentTheme.displayName);
+              selectTag.options.selectedIndex = option ? option.index : 0;
+            }
           } else if (activeTab) {
             setCSS(themes[storage.currentThemeId]);
           }
@@ -261,3 +255,5 @@ backgroundSwitch.addEventListener("change", setBackground, true);
 showSearchSwitch.addEventListener("change", setHideWidget, true);
 darkModeSwitch.addEventListener("change", setOpposingTheme, true);
 dokiHeart.addEventListener('click', optionsPage, true);
+/*Exports*/
+export {getRandomThemeId};

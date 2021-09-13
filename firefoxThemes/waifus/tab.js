@@ -1,3 +1,5 @@
+import {svgToPng, buildSVG} from "../modules/logo.js";
+
 let query = "";//the search query
 /*Record the keywords to search for.
 * These keywords will be delegated to the default search engine.*/
@@ -22,20 +24,6 @@ function keyConfirm(e) {
   if (e.key === "Enter") {
     confirmSearch();
   }
-}
-
-function setThemedFavicon(currentTheme) {
-  const faviconOptions = {width: 32, height: 32};
-  const faviconSVG = buildSVG(currentTheme, faviconOptions);
-  svgToPng(faviconSVG, faviconOptions, (imgData) => {
-    let link = document.querySelector("link[rel~='icon']");
-    if (!link) {
-      link = document.createElement('link');
-      link.rel = 'icon';
-      document.head.appendChild(link);
-    }
-    link.href = imgData;
-  });
 }
 
 function setThemedSearchInputIcon(currentTheme) {
@@ -99,7 +87,6 @@ function applyTabListeners() {
         const searchButton = document.querySelector(".search-button");
         searchButton.addEventListener("click", confirmSearch, false);
       }
-      setThemedFavicon(currentTheme);
     });
 }
 applyTabListeners();

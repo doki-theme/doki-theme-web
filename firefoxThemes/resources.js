@@ -1,12 +1,9 @@
-/*Globals*/
-//Enum for the different Mixed option states
-const mixedStates = {
-  NONE: 0,
-  INITIAL: 1,
-  RESET: 2
-};
-/*---CLASSES---*/
+import {dokiThemeDefinitions} from "./DokiThemeDefinitions.js";
+import {buildSVG, svgToPng} from "./modules/logo.js";
+import {getRandomThemeId} from "./modules/random.js";
+import {mixedStates} from "./modules/states.js";
 
+/*---CLASSES---*/
 /*Class Goal: Holds theme data about all waifus*/
 class WaifuThemes {
   constructor() {
@@ -64,7 +61,7 @@ function startStorage() {
 }
 
 /*Initialize the Mixed feature*/
-function SetupMixedUpdate() {
+function SetupMixedUpdate(msg) {
   browser.tabs.query({})
     .then((tabs) => {
       browser.storage.local.get(["waifuThemes", "mixedTabs"])
@@ -78,11 +75,11 @@ function SetupMixedUpdate() {
           browser.tabs.onRemoved.addListener(MixTabClosed);//When a tab has been closed
           if (tabs.length > 0) {
             const themes = storage.waifuThemes.themes;
-            let currentThemeId = getRandomTheme(themes);
+            let currentThemeId = msg.currentThemeId;
             const [newTabs, otherTabs] = separateTabs(tabs);
             storage.mixedTabs = addOtherTabsToMix(otherTabs, storage.mixedTabs, themes);
             //If any New Tabs exists
-            if(newTabs.length){
+            if (newTabs.length) {
               const lastTab = keepLastTab(newTabs);//Closes all New Tab tabs except the last
               storage.mixedTabs.set(lastTab.id, currentThemeId);//Add a default theme to the mixed tab list
               browser.tabs.update(lastTab.id, {
@@ -90,7 +87,7 @@ function SetupMixedUpdate() {
                 url: themes[currentThemeId].page
               });
             }
-            browser.storage.local.set({currentThemeId: currentThemeId, mixedTabs: storage.mixedTabs});
+            browser.storage.local.set({currentThemeId, mixedTabs: storage.mixedTabs});
             //Initialize each tab with the default waifu
             loadTheme(themes, currentThemeId);
           }
@@ -116,7 +113,7 @@ function separateTabs(tabs) {
 function addOtherTabsToMix(tabs, mixList, themes) {
   if (tabs.length > 0) {
     for (const tab of tabs) {
-      mixList.set(tab.id, getRandomTheme(themes));
+      mixList.set(tab.id, getRandomThemeId(themes));
     }
   }
   return mixList;
@@ -139,7 +136,7 @@ function MixTabCreated(tab) {
   if (tab.title === "New Tab") {
     browser.storage.local.get("waifuThemes")
       .then((storage) => {
-        const chosenThemeId = getRandomTheme(storage.waifuThemes.themes);
+        const chosenThemeId = getRandomThemeId(storage.waifuThemes.themes);
         MixedUpdate(tab, chosenThemeId, storage.waifuThemes.themes);
       });
   }
@@ -267,11 +264,11 @@ async function loadTheme(themes, themeId) {
 function updateTabs(msg) {
   switch (msg.mixState) {
     case mixedStates.INITIAL:
-      SetupMixedUpdate();
+      SetupMixedUpdate(msg);
       break;
     case mixedStates.RESET:
       MixTabCleanup();
-      SetupMixedUpdate();
+      SetupMixedUpdate(msg);
       break;
     default:
       MixTabCleanup();
@@ -306,7 +303,7 @@ function updateOptions(element) {
   /*Update pages with new theme*/
   reloadTabs({url: '*://*/*'});
 }
-
+/*Registered Content Script Options*/
 const registerOpt = {};
 
 /*Registers a style*/
@@ -362,18 +359,6 @@ async function reloadTabs(obj) {
   for await(const tab of tabs) {
     browser.tabs.reload(tab.id);
   }
-}
-
-/*Selects a waifu at random*/
-function getRandomTheme(themes) {
-  themes = Object.keys(themes);
-  let randNum = getRandomNumber(0, themes.length);
-  return themes[randNum];
-}
-
-/*Retrieves a random number from min(inclusive) to max(exclusive)*/
-function getRandomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 //Initialize Storage
