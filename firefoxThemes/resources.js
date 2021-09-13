@@ -2,7 +2,8 @@
 //Enum for the different Mixed option states
 const mixedStates = {
   NONE: 0,
-  INITIAL: 1
+  INITIAL: 1,
+  RESET: 2
 };
 /*---CLASSES---*/
 
@@ -80,17 +81,19 @@ function SetupMixedUpdate() {
             let currentThemeId = getRandomTheme(themes);
             const [newTabs, otherTabs] = separateTabs(tabs);
             storage.mixedTabs = addOtherTabsToMix(otherTabs, storage.mixedTabs, themes);
-            const lastTab = keepLastTab(newTabs);//Closes all New Tab tabs except the last
-            storage.mixedTabs.set(lastTab.id, currentThemeId);//Add a default theme to the mixed tab list
+            //If any New Tabs exists
+            if(newTabs.length){
+              const lastTab = keepLastTab(newTabs);//Closes all New Tab tabs except the last
+              storage.mixedTabs.set(lastTab.id, currentThemeId);//Add a default theme to the mixed tab list
+              browser.tabs.update(lastTab.id, {
+                loadReplace: true,
+                url: themes[currentThemeId].page
+              });
+            }
             browser.storage.local.set({currentThemeId: currentThemeId, mixedTabs: storage.mixedTabs});
             //Initialize each tab with the default waifu
-            browser.tabs.update(lastTab.id, {
-              loadReplace: true,
-              url: themes[currentThemeId].page
-            });
             loadTheme(themes, currentThemeId);
           }
-
         });
     });
 }
@@ -179,7 +182,7 @@ function MixedUpdate(tab, themeId, themes) {
 }
 
 /*Cleans up all things relating to the Mixed tab option*/
-async function MixTabCleanup() {
+function MixTabCleanup() {
   browser.storage.local.get("mixedTabs")
     .then((storage) => {
       //Removes all listeners
@@ -192,7 +195,6 @@ async function MixTabCleanup() {
         browser.storage.local.set({mixedTabs: undefined});
       }
     });
-
 }
 
 /*Update the tabs with a selected theme*/
@@ -251,8 +253,8 @@ function themeExtensionIconInToolBar(dokiTheme) {
 async function loadTheme(themes, themeId) {
   const dokiTheme = themes[themeId];
   themeExtensionIconInToolBar(dokiTheme);
-  const json = dokiTheme.json;
-  fetch(json)
+  const themePath = dokiTheme.json;
+  fetch(themePath)
     .then((res) => {
       return res.json();
     })
@@ -265,6 +267,10 @@ async function loadTheme(themes, themeId) {
 function updateTabs(msg) {
   switch (msg.mixState) {
     case mixedStates.INITIAL:
+      SetupMixedUpdate();
+      break;
+    case mixedStates.RESET:
+      MixTabCleanup();
       SetupMixedUpdate();
       break;
     default:

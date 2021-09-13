@@ -10,7 +10,8 @@ const root = document.querySelector(":root");
 //Enum for the different Mixed option states
 const mixedStates = {
   NONE: 0,
-  INITIAL: 1
+  INITIAL: 1,
+  RESET:2
 };
 
 const backgroundTypes = {
@@ -102,10 +103,10 @@ function themeDokiLogo(currentTheme) {
 /*EVENT: Retrieve the selected waifu.
 Afterwards, send the chosen waifu to the background script.*/
 function setTheme(e) {
-  browser.storage.local.get(["darkMode", "waifuThemes"])
+  browser.storage.local.get(["darkMode", "waifuThemes","mixedTabs"])
     .then((storage) => {
       const chosenThemeName = e.target.value;
-      const currentMix = chosenThemeName === "mixed" ? mixedStates.INITIAL : mixedStates.NONE;
+      const currentMix = getMixState(chosenThemeName,storage.mixedTabs);
       let chosenThemeId;
       if (currentMix === mixedStates.NONE) {
         let themes;
@@ -119,11 +120,7 @@ function setTheme(e) {
               && dokiTheme.group === chosenRandom.group
             ));
         }else{
-          themes = Object.values(storage.waifuThemes.themes)
-            .filter(dokiTheme => (
-              dokiTheme.displayName === chosenThemeName ||
-              dokiTheme.name === chosenThemeName
-            ));
+          themes = Object.values(storage.waifuThemes.themes);
         }
 
         const isDark = (storage.darkMode) && storage.darkMode.isDarkNow;
@@ -143,7 +140,9 @@ function setTheme(e) {
             chosenThemeId = usableTheme.id;
           }
         }else{
-          setCSS(storage.waifuThemes.themes[chosenThemeId]);
+          if(chosenThemeId){
+            setCSS(storage.waifuThemes.themes[chosenThemeId]);
+          }
           selectTag.value = 'none';
         }
       }
@@ -151,7 +150,14 @@ function setTheme(e) {
       browser.runtime.sendMessage({currentThemeId: chosenThemeId || 'mixed', mixState: currentMix});
     });
 }
-
+function getMixState(name,mixTabs){
+  if(name === "mixed" && mixTabs){
+    return mixedStates.RESET;
+  }else if(name === "mixed"){
+    return mixedStates.INITIAL;
+  }
+  return mixedStates.NONE;
+}
 /*Selects a waifu at random*/
 function getRandomTheme(themes) {
   themes = Object.keys(themes);
@@ -237,9 +243,10 @@ function initChoice() {
           const themes = storage.waifuThemes.themes;
           if (activeTab && storage.mixedTabs) {
             const tabThemeId = storage.mixedTabs.get(activeTab.id);
-            setCSS(themes[tabThemeId]);
+            let currentTheme = themes[tabThemeId];
+            setCSS(currentTheme);
             selectTag.options.selectedIndex =
-              selectTag.options.namedItem(tabThemeId).index;
+              selectTag.options.namedItem(currentTheme.displayName).index;
           } else if (activeTab) {
             setCSS(themes[storage.currentThemeId]);
           }

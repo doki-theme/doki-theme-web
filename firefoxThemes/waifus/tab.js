@@ -26,13 +26,13 @@ function keyConfirm(e) {
 
 function setThemedFavicon(currentTheme) {
   const faviconOptions = {width: 32, height: 32};
-  const faviconSVG = buildSVG(currentTheme, faviconOptions)
+  const faviconSVG = buildSVG(currentTheme, faviconOptions);
   svgToPng(faviconSVG, faviconOptions, (imgData) => {
     let link = document.querySelector("link[rel~='icon']");
     if (!link) {
       link = document.createElement('link');
       link.rel = 'icon';
-      document.getElementsByTagName('head')[0].appendChild(link);
+      document.head.appendChild(link);
     }
     link.href = imgData;
   });
@@ -86,7 +86,7 @@ function applyTabListeners() {
         <button class="search-button" aria-label="Search" title="Search"></button>
     </div>
 </main>
-`
+`;
         // set themed icons
         setThemedSearchInputIcon(currentTheme);
         setThemedAboutIcon(currentTheme);
@@ -102,5 +102,4 @@ function applyTabListeners() {
       setThemedFavicon(currentTheme);
     });
 }
-
-applyTabListeners()
+applyTabListeners();
