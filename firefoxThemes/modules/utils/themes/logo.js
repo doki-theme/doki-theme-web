@@ -1,3 +1,14 @@
+// Theme the extension button in the toolbar
+function themeExtensionIconInToolBar(dokiTheme) {
+  const extensionIconOptions = {width: 74, height: 74, useCanvasData: true};
+  const extensionSVG = buildSVG(dokiTheme, extensionIconOptions)
+  svgToPng(extensionSVG, extensionIconOptions, (imageData) => {
+    browser.browserAction.setIcon({
+      imageData
+    });
+  });
+}
+
 // Themed logo stuffs
 function shadeHexColor(color, percent) {
   const f = parseInt(color.slice(1), 16),
@@ -18,6 +29,7 @@ function shadeHexColor(color, percent) {
       .slice(1)
   );
 }
+
 /*The Logo in SVG format*/
 const buildSVG = (dokiTheme, {width, height}) =>
   `<svg width="${width}" height="${height}" viewBox="0 0 52.915 52.915" xmlns="http://www.w3.org/2000/svg">
@@ -40,8 +52,8 @@ const svgUrlToPng = (svgUrl, options, callback) => {
     canvasCtx.drawImage(svgImage, 0, 0);
     const imgData =
       options.useCanvasData ?
-      canvasCtx.getImageData(0, 0, options.width, options.height) :
-      canvas.toDataURL('image/png');
+        canvasCtx.getImageData(0, 0, options.width, options.height) :
+        canvas.toDataURL('image/png');
     callback(imgData);
     svgImage.remove();
   };
@@ -60,4 +72,4 @@ const svgToPng = (svg, options, callback) => {
   });
 };
 
-export {svgToPng,buildSVG};
+export {svgToPng, buildSVG, themeExtensionIconInToolBar};

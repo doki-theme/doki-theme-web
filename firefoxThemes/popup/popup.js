@@ -1,6 +1,7 @@
-import {svgToPng, buildSVG} from "../modules/logo.js";
-import {getRandomThemeId} from "../modules/random.js";
-import {mixedStates,backgroundTypes} from "../modules/states.js";
+import {svgToPng, buildSVG} from "../modules/utils/themes/logo.js";
+import {getRandomThemeId} from "../modules/utils/random.js";
+import {mixedStates, backgroundTypes} from "../modules/utils/states.js";
+import {optionsPage} from "../modules/utils/browser.js";
 
 /*Global Variables*/
 const selectTag = document.querySelector("select");
@@ -86,9 +87,9 @@ const setOpposingTheme = async () => {
 
 function themeDokiLogo(currentTheme) {
   const searchOptions = {width: 75, height: 75};
-  const searchSVG = buildSVG(currentTheme, searchOptions)
+  const searchSVG = buildSVG(currentTheme, searchOptions);
   svgToPng(searchSVG, searchOptions, (imgData) => {
-    dokiHeart.src = imgData
+    dokiHeart.src = imgData;
   });
 }
 
@@ -139,6 +140,7 @@ function setTheme(e) {
           if (chosenThemeId) {
             setCSS(storage.waifuThemes.themes[chosenThemeId]);
           }
+          selectTag.value = 'none';// Reset option back to 'choose a waifu'
         }
         setHasSecondary(storage.waifuThemes.themes[chosenThemeId]);
       } else {
@@ -147,8 +149,8 @@ function setTheme(e) {
         setDarkMode(true);
         setHasSecondary(false);
         setCSS(themes[chosenThemeId]);
+        selectTag.value = 'none';// Reset option back to 'choose a waifu'
       }
-      selectTag.value = 'none';// Reset option back to 'choose a waifu'
       browser.runtime.sendMessage({currentThemeId: chosenThemeId, mixState: currentMix});
     });
 }
@@ -160,11 +162,6 @@ function getMixState(name, mixTabs) {
     return mixedStates.INITIAL;
   }
   return mixedStates.NONE;
-}
-
-/*Navigate to options page*/
-function optionsPage() {
-  browser.runtime.openOptionsPage();
 }
 
 /*Initializes checkbox switches*/

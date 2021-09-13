@@ -1,4 +1,4 @@
-import {buildSVG, svgToPng} from "../modules/logo.js";
+import {buildSVG, svgToPng} from "../modules/utils/themes/logo.js";
 
 function setThemedFavicon(currentTheme) {
   const faviconOptions = {width: 32, height: 32};
