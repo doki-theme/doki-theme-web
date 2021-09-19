@@ -167,24 +167,6 @@ There is a know issue with session restoration on re-open though. [See GitHub is
 | ![before fix](./screenshots/firefoxIssues/before.png) |![after fix](./screenshots/firefoxIssues/after.png) |
 
 
-## About the plugin!
-
-These Chrome extensions are for serious Otaku web surfers.
-With over **20** chrome themes, based off of various waifus,
-I think you will find your best girl.
-
-Variety is the spice of life! 
-So you can choose themes from various, Anime, Manga, or Visual Novels:
-
-- Doki-Doki Literature Club
-- Re:Zero
-- Kill La Kill
-- KonoSuba
-- DanganRonpa
-- High School DxD
-- Lucky Star
-- Sword Art Online
-
 # Got Contributions, fun ideas, or issues?
 
 The Chrome platform is has a fairly limited feature set.
