@@ -1,18 +1,18 @@
 import {
   BaseAppDokiThemeDefinition,
+  constructNamedColorTemplate,
+  dictionaryReducer,
   DokiThemeDefinitions,
   evaluateTemplates,
   MasterDokiThemeDefinition,
-  resolvePaths,
-  StringDictionary,
-  walkDir,
-  dictionaryReducer,
-  constructNamedColorTemplate,
+  readJson,
   resolveColor,
-  toRGBArray,
-  rgbToHsl,
+  resolvePaths,
   resolveStickerPath,
-  readJson
+  rgbToHsl,
+  StringDictionary,
+  toRGBArray,
+  walkDir
 } from 'doki-build-source';
 import {FireFoxTheme, ManifestTemplate,} from './types';
 
@@ -42,6 +42,29 @@ function replaceValues<T, R>(itemToReplace: T, valueConstructor: (key: string, v
     .reduce(dictionaryReducer, {});
 }
 
+function buildColors(
+  dokiThemeDefinition: MasterDokiThemeDefinition,
+  dokiTemplateDefinitions: DokiThemeDefinitions,
+  dokiThemeChromeDefinition: ChromeDokiThemeDefinition,
+): StringDictionary<string> {
+  const namedColors = constructNamedColorTemplate(
+    dokiThemeDefinition, dokiTemplateDefinitions
+  )
+  const themeOverrides = dokiThemeChromeDefinition.overrides.theme &&
+    dokiThemeChromeDefinition.overrides.theme.colors || {};
+  const colorsOverride: StringDictionary<string> = {
+    ...namedColors,
+    ...themeOverrides,
+    ...dokiThemeChromeDefinition.colors,
+  }
+  return Object.entries<string>(colorsOverride).reduce(
+    (accum, [colorName, colorValue]) => ({
+      ...accum,
+      [colorName]: resolveColor(colorValue, namedColors),
+    }),
+    {}
+  );
+}
 
 function buildChromeThemeManifest(
   dokiThemeDefinition: MasterDokiThemeDefinition,
@@ -53,8 +76,12 @@ function buildChromeThemeManifest(
     dokiThemeDefinition, dokiTemplateDefinitions
   )
   const manifestTheme = manifestTemplate.theme;
-  const colorsOverride = dokiThemeChromeDefinition.overrides.theme &&
+  const themeOverrides = dokiThemeChromeDefinition.overrides.theme &&
     dokiThemeChromeDefinition.overrides.theme.colors || {};
+  const colorsOverride: StringDictionary<string> = {
+    ...themeOverrides,
+    ...dokiThemeChromeDefinition.colors,
+  }
   return {
     ...manifestTemplate,
     name: `Doki Theme: ${dokiThemeDefinition.name}`,
@@ -127,7 +154,10 @@ function createDokiTheme(
   try {
     return {
       path: dokiFileDefinitionPath,
-      definition: dokiThemeDefinition,
+      definition: {
+        ...dokiThemeDefinition,
+        colors: buildColors(dokiThemeDefinition, dokiTemplateDefinitions, dokiThemeChromeDefinition)
+      },
       manifest: buildChromeThemeManifest(
         dokiThemeDefinition,
         dokiTemplateDefinitions,
@@ -214,7 +244,7 @@ function buildActiveTabImage(
   accentColor: number,
   backgroundDirectory: string
 ) {
-  return new Promise(((resolve, reject) => {
+  return new Promise<void>(((resolve, reject) => {
     // @ts-ignore
     new jimp(300, 120, (err, image) => {
       for (let i = 0; i < tabHeight; i++) {
@@ -344,12 +374,12 @@ preBuild()
         currentWorkingDirectory: __dirname,
       },
       ((
-        dokiFileDefinitionPath,
-        dokiThemeDefinition,
-        _,
-        dokiThemeAppDefinition,
-        dokiTemplateDefinitions,
-) =>
+          dokiFileDefinitionPath,
+          dokiThemeDefinition,
+          _,
+          dokiThemeAppDefinition,
+          dokiTemplateDefinitions,
+        ) =>
           createDokiTheme(
             dokiFileDefinitionPath,
             dokiThemeDefinition,
@@ -432,7 +462,7 @@ preBuild()
             return (fs.existsSync(highResThemeDirectory) ?
               walkDir(highResThemeDirectory)
                 .then(items => items.forEach(item => fs.unlinkSync(item))) : Promise.resolve())
-              .then(() => new Promise((resolve, reject) => {
+              .then(() => new Promise<void>((resolve, reject) => {
                   ncp(themeDirectory, highResThemeDirectory, {
                     clobber: false,
                   }, (err: Error[] | null) => {
@@ -450,13 +480,15 @@ preBuild()
 
                       // copy high res image to firefox
                       const highResFireFoxBackgroundDirectory = path.resolve(firefoxThemeDirectory, 'images');
-                      highResThemes.forEach(hiResTheme => {
-                        const highResFireFox = path.resolve(highResFireFoxBackgroundDirectory, path.basename(hiResTheme));
-                        fs.copyFileSync(
-                          hiResTheme,
-                          highResFireFox
-                        )
-                      });
+                      highResThemes
+                        .filter(themeAssetPath => themeAssetPath.indexOf("kanna_dark.png") < 0) // filter out duplicate Kanna Primary background
+                        .forEach(hiResTheme => {
+                          const highResFireFox = path.resolve(highResFireFoxBackgroundDirectory, path.basename(hiResTheme));
+                          fs.copyFileSync(
+                            hiResTheme,
+                            highResFireFox
+                          )
+                        });
 
                       resolve()
                     }
@@ -483,20 +515,22 @@ preBuild()
           // high res.
           const bkNames = Object.values(stickers)
             .map(sticker => sticker.name)
-          bkNames.forEach(bkName => {
-            const chromeLowerRes = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome',
-              bkName);
-            const lowResFallback = fs.existsSync(chromeLowerRes) ?
-              chromeLowerRes : path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', bkName);
+          bkNames
+            .filter(bkName => bkName.indexOf("kanna_dark.png") < 0) // filter out duplicate Kanna Primary
+            .forEach(bkName => {
+              const chromeLowerRes = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome',
+                bkName);
+              const lowResFallback = fs.existsSync(chromeLowerRes) ?
+                chromeLowerRes : path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', bkName);
 
-            const lowResFirefoxPath = path.resolve(
-              getBackgroundDirectory(firefoxThemeDirectory),
-              bkName
-            )
-            if (!fs.existsSync(lowResFirefoxPath)) {
-              fs.copyFileSync(lowResFallback, lowResFirefoxPath)
-            }
-          })
+              const lowResFirefoxPath = path.resolve(
+                getBackgroundDirectory(firefoxThemeDirectory),
+                bkName
+              )
+              if (!fs.existsSync(lowResFirefoxPath)) {
+                fs.copyFileSync(lowResFallback, lowResFirefoxPath)
+              }
+            })
         })
         .catch(() => {
           // skipping asset copies
@@ -508,10 +542,14 @@ preBuild()
       // write things for firefox extension
       const dokiThemeDefinitions = dokiThemes.map(dokiTheme => {
         const dokiDefinition = dokiTheme.definition;
-        const stickers = getStickers(dokiDefinition, dokiTheme);
         const relativeFireFoxAssetPath = `${FIRE_FOX_EXTENSION_ASSET_DIRECTORY}/${
           getFireFoxThemeAssetDirectory(dokiDefinition)
         }`
+        const backgrounds = getBackgrounds(
+          dokiDefinition,
+          dokiTheme,
+          relativeFireFoxAssetPath
+        );
         return {
           information: {
             ...omit(dokiDefinition, [
@@ -520,16 +558,7 @@ preBuild()
               'ui',
               'icons'
             ]),
-            backgrounds: {
-              primary: `${relativeFireFoxAssetPath}/images/${
-                stickers.default.name
-              }`,
-              ...(stickers.secondary ? {
-                secondary: `${relativeFireFoxAssetPath}/images/${
-                  stickers.secondary.name
-                }`
-              } : {})
-            },
+            backgrounds,
             jsonPath: `${relativeFireFoxAssetPath}/theme.json`,
           },
           colors: dokiDefinition.colors,
@@ -543,7 +572,7 @@ preBuild()
       const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions,);
       fs.writeFileSync(
         path.resolve(repoDirectory, 'firefoxThemes', 'DokiThemeDefinitions.js'),
-        `const dokiThemeDefinitions = ${finalDokiDefinitions};`);
+        `export const dokiThemeDefinitions = ${finalDokiDefinitions};`);
     })
 
     .then(() => {
@@ -574,6 +603,30 @@ preBuild()
     console.log('Theme Generation Complete!');
   });
 
+function getBackgrounds(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: import("/home/alex/workspace/doki-build-source/lib/cjs/types").Overrides | undefined; product?: "community" | "ultimate" | undefined; stickers: import("/home/alex/workspace/doki-build-source/lib/cjs/types").Stickers; editorScheme?: import("/home/alex/workspace/doki-build-source/lib/cjs/types").EditorScheme | undefined; }, dokiTheme: { path: string; definition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: import("/home/alex/workspace/doki-build-source/lib/cjs/types").Overrides | undefined; product?: "community" | "ultimate" | undefined; stickers: import("/home/alex/workspace/doki-build-source/lib/cjs/types").Stickers; editorScheme?: import("/home/alex/workspace/doki-build-source/lib/cjs/types").EditorScheme | undefined; }; manifest: ManifestTemplate; fireFoxTheme: FireFoxTheme; theme: {}; chromeDefinition: BaseAppDokiThemeDefinition; }, relativeFireFoxAssetPath: string) {
+  const stickers = getStickers(dokiDefinition, dokiTheme);
+
+  if (isKanna(dokiDefinition)) {
+    return {
+      // retain secondary image because that is what the chrome themes use.
+      // because both of Kanna's backgrounds are the same. Only the sticker is different.
+      primary: `${relativeFireFoxAssetPath}/images/${stickers.secondary!!.name}`,
+    }
+  }
+
+
+  return {
+    primary: `${relativeFireFoxAssetPath}/images/${stickers.default.name}`,
+    ...(stickers.secondary ? {
+      secondary: `${relativeFireFoxAssetPath}/images/${stickers.secondary.name}`
+    } : {})
+  };
+}
+
 function getName(dokiDefinition: MasterDokiThemeDefinition) {
   return dokiDefinition.name.replace(':', '');
+}
+
+function isKanna(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: import("/home/alex/workspace/doki-build-source/lib/cjs/types").Overrides | undefined; product?: "community" | "ultimate" | undefined; stickers: import("/home/alex/workspace/doki-build-source/lib/cjs/types").Stickers; editorScheme?: import("/home/alex/workspace/doki-build-source/lib/cjs/types").EditorScheme | undefined; }): boolean {
+  return dokiDefinition.id === "b93ab4ea-ff96-4459-8fa2-0caae5bc7116"
 }
