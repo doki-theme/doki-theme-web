@@ -2,6 +2,21 @@ Changelog
 ---
 
 # Unreleased
+
+# 14.0.0 [KillLaKill Alt. Themes]
+
+## 2 New Themes!
+
+- Ryuko Light
+- Satsuki Dark
+
+**Other Stuff**
+
+- Updated Ryuko's dark background art.
+- Updated Satsuki's light background art.
+
+![v19 Girls](https://doki.assets.unthrottled.io/misc/v19_girls.png)
+
 # 13.2.0 [Marketplace Conformance]
 
 - Updated plugin to conform to the Firefox addon rules and guidelines when using registered trademarks.
