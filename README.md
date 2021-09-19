@@ -135,7 +135,7 @@ If you don't feel like downloading the addon from the store, then follow the bel
 6. Now, select the doki-theme icon on the toolbar & Choose a theme to load
 7. And that's it!
 
-****Warning:*** This is a temporary way of installing *Doki Theme*. Everytime the browser is closed, the extension 
+***Warning:*** This is a temporary way of installing *Doki Theme*. Everytime the browser is closed, the extension 
 must be reinstalled again using these steps.
 
 ### Configuration
@@ -148,7 +148,7 @@ You can configure the extension by:
 
 **OR**
 1. Open the extension in the toolbar
-2. Click on *Doki Theme* logo
+2. Click on the *Doki Theme* logo
 
 **Load New Tab on start** is not enabled by default. 
 When enabled, when the browser will first open, it will open a tab with your Waifu in the background.
