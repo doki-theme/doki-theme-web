@@ -114,26 +114,29 @@ Until then, you'll have to do a local install.
 
 ## Mozilla Firefox
 
-### Add-on
+### 1.) Mozilla's Add-on Store Install
 
 You can find the extension on the [FireFox addon marketplace.](https://addons.mozilla.org/en-US/firefox/addon/doki-theme-for-firefox/)
 
-### Manual
+### 2.) Manual Install
 
 If you don't feel like downloading the addon from the store, then follow the below steps.
 
-### Prerequisites
+#### Prerequisites
 
 - Mozilla Firefox 63 or above
 
-### Steps
+#### Steps
 1. Clone this repository
-1. Open Firefox
-1. Type in the search bar `about:debugging`
-1. Select *This Firefox* and click *Load Temporary Add-on...*
-1. Choose the *manifest.json* file in the Firefox directory
-1. Now, select the doki-theme icon on the toolbar & Choose a theme to load
-1. And that's it!
+2. Open Firefox
+3. Type in the search bar `about:debugging`
+4. Select *This Firefox* and click *Load Temporary Add-on...*
+5. Choose the *manifest.json* file in the Firefox directory
+6. Now, select the doki-theme icon on the toolbar & Choose a theme to load
+7. And that's it!
+
+***Warning:*** This is a temporary way of installing *Doki Theme*. Everytime the browser is closed, the extension 
+must be reinstalled again using these steps.
 
 ### Configuration
 
@@ -142,6 +145,10 @@ You can configure the extension by:
 1. Right-click the extension in the toolbar.
 2. Manage Extension
 3. Under Doki Theme for Firefox choose `Options`
+
+**OR**
+1. Open the extension in the toolbar
+2. Click on the *Doki Theme* logo
 
 **Load New Tab on start** is not enabled by default. 
 When enabled, when the browser will first open, it will open a tab with your Waifu in the background.
@@ -159,24 +166,6 @@ There is a know issue with session restoration on re-open though. [See GitHub is
 | --- | --- |
 | ![before fix](./screenshots/firefoxIssues/before.png) |![after fix](./screenshots/firefoxIssues/after.png) |
 
-
-## About the plugin!
-
-These Chrome extensions are for serious Otaku web surfers.
-With over **20** chrome themes, based off of various waifus,
-I think you will find your best girl.
-
-Variety is the spice of life! 
-So you can choose themes from various, Anime, Manga, or Visual Novels:
-
-- Doki-Doki Literature Club
-- Re:Zero
-- Kill La Kill
-- KonoSuba
-- DanganRonpa
-- High School DxD
-- Lucky Star
-- Sword Art Online
 
 # Got Contributions, fun ideas, or issues?
 

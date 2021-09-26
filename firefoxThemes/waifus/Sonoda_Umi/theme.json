@@ -66,9 +66,9 @@
       80
     ],
     "popup_highlight": [
-      35,
-      38,
-      79
+      39,
+      42,
+      89
     ],
     "popup_highlight_text": [
       251,
@@ -126,16 +126,16 @@
       84
     ],
     "toolbar_field_highlight": [
-      35,
-      38,
-      79
+      39,
+      42,
+      89
     ],
     "toolbar_field_highlight_text": [
       251,
       251,
       251
     ],
-		"toolbar_field_text": [
+    "toolbar_field_text": [
       104,
       120,
       194

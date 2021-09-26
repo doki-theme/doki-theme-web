@@ -51,8 +51,8 @@
       253
     ],
     "frame_inactive": [
-      37,
-      45,
+      23,
+      36,
       60
     ],
     "popup": [
@@ -135,7 +135,7 @@
       245,
       255
     ],
-		"toolbar_field_text": [
+    "toolbar_field_text": [
       58,
       159,
       177

@@ -2,6 +2,26 @@ Changelog
 ---
 
 # Unreleased
+
+# 14.0.0 [KillLaKill Alt. Themes]
+
+## 2 New Themes!
+
+- Ryuko Light
+- Satsuki Dark
+
+**Other Stuff**
+
+- Updated Ryuko's dark background art.
+- Updated Satsuki's light background art.
+
+![v19 Girls](https://doki.assets.unthrottled.io/misc/v19_girls.png)
+
+# 13.2.0 [Marketplace Conformance]
+
+- Updated plugin to conform to the Firefox addon rules and guidelines when using registered trademarks.
+- *Browser action* button now changes logo color based on currently selected theme.
+
 # 13.1.0 [Scrollbars & Text Selection]
 
 - Scrollbar, text selection, & caret are now themed! [#59](https://github.com/doki-theme/doki-theme-web/issues/59)
@@ -12,6 +32,7 @@ Changelog
 - Fixes *popup menu* not changing to appropriate theme color when selected
 - Custom checkboxes in *options page*
 - *Options page* now changes with current Doki Theme
+
 
 # 13.0.0 [NekoPara OneeSan Vol.]
 
