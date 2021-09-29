@@ -3,9 +3,11 @@ Changelog
 
 # Unreleased
 # 15.0.1 [Firefox: theming bug fixes]
-- Fix tabs not being randomized when creating tabs rapidly in mixed mode;
-- Fixes text selection & scrollbar not loading appropriately with their individual tab in mixed mode;
-- Fixes initialization of mixed mode in new window, if the last option chosen was mixed mode;
+- Fix tabs not being randomized when creating tabs rapidly in mixed mode.
+- Fixes text selection & scrollbar not loading appropriately with their individual tab in mixed mode.
+- Fixes text selection & scrollbar not loading appropriately with their individual tab in mixed mode.
+- Appropriate theme for *options page* for each tab loads correctly in mixed mode.
+- Fixes initialization of mixed mode in new window, if the last option chosen was mixed mode.
 - Mitigates favicon & other theming components to stay themed in mixed mode.
 
 # 15.0.0 [Only for Onii-chan] 
