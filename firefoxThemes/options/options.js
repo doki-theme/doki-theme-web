@@ -14,14 +14,17 @@ function setCss(chosenTheme) {
   root.style.setProperty('--checkmark-color',colors.classNameColor);
 }
 
-function initContent() {
-  browser.storage.local.get(['loadOnStart', 'textSelection', 'scrollbar', 'waifuThemes', 'currentThemeId'])
-    .then((storage) => {
-      initCheckbox(loadOnStartCheckbox,!!storage.loadOnStart);
-      initCheckbox(textSelectionCheckbox,!!storage.textSelection);
-      initCheckbox(scrollbarCheckbox,!!storage.scrollbar);
-      setCss(storage.waifuThemes.themes[storage.currentThemeId])
-    });
+async function initContent() {
+  const storage = await browser.storage.local.get(['loadOnStart', 'textSelection', 'scrollbar', 'waifuThemes', 'currentThemeId','mixedTabs'])
+  initCheckbox(loadOnStartCheckbox,!!storage.loadOnStart);
+  initCheckbox(textSelectionCheckbox,!!storage.textSelection);
+  initCheckbox(scrollbarCheckbox,!!storage.scrollbar);
+  let themeId = storage.currentThemeId;
+  if(storage.mixedTabs){
+    const tab = await browser.tabs.getCurrent();
+    themeId = storage.mixedTabs.get(tab.id);
+  }
+  setCss(storage.waifuThemes.themes[themeId]);
 }
 
 const onChangeCheckEvents = async (e) => {

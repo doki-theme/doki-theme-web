@@ -40,26 +40,27 @@ class Theme {
 }
 
 /*Initialize Local Storage & custom new tab page*/
-function startStorage() {
-  browser.storage.local.get(["currentThemeId", "loadOnStart", "textSelection", "scrollbar"])
-    .then((storage) => {
-      const initStorage = {
-        waifuThemes: new WaifuThemes(),
-      };
-      //Retrieve all themes if none exists in local storage
-      browser.storage.local.set(initStorage);
-      //Load browser theme
-      if (storage.currentThemeId) {
-        loadTheme(initStorage.waifuThemes.themes, storage.currentThemeId);
-      }
-      if (storage.loadOnStart) {
-        //When the browser first opens, redirect to custom new tab page
-        browser.tabs.update({loadReplace: true, url: "waifus/index.html"});
-      }
-      // Register all styles from option page
-      updateOptions({optionName: "textSelection", optionValue: !!!storage.textSelection});
-      updateOptions({optionName: "scrollbar", optionValue: !!!storage.scrollbar});
-    });
+async function startStorage() {
+  const storage = await browser.storage.local.get(["currentThemeId", "loadOnStart", "textSelection", "scrollbar","mixedTabs"]);
+  const initStorage = {
+    waifuThemes: new WaifuThemes(),
+  };
+  //Retrieve all themes if none exists in local storage
+  browser.storage.local.set(initStorage);
+  //Load browser theme
+  if (storage.mixedTabs){
+    const tab = await browser.tabs.getCurrent();
+    loadTheme(initStorage.waifuThemes.themes, storage.mixedTabs.get(tab.id));
+  }else if (storage.currentThemeId) {
+    loadTheme(initStorage.waifuThemes.themes, storage.currentThemeId);
+  }
+  if (storage.loadOnStart) {
+    //When the browser first opens, redirect to custom new tab page
+    browser.tabs.update({loadReplace: true, url: "waifus/index.html"});
+  }
+  // Register all styles from option page
+  updateOptions({optionName: "textSelection", optionValue: !!!storage.textSelection});
+  updateOptions({optionName: "scrollbar", optionValue: !!!storage.scrollbar});
 }
 
 /*Update all new tabs with new waifu theme*/

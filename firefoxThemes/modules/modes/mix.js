@@ -36,7 +36,15 @@ function keepLastTab(tabs) {
   }
   return lastTabs;
 }
-
+/*Remove themes that did not make it to the mixedTab list.
+* This is primarily used to mitigate speedy tab creations*/
+async function purgeGlitchedTabs(newTab){
+  const {mixedTabs} = await browser.storage.local.get(["mixedTabs"]);
+  const tabs = await browser.tabs.query({});
+  const glitchyTabs = tabs.filter(tab => !(!!mixedTabs.get(tab.id)) && tab.id !== newTab.id);
+  const glitchyTabIDs = glitchyTabs.map(tab => tab.id);
+  browser.tabs.remove(glitchyTabIDs);
+}
 /*EVENT: When a new tab is created add a random theme to it*/
 function MixTabCreated(tab) {
   if (tab.title === "New Tab") {
@@ -50,38 +58,33 @@ function MixTabCreated(tab) {
 
 /*EVENT: Set the theme for the current active tab*/
 function MixTabActivated(activeInfo) {
-  browser.storage.local.get(["waifuThemes", "mixedTabs"])
+  browser.storage.local.get(["waifuThemes"])
     .then((storage) => {
-      const currentThemeId = storage.mixedTabs.get(activeInfo.tabId);
+      const currentThemeId = mixList.get(activeInfo.tabId);
       if (currentThemeId) {
         loadTheme(storage.waifuThemes.themes, currentThemeId);
+        browser.storage.local.set({currentThemeId});
       }
     });
 }
-
+//Maintain a local list of all mixed tabs
+let mixList = new Map();
 /*EVENT: When a tab is closed delete the saved data for it*/
 function MixTabClosed(tabId) {
-  browser.storage.local.get()
-    .then((storage) => {
-      storage.mixedTabs.delete(tabId);
-      browser.storage.local.set({mixedTabs: storage.mixedTabs});
-    });
+  mixList.delete(tabId);
+  browser.storage.local.set({mixedTabs: mixList});
 }
 
 /*Updates the new tab with a new waifu theme*/
 function MixedUpdate(tab, themeId, themes) {
-  browser.storage.local.get(["mixedTabs"])
-    .then((storage) => {
-      storage.mixedTabs.set(tab.id, themeId);//Adds the created tab to the list of mixed tabs
-      browser.storage.local.set({currentThemeId: themeId, mixedTabs: storage.mixedTabs});
-      //Update the tab with theme
-      browser.tabs.update(tab.id, {
-        loadReplace: true,
-        url: themes[themeId].page
-      });
-      //Load browser theme
-      loadTheme(themes, themeId);
-    });
+  mixList.set(tab.id, themeId);//Adds the created tab to the list of mixed tabs
+  browser.storage.local.set({currentThemeId: themeId, mixedTabs: mixList});
+  //Load browser theme
+  loadTheme(themes, themeId);
+  //Purge glitchy tabs
+  setTimeout(()=>{
+    purgeGlitchedTabs(tab);
+  },3000);
 }
 
 /*Cleans up all things relating to the Mixed tab option*/
@@ -108,6 +111,7 @@ function setupMixedUpdate(msg) {
         .then((storage) => {
           if (!storage.mixedTabs) {
             storage.mixedTabs = new Map();//Create a new mixed tab list
+            mixList = new Map();
           }
           //Activate event listeners
           browser.tabs.onCreated.addListener(MixTabCreated);//When a tab is created
@@ -130,6 +134,7 @@ function setupMixedUpdate(msg) {
             } else {
               browser.storage.local.set({currentThemeId, mixedTabs: storage.mixedTabs});
             }
+            mixList = storage.mixedTabs;
             //Initialize first (and only) new tab with the default theme
             loadTheme(themes, currentThemeId);
           }

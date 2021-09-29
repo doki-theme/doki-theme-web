@@ -69,30 +69,26 @@ function displayWidget() {
 `;
 }
 
-function applyTabListeners() {
-  browser.storage.local.get(["showWidget", "waifuThemes", "currentThemeId"])
-    .then((storage) => {
-      const currentTheme = storage.waifuThemes.themes[storage.currentThemeId] ||
-        storage.waifuThemes.themes["19b65ec8-133c-4655-a77b-13623d8e97d3"]; // Ryuko Dark
-      const root = document.querySelector(':root');
-      root.style.setProperty('--accent-color', currentTheme.definition.colors.accentColor);
-      root.style.setProperty('--base-background-color', currentTheme.definition.colors.baseBackground);
+function applyTabListeners(storage) {
+    const currentTheme = storage.currentTheme;
+    const root = document.querySelector(':root');
+    root.style.setProperty('--accent-color', currentTheme.definition.colors.accentColor);
+    root.style.setProperty('--base-background-color', currentTheme.definition.colors.baseBackground);
 
-      if (storage.showWidget === undefined || storage.showWidget) {
-        displayWidget();
-        // set themed icons
-        setThemedSearchInputIcon(currentTheme);
-        setThemedAboutIcon(currentTheme);
+    if (storage.showWidget === undefined || storage.showWidget) {
+      displayWidget();
+      // set themed icons
+      setThemedSearchInputIcon(currentTheme);
+      setThemedAboutIcon(currentTheme);
 
-        /*---Event Listeners---*/
-        const input = document.querySelector("input[type='search']");
-        input.addEventListener("input", searchQuery, true);
-        input.addEventListener("keydown", keyConfirm, true);
+      /*---Event Listeners---*/
+      const input = document.querySelector("input[type='search']");
+      input.addEventListener("input", searchQuery, true);
+      input.addEventListener("keydown", keyConfirm, true);
 
-        const searchButton = document.querySelector(".search-button");
-        searchButton.addEventListener("click", confirmSearch, false);
-      }
-    });
+      const searchButton = document.querySelector(".search-button");
+      searchButton.addEventListener("click", confirmSearch, false);
+    }
 }
 
-applyTabListeners();
+export {applyTabListeners};
