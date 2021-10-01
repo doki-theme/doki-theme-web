@@ -3,7 +3,7 @@ import {mixedStates} from "./modules/utils/states.js";
 import {setupMixedUpdate, mixTabCleanup} from "./modules/modes/mix.js";
 import {normalUpdate} from "./modules/modes/normal.js";
 import {updateOptions} from "./modules/contentConfig.js";
-
+import {loadTheme} from "./modules/utils/themes/browser.js";
 /*---CLASSES---*/
 
 /*Class Goal: Holds theme data about all waifus*/
