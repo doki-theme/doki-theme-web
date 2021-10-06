@@ -1,5 +1,4 @@
 import {themeExtensionIconInToolBar} from "./logo.js";
-import {getRandomThemeId} from "../random.js";
 
 
 /*Set the browser theme for chosen waifu*/
@@ -12,16 +11,10 @@ async function loadTheme(themes, themeId) {
   browser.theme.update(themeJSON);
 }
 /*Retrieve the appropriate theme*/
-async function getCurrentTheme(themes,themeId,mixedTabs){
+function getCurrentTheme(themes,themeId,mixedTabs,tab){
   if(mixedTabs){
-    const tab = await browser.tabs.getCurrent();
     themeId = mixedTabs.get(tab.id);
-    if(!themeId){
-      themeId = getRandomThemeId(themes);
-      mixedTabs.set(tab.id,themeId);
-      browser.storage.local.set({mixedTabs});
-      loadTheme(themes,themeId);
-    }
+    browser.storage.local.set({currentThemeId:themeId});
   }
   return themes[themeId];
 }
