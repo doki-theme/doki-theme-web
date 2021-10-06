@@ -3,7 +3,7 @@ import {mixedStates} from "./modules/utils/states.js";
 import {setupMixedUpdate, mixTabCleanup} from "./modules/modes/mix.js";
 import {normalUpdate} from "./modules/modes/normal.js";
 import {updateOptions} from "./modules/contentConfig.js";
-import {loadTheme} from "./modules/utils/themes/browser.js";
+import {getRandomThemeId} from "./modules/utils/random.js";
 /*---CLASSES---*/
 
 /*Class Goal: Holds theme data about all waifus*/
@@ -49,10 +49,11 @@ async function startStorage() {
   browser.storage.local.set(initStorage);
   //Load browser theme
   if (storage.mixedTabs){
-    const tab = await browser.tabs.getCurrent();
-    loadTheme(initStorage.waifuThemes.themes, storage.mixedTabs.get(tab.id));
+    let themeId = storage.currentThemeId || getRandomThemeId(initStorage.waifuThemes.themes);
+    updateTabs({mixState:mixedStates.RESET,currentThemeId:themeId});
   }else if (storage.currentThemeId) {
-    loadTheme(initStorage.waifuThemes.themes, storage.currentThemeId);
+    let themeId = storage.currentThemeId || getRandomThemeId(initStorage.waifuThemes.themes);
+    updateTabs({currentThemeId:themeId});
   }
   if (storage.loadOnStart) {
     //When the browser first opens, redirect to custom new tab page

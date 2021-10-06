@@ -13,7 +13,6 @@ async function loadTheme(themes, themeId) {
 }
 /*Retrieve the appropriate theme*/
 async function getCurrentTheme(themes,themeId,mixedTabs){
-  console.group("Page");
   if(mixedTabs){
     const tab = await browser.tabs.getCurrent();
     themeId = mixedTabs.get(tab.id);
