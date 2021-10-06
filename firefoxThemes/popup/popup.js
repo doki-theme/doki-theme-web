@@ -44,8 +44,7 @@ const setHideWidget = async () => {
     showWidget: showSearchSwitch.checked
   });
 
-  const {currentThemeId} = await browser.storage.local.get(["currentThemeId"])
-  browser.runtime.sendMessage({resourceMSG:true,currentThemeId});
+  browser.runtime.sendMessage({resourceMSG:true,applyWidget:true});
 }
 
 /*Stores info to set dark mode switch accordingly*/

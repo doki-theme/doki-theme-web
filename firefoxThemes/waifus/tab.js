@@ -74,7 +74,6 @@ function applyTabListeners(storage) {
     const root = document.querySelector(':root');
     root.style.setProperty('--accent-color', currentTheme.definition.colors.accentColor);
     root.style.setProperty('--base-background-color', currentTheme.definition.colors.baseBackground);
-
     if (storage.showWidget === undefined || storage.showWidget) {
       displayWidget();
       // set themed icons

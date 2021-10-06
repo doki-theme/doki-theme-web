@@ -4,6 +4,7 @@ import {setupMixedUpdate, mixTabCleanup} from "./modules/modes/mix.js";
 import {normalUpdate} from "./modules/modes/normal.js";
 import {updateOptions} from "./modules/contentConfig.js";
 import {getRandomThemeId} from "./modules/utils/random.js";
+import {reloadTabs} from "./modules/utils/browser.js";
 /*---CLASSES---*/
 
 /*Class Goal: Holds theme data about all waifus*/
@@ -41,19 +42,19 @@ class Theme {
 
 /*Initialize Local Storage & custom new tab page*/
 async function startStorage() {
-  const storage = await browser.storage.local.get(["currentThemeId", "loadOnStart", "textSelection", "scrollbar","mixedTabs"]);
+  const storage = await browser.storage.local.get(["currentThemeId", "loadOnStart", "textSelection", "scrollbar", "mixedTabs"]);
   const initStorage = {
     waifuThemes: new WaifuThemes(),
   };
   //Retrieve all themes if none exists in local storage
   browser.storage.local.set(initStorage);
   //Load browser theme
-  if (storage.mixedTabs){
+  if (storage.mixedTabs) {
     let themeId = storage.currentThemeId || getRandomThemeId(initStorage.waifuThemes.themes);
-    updateTabs({mixState:mixedStates.RESET,currentThemeId:themeId});
-  }else if (storage.currentThemeId) {
+    updateTabs({mixState: mixedStates.RESET, currentThemeId: themeId});
+  } else if (storage.currentThemeId) {
     let themeId = storage.currentThemeId || getRandomThemeId(initStorage.waifuThemes.themes);
-    updateTabs({currentThemeId:themeId});
+    updateTabs({currentThemeId: themeId});
   }
   if (storage.loadOnStart) {
     //When the browser first opens, redirect to custom new tab page
@@ -83,15 +84,17 @@ function updateTabs(msg) {
 
 /*MESSAGE: Update all theme components*/
 function updateTheme(msg) {
-  if(!msg.resourceMSG) return;
+  if (!msg.resourceMSG) return;
 
-  if (!msg.optionName) {
+  if (msg.applyWidget) {
+    reloadTabs({title: 'New Tab'});
+  } else if (msg.optionName && msg.optionValue) {
+    updateOptions(msg);
+  } else {
     updateTabs(msg);
     for (const optionName of ['textSelection', 'scrollbar']) {
       updateOptions({optionName});
     }
-  } else {
-    updateOptions(msg);
   }
 }
 
