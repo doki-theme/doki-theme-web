@@ -1,6 +1,7 @@
 import {getRandomThemeId} from "../utils/random.js";
 import {loadTheme} from "../utils/themes/browser.js";
-
+/*Global Variables*/
+let mixedList = new Map();//Maintain a local list of all mixed tabs
 /*Separate the New Tab pages from the other types of pages*/
 function separateTabs(tabs) {
   let newTabs = [];
@@ -60,25 +61,24 @@ function MixTabCreated(tab) {
 function MixTabActivated(activeInfo) {
   browser.storage.local.get(["waifuThemes"])
     .then((storage) => {
-      const currentThemeId = mixList.get(activeInfo.tabId);
+      const currentThemeId = mixedList.get(activeInfo.tabId);
       if (currentThemeId) {
         loadTheme(storage.waifuThemes.themes, currentThemeId);
         browser.storage.local.set({currentThemeId});
       }
     });
 }
-//Maintain a local list of all mixed tabs
-let mixList = new Map();
+
 /*EVENT: When a tab is closed delete the saved data for it*/
 function MixTabClosed(tabId) {
-  mixList.delete(tabId);
-  browser.storage.local.set({mixedTabs: mixList});
+  mixedList.delete(tabId);
+  browser.storage.local.set({mixedTabs: mixedList});
 }
 
 /*Updates the new tab with a new waifu theme*/
 function MixedUpdate(tab, themeId, themes) {
-  mixList.set(tab.id, themeId);//Adds the created tab to the list of mixed tabs
-  browser.storage.local.set({currentThemeId: themeId, mixedTabs: mixList});
+  mixedList.set(tab.id, themeId);//Adds the created tab to the list of mixed tabs
+  browser.storage.local.set({currentThemeId: themeId, mixedTabs: mixedList});
   //Load browser theme
   loadTheme(themes, themeId);
   //Purge glitchy tabs
@@ -99,6 +99,7 @@ function mixTabCleanup() {
       }
       if (storage.mixedTabs) {
         browser.storage.local.set({mixedTabs: undefined});
+        mixedList = undefined;
       }
     });
 }
@@ -111,7 +112,7 @@ function setupMixedUpdate(msg) {
         .then((storage) => {
           if (!storage.mixedTabs) {
             storage.mixedTabs = new Map();//Create a new mixed tab list
-            mixList = new Map();
+            mixedList = new Map();
           }
           //Activate event listeners
           browser.tabs.onCreated.addListener(MixTabCreated);//When a tab is created
@@ -134,7 +135,7 @@ function setupMixedUpdate(msg) {
             } else {
               browser.storage.local.set({currentThemeId, mixedTabs: storage.mixedTabs});
             }
-            mixList = storage.mixedTabs;
+            mixedList = storage.mixedTabs;
             //Initialize first (and only) new tab with the default theme
             loadTheme(themes, currentThemeId);
           }
