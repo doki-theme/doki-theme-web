@@ -30,6 +30,7 @@ async function initContent() {
 const onChangeCheckEvents = async (e) => {
   changeCheckboxState(e);
   await browser.runtime.sendMessage({
+    resourceMSG:true,
     optionName: e.target.id,
     optionValue: e.target.className
   });

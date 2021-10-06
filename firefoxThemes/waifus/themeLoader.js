@@ -17,24 +17,20 @@ function setThemedFavicon(currentTheme) {
   });
 }
 
-async function startTheming() {
-  const storage = await browser.storage.local.get(["currentThemeId","waifuThemes","mixedTabs","backgroundType","showWidget"]);
-  storage.currentTheme = await getCurrentTheme(storage.waifuThemes.themes,storage.currentThemeId,storage.mixedTabs);
-  applyTheme(storage);
-  applyTabListeners(storage);
-  setThemedFavicon(storage.currentTheme);
-  if(storage.mixedTabs){
-    //Makes sure the mixedTab list has the same amount of tabs as the amount currently opened tabs
-    const tabs = await browser.tabs.query({});
-    const tabIDs = tabs.map(tab=>tab.id);
-
-    for(const key of storage.mixedTabs.keys()){
-      if(!tabIDs.includes(key)){
-        storage.mixedTabs.delete(key);
-      }
-    }
-    browser.storage.local.set({mixedTabs:storage.mixedTabs});
-  }
+/*Apply All Themes except toolbar themes*/
+function startTheming(msg) {
+  if (!msg.pageMSG) return;
+  msg.currentTheme = getCurrentTheme(msg.waifuThemes.themes, msg.currentThemeId, msg.mixedTabs, msg.pageTab);
+  applyTheme(msg);
+  applyTabListeners(msg);
+  setThemedFavicon(msg.currentTheme);
 }
 
-startTheming();
+/*MESSAGE: Alerts background script that page is fully loaded and ready to apply theme*/
+async function sendMessage() {
+  const tab = await browser.tabs.getCurrent();
+  browser.runtime.sendMessage({mixMSG: true, pageTab: tab});
+}
+
+browser.runtime.onMessage.addListener(startTheming);
+sendMessage();

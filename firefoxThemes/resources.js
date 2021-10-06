@@ -81,8 +81,10 @@ function updateTabs(msg) {
   }
 }
 
-/*Update all theme components*/
+/*MESSAGE: Update all theme components*/
 function updateTheme(msg) {
+  if(!msg.resourceMSG) return;
+
   if (!msg.optionName) {
     updateTabs(msg);
     for (const optionName of ['textSelection', 'scrollbar']) {
