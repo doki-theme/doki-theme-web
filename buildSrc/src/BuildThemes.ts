@@ -603,7 +603,7 @@ preBuild()
     console.log('Theme Generation Complete!');
   });
 
-function getBackgrounds(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: import("/home/alex/workspace/doki-build-source/lib/cjs/types").Overrides | undefined; product?: "community" | "ultimate" | undefined; stickers: import("/home/alex/workspace/doki-build-source/lib/cjs/types").Stickers; editorScheme?: import("/home/alex/workspace/doki-build-source/lib/cjs/types").EditorScheme | undefined; }, dokiTheme: { path: string; definition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: import("/home/alex/workspace/doki-build-source/lib/cjs/types").Overrides | undefined; product?: "community" | "ultimate" | undefined; stickers: import("/home/alex/workspace/doki-build-source/lib/cjs/types").Stickers; editorScheme?: import("/home/alex/workspace/doki-build-source/lib/cjs/types").EditorScheme | undefined; }; manifest: ManifestTemplate; fireFoxTheme: FireFoxTheme; theme: {}; chromeDefinition: BaseAppDokiThemeDefinition; }, relativeFireFoxAssetPath: string) {
+function getBackgrounds(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }, dokiTheme: { path: string; definition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }; manifest: ManifestTemplate; fireFoxTheme: FireFoxTheme; theme: {}; chromeDefinition: BaseAppDokiThemeDefinition; }, relativeFireFoxAssetPath: string) {
   const stickers = getStickers(dokiDefinition, dokiTheme);
 
   if (isKanna(dokiDefinition)) {
@@ -627,6 +627,6 @@ function getName(dokiDefinition: MasterDokiThemeDefinition) {
   return dokiDefinition.name.replace(':', '');
 }
 
-function isKanna(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: import("/home/alex/workspace/doki-build-source/lib/cjs/types").Overrides | undefined; product?: "community" | "ultimate" | undefined; stickers: import("/home/alex/workspace/doki-build-source/lib/cjs/types").Stickers; editorScheme?: import("/home/alex/workspace/doki-build-source/lib/cjs/types").EditorScheme | undefined; }): boolean {
+function isKanna(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }): boolean {
   return dokiDefinition.id === "b93ab4ea-ff96-4459-8fa2-0caae5bc7116"
 }
