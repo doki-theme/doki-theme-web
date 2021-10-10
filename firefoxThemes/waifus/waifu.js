@@ -21,9 +21,8 @@ function getSecondaryAnchoring(theme) {
 
 /*Prepares the Waifu to be displayed on webpage*/
 function getWaifu(storage) {
-  const themes = storage.waifuThemes.themes;
   //Retrieve path to the image file
-  const currentTheme = themes[storage.currentThemeId];
+  const currentTheme = storage.currentTheme;
 
   const primaryBackgroundRelativeUrl = currentTheme.backgrounds.primary;
   const isPrimaryBackground = !storage.backgroundType;
@@ -54,13 +53,9 @@ function loadDokiTheme(storage) {
 }
 
 /*Apply Theme */
-function applyTheme() {
-  browser.storage.local.get(["waifuThemes", "currentThemeId", "backgroundType"])
-    .then((storage) => {
-      if (Object.keys(storage.waifuThemes.themes).includes(storage.currentThemeId)) {
-        loadDokiTheme(storage);
-      }
-    });
+function applyTheme(storage) {
+    if (Object.keys(storage.waifuThemes.themes).includes(storage.currentThemeId)) {
+      loadDokiTheme(storage);
+    }
 }
-
-applyTheme();
+export {applyTheme};

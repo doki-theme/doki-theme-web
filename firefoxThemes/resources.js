@@ -3,7 +3,8 @@ import {mixedStates} from "./modules/utils/states.js";
 import {setupMixedUpdate, mixTabCleanup} from "./modules/modes/mix.js";
 import {normalUpdate} from "./modules/modes/normal.js";
 import {updateOptions} from "./modules/contentConfig.js";
-
+import {getRandomThemeId} from "./modules/utils/random.js";
+import {reloadTabs} from "./modules/utils/browser.js";
 /*---CLASSES---*/
 
 /*Class Goal: Holds theme data about all waifus*/
@@ -40,26 +41,28 @@ class Theme {
 }
 
 /*Initialize Local Storage & custom new tab page*/
-function startStorage() {
-  browser.storage.local.get(["currentThemeId", "loadOnStart", "textSelection", "scrollbar"])
-    .then((storage) => {
-      const initStorage = {
-        waifuThemes: new WaifuThemes(),
-      };
-      //Retrieve all themes if none exists in local storage
-      browser.storage.local.set(initStorage);
-      //Load browser theme
-      if (storage.currentThemeId) {
-        loadTheme(initStorage.waifuThemes.themes, storage.currentThemeId);
-      }
-      if (storage.loadOnStart) {
-        //When the browser first opens, redirect to custom new tab page
-        browser.tabs.update({loadReplace: true, url: "waifus/index.html"});
-      }
-      // Register all styles from option page
-      updateOptions({optionName: "textSelection", optionValue: !!!storage.textSelection});
-      updateOptions({optionName: "scrollbar", optionValue: !!!storage.scrollbar});
-    });
+async function startStorage() {
+  const storage = await browser.storage.local.get(["currentThemeId", "loadOnStart", "textSelection", "scrollbar", "mixedTabs"]);
+  const initStorage = {
+    waifuThemes: new WaifuThemes(),
+  };
+  //Retrieve all themes if none exists in local storage
+  browser.storage.local.set(initStorage);
+  //Load browser theme
+  if (storage.mixedTabs) {
+    let themeId = storage.currentThemeId || getRandomThemeId(initStorage.waifuThemes.themes);
+    updateTabs({mixState: mixedStates.RESET, currentThemeId: themeId});
+  } else if (storage.currentThemeId) {
+    let themeId = storage.currentThemeId || getRandomThemeId(initStorage.waifuThemes.themes);
+    updateTabs({currentThemeId: themeId});
+  }
+  if (storage.loadOnStart) {
+    //When the browser first opens, redirect to custom new tab page
+    browser.tabs.update({loadReplace: true, url: "waifus/index.html"});
+  }
+  // Register all styles from option page
+  updateOptions({optionName: "textSelection", optionValue: !!!storage.textSelection});
+  updateOptions({optionName: "scrollbar", optionValue: !!!storage.scrollbar});
 }
 
 /*Update all new tabs with new waifu theme*/
@@ -79,15 +82,19 @@ function updateTabs(msg) {
   }
 }
 
-/*Update all theme components*/
+/*MESSAGE: Update all theme components*/
 function updateTheme(msg) {
-  if (!msg.optionName) {
+  if (!msg.resourceMSG) return;
+
+  if (msg.applyWidget) {
+    reloadTabs({title: 'New Tab'});
+  } else if (msg.optionName && msg.optionValue) {
+    updateOptions(msg);
+  } else {
     updateTabs(msg);
     for (const optionName of ['textSelection', 'scrollbar']) {
       updateOptions({optionName});
     }
-  } else {
-    updateOptions(msg);
   }
 }
 

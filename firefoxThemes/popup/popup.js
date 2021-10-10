@@ -36,7 +36,7 @@ const setBackground = async () => {
   });
 
   const {currentThemeId} = await browser.storage.local.get(["currentThemeId"])
-  browser.runtime.sendMessage({currentThemeId});
+  browser.runtime.sendMessage({resourceMSG:true,currentThemeId});
 }
 
 const setHideWidget = async () => {
@@ -44,8 +44,7 @@ const setHideWidget = async () => {
     showWidget: showSearchSwitch.checked
   });
 
-  const {currentThemeId} = await browser.storage.local.get(["currentThemeId"])
-  browser.runtime.sendMessage({currentThemeId});
+  browser.runtime.sendMessage({resourceMSG:true,applyWidget:true});
 }
 
 /*Stores info to set dark mode switch accordingly*/
@@ -81,7 +80,7 @@ const setOpposingTheme = async () => {
     const newThemeId = newTheme.id;
     setCSS(newTheme);
     await browser.storage.local.set({currentThemeId: newThemeId});
-    browser.runtime.sendMessage({currentThemeId: newThemeId});
+    browser.runtime.sendMessage({resourceMSG:true,currentThemeId: newThemeId});
   }
 }
 
@@ -151,7 +150,7 @@ function setTheme(e) {
         setCSS(themes[chosenThemeId]);
         selectTag.value = 'none';// Reset option back to 'choose a waifu'
       }
-      browser.runtime.sendMessage({currentThemeId: chosenThemeId, mixState: currentMix});
+      browser.runtime.sendMessage({resourceMSG:true,currentThemeId: chosenThemeId, mixState: currentMix});
     });
 }
 

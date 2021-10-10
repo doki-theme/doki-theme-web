@@ -10,5 +10,13 @@ async function loadTheme(themes, themeId) {
   const themeJSON = await res.json();
   browser.theme.update(themeJSON);
 }
+/*Retrieve the appropriate theme*/
+function getCurrentTheme(themes,themeId,mixedTabs,tab){
+  if(mixedTabs){
+    themeId = mixedTabs.get(tab.id);
+    browser.storage.local.set({currentThemeId:themeId});
+  }
+  return themes[themeId];
+}
 
-export {loadTheme};
+export {loadTheme,getCurrentTheme};
