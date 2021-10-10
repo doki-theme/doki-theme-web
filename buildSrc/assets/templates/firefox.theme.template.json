@@ -20,6 +20,7 @@
     "sidebar_highlight":"&selectionBackground&",
     "sidebar_highlight_text":"&selectionForeground&",
     "sidebar_border":"&borderColor&",
+    "sidebar_text": "&foregroundColor&",
     "tab_background_separator": "&borderColor&",
     "tab_line": "&accentColor&",
     "tab_loading": "&accentColor&",
