@@ -80,6 +80,31 @@
       36,
       39
     ],
+    "sidebar": [
+      252,
+      252,
+      250
+    ],
+    "sidebar_highlight": [
+      255,
+      245,
+      199
+    ],
+    "sidebar_highlight_text": [
+      57,
+      61,
+      69
+    ],
+    "sidebar_border": [
+      238,
+      238,
+      238
+    ],
+    "sidebar_text": [
+      37,
+      36,
+      39
+    ],
     "tab_background_separator": [
       238,
       238,

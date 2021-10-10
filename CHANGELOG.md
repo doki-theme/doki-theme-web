@@ -2,6 +2,11 @@ Changelog
 ---
 
 # Unreleased
+
+# 15.0.2 [Firefox History Sidebar Theming]
+
+- Themes the Firefox's history sidebar ([#75](https://github.com/doki-theme/doki-theme-web/issues/75))
+
 # 15.0.1 [Firefox: Theming Bug Fixes]
 - Fix tabs not being randomized when creating tabs rapidly in mixed mode.
 - Fixes text selection & scrollbar not loading appropriately with their individual tab in mixed mode.
