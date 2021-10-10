@@ -11,6 +11,10 @@ Changelog
 - Mitigates favicon & other theming components to stay themed in mixed mode.
 - Fixes search bar widget toggling in *Mixed Mode* reverting all tabs back to using a single theme.
 
+# 15.1.0 [Firefox History Sidebar Theming]
+
+- Themes the Firefox's history sidebar ([#75](https://github.com/doki-theme/doki-theme-web/issues/75))
+
 # 15.0.0 [Only for Onii-chan] 
 
 **3 New Themes!**
