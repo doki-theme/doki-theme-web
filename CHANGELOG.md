@@ -2,14 +2,9 @@ Changelog
 ---
 
 # Unreleased
-# 15.0.1 [Firefox: Theming Bug Fixes]
-- Fix tabs not being randomized when creating tabs rapidly in mixed mode.
-- Fixes text selection & scrollbar not loading appropriately with their individual tab in mixed mode.
-- Fixes text selection & scrollbar not loading appropriately with their individual tab in mixed mode.
-- Appropriate theme for *options page* for each tab loads correctly in mixed mode.
-- Fixes initialization of a theme, when closing and reopening a browser.
-- Mitigates favicon & other theming components to stay themed in mixed mode.
-- Fixes search bar widget toggling in *Mixed Mode* reverting all tabs back to using a single theme.
+# 15.0.3 [Firefox: Theming Bug Fixes]
+- Fixes incorrect toolbar theme in *mixed mode* when rapidly creating tabs.([#77](https://github.com/doki-theme/doki-theme-web/issues/77))
+- Fixes incorrect toolbar theme in *mixed mode* when toggling search widget.([#77](https://github.com/doki-theme/doki-theme-web/issues/77))
 
 # 15.0.2 [Firefox History Sidebar Theming]
 
