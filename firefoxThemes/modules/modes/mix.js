@@ -121,7 +121,21 @@ function setupMixedUpdate(msg) {
         });
     });
 }
-
+/*Checks if tab is added to the local mixedlist.
+* If not, then add it in.*/
+function localMixedListCheck(tabId,themes){
+  if (!mixedList.has(tabId)) {
+    mixedList.set(tabId, getRandomThemeId(themes));
+    browser.storage.local.set({mixedTabs: mixedList});
+  }
+}
+/*Get the Current Tab's Theme from the local mixed list*/
+function getCurrentTabTheme(currentThemeId,tabId){
+  if(currentThemeId !== mixedList.get(tabId)){
+    browser.storage.local.set({currentThemeId: mixedList.get(tabId)});
+  }
+  return mixedList.get(tabId);
+}
 /*MESSAGE: Send a message to the page to apply theme*/
 function pageResponse(msg) {
   if (!msg.mixMSG) return;
@@ -135,20 +149,20 @@ function pageResponse(msg) {
         showWidget: storage.showWidget,
       });
     } else {
-      if (!mixedList.has(msg.pageTab.id)) {
-        mixedList.set(msg.pageTab.id, getRandomThemeId(storage.waifuThemes.themes));
-        browser.storage.local.set({mixedTabs: mixedList});
-      }
+      localMixedListCheck(msg.pageTab.id,storage.waifuThemes.themes);
       browser.tabs.sendMessage(msg.pageTab.id, {
         pageMSG: true,
         waifuThemes: storage.waifuThemes,
-        currentThemeId: storage.currentThemeId,
+        currentThemeId: getCurrentTabTheme(storage.currentThemeId,msg.pageTab.id),
         backgroundType: storage.backgroundType,
         showWidget: storage.showWidget,
         mixedTabs: mixedList,
         pageTab: msg.pageTab
       });
-      loadTheme(storage.waifuThemes.themes, mixedList.get(msg.pageTab.id));
+      //Load theme for active(currently shown) tab only
+      if(msg.pageTab.active){
+        loadTheme(storage.waifuThemes.themes, mixedList.get(msg.pageTab.id));
+      }
     }
   });
 }

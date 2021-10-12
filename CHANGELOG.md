@@ -2,6 +2,9 @@ Changelog
 ---
 
 # Unreleased
+# 15.0.3 [Firefox: Theming Bug Fixes]
+- Fixes incorrect toolbar theme in *mixed mode* when rapidly creating tabs.([#77](https://github.com/doki-theme/doki-theme-web/issues/77))
+- Fixes incorrect toolbar theme in *mixed mode* when toggling search widget.([#77](https://github.com/doki-theme/doki-theme-web/issues/77))
 
 # 15.0.2 [Firefox History Sidebar Theming]
 
