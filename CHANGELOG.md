@@ -2,6 +2,15 @@ Changelog
 ---
 
 # Unreleased
+
+# 16.0.0 [Jahy-sama will not be discouraged!]
+
+**1 New Theme!**
+
+Featuring the Dark World's Second in Command: Jahy!
+
+![v21 Girl](https://doki.assets.unthrottled.io/misc/v21_girl.png)
+
 # 15.0.3 [Firefox: Theming Bug Fixes]
 - Fixes incorrect toolbar theme in *mixed mode* when rapidly creating tabs.([#77](https://github.com/doki-theme/doki-theme-web/issues/77))
 - Fixes incorrect toolbar theme in *mixed mode* when toggling search widget.([#77](https://github.com/doki-theme/doki-theme-web/issues/77))

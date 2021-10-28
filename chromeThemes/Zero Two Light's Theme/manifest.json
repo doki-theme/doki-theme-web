@@ -1,6 +1,6 @@
 {
   "name": "Doki Theme: Zero Two Light",
-  "version": "15.0.2",
+  "version": "16.0.0",
   "description": "A light theme modeled after Zero Two from Darling in the Franxx",
   "theme": {
     "images": {
@@ -57,8 +57,8 @@
       ],
       "omnibox_text": [
         166,
-        29,
-        13
+        34,
+        16
       ],
       "theme_toolbar": [
         241,
@@ -93,14 +93,14 @@
     },
     "tints": {
       "buttons": [
-        0.017429193899782137,
+        0.02,
         1,
-        0.3509803921568628
+        0.3568627450980392
       ],
       "frame": [
-        0.017429193899782137,
+        0.02,
         1,
-        0.3509803921568628
+        0.3568627450980392
       ]
     },
     "properties": {
