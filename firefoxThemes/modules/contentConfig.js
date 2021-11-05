@@ -5,7 +5,7 @@ const registerOpt = {};
 /*Apply styles configured by the options page*/
 function updateOptions(element) {
   if (element.optionValue !== undefined) {
-    browser.storage.local.set({[element.optionName]: element.optionValue});
+    browser.storage.local.set({[element.optionName]: !!element.optionValue});
     registerTheme(element.optionName, element.optionValue);
   } else {
     browser.storage.local.set({[element.optionName]: true});
