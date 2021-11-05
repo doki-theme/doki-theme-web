@@ -2,9 +2,9 @@ Changelog
 ---
 
 # Unreleased
-# 15.0.3 [Firefox: Theming Bug Fixes]
-- Fixes incorrect toolbar theme in *mixed mode* when rapidly creating tabs.([#77](https://github.com/doki-theme/doki-theme-web/issues/77))
-- Fixes incorrect toolbar theme in *mixed mode* when toggling search widget.([#77](https://github.com/doki-theme/doki-theme-web/issues/77))
+# 16.0.1 [Firefox: Fix Options]
+- Fix theme breaking when enabling/disabling textbox selection/scrollbar options.
+- Remove edges from search bar
 
 # 16.0.0 [Jahy-sama will not be discouraged!]
 
