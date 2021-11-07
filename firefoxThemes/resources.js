@@ -88,7 +88,7 @@ function updateTheme(msg) {
 
   if (msg.applyWidget) {
     reloadTabs({title: 'New Tab'});
-  } else if (msg.optionName && msg.optionValue) {
+  } else if (msg.optionName && (msg.optionValue || msg.optionValue === '')) {
     updateOptions(msg);
   } else {
     updateTabs(msg);

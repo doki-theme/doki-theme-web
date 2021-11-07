@@ -1,7 +1,7 @@
 :root {
   --accent-color: inherit;
   --base-background-color: inherit;
-  --search-border-radius: 12px;
+  --search-border-radius: 40px;
 }
 
 body {

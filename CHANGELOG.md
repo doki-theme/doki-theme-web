@@ -2,6 +2,9 @@ Changelog
 ---
 
 # Unreleased
+# 16.0.1 [Firefox: Fix Options]
+- Fix theme breaking when enabling/disabling textbox selection/scrollbar options.
+- Remove edges from search bar
 
 # 16.0.0 [Jahy-sama will not be discouraged!]
 
