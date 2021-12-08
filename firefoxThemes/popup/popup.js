@@ -197,7 +197,8 @@ function initChoice() {
           const themeByDisplayName = accum[displayName];
           const hasConflicts = !!themeByDisplayName &&
             themeByDisplayName[0].group !== dokiTheme.group;
-          const themeKey = hasConflicts ? dokiTheme.name : dokiTheme.displayName;
+          const themeKey = hasConflicts ? dokiTheme.name : 
+          dokiTheme.displayName;
 
           // update existing collisions
           if (hasConflicts) {

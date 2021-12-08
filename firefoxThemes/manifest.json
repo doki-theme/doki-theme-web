@@ -1,8 +1,8 @@
 {
   "name": "Doki Theme for Firefox",
   "short_name": "Doki Theme",
-  "version": "16.0.1",
-  "description": "A theme collection of girls from various anime, manga, and visual novels series.",
+  "version": "17.0.0",
+  "description": "A collection of themes based on girls from various anime, manga, and visual novels series.",
   "manifest_version": 2,
   "icons": {
     "48": "icons/doki-theme-logo@48.png",
