@@ -1,6 +1,6 @@
 {
   "name": "Doki Theme: Tohsaka Rin",
-  "version": "16.0.0",
+  "version": "17.0.0",
   "description": "A dark theme modeled after Rin from Fate",
   "theme": {
     "images": {
@@ -102,7 +102,7 @@
       ]
     },
     "properties": {
-      "ntp_background_alignment": "center",
+      "ntp_background_alignment": "right",
       "ntp_logo_alternate": 0
     }
   },
