@@ -3,7 +3,7 @@ import {mixedStates} from "./modules/utils/states.js";
 import {setupMixedUpdate, mixTabCleanup} from "./modules/modes/mix.js";
 import {normalUpdate} from "./modules/modes/normal.js";
 import {updateOptions} from "./modules/contentConfig.js";
-import {getRandomThemeId} from "./modules/utils/random.js";
+import {getRandomThemeComps} from "./modules/utils/random.js";
 import {reloadTabs} from "./modules/utils/browser.js";
 /*---CLASSES---*/
 
@@ -32,7 +32,7 @@ class WaifuThemes {
 class Theme {
   constructor(name, backgrounds, json, themeDefinition) {
     this.name = name;//Name of theme
-    this.backgrounds = backgrounds;//Relative links to each themes backgrounds
+    this.backgrounds = backgrounds;//Relative links to each theme's backgrounds
     this.json = json;//Relative link to browser theme file
     this.definition = themeDefinition;
     Object.assign(this, themeDefinition.information)
@@ -42,7 +42,7 @@ class Theme {
 
 /*Initialize Local Storage & custom new tab page*/
 async function startStorage() {
-  const storage = await browser.storage.local.get(["currentThemeId", "loadOnStart", "textSelection", "scrollbar", "mixedTabs"]);
+  const storage = await browser.storage.local.get(["currentThemeId", "loadOnStart", "textSelection", "scrollbar", "mixedTabs", "systemTheme", "systemThemeOpt"]);
   const initStorage = {
     waifuThemes: new WaifuThemes(),
   };
@@ -50,10 +50,18 @@ async function startStorage() {
   browser.storage.local.set(initStorage);
   //Load browser theme
   if (storage.mixedTabs) {
-    let themeId = storage.currentThemeId || getRandomThemeId(initStorage.waifuThemes.themes);
+    let themeId = storage.currentThemeId;
+    if (!themeId) {
+      const [randomId, _] = getRandomThemeComps(storage.systemTheme, storage.systemThemeOpt, initStorage.waifuThemes.themes);
+      themeId = randomId;
+    }
     updateTabs({mixState: mixedStates.RESET, currentThemeId: themeId});
   } else if (storage.currentThemeId) {
-    let themeId = storage.currentThemeId || getRandomThemeId(initStorage.waifuThemes.themes);
+    let themeId = storage.currentThemeId;
+    if (!themeId) {
+      const [randomId, _] = getRandomThemeComps(storage.systemTheme, storage.systemThemeOpt, initStorage.waifuThemes.themes);
+      themeId = randomId;
+    }
     updateTabs({currentThemeId: themeId});
   }
   if (storage.loadOnStart) {
@@ -63,6 +71,12 @@ async function startStorage() {
   // Register all styles from option page
   updateOptions({optionName: "textSelection", optionValue: !!!storage.textSelection});
   updateOptions({optionName: "scrollbar", optionValue: !!!storage.scrollbar});
+  // Register to follow system color theme
+  if (storage.systemThemeOpt) {
+    browser.browserSettings.overrideContentColorScheme.set({value: "system"});
+  } else {
+    browser.browserSettings.overrideContentColorScheme.set({value: "browser"});
+  }
 }
 
 /*Update all new tabs with new waifu theme*/
@@ -102,3 +116,4 @@ function updateTheme(msg) {
 startStorage();
 /*---EventListeners---*/
 browser.runtime.onMessage.addListener(updateTheme);
+

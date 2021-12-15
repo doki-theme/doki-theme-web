@@ -1,4 +1,4 @@
-import {getRandomThemeId} from "../utils/random.js";
+import {getRandomThemeComps} from "../utils/random.js";
 import {loadTheme} from "../utils/themes/browser.js";
 /*Global Variables*/
 let mixedList = undefined;//Maintain a local list of all mixed tabs
@@ -17,10 +17,11 @@ function separateTabs(tabs) {
 }
 
 /*Add all tabs that are not a new tab into the mix mixedQueue*/
-function addOtherTabsToMix(tabs, mixList, themes) {
+function addOtherTabsToMix(tabs, mixList, systemTheme, systemOpt, themes) {
   if (tabs.length > 0) {
     for (const tab of tabs) {
-      mixList.set(tab.id, getRandomThemeId(themes));
+      const [randomId, _] = getRandomThemeComps(systemTheme, systemOpt, themes);
+      mixList.set(tab.id, randomId);
     }
   }
   return mixList;
@@ -88,7 +89,7 @@ function mixTabCleanup() {
 function setupMixedUpdate(msg) {
   browser.tabs.query({})
     .then((tabs) => {
-      browser.storage.local.get(["waifuThemes", "mixedTabs"])
+      browser.storage.local.get(["waifuThemes", "mixedTabs", "systemThemeOpt", "systemTheme"])
         .then((storage) => {
           if (!storage.mixedTabs) {
             storage.mixedTabs = new Map();//Create a new mixed tab list
@@ -101,7 +102,7 @@ function setupMixedUpdate(msg) {
             const themes = storage.waifuThemes.themes;
             let currentThemeId = msg.currentThemeId;
             const [newTabs, otherTabs] = separateTabs(tabs);
-            storage.mixedTabs = addOtherTabsToMix(otherTabs, storage.mixedTabs, themes);
+            storage.mixedTabs = addOtherTabsToMix(otherTabs, storage.mixedTabs, storage.systemTheme, storage.systemThemeOpt, themes);
             //If any New Tabs exists
             if (newTabs.length) {
               const lastTab = keepLastTab(newTabs);//Closes all New Tab tabs except the last
@@ -121,25 +122,29 @@ function setupMixedUpdate(msg) {
         });
     });
 }
+
 /*Checks if tab is added to the local mixedlist.
 * If not, then add it in.*/
-function localMixedListCheck(tabId,themes){
+function localMixedListCheck(tabId, systemTheme, systemOpt, themes) {
   if (!mixedList.has(tabId)) {
-    mixedList.set(tabId, getRandomThemeId(themes));
+    const [randomId, _] = getRandomThemeComps(systemTheme, systemOpt, themes);
+    mixedList.set(tabId, randomId);
     browser.storage.local.set({mixedTabs: mixedList});
   }
 }
+
 /*Get the Current Tab's Theme from the local mixed list*/
-function getCurrentTabTheme(currentThemeId,tabId){
-  if(currentThemeId !== mixedList.get(tabId)){
+function getCurrentTabTheme(currentThemeId, tabId) {
+  if (currentThemeId !== mixedList.get(tabId)) {
     browser.storage.local.set({currentThemeId: mixedList.get(tabId)});
   }
   return mixedList.get(tabId);
 }
+
 /*MESSAGE: Send a message to the page to apply theme*/
 function pageResponse(msg) {
   if (!msg.mixMSG) return;
-  browser.storage.local.get(["currentThemeId", "waifuThemes", "backgroundType", "showWidget"]).then(storage => {
+  browser.storage.local.get(["currentThemeId", "waifuThemes", "backgroundType", "showWidget", "systemTheme", "systemThemeOpt"]).then(storage => {
     if (!mixedList) {
       browser.tabs.sendMessage(msg.pageTab.id, {
         pageMSG: true,
@@ -149,18 +154,18 @@ function pageResponse(msg) {
         showWidget: storage.showWidget,
       });
     } else {
-      localMixedListCheck(msg.pageTab.id,storage.waifuThemes.themes);
+      localMixedListCheck(msg.pageTab.id, storage.systemTheme, storage.systemThemeOpt, storage.waifuThemes.themes);
       browser.tabs.sendMessage(msg.pageTab.id, {
         pageMSG: true,
         waifuThemes: storage.waifuThemes,
-        currentThemeId: getCurrentTabTheme(storage.currentThemeId,msg.pageTab.id),
+        currentThemeId: getCurrentTabTheme(storage.currentThemeId, msg.pageTab.id),
         backgroundType: storage.backgroundType,
         showWidget: storage.showWidget,
         mixedTabs: mixedList,
         pageTab: msg.pageTab
       });
       //Load theme for active(currently shown) tab only
-      if(msg.pageTab.active){
+      if (msg.pageTab.active) {
         loadTheme(storage.waifuThemes.themes, mixedList.get(msg.pageTab.id));
       }
     }

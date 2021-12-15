@@ -1,5 +1,5 @@
 import {svgToPng, buildSVG} from "../modules/utils/themes/logo.js";
-import {getRandomThemeId} from "../modules/utils/random.js";
+import {getRandomThemeComps} from "../modules/utils/random.js";
 import {mixedStates, backgroundTypes} from "../modules/utils/states.js";
 import {optionsPage} from "../modules/utils/browser.js";
 
@@ -36,7 +36,7 @@ const setBackground = async () => {
   });
 
   const {currentThemeId} = await browser.storage.local.get(["currentThemeId"])
-  browser.runtime.sendMessage({resourceMSG:true,currentThemeId});
+  browser.runtime.sendMessage({resourceMSG: true, currentThemeId});
 }
 
 const setHideWidget = async () => {
@@ -44,7 +44,7 @@ const setHideWidget = async () => {
     showWidget: showSearchSwitch.checked
   });
 
-  browser.runtime.sendMessage({resourceMSG:true,applyWidget:true});
+  browser.runtime.sendMessage({resourceMSG: true, applyWidget: true});
 }
 
 /*Stores info to set dark mode switch accordingly*/
@@ -57,7 +57,7 @@ async function setDarkMode(shouldDisable) {
   });
 }
 
-/*Stores whether or not the current theme has a secondary theme*/
+/*Stores whether the current theme has a secondary theme*/
 function setHasSecondary(currentTheme) {
   const hasSecondaryMode = currentTheme && !!currentTheme.backgrounds.secondary;
   backgroundSwitch.disabled = !hasSecondaryMode;
@@ -80,7 +80,7 @@ const setOpposingTheme = async () => {
     const newThemeId = newTheme.id;
     setCSS(newTheme);
     await browser.storage.local.set({currentThemeId: newThemeId});
-    browser.runtime.sendMessage({resourceMSG:true,currentThemeId: newThemeId});
+    browser.runtime.sendMessage({resourceMSG: true, currentThemeId: newThemeId});
   }
 }
 
@@ -95,7 +95,7 @@ function themeDokiLogo(currentTheme) {
 /*EVENT: Retrieve the selected waifu.
 Afterwards, send the chosen waifu to the background script.*/
 function setTheme(e) {
-  browser.storage.local.get(["darkMode", "waifuThemes", "mixedTabs"])
+  browser.storage.local.get(["darkMode", "waifuThemes", "mixedTabs", "systemThemeOpt", "systemTheme"])
     .then((storage) => {
       const chosenThemeName = e.target.value;
       const currentMix = getMixState(chosenThemeName, storage.mixedTabs);
@@ -103,13 +103,13 @@ function setTheme(e) {
       if (currentMix === mixedStates.NONE) {
         let themes;
         if (chosenThemeName === "random") {
-          chosenThemeId = getRandomThemeId(storage.waifuThemes.themes);
-          const chosenRandom = storage.waifuThemes.themes[chosenThemeId];
+          const [chosenRandomId, chosenRandomTheme] = getRandomThemeComps(storage.systemTheme, storage.systemThemeOpt, storage.waifuThemes.themes);
+          chosenThemeId = chosenRandomId;
           themes = Object.values(storage.waifuThemes.themes)
             .filter(dokiTheme => (
-              (dokiTheme.name === chosenRandom.name
-                || dokiTheme.displayName === chosenRandom.displayName)
-              && dokiTheme.group === chosenRandom.group
+              (dokiTheme.name === chosenRandomTheme.name
+                || dokiTheme.displayName === chosenRandomTheme.displayName)
+              && dokiTheme.group === chosenRandomTheme.group
             ));
         } else {
           themes = Object.values(storage.waifuThemes.themes)
@@ -118,20 +118,29 @@ function setTheme(e) {
               dokiTheme.name === chosenThemeName
             ));
         }
-
-        const isDark = (storage.darkMode) && storage.darkMode.isDarkNow;
-        const theme = themes.find(dokiTheme =>
-          dokiTheme.dark === isDark);
-
-        const disableDarkSwitch = themes.length < 2;
+        let isDark;
+        let theme;
+        if (storage.systemThemeOpt) {
+          /*Prioritize the current system theme (light or dark)*/
+          isDark = storage.systemTheme === "dark";
+          theme = themes.find(dokiTheme => dokiTheme.dark === isDark);
+          /*If system theme is not available, use the opposite theme instead*/
+          if (!theme) {
+            theme = themes.find(dokiTheme => dokiTheme.dark === !isDark);
+          }
+        } else {
+          isDark = (storage.darkMode) && storage.darkMode.isDarkNow;
+          theme = themes.find(dokiTheme => dokiTheme.dark === isDark);
+        }
+        const disableDarkSwitch = themes.length < 2 || storage.systemThemeOpt;
         darkModeSwitch.disabled = disableDarkSwitch;
         setDarkMode(disableDarkSwitch);
 
         if (chosenThemeName !== 'random') {
           const usableTheme = theme || themes[0];
-          darkModeSwitch.checked = !!usableTheme.dark;
 
           if (usableTheme) {
+            darkModeSwitch.checked = !!usableTheme.dark;
             setCSS(usableTheme);
             chosenThemeId = usableTheme.id;
           }
@@ -144,13 +153,14 @@ function setTheme(e) {
         setHasSecondary(storage.waifuThemes.themes[chosenThemeId]);
       } else {
         let themes = storage.waifuThemes.themes;
-        chosenThemeId = getRandomThemeId(themes);
+        const [randomId, randomTheme] = getRandomThemeComps(storage.systemTheme, storage.systemThemeOpt, themes);
+        chosenThemeId = randomId;
         setDarkMode(true);
         setHasSecondary(false);
-        setCSS(themes[chosenThemeId]);
+        setCSS(randomTheme);
         selectTag.value = 'none';// Reset option back to 'choose a waifu'
       }
-      browser.runtime.sendMessage({resourceMSG:true,currentThemeId: chosenThemeId, mixState: currentMix});
+      browser.runtime.sendMessage({resourceMSG: true, currentThemeId: chosenThemeId, mixState: currentMix});
     });
 }
 
@@ -161,6 +171,16 @@ function getMixState(name, mixTabs) {
     return mixedStates.INITIAL;
   }
   return mixedStates.NONE;
+}
+
+/*Set the current system theme color (dark or light)*/
+function setSystemTheme(storage) {
+  if (storage.systemThemeOpt) {
+    const element = document.querySelector("div#sys");
+    const cssVar = '--system-color-theme';
+    const systemThemeName = getComputedStyle(element).getPropertyValue(cssVar);
+    browser.storage.local.set({systemTheme: systemThemeName});
+  }
 }
 
 /*Initializes checkbox switches*/
@@ -179,7 +199,7 @@ function prepareSwitches(storage) {
 
 /*Setup Waifu Choices for the popup menu
 * Also categorizes each theme based on their type (dark/light)*/
-function initChoice() {
+function initChoices() {
   browser.storage.local.get([
     "waifuThemes",
     "currentThemeId",
@@ -187,18 +207,20 @@ function initChoice() {
     "backgroundType",
     'showWidget',
     "darkMode",
-    "hasSecondaryMode"
+    "hasSecondaryMode",
+    "systemThemeOpt"
   ])
     .then((storage) => {
       prepareSwitches(storage);
+      setSystemTheme(storage);
       const themesGroupedByName = Object.values(storage.waifuThemes.themes)
         .reduce((accum, dokiTheme) => {
           const displayName = dokiTheme.displayName;
           const themeByDisplayName = accum[displayName];
           const hasConflicts = !!themeByDisplayName &&
             themeByDisplayName[0].group !== dokiTheme.group;
-          const themeKey = hasConflicts ? dokiTheme.name : 
-          dokiTheme.displayName;
+          const themeKey = hasConflicts ? dokiTheme.name :
+            dokiTheme.displayName;
 
           // update existing collisions
           if (hasConflicts) {
@@ -245,12 +267,10 @@ function initChoice() {
     });
 }
 
-initChoice();
+initChoices();
 /*---Event Listeners---*/
 selectTag.addEventListener("change", setTheme, true);
 backgroundSwitch.addEventListener("change", setBackground, true);
 showSearchSwitch.addEventListener("change", setHideWidget, true);
 darkModeSwitch.addEventListener("change", setOpposingTheme, true);
 dokiHeart.addEventListener('click', optionsPage, true);
-/*Exports*/
-export {getRandomThemeId};

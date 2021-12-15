@@ -2,6 +2,14 @@ Changelog
 ---
 
 # Unreleased
+# 18.0.0 [System Color Theme Sync]
+Doki Theme can now synchronize with your system color theme settings.
+
+Do not want to see light mode ever again? No problem. Just set your system settings color theme 
+to dark mode and Doki Theme will try to prioritize dark themes only. 
+
+**Only if current Doki Theme supports the system color theme, of course.*
+
 # 17.0.0 [Holiday Release]
 
 **3 New Dark Themes!**
