@@ -1,7 +1,10 @@
 import {svgToPng, buildSVG} from "../modules/utils/themes/logo.js";
-import {getRandomThemeComps} from "../modules/utils/random.js";
+import {getRandomThemeComps, randomBackgroundType} from "../modules/utils/random.js";
 import {mixedStates, backgroundTypes} from "../modules/utils/states.js";
 import {optionsPage} from "../modules/utils/browser.js";
+import {setSystemTheme} from "../modules/dom/inits.js";
+import {isSpecificSysTheme, isSysDark} from "../modules/utils/system.js";
+import {hasSecondaryBG} from "../modules/utils/themes/background.js";
 
 /*Global Variables*/
 const selectTag = document.querySelector("select");
@@ -30,12 +33,24 @@ function setCSS(chosenTheme) {
   root.style.setProperty('--base-background-color', colors.baseBackground);
 }
 
+/*Set the background to primary or secondary depending on user choice*/
 const setBackground = async () => {
   await browser.storage.local.set({
     backgroundType: backgroundSwitch.checked ? backgroundTypes.SECONDARY : backgroundTypes.PRIMARY
   });
 
   const {currentThemeId} = await browser.storage.local.get(["currentThemeId"])
+  browser.runtime.sendMessage({resourceMSG: true, currentThemeId});
+}
+
+/*Randomly select between primary or secondary backgrounds*/
+function setRandomBackground(currentThemeId, themes) {
+  const bgChoice = randomBackgroundType(themes[currentThemeId]);
+  backgroundSwitch.checked = !!bgChoice;
+  browser.storage.local.set({
+    backgroundType: bgChoice
+  });
+
   browser.runtime.sendMessage({resourceMSG: true, currentThemeId});
 }
 
@@ -59,10 +74,11 @@ async function setDarkMode(shouldDisable) {
 
 /*Stores whether the current theme has a secondary theme*/
 function setHasSecondary(currentTheme) {
-  const hasSecondaryMode = currentTheme && !!currentTheme.backgrounds.secondary;
+  const hasSecondaryMode = hasSecondaryBG(currentTheme);
   backgroundSwitch.disabled = !hasSecondaryMode;
   browser.storage.local.set({hasSecondaryMode});
 }
+
 
 /*Set the theme to the opposite type. (Light vs Dark)
 * Ex: If current theme is light, go to dark and vice versa*/
@@ -95,7 +111,7 @@ function themeDokiLogo(currentTheme) {
 /*EVENT: Retrieve the selected waifu.
 Afterwards, send the chosen waifu to the background script.*/
 function setTheme(e) {
-  browser.storage.local.get(["darkMode", "waifuThemes", "mixedTabs", "systemThemeOpt", "systemTheme"])
+  browser.storage.local.get(["darkMode", "waifuThemes", "mixedTabs", "systemTheme", "systemThemeChoice"])
     .then((storage) => {
       const chosenThemeName = e.target.value;
       const currentMix = getMixState(chosenThemeName, storage.mixedTabs);
@@ -103,7 +119,7 @@ function setTheme(e) {
       if (currentMix === mixedStates.NONE) {
         let themes;
         if (chosenThemeName === "random") {
-          const [chosenRandomId, chosenRandomTheme] = getRandomThemeComps(storage.systemTheme, storage.systemThemeOpt, storage.waifuThemes.themes);
+          const [chosenRandomId, chosenRandomTheme] = getRandomThemeComps(storage.systemTheme, storage.systemThemeChoice, storage.waifuThemes.themes);
           chosenThemeId = chosenRandomId;
           themes = Object.values(storage.waifuThemes.themes)
             .filter(dokiTheme => (
@@ -120,9 +136,9 @@ function setTheme(e) {
         }
         let isDark;
         let theme;
-        if (storage.systemThemeOpt) {
+        if (isSpecificSysTheme(storage.systemTheme)) {
           /*Prioritize the current system theme (light or dark)*/
-          isDark = storage.systemTheme === "dark";
+          isDark = isSysDark(storage.systemTheme, storage.systemThemeChoice);
           theme = themes.find(dokiTheme => dokiTheme.dark === isDark);
           /*If system theme is not available, use the opposite theme instead*/
           if (!theme) {
@@ -132,7 +148,7 @@ function setTheme(e) {
           isDark = (storage.darkMode) && storage.darkMode.isDarkNow;
           theme = themes.find(dokiTheme => dokiTheme.dark === isDark);
         }
-        const disableDarkSwitch = themes.length < 2 || storage.systemThemeOpt;
+        const disableDarkSwitch = themes.length < 2 || isSpecificSysTheme(storage.systemTheme);
         darkModeSwitch.disabled = disableDarkSwitch;
         setDarkMode(disableDarkSwitch);
 
@@ -144,16 +160,18 @@ function setTheme(e) {
             setCSS(usableTheme);
             chosenThemeId = usableTheme.id;
           }
+          setHasSecondary(storage.waifuThemes.themes[chosenThemeId]);
         } else {
           if (chosenThemeId) {
             setCSS(storage.waifuThemes.themes[chosenThemeId]);
           }
           selectTag.value = 'none';// Reset option back to 'choose a waifu'
+          setHasSecondary(storage.waifuThemes.themes[chosenThemeId]);
+          setRandomBackground(chosenThemeId, storage.waifuThemes.themes);
         }
-        setHasSecondary(storage.waifuThemes.themes[chosenThemeId]);
       } else {
         let themes = storage.waifuThemes.themes;
-        const [randomId, randomTheme] = getRandomThemeComps(storage.systemTheme, storage.systemThemeOpt, themes);
+        const [randomId, randomTheme] = getRandomThemeComps(storage.systemTheme, storage.systemThemeChoice, themes);
         chosenThemeId = randomId;
         setDarkMode(true);
         setHasSecondary(false);
@@ -171,16 +189,6 @@ function getMixState(name, mixTabs) {
     return mixedStates.INITIAL;
   }
   return mixedStates.NONE;
-}
-
-/*Set the current system theme color (dark or light)*/
-function setSystemTheme(storage) {
-  if (storage.systemThemeOpt) {
-    const element = document.querySelector("div#sys");
-    const cssVar = '--system-color-theme';
-    const systemThemeName = getComputedStyle(element).getPropertyValue(cssVar);
-    browser.storage.local.set({systemTheme: systemThemeName});
-  }
 }
 
 /*Initializes checkbox switches*/
@@ -208,11 +216,11 @@ function initChoices() {
     'showWidget',
     "darkMode",
     "hasSecondaryMode",
-    "systemThemeOpt"
+    "systemTheme"
   ])
     .then((storage) => {
       prepareSwitches(storage);
-      setSystemTheme(storage);
+      setSystemTheme(storage.systemTheme);
       const themesGroupedByName = Object.values(storage.waifuThemes.themes)
         .reduce((accum, dokiTheme) => {
           const displayName = dokiTheme.displayName;

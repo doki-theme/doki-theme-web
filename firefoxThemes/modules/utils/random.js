@@ -1,3 +1,7 @@
+import {isSysDark} from "./system.js";
+import {hasSecondaryBG} from "./themes/background.js";
+import {backgroundTypes} from "./states.js";
+
 /*Selects a waifu at random*/
 function getRandomThemeId(themes) {
   themes = Object.keys(themes);
@@ -6,18 +10,18 @@ function getRandomThemeId(themes) {
 }
 
 /*Select a random waifu theme, keeping the current system theme color in mind*/
-function getRandomThemeComps(systemTheme, systemOption, themes) {
+function getRandomThemeComps(systemTheme, systemChoice, themes) {
   let chosenThemeId;
   let chosenRandom;
   let isCorrectSystemTheme = false; // End loop when correct theme is found
-  const isDarkSystemTheme = systemTheme === 'dark';// 'dark' or 'light'
+  let isDarkSystemTheme = isSysDark(systemTheme, systemChoice);
   while (!isCorrectSystemTheme) {
     chosenThemeId = getRandomThemeId(themes);
     chosenRandom = themes[chosenThemeId];
-    if (systemOption) {
-      isCorrectSystemTheme = isDarkSystemTheme === chosenRandom.dark;
-    } else {
+    if (systemTheme === 'default' || !systemTheme) {
       isCorrectSystemTheme = true;
+    } else {
+      isCorrectSystemTheme = isDarkSystemTheme === chosenRandom.dark;
     }
   }
   return [chosenThemeId, chosenRandom];
@@ -27,4 +31,13 @@ function getRandomThemeComps(systemTheme, systemOption, themes) {
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
-export {getRandomThemeId, getRandomThemeComps};
+/*Select a background type at random (primary/secondary)*/
+function randomBackgroundType(currentTheme) {
+  if (!hasSecondaryBG(currentTheme)) {
+    return backgroundTypes.PRIMARY;
+  }
+  let bgChoice = getRandomNumber(0, 2);
+  return bgChoice ? backgroundTypes.SECONDARY : backgroundTypes.PRIMARY;
+}
+
+export {getRandomThemeId, getRandomThemeComps, getRandomNumber, randomBackgroundType};

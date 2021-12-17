@@ -2,6 +2,10 @@
   color: var(--foreground-color);
 }
 
+:root {
+  --system-color-theme: dark;
+}
+
 html, body {
   font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
   font-size: 100%;
@@ -12,16 +16,24 @@ html, body {
   color: var(--foreground-color);
 }
 
+div.options-container {
+  display: flex;
+}
+
+div.options-container > section {
+  margin-right: 50px;
+}
+
 section {
   position: relative;
-  margin-top: 2em;
+  margin-top: 1.25em;
 }
 
 h1 {
   text-align: center;
 }
 
-label {
+label, h2 {
   color: var(--foreground-color);
 }
 
@@ -31,7 +43,10 @@ span {
   display: inline-block;
   width: 12px;
   height: 12px;
-  border: 2pt solid var(--checkbox-border-color,#00000070);
+  border: 2pt solid var(--checkbox-border-color, #00000070);
+}
+
+span[role=checkbox] {
   border-radius: 3px;
 }
 
@@ -55,4 +70,40 @@ span:active {
   font-weight: bold;
   color: var(--checkmark-color, white);
   text-shadow: 1pt 1pt 2pt black;
+}
+
+/*Custom radio button*/
+section#theme {
+  display: flex;
+  flex-flow: column;
+}
+
+section#theme h2 {
+  margin-top: 0;
+}
+
+section#theme div {
+  display: flex;
+  margin: 6px 0;
+}
+
+span[role=radio] {
+  border-radius: 10px;
+}
+
+span[role=radio] + label {
+  margin-left: 10px;
+}
+
+/*Used for detecting system theme color*/
+@media (prefers-color-scheme: dark) {
+  #sys {
+    --system-color-theme: dark;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  #sys {
+    --system-color-theme: light;
+  }
 }

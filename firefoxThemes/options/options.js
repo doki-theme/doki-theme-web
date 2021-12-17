@@ -1,8 +1,10 @@
+import {clickListener, multiClickListener} from "../modules/dom/listeners.js";
+import {setSystemTheme} from "../modules/dom/inits.js";
 /*DOM Elements*/
 const loadOnStartCheckbox = document.querySelector("#loadOnStart");
 const textSelectionCheckbox = document.querySelector("#textSelection");
 const scrollbarCheckbox = document.querySelector("#scrollbar");
-const systemThemeCheckbox = document.querySelector("#systemThemeOpt");
+const systemThemeRadios = document.querySelectorAll("section#theme div span[role='radio']");
 const root = document.querySelector(':root');
 
 /*Set color of options menu based on theme*/
@@ -17,11 +19,11 @@ function setCss(chosenTheme) {
 }
 
 async function initContent() {
-  const storage = await browser.storage.local.get(['systemThemeOpt', 'loadOnStart', 'textSelection', 'scrollbar', 'waifuThemes', 'currentThemeId', 'mixedTabs'])
-  initCheckbox(loadOnStartCheckbox, !!storage.loadOnStart);
-  initCheckbox(textSelectionCheckbox, !!storage.textSelection);
-  initCheckbox(scrollbarCheckbox, !!storage.scrollbar);
-  initCheckbox(systemThemeCheckbox, !!storage.systemThemeOpt);
+  const storage = await browser.storage.local.get(['systemTheme', 'loadOnStart', 'textSelection', 'scrollbar', 'waifuThemes', 'currentThemeId', 'mixedTabs'])
+  initBox(loadOnStartCheckbox, !!storage.loadOnStart);
+  initBox(textSelectionCheckbox, !!storage.textSelection);
+  initBox(scrollbarCheckbox, !!storage.scrollbar);
+  initSystemTheme(systemThemeRadios, storage.systemTheme);
   let themeId = storage.currentThemeId;
   if (storage.mixedTabs) {
     const tab = await browser.tabs.getCurrent();
@@ -32,38 +34,57 @@ async function initContent() {
 
 /*EVENT: Alter the checkbox & apply content script option*/
 const onChangeCheckEvents = async (e) => {
-  changeCheckboxState(e);
+  changeCheckedState(e);
   await browser.runtime.sendMessage({
     resourceMSG: true,
     optionName: e.target.id,
     optionValue: e.target.className
   });
 };
-/*EVENT: Alter the checkbox & save its current state*/
+
+/*EVENT: Change the current state of the system theme radio group*/
 const onChangeSystemTheme = (e) => {
-  changeCheckboxState(e);
-  let isChecked = !!e.target.className;
-  if (isChecked) {
+  for (const el of systemThemeRadios) {
+    initBox(el, el.id === e.target.id);
+  }
+  let isSystem = e.target.id === 'system';
+  if (isSystem) {
     browser.browserSettings.overrideContentColorScheme.set({value: "system"});
   } else {
     browser.browserSettings.overrideContentColorScheme.set({value: "browser"});
   }
-  browser.storage.local.set({[e.target.id]: isChecked});
+  browser.storage.local.set({systemTheme: e.target.id});
 }
 
 /*Initialize checkbox state*/
-function initCheckbox(el, state) {
+function initBox(el, state) {
   el.className = state ? 'checked' : '';
 }
 
-/*Changes checkbox state*/
-function changeCheckboxState(e) {
-  const el = e.target;
-  el.className = el.className !== 'checked' ? "checked" : '';
+/*Initialize system theme radio group*/
+function initSystemTheme(els, systemTheme) {
+  setSystemTheme(systemTheme);
+  /*If no system theme radio is selected choose 'default' as selected*/
+  if (!systemTheme) {
+    browser.storage.local.set({systemTheme:'default'});
+    systemTheme = 'default';
+  }
+
+  for (const el of els) {
+    initBox(el, el.id === systemTheme);
+  }
+
 }
 
+/*Checks the boxes of an element to its opposite status*/
+function changeCheckedState(e) {
+  const el = e.target;
+  initBox(el, !!!el.className);
+}
+
+
 initContent();
-loadOnStartCheckbox.addEventListener('click', onChangeCheckEvents, true);
-textSelectionCheckbox.addEventListener('click', onChangeCheckEvents, true);
-scrollbarCheckbox.addEventListener('click', onChangeCheckEvents, true);
-systemThemeCheckbox.addEventListener('click', onChangeSystemTheme, true);
+clickListener(loadOnStartCheckbox, onChangeCheckEvents);
+clickListener(textSelectionCheckbox, onChangeCheckEvents);
+clickListener(scrollbarCheckbox, onChangeCheckEvents);
+multiClickListener(systemThemeRadios, onChangeSystemTheme);

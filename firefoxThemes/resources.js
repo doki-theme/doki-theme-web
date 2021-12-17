@@ -42,7 +42,8 @@ class Theme {
 
 /*Initialize Local Storage & custom new tab page*/
 async function startStorage() {
-  const storage = await browser.storage.local.get(["currentThemeId", "loadOnStart", "textSelection", "scrollbar", "mixedTabs", "systemTheme", "systemThemeOpt"]);
+  const storage = await browser.storage.local.get(["currentThemeId", "loadOnStart", "textSelection", "scrollbar",
+    "mixedTabs", "systemTheme", "systemThemeChoice"]);
   const initStorage = {
     waifuThemes: new WaifuThemes(),
   };
@@ -52,14 +53,14 @@ async function startStorage() {
   if (storage.mixedTabs) {
     let themeId = storage.currentThemeId;
     if (!themeId) {
-      const [randomId, _] = getRandomThemeComps(storage.systemTheme, storage.systemThemeOpt, initStorage.waifuThemes.themes);
+      const [randomId, _] = getRandomThemeComps(storage.systemTheme, storage.systemThemeChoice, initStorage.waifuThemes.themes);
       themeId = randomId;
     }
     updateTabs({mixState: mixedStates.RESET, currentThemeId: themeId});
   } else if (storage.currentThemeId) {
     let themeId = storage.currentThemeId;
     if (!themeId) {
-      const [randomId, _] = getRandomThemeComps(storage.systemTheme, storage.systemThemeOpt, initStorage.waifuThemes.themes);
+      const [randomId, _] = getRandomThemeComps(storage.systemTheme, storage.systemThemeChoice, initStorage.waifuThemes.themes);
       themeId = randomId;
     }
     updateTabs({currentThemeId: themeId});
@@ -72,7 +73,7 @@ async function startStorage() {
   updateOptions({optionName: "textSelection", optionValue: !!!storage.textSelection});
   updateOptions({optionName: "scrollbar", optionValue: !!!storage.scrollbar});
   // Register to follow system color theme
-  if (storage.systemThemeOpt) {
+  if (storage.systemTheme === 'system') {
     browser.browserSettings.overrideContentColorScheme.set({value: "system"});
   } else {
     browser.browserSettings.overrideContentColorScheme.set({value: "browser"});

@@ -1,4 +1,6 @@
 /*Get background position */
+import {randomBackgroundType} from "../modules/utils/random.js";
+
 function getAnchoring(theme) {
   if (theme.definition.overrides && theme.definition.overrides.theme &&
     theme.definition.overrides.theme.properties &&
@@ -25,7 +27,12 @@ function getWaifu(storage) {
   const currentTheme = storage.currentTheme;
 
   const primaryBackgroundRelativeUrl = currentTheme.backgrounds.primary;
-  const isPrimaryBackground = !storage.backgroundType;
+  let isPrimaryBackground;
+  if (storage.mixedTabs){
+    isPrimaryBackground = !randomBackgroundType(currentTheme);
+  }else{
+    isPrimaryBackground = !storage.backgroundType;
+  }
   const backgroundImageUrl = isPrimaryBackground ? primaryBackgroundRelativeUrl :
     currentTheme.backgrounds.secondary || primaryBackgroundRelativeUrl
 

@@ -17,10 +17,10 @@ function separateTabs(tabs) {
 }
 
 /*Add all tabs that are not a new tab into the mix mixedQueue*/
-function addOtherTabsToMix(tabs, mixList, systemTheme, systemOpt, themes) {
+function addOtherTabsToMix(tabs, mixList, systemTheme, systemChoice, themes) {
   if (tabs.length > 0) {
     for (const tab of tabs) {
-      const [randomId, _] = getRandomThemeComps(systemTheme, systemOpt, themes);
+      const [randomId, _] = getRandomThemeComps(systemTheme, systemChoice, themes);
       mixList.set(tab.id, randomId);
     }
   }
@@ -89,7 +89,7 @@ function mixTabCleanup() {
 function setupMixedUpdate(msg) {
   browser.tabs.query({})
     .then((tabs) => {
-      browser.storage.local.get(["waifuThemes", "mixedTabs", "systemThemeOpt", "systemTheme"])
+      browser.storage.local.get(["waifuThemes", "mixedTabs", "systemThemeChoice", "systemTheme"])
         .then((storage) => {
           if (!storage.mixedTabs) {
             storage.mixedTabs = new Map();//Create a new mixed tab list
@@ -102,7 +102,7 @@ function setupMixedUpdate(msg) {
             const themes = storage.waifuThemes.themes;
             let currentThemeId = msg.currentThemeId;
             const [newTabs, otherTabs] = separateTabs(tabs);
-            storage.mixedTabs = addOtherTabsToMix(otherTabs, storage.mixedTabs, storage.systemTheme, storage.systemThemeOpt, themes);
+            storage.mixedTabs = addOtherTabsToMix(otherTabs, storage.mixedTabs, storage.systemTheme, storage.systemThemeChoice, themes);
             //If any New Tabs exists
             if (newTabs.length) {
               const lastTab = keepLastTab(newTabs);//Closes all New Tab tabs except the last
@@ -125,9 +125,9 @@ function setupMixedUpdate(msg) {
 
 /*Checks if tab is added to the local mixedlist.
 * If not, then add it in.*/
-function localMixedListCheck(tabId, systemTheme, systemOpt, themes) {
+function localMixedListCheck(tabId, systemTheme, systemChoice, themes) {
   if (!mixedList.has(tabId)) {
-    const [randomId, _] = getRandomThemeComps(systemTheme, systemOpt, themes);
+    const [randomId, _] = getRandomThemeComps(systemTheme, systemChoice, themes);
     mixedList.set(tabId, randomId);
     browser.storage.local.set({mixedTabs: mixedList});
   }
@@ -144,7 +144,7 @@ function getCurrentTabTheme(currentThemeId, tabId) {
 /*MESSAGE: Send a message to the page to apply theme*/
 function pageResponse(msg) {
   if (!msg.mixMSG) return;
-  browser.storage.local.get(["currentThemeId", "waifuThemes", "backgroundType", "showWidget", "systemTheme", "systemThemeOpt"]).then(storage => {
+  browser.storage.local.get(["currentThemeId", "waifuThemes", "backgroundType", "showWidget", "systemTheme", "systemThemeChoice"]).then(storage => {
     if (!mixedList) {
       browser.tabs.sendMessage(msg.pageTab.id, {
         pageMSG: true,
@@ -154,7 +154,7 @@ function pageResponse(msg) {
         showWidget: storage.showWidget,
       });
     } else {
-      localMixedListCheck(msg.pageTab.id, storage.systemTheme, storage.systemThemeOpt, storage.waifuThemes.themes);
+      localMixedListCheck(msg.pageTab.id, storage.systemTheme, storage.systemThemeChoice, storage.waifuThemes.themes);
       browser.tabs.sendMessage(msg.pageTab.id, {
         pageMSG: true,
         waifuThemes: storage.waifuThemes,

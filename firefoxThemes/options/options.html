@@ -7,23 +7,46 @@
   <link rel="stylesheet" href="option.css"/>
 </head>
 <body>
+<h1>Settings</h1>
 <div class="options-container">
-  <section>
-    <span id="loadOnStart" role="checkbox"></span>
-    <label for="loadOnStart">Load Doki Theme page on startup</label>
+  <!--General Settings-->
+  <section id="general">
+    <h2>General</h2>
+    <section>
+      <span id="loadOnStart" role="checkbox"></span>
+      <label for="loadOnStart">Load Doki Theme page on startup</label>
+    </section>
+    <section>
+      <span id="textSelection" class="checked" role="checkbox"></span>
+      <label for="textSelection">Text Selection</label>
+    </section>
+    <section>
+      <span id="scrollbar" class="checked" role="checkbox"></span>
+      <label for="scrollbar">Scrollbar</label>
+    </section>
   </section>
-  <section>
-    <span id="textSelection" class="checked" role="checkbox"></span>
-    <label for="textSelection">Text Selection</label>
-  </section>
-  <section>
-    <span id="scrollbar" class="checked" role="checkbox"></span>
-    <label for="scrollbar">Scrollbar</label>
-  </section>
-  <section>
-    <span id="systemThemeOpt" role="checkbox"></span>
-    <label for="systemThemeOpt">Use System settings theme</label>
+  <!--System Settings-->
+  <section id="theme">
+    <h2>System Theme</h2>
+    <div>
+      <span id="system" role="radio"></span>
+      <label for="system">System</label>
+    </div>
+    <div>
+      <span id="dark" role="radio"></span>
+      <label for="dark">Dark</label>
+    </div>
+    <div>
+      <span id="light" role="radio"></span>
+      <label for="light">Light</label>
+    </div>
+    <div>
+      <span id="default" class="checked" role="radio"></span>
+      <label for="default">Default</label>
+    </div>
   </section>
 </div>
+<!--Used for detecting system theme color (Dark/Light)-->
+<div id="sys"></div>
 </body>
 </html>
