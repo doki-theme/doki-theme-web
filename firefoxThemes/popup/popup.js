@@ -3,7 +3,7 @@ import {getRandomThemeComps, randomBackgroundType} from "../modules/utils/random
 import {mixedStates, backgroundTypes} from "../modules/utils/states.js";
 import {optionsPage} from "../modules/utils/browser.js";
 import {setSystemTheme} from "../modules/dom/inits.js";
-import {isSpecificSysTheme, isSysDark} from "../modules/utils/system.js";
+import {isSpecificSysTheme, isSysDark, isSysDefault} from "../modules/utils/system.js";
 import {hasSecondaryBG} from "../modules/utils/themes/background.js";
 
 /*Global Variables*/
@@ -216,12 +216,20 @@ function initChoices() {
     'showWidget',
     "darkMode",
     "hasSecondaryMode",
-    "systemTheme"
+    "systemTheme",
+    "systemThemeChoice"
   ])
     .then((storage) => {
       prepareSwitches(storage);
       setSystemTheme(storage.systemTheme);
-      const themesGroupedByName = Object.values(storage.waifuThemes.themes)
+      let filteredThemes = {};
+      const isDark = isSysDark(storage.systemTheme, storage.systemThemeChoice);
+      for (const [key, value] of Object.entries(storage.waifuThemes.themes)) {
+        if (isDark === value.dark && isSpecificSysTheme(storage.systemTheme) || isSysDefault(storage.systemTheme)) {
+          filteredThemes[key] = value;
+        }
+      }
+      const themesGroupedByName = Object.values(filteredThemes)
         .reduce((accum, dokiTheme) => {
           const displayName = dokiTheme.displayName;
           const themeByDisplayName = accum[displayName];
