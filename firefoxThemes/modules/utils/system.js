@@ -8,6 +8,10 @@ function isSysDark(systemTheme, systemChoice) {
   }
   return isDark;
 }
+/*Check if system settings is default mode*/
+function isSysDefault(systemTheme){
+  return !systemTheme || systemTheme === 'default';
+}
 
 /*Checks if any specific system theme is set*/
 function isSpecificSysTheme(systemTheme) {
@@ -17,4 +21,4 @@ function isSpecificSysTheme(systemTheme) {
   return isSysTheme || isDark || isLight;
 }
 
-export {isSysDark, isSpecificSysTheme};
+export {isSysDark, isSpecificSysTheme, isSysDefault};
