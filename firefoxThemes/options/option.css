@@ -2,10 +2,6 @@
   color: var(--foreground-color);
 }
 
-:root {
-  --system-color-theme: dark;
-}
-
 html, body {
   font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
   font-size: 100%;
@@ -29,12 +25,22 @@ section {
   margin-top: 1.25em;
 }
 
-h1 {
+h1, h2, h3 {
   text-align: center;
 }
 
 label, h2 {
   color: var(--foreground-color);
+}
+
+select {
+  border-radius: 50px;
+  background-color: var(--button-color);
+  color: var(--button-font-color);
+}
+
+option {
+  color: var(--button-font-color);
 }
 
 /*Custom Checkbox*/
@@ -95,15 +101,19 @@ span[role=radio] + label {
   margin-left: 10px;
 }
 
-/*Used for detecting system theme color*/
-@media (prefers-color-scheme: dark) {
-  #sys {
-    --system-color-theme: dark;
-  }
+/*Druthers Options*/
+section#druthersOpts {
+  display: none;
 }
 
-@media (prefers-color-scheme: light) {
-  #sys {
-    --system-color-theme: light;
-  }
+section#druthersOpts > div {
+  margin-top: 20px;
+  display: block;
+  text-align:center;
+}
+
+section#druthersOpts div select {
+  margin-left: 10px;
+  width: 20vw;
+  height: 26px;
 }

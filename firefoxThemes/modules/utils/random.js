@@ -1,6 +1,6 @@
-import {isSysDark} from "./system.js";
+import {isSysDark} from "../modes/system/system.js";
 import {hasSecondaryBG} from "./themes/background.js";
-import {backgroundTypes} from "./states.js";
+import {backgroundTypes,systemStates} from "./states.js";
 
 /*Selects a waifu at random*/
 function getRandomThemeId(themes) {
@@ -18,7 +18,7 @@ function getRandomThemeComps(systemTheme, systemChoice, themes) {
   while (!isCorrectSystemTheme) {
     chosenThemeId = getRandomThemeId(themes);
     chosenRandom = themes[chosenThemeId];
-    if (systemTheme === 'default' || !systemTheme) {
+    if (systemTheme === systemStates.DEFAULT || !systemTheme) {
       isCorrectSystemTheme = true;
     } else {
       isCorrectSystemTheme = isDarkSystemTheme === chosenRandom.dark;

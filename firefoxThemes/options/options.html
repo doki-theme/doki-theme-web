@@ -33,6 +33,10 @@
       <label for="system">System</label>
     </div>
     <div>
+      <span id="druthers" role="radio"></span>
+      <label for="druthers">Druthers</label>
+    </div>
+    <div>
       <span id="dark" role="radio"></span>
       <label for="dark">Dark</label>
     </div>
@@ -44,6 +48,27 @@
       <span id="default" class="checked" role="radio"></span>
       <label for="default">Default <em>(all)</em></label>
     </div>
+    <section id="druthersOpts">
+      <h3>Druthers Choice</h3>
+      <div>
+        <label for="druthersLightOpt">Light:</label>
+        <select name="druthersLightOpt" id="druthersLightOpt">
+        </select>
+        <section id="lightSecondBG">
+          <span role="checkbox"></span>
+          <label for="lightSecondBG">Secondary:</label>
+        </section>
+      </div>
+      <div>
+        <label for="druthersDarkOpt">Dark:</label>
+        <select name="druthersDarkOpt" id="druthersDarkOpt">
+        </select>
+        <section id="darkSecondBG">
+          <span role="checkbox"></span>
+          <label for="darkSecondBG">Secondary:</label>
+        </section>
+      </div>
+    </section>
   </section>
 </div>
 <!--Used for detecting system theme color (Dark/Light)-->

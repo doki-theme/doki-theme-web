@@ -1,9 +1,9 @@
 import {svgToPng, buildSVG} from "../modules/utils/themes/logo.js";
 import {getRandomThemeComps, randomBackgroundType} from "../modules/utils/random.js";
-import {mixedStates, backgroundTypes} from "../modules/utils/states.js";
+import {mixedStates, backgroundTypes, systemStates} from "../modules/utils/states.js";
 import {optionsPage} from "../modules/utils/browser.js";
-import {setSystemTheme} from "../modules/dom/inits.js";
-import {isSpecificSysTheme, isSysDark, isSysDefault} from "../modules/utils/system.js";
+import {populateSelect} from "../modules/dom/inits.js";
+import {isSpecificSysTheme, isSysDark} from "../modules/modes/system/system.js";
 import {hasSecondaryBG} from "../modules/utils/themes/background.js";
 
 /*Global Variables*/
@@ -193,16 +193,22 @@ function getMixState(name, mixTabs) {
 
 /*Initializes checkbox switches*/
 function prepareSwitches(storage) {
-  backgroundSwitch.checked = !!storage.backgroundType;
-  backgroundSwitch.disabled = !(!!storage.hasSecondaryMode);
-  if (storage.darkMode !== undefined) {
-    darkModeSwitch.checked = !!storage.darkMode.isDarkNow
-    darkModeSwitch.disabled = !!storage.darkMode.shouldDisable;
+  if(storage.systemTheme === systemStates.DRUTHERS){
+      selectTag.disabled = true;
+      darkModeSwitch.disabled = true;
+      backgroundSwitch.disabled = true;
   } else {
-    darkModeSwitch.checked = false;
-    darkModeSwitch.disabled = true;
+    backgroundSwitch.checked = !!storage.backgroundType;
+    backgroundSwitch.disabled = !(!!storage.hasSecondaryMode);
+    if (storage.darkMode !== undefined) {
+      darkModeSwitch.checked = !!storage.darkMode.isDarkNow
+      darkModeSwitch.disabled = !!storage.darkMode.shouldDisable;
+    } else {
+      darkModeSwitch.checked = false;
+      darkModeSwitch.disabled = true;
+    }
+    showSearchSwitch.checked = storage.showWidget === undefined || storage.showWidget;
   }
-  showSearchSwitch.checked = storage.showWidget === undefined || storage.showWidget;
 }
 
 /*Setup Waifu Choices for the popup menu
@@ -221,48 +227,9 @@ function initChoices() {
   ])
     .then((storage) => {
       prepareSwitches(storage);
-      setSystemTheme(storage.systemTheme);
-      let filteredThemes = {};
-      const isDark = isSysDark(storage.systemTheme, storage.systemThemeChoice);
-      for (const [key, value] of Object.entries(storage.waifuThemes.themes)) {
-        if (isDark === value.dark && isSpecificSysTheme(storage.systemTheme) || isSysDefault(storage.systemTheme)) {
-          filteredThemes[key] = value;
-        }
+      if(storage.systemTheme !== systemStates.DRUTHERS){
+        populateSelect("#waifus", storage.systemTheme, storage.systemThemeChoice, storage.waifuThemes.themes);
       }
-      const themesGroupedByName = Object.values(filteredThemes)
-        .reduce((accum, dokiTheme) => {
-          const displayName = dokiTheme.displayName;
-          const themeByDisplayName = accum[displayName];
-          const hasConflicts = !!themeByDisplayName &&
-            themeByDisplayName[0].group !== dokiTheme.group;
-          const themeKey = hasConflicts ? dokiTheme.name :
-            dokiTheme.displayName;
-
-          // update existing collisions
-          if (hasConflicts) {
-            delete accum[displayName]
-            accum[themeByDisplayName[0].name] = themeByDisplayName;
-          }
-
-          return {
-            ...accum,
-            [themeKey]: [
-              ...(accum[themeKey] || []),
-              dokiTheme
-            ]
-          };
-        }, {});
-      const themes = Object.keys(themesGroupedByName)
-        .sort((a, b) => a.localeCompare(b));
-      const waifuGroup = document.querySelector("#waifus");
-      themes.forEach(themeName => {
-        const themeOption = document.createElement("option");
-        themeOption.setAttribute("value", themeName);
-        themeOption.id = themeName;
-        const txtNode = document.createTextNode(themeName);
-        themeOption.append(txtNode);
-        waifuGroup.append(themeOption);
-      });
       /*Set the theme of the popup menu based on current tab color*/
       browser.tabs.query({active: true})
         .then((tabs) => {

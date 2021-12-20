@@ -4,7 +4,7 @@ import {loadTheme} from "../utils/themes/browser.js";
 function normalUpdate(msg) {
   browser.tabs.query({title: "New Tab"})
     .then((newTabs) => {
-      browser.storage.local.get(["waifuThemes", "currentThemeId"])
+      browser.storage.local.get(["waifuThemes"])
         .then((storage) => {
           const themes = storage.waifuThemes.themes;
           //Store chosen waifu in storage

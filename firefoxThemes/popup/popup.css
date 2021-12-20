@@ -10,7 +10,6 @@
   --base-background-color: #2f363c;
   --switch-shadow-color: #777;
   --doki-shadow: #fff;
-  --system-color-theme: dark;
 }
 
 /*Classes*/
@@ -119,7 +118,6 @@ select {
   border-radius: 50px;
   background-color: var(--button-color);
   color: var(--button-font-color);
-
 }
 
 .settings-container {
@@ -202,16 +200,4 @@ label[for="hideSearch"] {
 
 .slider.round:before {
   border-radius: 50%;
-}
-
-/*Used for detecting system theme color*/
-@media (prefers-color-scheme: dark) {
-  #sys{
-    --system-color-theme: dark;
-  }
-}
-@media (prefers-color-scheme: light) {
-  #sys{
-    --system-color-theme: light;
-  }
 }

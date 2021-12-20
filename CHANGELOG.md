@@ -5,11 +5,36 @@ Changelog
 # 18.0.0 [System Color Theme Sync]
 Doki Theme can now synchronize with your system color theme settings.
 
-Do not want to see light mode ever again? No problem! The *Options page* now allows you to choose 
-between `light`, `dark`, `system`, or `default` *(all themes)*. So take your time and browse.
+Never want to see light mode ever again? No problem! The *Options page* now allows you to choose 
+between `light`, `dark`, `system`, `druthers`, or `default` *(all themes)*. So take your time and 
+browse.
+
+## System Mode
+`system` will load only themes based on your current system theme settings *(either light or dark)*.
+In other words, your system settings determines what characters are present in the popup menu.
+
+## Druthers Mode
+`druthers` is similar to `system` except the character chosen for the light theme and the 
+character chosen for the dark theme will alternate depending on your current system settings.
+
+For clarity, if I choose *Asuna* for the **light theme** & *Hatsune Miku* for the **dark theme**.
+If system settings is **currently dark**, the **dark** *Hatsune Miku theme* will show. If system 
+settings is *light*, the **light** *Asuna* theme will show.
+
+## Dark Mode
+`dark` will load only dark themes. The popup menu will only load dark themes. This is for all you 
+dark theme lovers out there!
+
+## Light Mode
+`light` will load only light themes. The popup menu will only load light themes. This is for all 
+you light theme lovers out there!
+
+## Default Mode
+`default` is the default settings of Doki Theme. All themes will be present.
 
 ## Other Changes
-- Secondary backgrounds are now candidates when selecting the next theme in`random` & `mixed` modes.
+- Secondary backgrounds are now candidates when selecting the next theme in `random` & `mixed` 
+  modes.
 
 # 17.0.0 [Holiday Release]
 

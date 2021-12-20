@@ -1,11 +1,13 @@
 import {dokiThemeDefinitions} from "./DokiThemeDefinitions.js";
-import {mixedStates} from "./modules/utils/states.js";
+import {mixedStates, systemStates} from "./modules/utils/states.js";
 import {setupMixedUpdate, mixTabCleanup} from "./modules/modes/mix.js";
 import {normalUpdate} from "./modules/modes/normal.js";
 import {updateOptions} from "./modules/contentConfig.js";
 import {getRandomThemeComps} from "./modules/utils/random.js";
 import {reloadTabs} from "./modules/utils/browser.js";
-/*---CLASSES---*/
+import {systemListener} from "./modules/modes/system/system.js";
+/*---Classes---*/
+let systemObserver;
 
 /*Class Goal: Holds theme data about all waifus*/
 class WaifuThemes {
@@ -73,10 +75,25 @@ async function startStorage() {
   updateOptions({optionName: "textSelection", optionValue: !!!storage.textSelection});
   updateOptions({optionName: "scrollbar", optionValue: !!!storage.scrollbar});
   // Register to follow system color theme
-  if (storage.systemTheme === 'system') {
+  if (storage.systemTheme === systemStates.SYSTEM || storage.systemTheme === systemStates.DRUTHERS) {
+    updateSystemListener({addObserver:true});
     browser.browserSettings.overrideContentColorScheme.set({value: "system"});
   } else {
     browser.browserSettings.overrideContentColorScheme.set({value: "browser"});
+  }
+
+}
+/*Update the system observer to listen to system color theme changes*/
+function updateSystemListener(msg) {
+  if (msg.addObserver) {
+    if (!systemObserver) {
+      systemObserver = setInterval(() => systemListener(updateTheme), 500);
+    }
+  } else {
+    if (systemObserver) {
+      clearInterval(systemObserver);
+      systemObserver = undefined;
+    }
   }
 }
 
@@ -100,8 +117,9 @@ function updateTabs(msg) {
 /*MESSAGE: Update all theme components*/
 function updateTheme(msg) {
   if (!msg.resourceMSG) return;
-
-  if (msg.applyWidget) {
+  if (msg.isSystemRelated) {
+    updateSystemListener(msg);
+  } else if (msg.applyWidget) {
     reloadTabs({title: 'New Tab'});
   } else if (msg.optionName && (msg.optionValue || msg.optionValue === '')) {
     updateOptions(msg);
@@ -113,8 +131,10 @@ function updateTheme(msg) {
   }
 }
 
+
 //Initialize Storage
 startStorage();
+
 /*---EventListeners---*/
 browser.runtime.onMessage.addListener(updateTheme);
 
