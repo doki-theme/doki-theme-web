@@ -207,8 +207,8 @@ function prepareSwitches(storage) {
       darkModeSwitch.checked = false;
       darkModeSwitch.disabled = true;
     }
-    showSearchSwitch.checked = storage.showWidget === undefined || storage.showWidget;
   }
+  showSearchSwitch.checked = storage.showWidget === undefined || storage.showWidget;
 }
 
 /*Setup Waifu Choices for the popup menu

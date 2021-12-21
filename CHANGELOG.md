@@ -6,14 +6,14 @@ Changelog
 Doki Theme can now synchronize with your system color theme settings.
 
 Never want to see light mode ever again? No problem! The *Options page* now allows you to choose 
-between `light`, `dark`, `system`, `druthers`, or `default` *(all themes)*. So take your time and 
+between `light`, `dark`, `system`, `druthers`, or `all` *(all themes)*. So take your time and 
 browse.
 
-## System Mode
+## Match Device
 `system` will load only themes based on your current system theme settings *(either light or dark)*.
 In other words, your system settings determines what characters are present in the popup menu.
 
-## Druthers Mode
+## Druthers
 `druthers` is similar to `system` except the character chosen for the light theme and the 
 character chosen for the dark theme will alternate depending on your current system settings.
 
@@ -21,16 +21,16 @@ For clarity, if I choose *Asuna* for the **light theme** & *Hatsune Miku* for th
 If system settings is **currently dark**, the **dark** *Hatsune Miku theme* will show. If system 
 settings is *light*, the **light** *Asuna* theme will show.
 
-## Dark Mode
+## Dark Only
 `dark` will load only dark themes. The popup menu will only load dark themes. This is for all you 
 dark theme lovers out there!
 
-## Light Mode
+## Light Only
 `light` will load only light themes. The popup menu will only load light themes. This is for all 
 you light theme lovers out there!
 
-## Default Mode
-`default` is the default settings of Doki Theme. All themes will be present.
+## All
+`all` is the default settings of Doki Theme. All themes will be present.
 
 ## Other Changes
 - Secondary backgrounds are now candidates when selecting the next theme in `random` & `mixed` 

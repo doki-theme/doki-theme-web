@@ -109,11 +109,20 @@ section#druthersOpts {
 section#druthersOpts > div {
   margin-top: 20px;
   display: block;
-  text-align:center;
+  text-align: center;
 }
 
 section#druthersOpts div select {
   margin-left: 10px;
   width: 20vw;
   height: 26px;
+}
+
+section#druthersOpts div button {
+  margin-top: 20px;
+  width: 50px;
+  margin-left: 5px;
+  border-radius: 6px;
+  background-color: var(--button-color);
+  color: var(--button-font-color);
 }

@@ -1,4 +1,4 @@
-import {clickListener, changeListener, multiClickListener} from "../modules/dom/listeners.js";
+import {clickListener, multiClickListener} from "../modules/dom/listeners.js";
 import {backgroundTypes, systemStates} from "../modules/utils/states.js";
 import {
   initDruthers,
@@ -19,8 +19,10 @@ const druthersLightSelectBox = document.querySelector("#druthersLightOpt");
 const druthersDarkSelectBox = document.querySelector("#druthersDarkOpt");
 const druthersLightBGCheckbox = document.querySelector("#lightSecondBG span");
 const druthersLightBGSection = document.querySelector("#lightSecondBG");
+const druthersLightBtn = document.querySelector("#druthersLightBtn");
 const druthersDarkBGCheckbox = document.querySelector("#darkSecondBG span");
 const druthersDarkBGSection = document.querySelector("#darkSecondBG");
+const druthersDarkBtn = document.querySelector("#druthersDarkBtn");
 const root = document.querySelector(':root');
 
 /*Set color of options menu based on theme*/
@@ -165,8 +167,12 @@ clickListener(loadOnStartCheckbox, onChangeCheckEvents);
 clickListener(textSelectionCheckbox, onChangeCheckEvents);
 clickListener(scrollbarCheckbox, onChangeCheckEvents);
 multiClickListener(systemThemeRadios, onChangeSystemTheme);
-changeListener(druthersLightSelectBox, onChangeDruthersLight);
-changeListener(druthersDarkSelectBox, onChangeDruthersDark);
+clickListener(druthersLightBtn, () => {
+  onChangeDruthersLight(druthersLightSelectBox)
+});
+clickListener(druthersDarkBtn, ()=>{
+  onChangeDruthersDark(druthersDarkSelectBox);
+});
 
 clickListener(druthersDarkBGCheckbox, onChangeDruthersDarkBG);
 clickListener(druthersLightBGCheckbox, onChangeDruthersLightBG);

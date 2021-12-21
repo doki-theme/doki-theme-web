@@ -27,26 +27,27 @@
   </section>
   <!--System Settings-->
   <section id="theme">
-    <h2>System Theme</h2>
-    <div>
+    <h2>Theme Settings</h2>
+    <div title="Light/Dark themes will be loaded depending on your current device settings.">
       <span id="system" role="radio"></span>
-      <label for="system">System</label>
+      <label for="system">Match Device</label>
     </div>
-    <div>
+    <div
+      title="Characters chosen for light and dark theme will alternate depending on your current device settings.">
       <span id="druthers" role="radio"></span>
       <label for="druthers">Druthers</label>
     </div>
-    <div>
+    <div title="Characters with dark themes will be loaded.">
       <span id="dark" role="radio"></span>
-      <label for="dark">Dark</label>
+      <label for="dark">Dark Only</label>
     </div>
-    <div>
+    <div title="Characters with light themes will be loaded.">
       <span id="light" role="radio"></span>
-      <label for="light">Light</label>
+      <label for="light">Light Only</label>
     </div>
-    <div>
+    <div title="All characters will be loaded. (Default setting.)">
       <span id="default" class="checked" role="radio"></span>
-      <label for="default">Default <em>(all)</em></label>
+      <label for="default">All</label>
     </div>
     <section id="druthersOpts">
       <h3>Druthers Choice</h3>
@@ -54,6 +55,7 @@
         <label for="druthersLightOpt">Light:</label>
         <select name="druthersLightOpt" id="druthersLightOpt">
         </select>
+        <button id="druthersLightBtn">Apply</button>
         <section id="lightSecondBG">
           <span role="checkbox"></span>
           <label for="lightSecondBG">Secondary:</label>
@@ -63,6 +65,7 @@
         <label for="druthersDarkOpt">Dark:</label>
         <select name="druthersDarkOpt" id="druthersDarkOpt">
         </select>
+        <button id="druthersDarkBtn">Apply</button>
         <section id="darkSecondBG">
           <span role="checkbox"></span>
           <label for="darkSecondBG">Secondary:</label>
