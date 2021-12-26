@@ -114,6 +114,9 @@ Until then, you'll have to do a local install.
 
 ## Mozilla Firefox
 
+- [Features](#firefox-features)
+  - [Theme Settings](#firefox-theme-settings)
+
 ### 1.) Mozilla's Add-on Store Install
 
 You can find the extension on the [FireFox addon marketplace.](https://addons.mozilla.org/en-US/firefox/addon/doki-theme-for-firefox/)
@@ -124,7 +127,7 @@ If you don't feel like downloading the addon from the store, then follow the bel
 
 #### Prerequisites
 
-- Mozilla Firefox 63 or above
+- Mozilla Firefox 95 or above
 
 #### Steps
 1. Clone this repository
@@ -155,6 +158,45 @@ When enabled, when the browser will first open, it will open a tab with your Wai
 There is a know issue with session restoration on re-open though. [See GitHub issue for more details](https://github.com/doki-theme/doki-theme-web/issues/51).
 
 ![Firefox settings](./screenshots/firefox_config.png)
+
+### FireFox Features
+
+#### Theme Settings
+
+The Doki Theme for FireFox can synchronize with your device theme settings.
+
+Never want to see light mode ever again? No problem! The *Options page* now allows you to choose
+between `light`, `dark`, `device`, `druthers`, or `all` *(all themes)*. So take your time and
+browse.
+
+**Match Device**
+
+`device` will load only themes based on your current device theme settings *(either light or dark)*.
+In other words, your device settings determines what characters are present in the popup menu.
+
+**Druthers**
+
+`druthers` is similar to `device` except the character chosen for the light theme and the
+character chosen for the dark theme will alternate depending on your current device settings.
+
+For clarity, if I choose *Asuna* for the **light theme** & *Hatsune Miku* for the **dark theme**.
+If the device setting is **currently dark**, then the **dark** *Hatsune Miku theme* will show. If the device
+setting is *light*, then the **light** *Asuna* theme will show.
+
+**Dark Only**
+
+`dark` will load only dark themes. The popup menu will only load dark themes. This is for all you
+dark theme lovers out there!
+
+**Light Only**
+
+`light` will load only light themes. The popup menu will only load light themes. This is for all
+you light theme lovers out there!
+
+**All**
+
+`all` is the default settings of Doki Theme. All themes will be present.
+
 
 ### Issues
 

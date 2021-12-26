@@ -2,38 +2,40 @@ Changelog
 ---
 
 # Unreleased
-# 18.0.0 [System Color Theme Sync]
-Doki Theme can now synchronize with your system color theme settings.
+
+# 18.0.0 [Device Theme Sync]
+
+The Doki Theme for FireFox can now synchronize with your device theme settings.
 
 Never want to see light mode ever again? No problem! The *Options page* now allows you to choose 
-between `light`, `dark`, `system`, `druthers`, or `all` *(all themes)*. So take your time and 
+between `light`, `dark`, `device`, `druthers`, or `all` *(all themes)*. So take your time and 
 browse.
 
-## Match Device
-`system` will load only themes based on your current system theme settings *(either light or dark)*.
-In other words, your system settings determines what characters are present in the popup menu.
+### Match Device
+`device` will load only themes based on your current device theme settings *(either light or dark)*.
+In other words, your device settings determines what characters are present in the popup menu.
 
-## Druthers
-`druthers` is similar to `system` except the character chosen for the light theme and the 
-character chosen for the dark theme will alternate depending on your current system settings.
+### Druthers
+`druthers` is similar to `device` except the character chosen for the light theme and the 
+character chosen for the dark theme will alternate depending on your current device settings.
 
 For clarity, if I choose *Asuna* for the **light theme** & *Hatsune Miku* for the **dark theme**.
-If system settings is **currently dark**, the **dark** *Hatsune Miku theme* will show. If system 
-settings is *light*, the **light** *Asuna* theme will show.
+If the device setting is **currently dark**, then the **dark** *Hatsune Miku theme* will show. If the device 
+setting is *light*, then the **light** *Asuna* theme will show.
 
-## Dark Only
+### Dark Only
 `dark` will load only dark themes. The popup menu will only load dark themes. This is for all you 
 dark theme lovers out there!
 
-## Light Only
+### Light Only
 `light` will load only light themes. The popup menu will only load light themes. This is for all 
 you light theme lovers out there!
 
-## All
+### All
 `all` is the default settings of Doki Theme. All themes will be present.
 
 ## Other Changes
-- Secondary backgrounds are now candidates when selecting the next theme in `random` & `mixed` 
+- Secondary backgrounds are now candidates to be randomly selected when using the `random` & `mixed` 
   modes.
 
 # 17.0.0 [Holiday Release]
