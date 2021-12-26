@@ -7,19 +7,74 @@
   <link rel="stylesheet" href="option.css"/>
 </head>
 <body>
+<h1>Settings</h1>
 <div class="options-container">
-  <section>
-    <span id="loadOnStart" role="checkbox"></span>
-    <label for="loadOnStart">Load Doki Theme page on startup</label>
+  <!--General Settings-->
+  <section id="general">
+    <h2>General</h2>
+    <section>
+      <span id="loadOnStart" role="checkbox"></span>
+      <label for="loadOnStart">Load Doki Theme page on startup</label>
+    </section>
+    <section>
+      <span id="textSelection" class="checked" role="checkbox"></span>
+      <label for="textSelection">Text Selection</label>
+    </section>
+    <section>
+      <span id="scrollbar" class="checked" role="checkbox"></span>
+      <label for="scrollbar">Scrollbar</label>
+    </section>
   </section>
-  <section>
-    <span id="textSelection" class="checked" role="checkbox"></span>
-    <label for="textSelection">Text Selection</label>
-  </section>
-  <section>
-    <span id="scrollbar" class="checked" role="checkbox"></span>
-    <label for="scrollbar">Scrollbar</label>
+  <!--System Settings-->
+  <section id="theme">
+    <h2>Theme Settings</h2>
+    <div title="Light/Dark themes will be loaded depending on your current device settings.">
+      <span id="system" role="radio"></span>
+      <label for="system">Match Device</label>
+    </div>
+    <div
+      title="Characters chosen for light and dark theme will alternate depending on your current device settings.">
+      <span id="druthers" role="radio"></span>
+      <label for="druthers">Druthers</label>
+    </div>
+    <div title="Characters with dark themes will be loaded.">
+      <span id="dark" role="radio"></span>
+      <label for="dark">Dark Only</label>
+    </div>
+    <div title="Characters with light themes will be loaded.">
+      <span id="light" role="radio"></span>
+      <label for="light">Light Only</label>
+    </div>
+    <div title="All characters will be loaded. (Default setting.)">
+      <span id="default" class="checked" role="radio"></span>
+      <label for="default">All</label>
+    </div>
+    <section id="druthersOpts">
+      <h3>Druthers Choice</h3>
+      <div>
+        <label for="druthersLightOpt">Light:</label>
+        <select name="druthersLightOpt" id="druthersLightOpt">
+        </select>
+        <button id="druthersLightBtn">Apply</button>
+        <section id="lightSecondBG">
+          <span role="checkbox"></span>
+          <label for="lightSecondBG">Secondary:</label>
+        </section>
+      </div>
+      <div>
+        <label for="druthersDarkOpt">Dark:</label>
+        <select name="druthersDarkOpt" id="druthersDarkOpt">
+        </select>
+        <button id="druthersDarkBtn">Apply</button>
+        <section id="darkSecondBG">
+          <span role="checkbox"></span>
+          <label for="darkSecondBG">Secondary:</label>
+        </section>
+      </div>
+    </section>
   </section>
 </div>
+<!--Used for detecting system theme color (Dark/Light)-->
+<div id="sys"></div>
 </body>
 </html>

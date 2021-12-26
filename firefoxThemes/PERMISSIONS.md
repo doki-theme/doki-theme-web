@@ -20,3 +20,7 @@
   - The data stored is as follows:
     - *Current Doki Theme*
     - *All Doki Themes*
+
+
+- Browser Settings
+  - Enables the ability to sync system color theme (dark/light) with the browser. 

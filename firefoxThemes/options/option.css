@@ -12,17 +12,35 @@ html, body {
   color: var(--foreground-color);
 }
 
-section {
-  position: relative;
-  margin-top: 2em;
+div.options-container {
+  display: flex;
 }
 
-h1 {
+div.options-container > section {
+  margin-right: 50px;
+}
+
+section {
+  position: relative;
+  margin-top: 1.25em;
+}
+
+h1, h2, h3 {
   text-align: center;
 }
 
-label {
+label, h2 {
   color: var(--foreground-color);
+}
+
+select {
+  border-radius: 50px;
+  background-color: var(--button-color);
+  color: var(--button-font-color);
+}
+
+option {
+  color: var(--button-font-color);
 }
 
 /*Custom Checkbox*/
@@ -31,7 +49,10 @@ span {
   display: inline-block;
   width: 12px;
   height: 12px;
-  border: 2pt solid var(--checkbox-border-color,#00000070);
+  border: 2pt solid var(--checkbox-border-color, #00000070);
+}
+
+span[role=checkbox] {
   border-radius: 3px;
 }
 
@@ -55,4 +76,53 @@ span:active {
   font-weight: bold;
   color: var(--checkmark-color, white);
   text-shadow: 1pt 1pt 2pt black;
+}
+
+/*Custom radio button*/
+section#theme {
+  display: flex;
+  flex-flow: column;
+}
+
+section#theme h2 {
+  margin-top: 0;
+}
+
+section#theme div {
+  display: flex;
+  margin: 6px 0;
+}
+
+span[role=radio] {
+  border-radius: 10px;
+}
+
+span[role=radio] + label {
+  margin-left: 10px;
+}
+
+/*Druthers Options*/
+section#druthersOpts {
+  display: none;
+}
+
+section#druthersOpts > div {
+  margin-top: 20px;
+  display: block;
+  text-align: center;
+}
+
+section#druthersOpts div select {
+  margin-left: 10px;
+  width: 20vw;
+  height: 26px;
+}
+
+section#druthersOpts div button {
+  margin-top: 20px;
+  width: 50px;
+  margin-left: 5px;
+  border-radius: 6px;
+  background-color: var(--button-color);
+  color: var(--button-font-color);
 }

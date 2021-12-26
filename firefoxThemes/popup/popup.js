@@ -1,7 +1,10 @@
 import {svgToPng, buildSVG} from "../modules/utils/themes/logo.js";
-import {getRandomThemeId} from "../modules/utils/random.js";
-import {mixedStates, backgroundTypes} from "../modules/utils/states.js";
+import {getRandomThemeComps, randomBackgroundType} from "../modules/utils/random.js";
+import {mixedStates, backgroundTypes, systemStates} from "../modules/utils/states.js";
 import {optionsPage} from "../modules/utils/browser.js";
+import {populateSelect} from "../modules/dom/inits.js";
+import {isSpecificSysTheme, isSysDark} from "../modules/modes/system/system.js";
+import {hasSecondaryBG} from "../modules/utils/themes/background.js";
 
 /*Global Variables*/
 const selectTag = document.querySelector("select");
@@ -30,13 +33,25 @@ function setCSS(chosenTheme) {
   root.style.setProperty('--base-background-color', colors.baseBackground);
 }
 
+/*Set the background to primary or secondary depending on user choice*/
 const setBackground = async () => {
   await browser.storage.local.set({
     backgroundType: backgroundSwitch.checked ? backgroundTypes.SECONDARY : backgroundTypes.PRIMARY
   });
 
   const {currentThemeId} = await browser.storage.local.get(["currentThemeId"])
-  browser.runtime.sendMessage({resourceMSG:true,currentThemeId});
+  browser.runtime.sendMessage({resourceMSG: true, currentThemeId});
+}
+
+/*Randomly select between primary or secondary backgrounds*/
+function setRandomBackground(currentThemeId, themes) {
+  const bgChoice = randomBackgroundType(themes[currentThemeId]);
+  backgroundSwitch.checked = !!bgChoice;
+  browser.storage.local.set({
+    backgroundType: bgChoice
+  });
+
+  browser.runtime.sendMessage({resourceMSG: true, currentThemeId});
 }
 
 const setHideWidget = async () => {
@@ -44,7 +59,7 @@ const setHideWidget = async () => {
     showWidget: showSearchSwitch.checked
   });
 
-  browser.runtime.sendMessage({resourceMSG:true,applyWidget:true});
+  browser.runtime.sendMessage({resourceMSG: true, applyWidget: true});
 }
 
 /*Stores info to set dark mode switch accordingly*/
@@ -57,12 +72,13 @@ async function setDarkMode(shouldDisable) {
   });
 }
 
-/*Stores whether or not the current theme has a secondary theme*/
+/*Stores whether the current theme has a secondary theme*/
 function setHasSecondary(currentTheme) {
-  const hasSecondaryMode = currentTheme && !!currentTheme.backgrounds.secondary;
+  const hasSecondaryMode = hasSecondaryBG(currentTheme);
   backgroundSwitch.disabled = !hasSecondaryMode;
   browser.storage.local.set({hasSecondaryMode});
 }
+
 
 /*Set the theme to the opposite type. (Light vs Dark)
 * Ex: If current theme is light, go to dark and vice versa*/
@@ -80,7 +96,7 @@ const setOpposingTheme = async () => {
     const newThemeId = newTheme.id;
     setCSS(newTheme);
     await browser.storage.local.set({currentThemeId: newThemeId});
-    browser.runtime.sendMessage({resourceMSG:true,currentThemeId: newThemeId});
+    browser.runtime.sendMessage({resourceMSG: true, currentThemeId: newThemeId});
   }
 }
 
@@ -95,7 +111,7 @@ function themeDokiLogo(currentTheme) {
 /*EVENT: Retrieve the selected waifu.
 Afterwards, send the chosen waifu to the background script.*/
 function setTheme(e) {
-  browser.storage.local.get(["darkMode", "waifuThemes", "mixedTabs"])
+  browser.storage.local.get(["darkMode", "waifuThemes", "mixedTabs", "systemTheme", "systemThemeChoice"])
     .then((storage) => {
       const chosenThemeName = e.target.value;
       const currentMix = getMixState(chosenThemeName, storage.mixedTabs);
@@ -103,13 +119,13 @@ function setTheme(e) {
       if (currentMix === mixedStates.NONE) {
         let themes;
         if (chosenThemeName === "random") {
-          chosenThemeId = getRandomThemeId(storage.waifuThemes.themes);
-          const chosenRandom = storage.waifuThemes.themes[chosenThemeId];
+          const [chosenRandomId, chosenRandomTheme] = getRandomThemeComps(storage.systemTheme, storage.systemThemeChoice, storage.waifuThemes.themes);
+          chosenThemeId = chosenRandomId;
           themes = Object.values(storage.waifuThemes.themes)
             .filter(dokiTheme => (
-              (dokiTheme.name === chosenRandom.name
-                || dokiTheme.displayName === chosenRandom.displayName)
-              && dokiTheme.group === chosenRandom.group
+              (dokiTheme.name === chosenRandomTheme.name
+                || dokiTheme.displayName === chosenRandomTheme.displayName)
+              && dokiTheme.group === chosenRandomTheme.group
             ));
         } else {
           themes = Object.values(storage.waifuThemes.themes)
@@ -118,39 +134,51 @@ function setTheme(e) {
               dokiTheme.name === chosenThemeName
             ));
         }
-
-        const isDark = (storage.darkMode) && storage.darkMode.isDarkNow;
-        const theme = themes.find(dokiTheme =>
-          dokiTheme.dark === isDark);
-
-        const disableDarkSwitch = themes.length < 2;
+        let isDark;
+        let theme;
+        if (isSpecificSysTheme(storage.systemTheme)) {
+          /*Prioritize the current system theme (light or dark)*/
+          isDark = isSysDark(storage.systemTheme, storage.systemThemeChoice);
+          theme = themes.find(dokiTheme => dokiTheme.dark === isDark);
+          /*If system theme is not available, use the opposite theme instead*/
+          if (!theme) {
+            theme = themes.find(dokiTheme => dokiTheme.dark === !isDark);
+          }
+        } else {
+          isDark = (storage.darkMode) && storage.darkMode.isDarkNow;
+          theme = themes.find(dokiTheme => dokiTheme.dark === isDark);
+        }
+        const disableDarkSwitch = themes.length < 2 || isSpecificSysTheme(storage.systemTheme);
         darkModeSwitch.disabled = disableDarkSwitch;
         setDarkMode(disableDarkSwitch);
 
         if (chosenThemeName !== 'random') {
           const usableTheme = theme || themes[0];
-          darkModeSwitch.checked = !!usableTheme.dark;
 
           if (usableTheme) {
+            darkModeSwitch.checked = !!usableTheme.dark;
             setCSS(usableTheme);
             chosenThemeId = usableTheme.id;
           }
+          setHasSecondary(storage.waifuThemes.themes[chosenThemeId]);
         } else {
           if (chosenThemeId) {
             setCSS(storage.waifuThemes.themes[chosenThemeId]);
           }
           selectTag.value = 'none';// Reset option back to 'choose a waifu'
+          setHasSecondary(storage.waifuThemes.themes[chosenThemeId]);
+          setRandomBackground(chosenThemeId, storage.waifuThemes.themes);
         }
-        setHasSecondary(storage.waifuThemes.themes[chosenThemeId]);
       } else {
         let themes = storage.waifuThemes.themes;
-        chosenThemeId = getRandomThemeId(themes);
+        const [randomId, randomTheme] = getRandomThemeComps(storage.systemTheme, storage.systemThemeChoice, themes);
+        chosenThemeId = randomId;
         setDarkMode(true);
         setHasSecondary(false);
-        setCSS(themes[chosenThemeId]);
+        setCSS(randomTheme);
         selectTag.value = 'none';// Reset option back to 'choose a waifu'
       }
-      browser.runtime.sendMessage({resourceMSG:true,currentThemeId: chosenThemeId, mixState: currentMix});
+      browser.runtime.sendMessage({resourceMSG: true, currentThemeId: chosenThemeId, mixState: currentMix});
     });
 }
 
@@ -165,21 +193,27 @@ function getMixState(name, mixTabs) {
 
 /*Initializes checkbox switches*/
 function prepareSwitches(storage) {
-  backgroundSwitch.checked = !!storage.backgroundType;
-  backgroundSwitch.disabled = !(!!storage.hasSecondaryMode);
-  if (storage.darkMode !== undefined) {
-    darkModeSwitch.checked = !!storage.darkMode.isDarkNow
-    darkModeSwitch.disabled = !!storage.darkMode.shouldDisable;
+  if(storage.systemTheme === systemStates.DRUTHERS){
+      selectTag.disabled = true;
+      darkModeSwitch.disabled = true;
+      backgroundSwitch.disabled = true;
   } else {
-    darkModeSwitch.checked = false;
-    darkModeSwitch.disabled = true;
+    backgroundSwitch.checked = !!storage.backgroundType;
+    backgroundSwitch.disabled = !(!!storage.hasSecondaryMode);
+    if (storage.darkMode !== undefined) {
+      darkModeSwitch.checked = !!storage.darkMode.isDarkNow
+      darkModeSwitch.disabled = !!storage.darkMode.shouldDisable;
+    } else {
+      darkModeSwitch.checked = false;
+      darkModeSwitch.disabled = true;
+    }
   }
   showSearchSwitch.checked = storage.showWidget === undefined || storage.showWidget;
 }
 
 /*Setup Waifu Choices for the popup menu
 * Also categorizes each theme based on their type (dark/light)*/
-function initChoice() {
+function initChoices() {
   browser.storage.local.get([
     "waifuThemes",
     "currentThemeId",
@@ -187,44 +221,15 @@ function initChoice() {
     "backgroundType",
     'showWidget',
     "darkMode",
-    "hasSecondaryMode"
+    "hasSecondaryMode",
+    "systemTheme",
+    "systemThemeChoice"
   ])
     .then((storage) => {
       prepareSwitches(storage);
-      const themesGroupedByName = Object.values(storage.waifuThemes.themes)
-        .reduce((accum, dokiTheme) => {
-          const displayName = dokiTheme.displayName;
-          const themeByDisplayName = accum[displayName];
-          const hasConflicts = !!themeByDisplayName &&
-            themeByDisplayName[0].group !== dokiTheme.group;
-          const themeKey = hasConflicts ? dokiTheme.name : 
-          dokiTheme.displayName;
-
-          // update existing collisions
-          if (hasConflicts) {
-            delete accum[displayName]
-            accum[themeByDisplayName[0].name] = themeByDisplayName;
-          }
-
-          return {
-            ...accum,
-            [themeKey]: [
-              ...(accum[themeKey] || []),
-              dokiTheme
-            ]
-          };
-        }, {});
-      const themes = Object.keys(themesGroupedByName)
-        .sort((a, b) => a.localeCompare(b));
-      const waifuGroup = document.querySelector("#waifus");
-      themes.forEach(themeName => {
-        const themeOption = document.createElement("option");
-        themeOption.setAttribute("value", themeName);
-        themeOption.id = themeName;
-        const txtNode = document.createTextNode(themeName);
-        themeOption.append(txtNode);
-        waifuGroup.append(themeOption);
-      });
+      if(storage.systemTheme !== systemStates.DRUTHERS){
+        populateSelect("#waifus", storage.systemTheme, storage.systemThemeChoice, storage.waifuThemes.themes);
+      }
       /*Set the theme of the popup menu based on current tab color*/
       browser.tabs.query({active: true})
         .then((tabs) => {
@@ -245,12 +250,10 @@ function initChoice() {
     });
 }
 
-initChoice();
+initChoices();
 /*---Event Listeners---*/
 selectTag.addEventListener("change", setTheme, true);
 backgroundSwitch.addEventListener("change", setBackground, true);
 showSearchSwitch.addEventListener("change", setHideWidget, true);
 darkModeSwitch.addEventListener("change", setOpposingTheme, true);
 dokiHeart.addEventListener('click', optionsPage, true);
-/*Exports*/
-export {getRandomThemeId};
