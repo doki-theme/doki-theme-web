@@ -30,7 +30,7 @@ dark theme lovers out there!
 you light theme lovers out there!
 
 ## All
-`all` is the default settings of Doki Theme. All themes will be present.
+`all` is the default setting of Doki Theme. All themes will be revealed with this option.
 
 ## Other Changes
 - Secondary backgrounds are now candidates when selecting the next theme in `random` & `mixed` 

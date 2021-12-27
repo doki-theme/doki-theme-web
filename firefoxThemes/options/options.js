@@ -67,10 +67,10 @@ const onChangeCheckEvents = async (e) => {
 
 /*Initialize system theme radio group*/
 function initSystemTheme(els, systemTheme) {
-  /*If no system theme radio is selected choose 'default' as selected*/
+  /*If no system theme radio is selected choose 'all' as selected*/
   if (!systemTheme) {
-    browser.storage.local.set({systemTheme: systemStates.DEFAULT});
-    systemTheme = systemStates.DEFAULT;
+    browser.storage.local.set({systemTheme: systemStates.ALL});
+    systemTheme = systemStates.ALL;
   }
 
   for (const el of els) {
@@ -107,7 +107,7 @@ const onChangeSystemTheme = async (e) => {
       for (const el of systemThemeRadios) {
         initBox(el, el.id === e.target.id);
       }
-      let isSystem = e.target.id === systemStates.SYSTEM
+      let isSystem = e.target.id === systemStates.DEVICE
         || e.target.id === systemStates.DRUTHERS;
       if (isSystem) {
         browser.browserSettings.overrideContentColorScheme.set({value: "system"});

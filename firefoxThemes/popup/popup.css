@@ -160,8 +160,8 @@ form > label > input {
   left: 4px;
   bottom: 4px;
   background-color: var(--primary-accent-color);
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: .2s;
+  transition: .2s;
 }
 
 input:checked + .slider {
@@ -169,7 +169,7 @@ input:checked + .slider {
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px var(--secondary-accent-color);
+  box-shadow: 0 0 3px var(--secondary-accent-color);
 }
 
 input:checked + .slider:before {

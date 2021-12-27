@@ -75,7 +75,7 @@ async function startStorage() {
   updateOptions({optionName: "textSelection", optionValue: !!!storage.textSelection});
   updateOptions({optionName: "scrollbar", optionValue: !!!storage.scrollbar});
   // Register to follow system color theme
-  if (storage.systemTheme === systemStates.SYSTEM || storage.systemTheme === systemStates.DRUTHERS) {
+  if (storage.systemTheme === systemStates.DEVICE || storage.systemTheme === systemStates.DRUTHERS) {
     updateSystemListener({addObserver:true});
     browser.browserSettings.overrideContentColorScheme.set({value: "system"});
   } else {
