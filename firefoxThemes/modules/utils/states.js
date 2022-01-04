@@ -6,8 +6,8 @@ const mixedStates = {
 const backgroundTypes = {
   PRIMARY: 0, SECONDARY: 1
 };
-/*Enums for system themes states*/
+/*Enums for device theme states*/
 const systemStates = {
-  SYSTEM: 'system', DRUTHERS: 'druthers', DARK: 'dark', LIGHT: 'light', DEFAULT: 'default'
+  DEVICE: 'device', DRUTHERS: 'druthers', DARK: 'dark', LIGHT: 'light', ALL: 'all'
 };
 export {mixedStates, backgroundTypes, systemStates};

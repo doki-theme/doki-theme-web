@@ -18,7 +18,7 @@ function getRandomThemeComps(systemTheme, systemChoice, themes) {
   while (!isCorrectSystemTheme) {
     chosenThemeId = getRandomThemeId(themes);
     chosenRandom = themes[chosenThemeId];
-    if (systemTheme === systemStates.DEFAULT || !systemTheme) {
+    if (systemTheme === systemStates.ALL || !systemTheme) {
       isCorrectSystemTheme = true;
     } else {
       isCorrectSystemTheme = isDarkSystemTheme === chosenRandom.dark;
