@@ -72,8 +72,8 @@ async function startStorage() {
     browser.tabs.update({loadReplace: true, url: "waifus/index.html"});
   }
   // Register all styles from option page
-  updateOptions({optionName: "textSelection", optionValue: !!!storage.textSelection});
-  updateOptions({optionName: "scrollbar", optionValue: !!!storage.scrollbar});
+  updateOptions({optionName: "textSelection", optionValue: !!storage.textSelection});
+  updateOptions({optionName: "scrollbar", optionValue: !!storage.scrollbar});
   // Register to follow system color theme
   if (storage.systemTheme === systemStates.DEVICE || storage.systemTheme === systemStates.DRUTHERS) {
     updateSystemListener({addObserver:true});

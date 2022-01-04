@@ -7,11 +7,8 @@ function updateOptions(element) {
   if (element.optionValue !== undefined) {
     browser.storage.local.set({[element.optionName]: !!element.optionValue});
     registerTheme(element.optionName, element.optionValue);
-  } else {
-    browser.storage.local.set({[element.optionName]: true});
-    registerTheme(element.optionName, false);
-    registerTheme(element.optionName, true);
   }
+
   /*Update pages with new theme*/
   reloadTabs({url: '*://*/*'});
   /*Refreshes options page to apply theme*/
