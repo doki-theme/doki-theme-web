@@ -1,3 +1,12 @@
+# Table of Contents
+
+- [Chrome Plugin Information](#chrome)
+- [Edge Plugin Information](#microsoft-edge)
+- [FireFox Plugin Information](#mozilla-firefox)
+  - [Features](#firefox-features)
+    - [General](#firefox-general-settings)
+    - [Theme Settings](#firefox-theme-settings)
+
 # Feature Preview
 
 ## Google Chrome
@@ -8,12 +17,6 @@
 
 ## FireFox
 ![Aqua FireFox](./screenshots/backgrounds/firefox_background.png)
-
-# Browser Docs
-
-- [Chrome](#chrome)
-- [Edge](#microsoft-edge)
-- [FireFox](#mozilla-firefox)
 
 ## Features
 
@@ -29,14 +32,13 @@ So I thought it was a good idea to add a bit of culture to this plugin.
 
 I will give you a bit of a warning before you install suggestive content.
 Some of us are professional Otaku, who want to remain, well...professional.
-Don't worry if you choose to continue, I won't ask you again for that specific theme.
 
 Applies for the following content:
 
 - Rias Onyx: Secondary Content
 
 
-Due to limitations of the platform(s), the Doki Theme has been broken into 2 pieces.
+Due to limitations of the chromium platform(s), the Doki Theme has been broken into 2 pieces.
 
 ### Theme
 
@@ -114,10 +116,6 @@ Until then, you'll have to do a local install.
 1. Enjoy!
 
 ## Mozilla Firefox
-
-- [Features](#firefox-features)
-  - [General](#firefox-general-settings)
-  - [Theme Settings](#firefox-theme-settings)
 
 ### 1.) Mozilla's Add-on Store Install
 
