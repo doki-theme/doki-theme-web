@@ -4,6 +4,7 @@
   --line-number-color: #666879;
   --selection-inactive-color: #292e34;
   --primary-accent-color: #a73035;
+  --link-color: #a73035;
   --secondary-accent-color: #a7303544;
   --button-color: white;
   --button-font-color: #47494b;
@@ -200,4 +201,11 @@ label[for="hideSearch"] {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+#show-settings {
+  margin-bottom: 1rem;
+  color: var(--link-color);
+  cursor: pointer;
+  text-decoration: underline;
 }
