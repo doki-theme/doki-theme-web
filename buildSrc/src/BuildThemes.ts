@@ -56,6 +56,8 @@ function buildColors(
     ...namedColors,
     ...themeOverrides,
     ...dokiThemeChromeDefinition.colors,
+    editorAccentColor: dokiThemeDefinition.overrides?.editorScheme?.colors.accentColor ||
+      dokiThemeDefinition.colors.accentColor
   }
   return Object.entries<string>(colorsOverride).reduce(
     (accum, [colorName, colorValue]) => ({
@@ -80,7 +82,7 @@ function buildChromeThemeManifest(
     dokiThemeChromeDefinition.overrides.theme.colors || {};
   const colorsOverride: StringDictionary<string> = {
     ...themeOverrides,
-    ...dokiThemeChromeDefinition.colors,
+    ...dokiThemeChromeDefinition.colors
   }
   return {
     ...manifestTemplate,

@@ -12,6 +12,15 @@ html, body {
   color: var(--foreground-color);
 }
 
+div.info-container {
+  text-align: center;
+}
+
+a {
+  color: var(--link-color);
+}
+
+
 div.options-container {
   display: flex;
 }

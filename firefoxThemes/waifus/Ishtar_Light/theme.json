@@ -32,13 +32,13 @@
     ],
     "button_background_active": [
       255,
-      250,
-      232
+      249,
+      219
     ],
     "button_background_hover": [
       255,
-      250,
-      232
+      249,
+      219
     ],
     "icons": [
       245,
@@ -122,8 +122,8 @@
     ],
     "tab_selected": [
       255,
-      250,
-      232
+      249,
+      219
     ],
     "toolbar_bottom_separator": [
       238,
