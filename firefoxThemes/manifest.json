@@ -8,11 +8,13 @@
     "48": "icons/doki-theme-logo@48.png",
     "96": "icons/doki-theme-logo@96.png"
   },
+  "optional_permissions": [
+    "search"
+  ],
   "permissions": [
     "theme",
     "tabs",
     "activeTab",
-    "search",
     "storage",
     "browserSettings",
     "<all_urls>"
