@@ -1,3 +1,7 @@
+:root {
+  --link-color: #a73035;
+}
+
 * {
   color: var(--foreground-color);
 }
