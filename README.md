@@ -116,6 +116,7 @@ Until then, you'll have to do a local install.
 ## Mozilla Firefox
 
 - [Features](#firefox-features)
+  - [General](#firefox-general-settings)
   - [Theme Settings](#firefox-theme-settings)
 
 ### 1.) Mozilla's Add-on Store Install
@@ -162,7 +163,16 @@ There is a know issue with session restoration on re-open though. [See GitHub is
 
 ### FireFox Features
 
-#### Theme Settings
+#### Firefox General Settings
+
+**Load Doki Theme page on startup** allows the plugin to automatically load the browser with the empty tab, which show's your current theme's character!
+_Note:_ This will break the restore previous open tab settings on startup feature.
+
+**Text Selection** requires the add-on to be able to modify your current tab to override the default text selection colors to match the current Doki Theme.
+
+**Scrollbar** themes the current tab's scrollbars to match the Doki Theme standard scrollbar color.
+
+#### FireFox Theme Settings
 
 The Doki Theme for FireFox can synchronize with your device theme settings.
 
