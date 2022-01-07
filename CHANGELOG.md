@@ -9,6 +9,7 @@ Changelog
 - Added documentation of the rest of the FireFox features.
 - Added a link to said documentation in the settings menu.
 - Added a link to show the Options Page in the popup.
+- Fixes *Options page* refreshing after selecting an option in the *General* category.
 
 # 18.0.0 [Device Theme Sync]
 

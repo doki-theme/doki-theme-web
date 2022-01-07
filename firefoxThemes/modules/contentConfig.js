@@ -7,12 +7,12 @@ function updateOptions(element) {
   if (element.optionValue !== undefined) {
     browser.storage.local.set({[element.optionName]: !!element.optionValue});
     registerTheme(element.optionName, element.optionValue);
+  } else {
+    /*Refreshes options page to apply theme*/
+    reloadTabs({title: 'Add-ons Manager'});
   }
-
   /*Update pages with new theme*/
   reloadTabs({url: '*://*/*'});
-  /*Refreshes options page to apply theme*/
-  reloadTabs({title: 'Add-ons Manager'});
 }
 
 /*Registers a style*/
