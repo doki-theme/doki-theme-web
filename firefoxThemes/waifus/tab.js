@@ -18,10 +18,10 @@ function conductSearch() {
 }
 
 /*Submit searches by pressing the search button*/
+const searchPermission = {
+  permissions: ["search"]
+};
 function confirmSearch() {
-  const searchPermission = {
-    permissions: ["search"]
-  };
   return browser.permissions.request(searchPermission).then((searchGranted) => {
     if (searchGranted) {
       conductSearch()

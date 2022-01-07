@@ -101,34 +101,51 @@ function initBox(el, state) {
   el.className = state ? 'checked' : '';
 }
 
-/*EVENT: Change the current state of the system theme radio group*/
-const onChangeSystemTheme = async (e) => {
+const browserSettingsPermission = {
+  permissions: ["browserSettings"]
+};
+function applySystemThemeChanges(userClickEvent,
+                                 wasSystemSelected) {
   browser.storage.local.get(["waifuThemes", "systemThemeChoice", "druthersThemes", "druthersBGs"])
     .then(storage => {
       for (const el of systemThemeRadios) {
-        initBox(el, el.id === e.target.id);
+        initBox(el, el.id === userClickEvent.target.id);
       }
-      let isSystem = e.target.id === systemStates.DEVICE
-        || e.target.id === systemStates.DRUTHERS;
-      if (isSystem) {
+      if (wasSystemSelected) {
         browser.browserSettings.overrideContentColorScheme.set({value: "system"});
-      } else {
+      } else if (browser.browserSettings) {
         browser.browserSettings.overrideContentColorScheme.set({value: "browser"});
       }
       // Show/Hide Druthers select options
-      displayDruthers(e.target.id, druthersSection);
+      displayDruthers(userClickEvent.target.id, druthersSection);
       browser.runtime.sendMessage({
         resourceMSG: true,
         isSystemRelated: true,
-        addObserver: isSystem
+        addObserver: wasSystemSelected
       });
       if (!storage.druthersBGs) {
         storage.druthersBGs = new Map();
         storage.druthersBGs.set(systemStates.LIGHT, backgroundTypes.PRIMARY);
         storage.druthersBGs.set(systemStates.DARK, backgroundTypes.PRIMARY);
       }
-      browser.storage.local.set({systemTheme: e.target.id, druthersBGs: storage.druthersBGs});
+      browser.storage.local.set({systemTheme: userClickEvent.target.id, druthersBGs: storage.druthersBGs});
     });
+}
+
+/*EVENT: Change the current state of the system theme radio group*/
+const onChangeSystemTheme = (e) => {
+  const wasSystemSelected = e.target.id === systemStates.DEVICE
+    || e.target.id === systemStates.DRUTHERS;
+  if(wasSystemSelected) {
+    return browser.permissions.request(browserSettingsPermission)
+      .then((grantedPermission) => {
+        if(grantedPermission) {
+          applySystemThemeChanges(e, wasSystemSelected);
+        }
+      })
+  }
+
+  applySystemThemeChanges(e, wasSystemSelected);
 }
 
 /*Change to a secondary light theme background*/

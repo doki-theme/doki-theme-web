@@ -75,13 +75,15 @@ async function startStorage() {
   updateOptions({optionName: "textSelection", optionValue: !!storage.textSelection});
   updateOptions({optionName: "scrollbar", optionValue: !!storage.scrollbar});
   // Register to follow system color theme
-  if (storage.systemTheme === systemStates.DEVICE || storage.systemTheme === systemStates.DRUTHERS) {
+  const wasSystemSelected = storage.systemTheme === systemStates.DEVICE ||
+    storage.systemTheme === systemStates.DRUTHERS;
+  const hasRequestedBrowserSettings = !!browser.browserSettings;
+  if (wasSystemSelected && hasRequestedBrowserSettings) {
     updateSystemListener({addObserver:true});
     browser.browserSettings.overrideContentColorScheme.set({value: "system"});
-  } else {
+  } else if (hasRequestedBrowserSettings) {
     browser.browserSettings.overrideContentColorScheme.set({value: "browser"});
   }
-
 }
 /*Update the system observer to listen to system color theme changes*/
 function updateSystemListener(msg) {

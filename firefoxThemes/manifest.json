@@ -9,14 +9,14 @@
     "96": "icons/doki-theme-logo@96.png"
   },
   "optional_permissions": [
-    "search"
+    "search",
+    "browserSettings"
   ],
   "permissions": [
     "theme",
     "tabs",
     "activeTab",
     "storage",
-    "browserSettings",
     "<all_urls>"
   ],
   "options_ui": {
