@@ -23,6 +23,7 @@ function setCSS(chosenTheme) {
   const {colors} = chosenTheme.definition;
   root.style.setProperty('--switch-shadow-color', colors.accentColor);
   root.style.setProperty('--link-color', colors.editorAccentColor);
+  root.style.setProperty('--link-hover', colors.accentColor);
   root.style.setProperty('--doki-shadow', colors.accentColor);
   root.style.setProperty('--info-foreground-color', colors.infoForeground);
   root.style.setProperty('--header-color', colors.headerColor);

@@ -1,5 +1,6 @@
 :root {
   --link-color: #a73035;
+  --link-hover: #EE5C09;
 }
 
 * {
@@ -22,6 +23,10 @@ div.info-container {
 
 a {
   color: var(--link-color);
+}
+
+a:hover {
+  color: var(--link-hover);
 }
 
 

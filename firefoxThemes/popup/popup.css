@@ -5,6 +5,7 @@
   --selection-inactive-color: #292e34;
   --primary-accent-color: #a73035;
   --link-color: #a73035;
+  --link-hover: #e4ff10;
   --secondary-accent-color: #a7303544;
   --button-color: white;
   --button-font-color: #47494b;
@@ -211,6 +212,5 @@ label[for="hideSearch"] {
 }
 
 #show-settings:hover{
-  text-shadow: 0 0 9px var(--doki-shadow);
-  font-size:11pt;
+  color: var(--link-hover)
 }

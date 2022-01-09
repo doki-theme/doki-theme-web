@@ -32,6 +32,7 @@ function setCss(chosenTheme) {
   const {colors} = chosenTheme.definition;
   root.style.setProperty('--checkbox-color', colors.accentColor);
   root.style.setProperty('--link-color', colors.editorAccentColor);
+  root.style.setProperty('--link-hover', colors.accentColor);
   root.style.setProperty('--foreground-color', colors.foregroundColor);
   root.style.setProperty('--checkbox-border-color', colors.baseIconColor);
   root.style.setProperty('--header-color', colors.headerColor);
