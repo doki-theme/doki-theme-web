@@ -608,11 +608,9 @@ preBuild()
 function getBackgrounds(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }, dokiTheme: { path: string; definition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }; manifest: ManifestTemplate; fireFoxTheme: FireFoxTheme; theme: {}; chromeDefinition: BaseAppDokiThemeDefinition; }, relativeFireFoxAssetPath: string) {
   const stickers = getStickers(dokiDefinition, dokiTheme);
 
-  if (isKanna(dokiDefinition)) {
+  if (isExcludedSecondaryContentTheme(dokiDefinition)) {
     return {
-      // retain secondary image because that is what the chrome themes use.
-      // because both of Kanna's backgrounds are the same. Only the sticker is different.
-      primary: `${relativeFireFoxAssetPath}/images/${stickers.secondary!!.name}`,
+      primary: `${relativeFireFoxAssetPath}/images/${stickers.default!!.name}`,
     }
   }
 
@@ -629,6 +627,11 @@ function getName(dokiDefinition: MasterDokiThemeDefinition) {
   return dokiDefinition.name.replace(':', '');
 }
 
-function isKanna(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }): boolean {
-  return dokiDefinition.id === "b93ab4ea-ff96-4459-8fa2-0caae5bc7116"
+const excludedSecondaryContentThemes = new Set([
+ 'b93ab4ea-ff96-4459-8fa2-0caae5bc7116', // Kanna's are the same
+  'ea9a13f6-fa7f-46a4-ba6e-6cefe1f55160' // I lack culture...
+]);
+
+function isExcludedSecondaryContentTheme(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }): boolean {
+  return excludedSecondaryContentThemes.has(dokiDefinition.id)
 }
