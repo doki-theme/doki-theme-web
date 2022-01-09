@@ -207,8 +207,8 @@ label[for="hideSearch"] {
   color: var(--link-color);
   cursor: pointer;
   text-decoration: underline;
-  -moz-transition: text-shadow 0.3s, font-size 0.2s;
-  transition: text-shadow 0.3s, font-size 0.2s;
+  -moz-transition: color 0.7s;
+  transition: color 0.7s;
 }
 
 #show-settings:hover{

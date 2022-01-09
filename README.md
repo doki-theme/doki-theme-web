@@ -6,7 +6,6 @@
 # Table of Contents
 - [Feature Set](#feature-set)
   - [Master Extension](#master-extension)
-  - [Suggestive Content](#suggestive-content)
   - [Firefox Features](#firefox-features)
     - [General Settings](#firefox-general-settings)
     - [Theme Settings](#firefox-theme-settings)
@@ -34,23 +33,6 @@ the CSS of every webpage you visit to match your current theme choices.
 Things that are currently changed:
 - Selection foreground/background
 - Scrollbars
-
-## Suggestive Content
-<div align="center">
-    <img src="https://doki.assets.unthrottled.io/misc/suggestive/cultured.gif" alt="a dark doki 
-theme"></img>
-</div>
-
-So I thought it would be a great idea to add a bit of culture to this plugin.
-<sup><sup>Ya boi is horny on main.</sup></sup>
-
-I will give you a bit of a warning before you install suggestive content.
-Some of us are professional Otaku, who want to remain, well...professional.
-
-Applies for the following content:
-- Rias Onyx: Secondary Content
-
-**Due to limitations of the chromium platform(s), the Doki Theme has been broken into 2 pieces.*
 
 # FireFox Features
 ## Firefox: General Settings
