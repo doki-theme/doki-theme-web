@@ -9,12 +9,12 @@ function displayDruthers(systemTheme, druthersSection) {
 }
 
 /*EVENT: Change light theme during druthers system mode*/
-function onChangeDruthersLight(selectBox) {
+function onClickDruthersLight(selectBox) {
   setDruthers(systemStates.LIGHT, selectBox.value, false);
 }
 
 /*EVENT: Change dark theme during druthers system mode*/
-function onChangeDruthersDark(selectBox) {
+function onClickDruthersDark(selectBox) {
   setDruthers(systemStates.DARK, selectBox.value, true);
 }
 
@@ -67,7 +67,7 @@ function initDruthers(druthersThemes, lightSelect, darkSelect, themes) {
 export {
   initDruthers,
   displayDruthers,
-  onChangeDruthersLight,
-  onChangeDruthersDark,
+  onClickDruthersLight,
+  onClickDruthersDark,
   populateDruthersOpts
 };
