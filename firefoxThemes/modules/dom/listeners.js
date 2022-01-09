@@ -10,4 +10,9 @@ function multiClickListener(els, func) {
   }
 }
 
-export {clickListener, multiClickListener}
+/*Establish change event listener*/
+function changeListener(el, func) {
+  el.addEventListener('change', func, true);
+}
+
+export {clickListener, multiClickListener, changeListener};

@@ -79,12 +79,13 @@ async function startStorage() {
     storage.systemTheme === systemStates.DRUTHERS;
   const hasRequestedBrowserSettings = !!browser.browserSettings;
   if (wasSystemSelected && hasRequestedBrowserSettings) {
-    updateSystemListener({addObserver:true});
+    updateSystemListener({addObserver: true});
     browser.browserSettings.overrideContentColorScheme.set({value: "system"});
   } else if (hasRequestedBrowserSettings) {
     browser.browserSettings.overrideContentColorScheme.set({value: "browser"});
   }
 }
+
 /*Update the system observer to listen to system color theme changes*/
 function updateSystemListener(msg) {
   if (msg.addObserver) {
@@ -124,11 +125,11 @@ function updateTheme(msg) {
   } else if (msg.applyWidget) {
     reloadTabs({title: 'New Tab'});
   } else if (msg.optionName && (msg.optionValue || msg.optionValue === '')) {
-    updateOptions(msg);
+    updateOptions(msg, msg.noOptPageRefresh);
   } else {
     updateTabs(msg);
     for (const optionName of ['textSelection', 'scrollbar']) {
-      updateOptions({optionName});
+      updateOptions({optionName}, msg.noOptPageRefresh);
     }
   }
 }

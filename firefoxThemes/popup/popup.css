@@ -94,13 +94,13 @@ img {
   margin: 1em auto 0 auto;
   max-width: 30%;
   animation: heartbeat 6s linear infinite;
-  -moz-transition: filter 1.2s;
-  transition: filter 1.2s;
+  -moz-transition: filter 0.7s;
+  transition: filter 0.7s;
 }
 
 img:hover {
   cursor: pointer;
-  filter: drop-shadow(0px 0px 11px var(--doki-shadow));
+  filter: drop-shadow(0px 0px 12px var(--doki-shadow));
 }
 
 /*Waifu Option Styles*/
@@ -174,8 +174,6 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
 
@@ -208,4 +206,11 @@ label[for="hideSearch"] {
   color: var(--link-color);
   cursor: pointer;
   text-decoration: underline;
+  -moz-transition: text-shadow 0.3s, font-size 0.2s;
+  transition: text-shadow 0.3s, font-size 0.2s;
+}
+
+#show-settings:hover{
+  text-shadow: 0 0 9px var(--doki-shadow);
+  font-size:11pt;
 }
