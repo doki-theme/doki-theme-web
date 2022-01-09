@@ -89,8 +89,8 @@ https://user-images.githubusercontent.com/23222943/146149663-22ad428e-0cc7-45f8-
 character chosen for the dark theme will alternate depending on your current device settings.
 
 For clarity, if I choose *Maple* for the **light theme** & *Jahy-sama* for the **dark theme**.
-If the device setting is **currently dark**, then the **dark** *Jahy-sama's* theme will show. If the device
-setting is *light*, then the **light** *Maple* theme will show.
+If the device setting is **currently dark**, then *Jahy-sama's* theme will show. If the device
+setting is *light*, then *Maple's* theme will show.
 
 #### Example
 https://user-images.githubusercontent.com/23222943/146766085-ecb1b416-a678-4cbc-a75c-44c7fb5b32de.mp4
