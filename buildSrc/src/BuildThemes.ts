@@ -483,7 +483,7 @@ preBuild()
                       // copy high res image to firefox
                       const highResFireFoxBackgroundDirectory = path.resolve(firefoxThemeDirectory, 'images');
                       highResThemes
-                        .filter(themeAssetPath => themeAssetPath.indexOf("kanna_dark.png") < 0) // filter out duplicate Kanna Primary background
+                        .filter(excludedAssetFilter) 
                         .forEach(hiResTheme => {
                           const highResFireFox = path.resolve(highResFireFoxBackgroundDirectory, path.basename(hiResTheme));
                           fs.copyFileSync(
@@ -518,7 +518,7 @@ preBuild()
           const bkNames = Object.values(stickers)
             .map(sticker => sticker.name)
           bkNames
-            .filter(bkName => bkName.indexOf("kanna_dark.png") < 0) // filter out duplicate Kanna Primary
+            .filter(excludedAssetFilter)
             .forEach(bkName => {
               const chromeLowerRes = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome',
                 bkName);
@@ -631,6 +631,16 @@ const excludedSecondaryContentThemes = new Set([
  'b93ab4ea-ff96-4459-8fa2-0caae5bc7116', // Kanna's are the same
   'ea9a13f6-fa7f-46a4-ba6e-6cefe1f55160' // I lack culture...
 ]);
+
+const excludedSecondaryContent = [
+  'kanna_dark_secondary.png',
+  'rias_onyx_spicy.png'
+];
+
+const excludedAssetFilter = (bkName: string) =>
+excludedSecondaryContent.map(
+  excludedContent => bkName.indexOf(excludedContent) < 0
+).reduce((accum, next) => accum && next)
 
 function isExcludedSecondaryContentTheme(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }): boolean {
   return excludedSecondaryContentThemes.has(dokiDefinition.id)
