@@ -5,7 +5,6 @@
   --selection-inactive-color: #292e34;
   --primary-accent-color: #a73035;
   --link-color: #a73035;
-  --link-hover: #e4ff10;
   --secondary-accent-color: #a7303544;
   --button-color: white;
   --button-font-color: #47494b;
@@ -207,10 +206,11 @@ label[for="hideSearch"] {
   color: var(--link-color);
   cursor: pointer;
   text-decoration: underline;
-  -moz-transition: color 0.7s;
-  transition: color 0.7s;
+  opacity: 0.5;
+  -moz-transition: opacity 0.7s;
+  transition: opacity 0.7s;
 }
 
 #show-settings:hover{
-  color: var(--link-hover)
+  opacity: 1;
 }

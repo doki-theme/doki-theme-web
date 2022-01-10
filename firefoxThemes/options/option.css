@@ -1,6 +1,5 @@
 :root {
   --link-color: #a73035;
-  --link-hover: #EE5C09;
 }
 
 * {
@@ -23,10 +22,13 @@ div.info-container {
 
 a {
   color: var(--link-color);
+  opacity: 0.5;
+  -moz-transition: opacity 0.7s;
+  transition: opacity 0.7s;
 }
 
 a:hover {
-  color: var(--link-hover);
+  opacity: 1;
 }
 
 
