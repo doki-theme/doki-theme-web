@@ -56,6 +56,8 @@ function buildColors(
     ...namedColors,
     ...themeOverrides,
     ...dokiThemeChromeDefinition.colors,
+    editorAccentColor: dokiThemeDefinition.overrides?.editorScheme?.colors.accentColor ||
+      dokiThemeDefinition.colors.accentColor
   }
   return Object.entries<string>(colorsOverride).reduce(
     (accum, [colorName, colorValue]) => ({
@@ -80,7 +82,7 @@ function buildChromeThemeManifest(
     dokiThemeChromeDefinition.overrides.theme.colors || {};
   const colorsOverride: StringDictionary<string> = {
     ...themeOverrides,
-    ...dokiThemeChromeDefinition.colors,
+    ...dokiThemeChromeDefinition.colors
   }
   return {
     ...manifestTemplate,
@@ -481,7 +483,7 @@ preBuild()
                       // copy high res image to firefox
                       const highResFireFoxBackgroundDirectory = path.resolve(firefoxThemeDirectory, 'images');
                       highResThemes
-                        .filter(themeAssetPath => themeAssetPath.indexOf("kanna_dark.png") < 0) // filter out duplicate Kanna Primary background
+                        .filter(excludedAssetFilter) 
                         .forEach(hiResTheme => {
                           const highResFireFox = path.resolve(highResFireFoxBackgroundDirectory, path.basename(hiResTheme));
                           fs.copyFileSync(
@@ -516,7 +518,7 @@ preBuild()
           const bkNames = Object.values(stickers)
             .map(sticker => sticker.name)
           bkNames
-            .filter(bkName => bkName.indexOf("kanna_dark.png") < 0) // filter out duplicate Kanna Primary
+            .filter(excludedAssetFilter)
             .forEach(bkName => {
               const chromeLowerRes = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome',
                 bkName);
@@ -606,11 +608,9 @@ preBuild()
 function getBackgrounds(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }, dokiTheme: { path: string; definition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }; manifest: ManifestTemplate; fireFoxTheme: FireFoxTheme; theme: {}; chromeDefinition: BaseAppDokiThemeDefinition; }, relativeFireFoxAssetPath: string) {
   const stickers = getStickers(dokiDefinition, dokiTheme);
 
-  if (isKanna(dokiDefinition)) {
+  if (isExcludedSecondaryContentTheme(dokiDefinition)) {
     return {
-      // retain secondary image because that is what the chrome themes use.
-      // because both of Kanna's backgrounds are the same. Only the sticker is different.
-      primary: `${relativeFireFoxAssetPath}/images/${stickers.secondary!!.name}`,
+      primary: `${relativeFireFoxAssetPath}/images/${stickers.default!!.name}`,
     }
   }
 
@@ -627,6 +627,21 @@ function getName(dokiDefinition: MasterDokiThemeDefinition) {
   return dokiDefinition.name.replace(':', '');
 }
 
-function isKanna(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }): boolean {
-  return dokiDefinition.id === "b93ab4ea-ff96-4459-8fa2-0caae5bc7116"
+const excludedSecondaryContentThemes = new Set([
+ 'b93ab4ea-ff96-4459-8fa2-0caae5bc7116', // Kanna's are the same
+  'ea9a13f6-fa7f-46a4-ba6e-6cefe1f55160' // I lack culture...
+]);
+
+const excludedSecondaryContent = [
+  'kanna_dark_secondary.png',
+  'rias_onyx_spicy.png'
+];
+
+const excludedAssetFilter = (bkName: string) =>
+excludedSecondaryContent.map(
+  excludedContent => bkName.indexOf(excludedContent) < 0
+).reduce((accum, next) => accum && next)
+
+function isExcludedSecondaryContentTheme(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }): boolean {
+  return excludedSecondaryContentThemes.has(dokiDefinition.id)
 }

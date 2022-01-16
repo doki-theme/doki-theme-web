@@ -1,4 +1,4 @@
-import {svgToPng, buildSVG} from "../modules/utils/themes/logo.js";
+import {buildSVG, svgToPng} from "../modules/utils/themes/logo.js";
 
 let query = "";//the search query
 /*Record the keywords to search for.
@@ -7,8 +7,7 @@ function searchQuery(e) {
   query = e.target.value;
 }
 
-/*Submit searches by pressing the search button*/
-function confirmSearch() {
+function conductSearch() {
   browser.tabs.getCurrent()
     .then((tab) => {
       browser.search.search({
@@ -16,7 +15,18 @@ function confirmSearch() {
         tabId: tab.id
       });
     });
+}
 
+/*Submit searches by pressing the search button*/
+const searchPermission = {
+  permissions: ["search"]
+};
+function confirmSearch() {
+  return browser.permissions.request(searchPermission).then((searchGranted) => {
+    if (searchGranted) {
+      conductSearch()
+    }
+  });
 }
 
 /*Submit searches by pressing the 'Enter' key*/
@@ -70,24 +80,24 @@ function displayWidget() {
 }
 
 function applyTabListeners(storage) {
-    const currentTheme = storage.currentTheme;
-    const root = document.querySelector(':root');
-    root.style.setProperty('--accent-color', currentTheme.definition.colors.accentColor);
-    root.style.setProperty('--base-background-color', currentTheme.definition.colors.baseBackground);
-    if (storage.showWidget === undefined || storage.showWidget) {
-      displayWidget();
-      // set themed icons
-      setThemedSearchInputIcon(currentTheme);
-      setThemedAboutIcon(currentTheme);
+  const currentTheme = storage.currentTheme;
+  const root = document.querySelector(':root');
+  root.style.setProperty('--accent-color', currentTheme.definition.colors.accentColor);
+  root.style.setProperty('--base-background-color', currentTheme.definition.colors.baseBackground);
+  if (storage.showWidget === undefined || storage.showWidget) {
+    displayWidget();
+    // set themed icons
+    setThemedSearchInputIcon(currentTheme);
+    setThemedAboutIcon(currentTheme);
 
-      /*---Event Listeners---*/
-      const input = document.querySelector("input[type='search']");
-      input.addEventListener("input", searchQuery, true);
-      input.addEventListener("keydown", keyConfirm, true);
+    /*---Event Listeners---*/
+    const input = document.querySelector("input[type='search']");
+    input.addEventListener("input", searchQuery, true);
+    input.addEventListener("keydown", keyConfirm, true);
 
-      const searchButton = document.querySelector(".search-button");
-      searchButton.addEventListener("click", confirmSearch, false);
-    }
+    const searchButton = document.querySelector(".search-button");
+    searchButton.addEventListener("click", confirmSearch, false);
+  }
 }
 
 export {applyTabListeners};

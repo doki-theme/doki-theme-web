@@ -4,6 +4,7 @@
   --line-number-color: #666879;
   --selection-inactive-color: #292e34;
   --primary-accent-color: #a73035;
+  --link-color: #a73035;
   --secondary-accent-color: #a7303544;
   --button-color: white;
   --button-font-color: #47494b;
@@ -93,13 +94,13 @@ img {
   margin: 1em auto 0 auto;
   max-width: 30%;
   animation: heartbeat 6s linear infinite;
-  -moz-transition: filter 1.2s;
-  transition: filter 1.2s;
+  -moz-transition: filter 0.7s;
+  transition: filter 0.7s;
 }
 
 img:hover {
   cursor: pointer;
-  filter: drop-shadow(0px 0px 11px var(--doki-shadow));
+  filter: drop-shadow(0px 0px 12px var(--doki-shadow));
 }
 
 /*Waifu Option Styles*/
@@ -173,8 +174,6 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
 
@@ -200,4 +199,18 @@ label[for="hideSearch"] {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+#show-settings {
+  margin-bottom: 1rem;
+  color: var(--link-color);
+  cursor: pointer;
+  text-decoration: underline;
+  opacity: 0.5;
+  -moz-transition: opacity 0.7s;
+  transition: opacity 0.7s;
+}
+
+#show-settings:hover{
+  opacity: 1;
 }

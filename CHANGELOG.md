@@ -3,6 +3,18 @@ Changelog
 
 # Unreleased
 
+# 18.1.0 [Opt-In FireFox Features]
+
+- Changed all settings to be opt-in to conform to the Mozilla Add-On policy.
+- Added documentation of the rest of the FireFox features.
+- Added a link to said documentation in the settings menu.
+- Added a link to show the Options Page in the popup.
+- Fixes *Options page* refreshing after selecting an option in the *General* category.
+- Fixes *Options page* refreshing after (un)checking the secondary background checkbox in 
+  `druthers`.
+- Fixes secondary background checkbox visibility when selecting a theme from a dropdown menu in 
+  `druthers`.
+
 # 18.0.0 [Device Theme Sync]
 
 The Doki Theme for FireFox can now synchronize with your device theme settings.

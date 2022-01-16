@@ -8,20 +8,23 @@
 </head>
 <body>
 <h1>Settings</h1>
+<div class="info-container">
+  <a href="https://github.com/doki-theme/doki-theme-web#table-of-contents">Show Documentation</a>
+</div>
 <div class="options-container">
   <!--General Settings-->
   <section id="general">
     <h2>General</h2>
-    <section>
+    <section title="Starts FireFox with an empty tab.">
       <span id="loadOnStart" role="checkbox"></span>
       <label for="loadOnStart">Load Doki Theme page on startup</label>
     </section>
-    <section>
-      <span id="textSelection" class="checked" role="checkbox"></span>
+    <section title="Modifies the current tab's text selection color to match the current tab's theme.">
+      <span id="textSelection" role="checkbox"></span>
       <label for="textSelection">Text Selection</label>
     </section>
-    <section>
-      <span id="scrollbar" class="checked" role="checkbox"></span>
+    <section title="Modifies the current tab's scrollbar to match the current tab's theme.">
+      <span id="scrollbar" role="checkbox"></span>
       <label for="scrollbar">Scrollbar</label>
     </section>
   </section>
@@ -53,7 +56,7 @@
       <h3>Druthers Choice</h3>
       <div>
         <label for="druthersLightOpt">Light:</label>
-        <select name="druthersLightOpt" id="druthersLightOpt">
+        <select name="druthersLightOpt" id="druthersLightOpt" data-theme="light">
         </select>
         <button id="druthersLightBtn">Apply</button>
         <section id="lightSecondBG">
@@ -63,7 +66,7 @@
       </div>
       <div>
         <label for="druthersDarkOpt">Dark:</label>
-        <select name="druthersDarkOpt" id="druthersDarkOpt">
+        <select name="druthersDarkOpt" id="druthersDarkOpt" data-theme="dark">
         </select>
         <button id="druthersDarkBtn">Apply</button>
         <section id="darkSecondBG">

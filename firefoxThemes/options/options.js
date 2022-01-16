@@ -1,13 +1,14 @@
-import {clickListener, multiClickListener} from "../modules/dom/listeners.js";
+import {clickListener, multiClickListener, changeListener} from "../modules/dom/listeners.js";
 import {backgroundTypes, systemStates} from "../modules/utils/states.js";
 import {
   initDruthers,
   displayDruthers,
-  onChangeDruthersLight,
-  onChangeDruthersDark,
+  onClickDruthersLight,
+  onClickDruthersDark,
   populateDruthersOpts
 } from "../modules/modes/system/druthers.js";
 import {hasSecondaryBG} from "../modules/utils/themes/background.js";
+import {getThemeByName} from "../modules/utils/themes/theme.js";
 
 /*DOM Elements*/
 const loadOnStartCheckbox = document.querySelector("#loadOnStart");
@@ -30,6 +31,7 @@ function setCss(chosenTheme) {
   if (!chosenTheme) return;
   const {colors} = chosenTheme.definition;
   root.style.setProperty('--checkbox-color', colors.accentColor);
+  root.style.setProperty('--link-color', colors.editorAccentColor);
   root.style.setProperty('--foreground-color', colors.foregroundColor);
   root.style.setProperty('--checkbox-border-color', colors.baseIconColor);
   root.style.setProperty('--header-color', colors.headerColor);
@@ -56,7 +58,7 @@ async function initContent() {
 }
 
 /*EVENT: Alter the checkbox & apply content script option*/
-const onChangeCheckEvents = async (e) => {
+const onClickCheckEvents = async (e) => {
   changeCheckedState(e);
   await browser.runtime.sendMessage({
     resourceMSG: true,
@@ -86,13 +88,28 @@ function initDruthersBG(druthersBGs, systemTheme, druthersThemes, themes) {
     return;
   }
 
-  const lightTheme = themes[druthersThemes.get(systemStates.LIGHT)];
-  const darkTheme = themes[druthersThemes.get(systemStates.DARK)];
+  const lightTheme = druthersThemes ? themes[druthersThemes.get(systemStates.LIGHT)] : false;
+  const darkTheme = druthersThemes ? themes[druthersThemes.get(systemStates.DARK)] : false;
 
-  druthersLightBGSection.style.visibility = hasSecondaryBG(lightTheme) ? 'visible' : 'collapse';
-  druthersDarkBGSection.style.visibility = hasSecondaryBG(darkTheme) ? 'visible' : 'collapse';
+  updateDruthersBGVisibility(lightTheme, druthersLightBGSection);
+  updateDruthersBGVisibility(darkTheme, druthersDarkBGSection);
   initBox(druthersLightBGCheckbox, druthersBGs.get(systemStates.LIGHT));
   initBox(druthersDarkBGCheckbox, druthersBGs.get(systemStates.DARK));
+}
+
+/*Update visibility of a druthers secondary checkbox if provided theme supports it*/
+function updateDruthersBGVisibility(theme, checkbox) {
+  checkbox.style.visibility = hasSecondaryBG(theme) ? 'visible' : 'collapse';
+}
+
+/*EVENT: Changes visibility of secondary checkbox for druthers based on chosen theme*/
+function onChangeDruthersSecondBGCheckBox(e) {
+  browser.storage.local.get(["waifuThemes"]).then(storage => {
+    const isDark = e.target.dataset.theme === 'dark'; //Element MUST have `data-theme` attribute
+    const theme = getThemeByName(e.target.value, isDark, storage.waifuThemes.themes);
+    const checkboxSection = isDark ? druthersDarkBGSection : druthersLightBGSection;
+    updateDruthersBGVisibility(theme, checkboxSection);
+  });
 }
 
 /*Initialize checkbox state*/
@@ -100,60 +117,67 @@ function initBox(el, state) {
   el.className = state ? 'checked' : '';
 }
 
-/*EVENT: Change the current state of the system theme radio group*/
-const onChangeSystemTheme = async (e) => {
+const browserSettingsPermission = {
+  permissions: ["browserSettings"]
+};
+
+function applySystemThemeChanges(userClickEvent,
+                                 wasSystemSelected) {
   browser.storage.local.get(["waifuThemes", "systemThemeChoice", "druthersThemes", "druthersBGs"])
     .then(storage => {
       for (const el of systemThemeRadios) {
-        initBox(el, el.id === e.target.id);
+        initBox(el, el.id === userClickEvent.target.id);
       }
-      let isSystem = e.target.id === systemStates.DEVICE
-        || e.target.id === systemStates.DRUTHERS;
-      if (isSystem) {
+      if (wasSystemSelected) {
         browser.browserSettings.overrideContentColorScheme.set({value: "system"});
-      } else {
+      } else if (browser.browserSettings) {
         browser.browserSettings.overrideContentColorScheme.set({value: "browser"});
       }
       // Show/Hide Druthers select options
-      displayDruthers(e.target.id, druthersSection);
+      displayDruthers(userClickEvent.target.id, druthersSection);
       browser.runtime.sendMessage({
         resourceMSG: true,
         isSystemRelated: true,
-        addObserver: isSystem
+        addObserver: wasSystemSelected
       });
       if (!storage.druthersBGs) {
         storage.druthersBGs = new Map();
         storage.druthersBGs.set(systemStates.LIGHT, backgroundTypes.PRIMARY);
         storage.druthersBGs.set(systemStates.DARK, backgroundTypes.PRIMARY);
       }
-      browser.storage.local.set({systemTheme: e.target.id, druthersBGs: storage.druthersBGs});
+      browser.storage.local.set({systemTheme: userClickEvent.target.id, druthersBGs: storage.druthersBGs});
     });
 }
 
-/*Change to a secondary light theme background*/
-function onChangeDruthersLightBG(e) {
-  onChangeDruthersBG(e, systemStates.LIGHT);
+/*EVENT: Change the current state of the system theme radio group*/
+const onClickSystemTheme = (e) => {
+  const wasSystemSelected = e.target.id === systemStates.DEVICE
+    || e.target.id === systemStates.DRUTHERS;
+  if (wasSystemSelected) {
+    return browser.permissions.request(browserSettingsPermission)
+      .then((grantedPermission) => {
+        if (grantedPermission) {
+          applySystemThemeChanges(e, wasSystemSelected);
+        }
+      })
+  }
+  applySystemThemeChanges(e, wasSystemSelected);
 }
 
-/*Change to a secondary dark theme background*/
-function onChangeDruthersDarkBG(e) {
-  onChangeDruthersBG(e, systemStates.DARK);
-}
-
-/*Change to a secondary background*/
-function onChangeDruthersBG(e, sysThemeType) {
-  browser.storage.local.get(["druthersThemes", "druthersBGs", "druthersThemes", "waifuThemes"])
+/*Change to a secondary background in druthers*/
+function druthersChangeBG(checkbox, sysThemeType) {
+  browser.storage.local.get(["druthersThemes", "druthersBGs", "waifuThemes"])
     .then(storage => {
-      e.target.className = !e.target.className ? 'checked' : '';
-    const backgroundType = e.target.className ? backgroundTypes.SECONDARY : backgroundTypes.PRIMARY;
-    storage.druthersBGs.set(sysThemeType, backgroundType);
-    initDruthersBG(storage.druthersBGs, systemStates.DRUTHERS, storage.druthersThemes, storage.waifuThemes.themes);
-    browser.storage.local.set({backgroundType, druthersBGs: storage.druthersBGs});
-    browser.runtime.sendMessage({
-      resourceMSG: true,
-      currentThemeId: storage.druthersThemes.get(sysThemeType)
+      const backgroundType = checkbox.className ? backgroundTypes.SECONDARY : backgroundTypes.PRIMARY;
+      storage.druthersBGs.set(sysThemeType, backgroundType);
+      initDruthersBG(storage.druthersBGs, systemStates.DRUTHERS, storage.druthersThemes, storage.waifuThemes.themes);
+      browser.storage.local.set({backgroundType, druthersBGs: storage.druthersBGs});
+      browser.runtime.sendMessage({
+        resourceMSG: true,
+        currentThemeId: storage.druthersThemes.get(sysThemeType),
+        noOptPageRefresh: true
+      });
     });
-  });
 }
 
 /*Checks the boxes of an element to its opposite status*/
@@ -163,16 +187,20 @@ function changeCheckedState(e) {
 }
 
 initContent();
-clickListener(loadOnStartCheckbox, onChangeCheckEvents);
-clickListener(textSelectionCheckbox, onChangeCheckEvents);
-clickListener(scrollbarCheckbox, onChangeCheckEvents);
-multiClickListener(systemThemeRadios, onChangeSystemTheme);
+clickListener(loadOnStartCheckbox, onClickCheckEvents);
+clickListener(textSelectionCheckbox, onClickCheckEvents);
+clickListener(scrollbarCheckbox, onClickCheckEvents);
+multiClickListener(systemThemeRadios, onClickSystemTheme);
 clickListener(druthersLightBtn, () => {
-  onChangeDruthersLight(druthersLightSelectBox)
+  onClickDruthersLight(druthersLightSelectBox);
+  druthersChangeBG(druthersLightBGCheckbox,systemStates.LIGHT);
 });
-clickListener(druthersDarkBtn, ()=>{
-  onChangeDruthersDark(druthersDarkSelectBox);
+clickListener(druthersDarkBtn, () => {
+  onClickDruthersDark(druthersDarkSelectBox);
+  druthersChangeBG(druthersDarkBGCheckbox,systemStates.DARK);
 });
 
-clickListener(druthersDarkBGCheckbox, onChangeDruthersDarkBG);
-clickListener(druthersLightBGCheckbox, onChangeDruthersLightBG);
+changeListener(druthersLightSelectBox, onChangeDruthersSecondBGCheckBox);
+changeListener(druthersDarkSelectBox, onChangeDruthersSecondBGCheckBox);
+clickListener(druthersDarkBGCheckbox, changeCheckedState);
+clickListener(druthersLightBGCheckbox, changeCheckedState);

@@ -72,17 +72,20 @@ async function startStorage() {
     browser.tabs.update({loadReplace: true, url: "waifus/index.html"});
   }
   // Register all styles from option page
-  updateOptions({optionName: "textSelection", optionValue: !!!storage.textSelection});
-  updateOptions({optionName: "scrollbar", optionValue: !!!storage.scrollbar});
+  updateOptions({optionName: "textSelection", optionValue: !!storage.textSelection});
+  updateOptions({optionName: "scrollbar", optionValue: !!storage.scrollbar});
   // Register to follow system color theme
-  if (storage.systemTheme === systemStates.DEVICE || storage.systemTheme === systemStates.DRUTHERS) {
-    updateSystemListener({addObserver:true});
+  const wasSystemSelected = storage.systemTheme === systemStates.DEVICE ||
+    storage.systemTheme === systemStates.DRUTHERS;
+  const hasRequestedBrowserSettings = !!browser.browserSettings;
+  if (wasSystemSelected && hasRequestedBrowserSettings) {
+    updateSystemListener({addObserver: true});
     browser.browserSettings.overrideContentColorScheme.set({value: "system"});
-  } else {
+  } else if (hasRequestedBrowserSettings) {
     browser.browserSettings.overrideContentColorScheme.set({value: "browser"});
   }
-
 }
+
 /*Update the system observer to listen to system color theme changes*/
 function updateSystemListener(msg) {
   if (msg.addObserver) {
@@ -122,11 +125,11 @@ function updateTheme(msg) {
   } else if (msg.applyWidget) {
     reloadTabs({title: 'New Tab'});
   } else if (msg.optionName && (msg.optionValue || msg.optionValue === '')) {
-    updateOptions(msg);
+    updateOptions(msg, msg.noOptPageRefresh);
   } else {
     updateTabs(msg);
     for (const optionName of ['textSelection', 'scrollbar']) {
-      updateOptions({optionName});
+      updateOptions({optionName}, msg.noOptPageRefresh);
     }
   }
 }

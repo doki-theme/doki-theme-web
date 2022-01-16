@@ -3,19 +3,18 @@ import {reloadTabs} from "./utils/browser.js";
 const registerOpt = {};
 
 /*Apply styles configured by the options page*/
-function updateOptions(element) {
+function updateOptions(element, noOptPageRefresh) {
   if (element.optionValue !== undefined) {
     browser.storage.local.set({[element.optionName]: !!element.optionValue});
     registerTheme(element.optionName, element.optionValue);
   } else {
-    browser.storage.local.set({[element.optionName]: true});
-    registerTheme(element.optionName, false);
-    registerTheme(element.optionName, true);
+    if (!noOptPageRefresh){
+      /*Refreshes options page to apply theme*/
+      reloadTabs({title: 'Add-ons Manager'});
+    }
   }
   /*Update pages with new theme*/
   reloadTabs({url: '*://*/*'});
-  /*Refreshes options page to apply theme*/
-  reloadTabs({title: 'Add-ons Manager'});
 }
 
 /*Registers a style*/

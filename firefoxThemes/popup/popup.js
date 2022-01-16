@@ -12,6 +12,7 @@ const backgroundSwitch = document.querySelector("#backgroundType");
 const showSearchSwitch = document.querySelector("#hideSearch");
 const darkModeSwitch = document.querySelector("#darkMode");
 const dokiHeart = document.querySelector("#doki_heart");
+const showSettings = document.querySelector("#show-settings");
 const root = document.querySelector(":root");
 
 
@@ -21,6 +22,7 @@ function setCSS(chosenTheme) {
   themeDokiLogo(chosenTheme);
   const {colors} = chosenTheme.definition;
   root.style.setProperty('--switch-shadow-color', colors.accentColor);
+  root.style.setProperty('--link-color', colors.editorAccentColor);
   root.style.setProperty('--doki-shadow', colors.accentColor);
   root.style.setProperty('--info-foreground-color', colors.infoForeground);
   root.style.setProperty('--header-color', colors.headerColor);
@@ -257,3 +259,4 @@ backgroundSwitch.addEventListener("change", setBackground, true);
 showSearchSwitch.addEventListener("change", setHideWidget, true);
 darkModeSwitch.addEventListener("change", setOpposingTheme, true);
 dokiHeart.addEventListener('click', optionsPage, true);
+showSettings.addEventListener('click', optionsPage, true);
