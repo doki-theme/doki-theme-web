@@ -1,0 +1,112 @@
+{
+  "name": "Doki Theme: Takanashi Rikka",
+  "version": "17.0.0",
+  "description": "A dark theme modeled after Rikka from Chuunibyou",
+  "theme": {
+    "images": {
+      "theme_ntp_background": "images/rikka_dark.png",
+      "theme_ntp_background_incognito": "images/rikka_dark.png",
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        187,
+        187,
+        187
+      ],
+      "button_background": [
+        73,
+        47,
+        65
+      ],
+      "frame": [
+        35,
+        30,
+        45
+      ],
+      "frame_inactive": [
+        30,
+        25,
+        40
+      ],
+      "frame_incognito": [
+        30,
+        25,
+        40
+      ],
+      "frame_incognito_inactive": [
+        35,
+        30,
+        45
+      ],
+      "ntp_background": [
+        35,
+        30,
+        45
+      ],
+      "ntp_header": [
+        30,
+        25,
+        40
+      ],
+      "omnibox_background": [
+        22,
+        18,
+        30
+      ],
+      "omnibox_text": [
+        221,
+        42,
+        98
+      ],
+      "theme_toolbar": [
+        70,
+        25,
+        44
+      ],
+      "ntp_text": [
+        187,
+        187,
+        187
+      ],
+      "tab_background_text": [
+        187,
+        187,
+        187
+      ],
+      "tab_background_text_inactive": [
+        142,
+        110,
+        123
+      ],
+      "tab_text": [
+        187,
+        187,
+        187
+      ],
+      "toolbar": [
+        30,
+        25,
+        40
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.9478584729981377,
+        1,
+        0.515686274509804
+      ],
+      "frame": [
+        0.9478584729981377,
+        1,
+        0.515686274509804
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  },
+  "manifest_version": 2
+}

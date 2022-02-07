@@ -31,14 +31,14 @@
       235
     ],
     "button_background_active": [
-      247,
-      210,
-      232
+      255,
+      212,
+      236
     ],
     "button_background_hover": [
-      247,
-      210,
-      232
+      255,
+      212,
+      236
     ],
     "icons": [
       120,
@@ -56,9 +56,9 @@
       230
     ],
     "popup": [
-      243,
-      207,
-      224
+      245,
+      193,
+      212
     ],
     "popup_border": [
       241,
@@ -66,14 +66,14 @@
       230
     ],
     "popup_highlight": [
-      220,
-      153,
-      187
+      252,
+      201,
+      242
     ],
     "popup_highlight_text": [
-      255,
-      255,
-      255
+      240,
+      73,
+      218
     ],
     "popup_text": [
       0,
@@ -81,19 +81,19 @@
       0
     ],
     "sidebar": [
-      243,
-      207,
-      224
+      245,
+      193,
+      212
     ],
     "sidebar_highlight": [
-      220,
-      153,
-      187
+      252,
+      201,
+      242
     ],
     "sidebar_highlight_text": [
-      255,
-      255,
-      255
+      240,
+      73,
+      218
     ],
     "sidebar_border": [
       241,
@@ -121,9 +121,9 @@
       235
     ],
     "tab_selected": [
-      247,
-      210,
-      232
+      255,
+      212,
+      236
     ],
     "toolbar_bottom_separator": [
       241,
@@ -151,14 +151,14 @@
       235
     ],
     "toolbar_field_highlight": [
-      220,
-      153,
-      187
+      252,
+      201,
+      242
     ],
     "toolbar_field_highlight_text": [
-      255,
-      255,
-      255
+      240,
+      73,
+      218
     ],
     "toolbar_field_text": [
       221,
