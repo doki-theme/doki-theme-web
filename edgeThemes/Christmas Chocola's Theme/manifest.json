@@ -24,14 +24,14 @@
         31
       ],
       "frame_inactive": [
-        23,
-        43,
-        31
+        58,
+        20,
+        29
       ],
       "frame_incognito": [
-        23,
-        43,
-        31
+        58,
+        20,
+        29
       ],
       "frame_incognito_inactive": [
         60,
@@ -44,9 +44,9 @@
         31
       ],
       "ntp_header": [
-        23,
-        43,
-        31
+        58,
+        20,
+        29
       ],
       "omnibox_background": [
         20,
@@ -84,9 +84,9 @@
         211
       ],
       "toolbar": [
-        23,
-        43,
-        31
+        58,
+        20,
+        29
       ]
     },
     "tints": {
