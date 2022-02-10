@@ -3,6 +3,7 @@
   "overrides": {
     "theme": {
       "colors": {
+        "omnibox_text": "&keywordColor&"
       },
       "properties": {
         "ntp_background_alignment": "right"

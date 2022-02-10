@@ -3,6 +3,7 @@
   "overrides": {
     "theme": {
       "colors": {
+        "omnibox_text": "&constantColor&"
       },
       "properties": {
         "ntp_background_alignment": "center"
