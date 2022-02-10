@@ -1,8 +1,9 @@
 {
-  "id": "3546f7be-b84f-4b8e-8cad-effa3f4603af",
+  "id": "df23dabc-61eb-4559-a504-992786964602",
   "overrides": {
     "theme": {
-      "colors": {},
+      "colors": {
+      },
       "properties": {
         "ntp_background_alignment": "right"
       }
