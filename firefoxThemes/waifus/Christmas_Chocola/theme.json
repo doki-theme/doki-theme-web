@@ -11,9 +11,9 @@
       31
     ],
     "tab_background_text": [
-      70,
-      180,
-      98
+      86,
+      179,
+      111
     ],
     "tab_text": [
       211,
@@ -51,9 +51,9 @@
       149
     ],
     "frame_inactive": [
-      30,
-      56,
-      40
+      79,
+      27,
+      39
     ],
     "popup": [
       20,
@@ -131,14 +131,14 @@
       39
     ],
     "toolbar_field": [
-      23,
-      43,
-      31
+      58,
+      20,
+      29
     ],
     "toolbar_field_focus": [
-      23,
-      43,
-      31
+      58,
+      20,
+      29
     ],
     "toolbar_field_border": [
       75,
@@ -161,9 +161,9 @@
       254
     ],
     "toolbar_field_text": [
-      70,
-      180,
-      98
+      86,
+      179,
+      111
     ],
     "toolbar_field_text_focus": [
       35,
