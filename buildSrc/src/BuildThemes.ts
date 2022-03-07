@@ -14,7 +14,7 @@ import {
   toRGBArray,
   walkDir
 } from 'doki-build-source';
-import {FireFoxTheme, ManifestTemplate,} from './types';
+import { ManifestTemplate,} from './types';
 
 type ChromeDokiThemeDefinition = BaseAppDokiThemeDefinition;
 
@@ -28,8 +28,6 @@ const {
 const generatedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes');
 
 const edgeGeneratedThemesDirectory = path.resolve(repoDirectory, 'edgeThemes');
-
-const fireFoxGeneratedThemesDirectory = path.resolve(repoDirectory, 'firefoxThemes');
 
 const hiResGeneratedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes_2560x1440');
 
@@ -93,8 +91,8 @@ function buildChromeThemeManifest(
       images: replaceValues(
         manifestTheme.images,
         (_, value) => value || `images/${
-          dokiThemeDefinition.stickers.secondary ||
-          dokiThemeDefinition.stickers.default
+          dokiThemeDefinition.stickers.secondary?.name ||
+          dokiThemeDefinition.stickers.default?.name
         }`
       ),
       colors: replaceValues(
@@ -122,28 +120,7 @@ function buildChromeThemeManifest(
   };
 }
 
-function buildFireFoxTheme(
-  dokiThemeDefinition: MasterDokiThemeDefinition,
-  dokiTemplateDefinitions: DokiThemeDefinitions,
-  dokiThemeChromeDefinition: ChromeDokiThemeDefinition,
-  manifestTemplate: FireFoxTheme,
-): FireFoxTheme {
-  const namedColors = constructNamedColorTemplate(
-    dokiThemeDefinition, dokiTemplateDefinitions
-  )
-  const colorsOverride = dokiThemeChromeDefinition.overrides.theme &&
-    dokiThemeChromeDefinition.overrides.theme.colors || {};
-  return {
-    ...manifestTemplate,
-    colors: replaceValues(
-      manifestTemplate.colors,
-      (key: string, color: string) => toRGBArray(resolveColor(
-        colorsOverride[key] || color,
-        namedColors
-      ))
-    ),
-  };
-}
+
 
 function createDokiTheme(
   dokiFileDefinitionPath: string,
@@ -151,7 +128,6 @@ function createDokiTheme(
   dokiTemplateDefinitions: DokiThemeDefinitions,
   dokiThemeChromeDefinition: ChromeDokiThemeDefinition,
   manifestTemplate: ManifestTemplate,
-  fireFoxTemplate: FireFoxTheme
 ) {
   try {
     return {
@@ -166,12 +142,6 @@ function createDokiTheme(
         dokiThemeChromeDefinition,
         manifestTemplate
       ),
-      fireFoxTheme: buildFireFoxTheme(
-        dokiThemeDefinition,
-        dokiTemplateDefinitions,
-        dokiThemeChromeDefinition,
-        fireFoxTemplate
-      ),
       theme: {},
       chromeDefinition: dokiThemeChromeDefinition,
     };
@@ -183,27 +153,27 @@ function createDokiTheme(
 const getStickers = (
   dokiDefinition: MasterDokiThemeDefinition,
   dokiTheme: any
-) => {
+): { default: { path: string; name: string }, secondary?: {path: string, name: string} } => {
   const secondary =
-    dokiDefinition.stickers.secondary || dokiDefinition.stickers.normal;
+    dokiDefinition.stickers.secondary;
   return {
     default: {
       path: resolveStickerPath(
         dokiTheme.path,
-        dokiDefinition.stickers.default,
+        dokiDefinition.stickers.default.name,
         __dirname
       ),
-      name: dokiDefinition.stickers.default,
+      name: dokiDefinition.stickers.default.name,
     },
     ...(secondary
       ? {
         secondary: {
           path: resolveStickerPath(
             dokiTheme.path,
-            secondary,
+            secondary?.name,
             __dirname
           ),
-          name: secondary,
+          name: secondary?.name,
         },
       }
       : {}),
@@ -277,7 +247,6 @@ type ChromeDokiTheme = {
   manifest: ManifestTemplate;
   definition: MasterDokiThemeDefinition;
   theme: {};
-  fireFoxTheme: FireFoxTheme;
 }
 
 function buildThemeDirectoryStruct(
@@ -307,22 +276,6 @@ function buildThemeDirectoryStruct(
     .then(() => buildInactiveTabImage(theme, backgroundDirectory))
 }
 
-function buildFireFoxDirectoryStruct(
-  theme: ChromeDokiTheme,
-  backgroundDirectory: string,
-  themeDirectory: string,
-): Promise<void> {
-
-  fs.mkdirSync(backgroundDirectory, {recursive: true});
-  //write theme file
-  fs.writeFileSync(
-    path.resolve(themeDirectory, 'theme.json'),
-    JSON.stringify(theme.fireFoxTheme, null, 2)
-  );
-
-  return Promise.resolve()
-}
-
 function getBackgroundDirectory(themeDirectory: string) {
   return path.resolve(themeDirectory, 'images');
 }
@@ -350,16 +303,10 @@ function preBuild(): Promise<void> {
   return Promise.resolve()
 }
 
-function getFireFoxThemeAssetDirectory(theme: MasterDokiThemeDefinition) {
-  return getName(theme).replace(/ /g, '_');
-}
-
-const FIRE_FOX_EXTENSION_ASSET_DIRECTORY = 'waifus';
-
 type Sticker = { path: string; name: string };
 
-function getDefaultSticker(stickers: { default: Sticker, secondary?: Sticker }) {
-  return stickers.secondary || stickers.default
+function getDefaultSticker(stickers: { default: Sticker, secondary?: Sticker }): string {
+  return stickers.secondary?.name || stickers.default?.name
 }
 
 // Begin theme construction
@@ -368,7 +315,6 @@ const isBuildDefs = process.argv[2] === "defs"
 
 preBuild()
   .then(() => {
-    const fireFoxTemplate = readJson<FireFoxTheme>(path.resolve(appTemplatesDirectoryPath, 'firefox.theme.template.json'))
     const manifestTemplate = readJson<ManifestTemplate>(path.resolve(appTemplatesDirectoryPath, 'manifest.template.json'))
     return evaluateTemplates(
       {
@@ -388,7 +334,6 @@ preBuild()
             dokiTemplateDefinitions,
             dokiThemeAppDefinition,
             manifestTemplate,
-            fireFoxTemplate,
           )
       )
     )
@@ -408,12 +353,6 @@ preBuild()
       const edgeThemeDirectory = path.resolve(
         edgeGeneratedThemesDirectory,
         themeDirectoryName
-      )
-
-      const firefoxThemeDirectory = path.resolve(
-        fireFoxGeneratedThemesDirectory,
-        FIRE_FOX_EXTENSION_ASSET_DIRECTORY,
-        getFireFoxThemeAssetDirectory(theme.definition)
       )
 
       // build chrome directories
@@ -442,13 +381,6 @@ preBuild()
           })
         ))
 
-        // build firefox
-        .then(() => buildFireFoxDirectoryStruct(
-          theme,
-          getBackgroundDirectory(firefoxThemeDirectory),
-          firefoxThemeDirectory
-        ))
-
         .then(() => !isBuildDefs ? Promise.resolve() : Promise.reject("Shouldn't copy assets"))
 
         .then(() => {
@@ -472,25 +404,13 @@ preBuild()
                       console.log(err)
                       reject(err)
                     } else {
-                      // copy high res image to chrome
+                      // copy high-res image to chrome
                       const highResChromeBackgroundDirectory = path.resolve(highResThemeDirectory, 'images');
                       const highResFile = path.resolve(highResChromeBackgroundDirectory, path.basename(highResTheme));
                       fs.copyFileSync(
                         highResTheme,
                         highResFile
                       )
-
-                      // copy high res image to firefox
-                      const highResFireFoxBackgroundDirectory = path.resolve(firefoxThemeDirectory, 'images');
-                      highResThemes
-                        .filter(excludedAssetFilter) 
-                        .forEach(hiResTheme => {
-                          const highResFireFox = path.resolve(highResFireFoxBackgroundDirectory, path.basename(hiResTheme));
-                          fs.copyFileSync(
-                            hiResTheme,
-                            highResFireFox
-                          )
-                        });
 
                       resolve()
                     }
@@ -503,7 +423,7 @@ preBuild()
         })
 
         .then(() => {
-          const backgroundName = getDefaultSticker(stickers).name;
+          const backgroundName = getDefaultSticker(stickers);
           const chromeLowRes = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome',
             backgroundName);
           const src = fs.existsSync(chromeLowRes) ?
@@ -512,70 +432,12 @@ preBuild()
             src,
             path.resolve(backgroundDirectory, backgroundName)
           )
-
-          // back fill any firefox images that don't have
-          // high res.
-          const bkNames = Object.values(stickers)
-            .map(sticker => sticker.name)
-          bkNames
-            .filter(excludedAssetFilter)
-            .forEach(bkName => {
-              const chromeLowerRes = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome',
-                bkName);
-              const lowResFallback = fs.existsSync(chromeLowerRes) ?
-                chromeLowerRes : path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', bkName);
-
-              const lowResFirefoxPath = path.resolve(
-                getBackgroundDirectory(firefoxThemeDirectory),
-                bkName
-              )
-              if (!fs.existsSync(lowResFirefoxPath)) {
-                fs.copyFileSync(lowResFallback, lowResFirefoxPath)
-              }
-            })
         })
         .catch(() => {
           // skipping asset copies
         });
     }), Promise.resolve())
 
-
-    .then(() => {
-      // write things for firefox extension
-      const dokiThemeDefinitions = dokiThemes.map(dokiTheme => {
-        const dokiDefinition = dokiTheme.definition;
-        const relativeFireFoxAssetPath = `${FIRE_FOX_EXTENSION_ASSET_DIRECTORY}/${
-          getFireFoxThemeAssetDirectory(dokiDefinition)
-        }`
-        const backgrounds = getBackgrounds(
-          dokiDefinition,
-          dokiTheme,
-          relativeFireFoxAssetPath
-        );
-        return {
-          information: {
-            ...omit(dokiDefinition, [
-              'colors',
-              'overrides',
-              'ui',
-              'icons'
-            ]),
-            backgrounds,
-            jsonPath: `${relativeFireFoxAssetPath}/theme.json`,
-          },
-          colors: dokiDefinition.colors,
-          overrides: dokiTheme.chromeDefinition.overrides
-        };
-      }).reduce((accum: StringDictionary<any>, definition) => {
-        accum[definition.information.id] = definition;
-        return accum;
-      }, {});
-
-      const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions,);
-      fs.writeFileSync(
-        path.resolve(repoDirectory, 'firefoxThemes', 'DokiThemeDefinitions.js'),
-        `export const dokiThemeDefinitions = ${finalDokiDefinitions};`);
-    })
 
     .then(() => {
       // write things for master extension
@@ -605,43 +467,6 @@ preBuild()
     console.log('Theme Generation Complete!');
   });
 
-function getBackgrounds(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }, dokiTheme: { path: string; definition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }; manifest: ManifestTemplate; fireFoxTheme: FireFoxTheme; theme: {}; chromeDefinition: BaseAppDokiThemeDefinition; }, relativeFireFoxAssetPath: string) {
-  const stickers = getStickers(dokiDefinition, dokiTheme);
-
-  if (isExcludedSecondaryContentTheme(dokiDefinition)) {
-    return {
-      primary: `${relativeFireFoxAssetPath}/images/${stickers.default!!.name}`,
-    }
-  }
-
-
-  return {
-    primary: `${relativeFireFoxAssetPath}/images/${stickers.default.name}`,
-    ...(stickers.secondary ? {
-      secondary: `${relativeFireFoxAssetPath}/images/${stickers.secondary.name}`
-    } : {})
-  };
-}
-
 function getName(dokiDefinition: MasterDokiThemeDefinition) {
   return dokiDefinition.name.replace(':', '');
-}
-
-const excludedSecondaryContentThemes = new Set([
- 'b93ab4ea-ff96-4459-8fa2-0caae5bc7116', // Kanna's are the same
-  'ea9a13f6-fa7f-46a4-ba6e-6cefe1f55160' // I lack culture...
-]);
-
-const excludedSecondaryContent = [
-  'kanna_dark_secondary.png',
-  'rias_onyx_spicy.png'
-];
-
-const excludedAssetFilter = (bkName: string) =>
-excludedSecondaryContent.map(
-  excludedContent => bkName.indexOf(excludedContent) < 0
-).reduce((accum, next) => accum && next)
-
-function isExcludedSecondaryContentTheme(dokiDefinition: { colors: StringDictionary<string>; id: string; name: string; displayName: string; dark: boolean; author: string; group: string; overrides?: any | undefined; product?: "community" | "ultimate" | undefined; stickers: any; editorScheme?: any | undefined; }): boolean {
-  return excludedSecondaryContentThemes.has(dokiDefinition.id)
 }
