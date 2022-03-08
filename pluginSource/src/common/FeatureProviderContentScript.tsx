@@ -44,9 +44,9 @@ const FeatureProvider: FC = ({ children }) => {
           setFeatures(payload.features);
         }
       };
-      browser.runtime.onMessage.addListener(featureSetListener);
+      chrome.runtime.onMessage.addListener(featureSetListener);
       return () => {
-        browser.runtime.onMessage.removeListener(featureSetListener);
+        chrome.runtime.onMessage.removeListener(featureSetListener);
       };
     });
   }, []);

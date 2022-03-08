@@ -1,12 +1,7 @@
-import { DEFAULT_DOKI_THEME, DokiTheme, DokiThemes } from "../common/DokiTheme";
-import { themeExtensionIconInToolBar } from "./themedIcon";
-import { pluginSettings } from "../Storage";
-import {
-  CurrentThemeSetEventPayload,
-  PluginEvent,
-  PluginEventTypes,
-  ThemeSetEventPayload,
-} from "../Events";
+import {DEFAULT_DOKI_THEME, DokiTheme, DokiThemes} from "../common/DokiTheme";
+import {themeExtensionIconInToolBar} from "./themedIcon";
+import {pluginSettings} from "../Storage";
+import {CurrentThemeSetEventPayload, PluginEvent, PluginEventTypes, ThemeSetEventPayload,} from "../Events";
 
 export abstract class ThemeManager {
   abstract handleMessage(message: any): Promise<void>;
@@ -28,7 +23,7 @@ export abstract class ThemeManager {
 
   protected async tellAllTabsTheirNewTheme(): Promise<void> {
     try {
-      const tabs = await browser.tabs.query({ title: "New Tab" });
+      const tabs = await chrome.tabs.query({title: "New Tab"});
       await Promise.all(
         tabs.map((tab) => {
           const tabId = tab.id!;
@@ -36,9 +31,7 @@ export abstract class ThemeManager {
             type: PluginEventTypes.THEME_SET,
             payload: this.getThemeForTab(tabId),
           };
-          return browser.tabs.sendMessage(tabId, themeSetEvent).catch((e) => {
-            console.warn(`to tell tab ${tab.id} to set its theme`, e);
-          });
+          return chrome.tabs.sendMessage(tabId, themeSetEvent)
         })
       );
     } catch (e) {
@@ -46,7 +39,7 @@ export abstract class ThemeManager {
     }
   }
 
-  async initializeFirefox() {
+  async initializeChrome() {
     await this.assumeCommand();
   }
 
@@ -58,8 +51,7 @@ export abstract class ThemeManager {
 
   async applyBrowserTheme(dokiTheme: DokiTheme) {
     themeExtensionIconInToolBar(dokiTheme);
-    browser.theme.update(dokiTheme.browserTheme);
-    await pluginSettings.set({ currentTheme: dokiTheme.themeId });
+    await pluginSettings.set({currentTheme: dokiTheme.themeId});
     await this.dispatchCurrentThemeSet(dokiTheme);
   }
 
@@ -71,30 +63,15 @@ export abstract class ThemeManager {
       },
     };
     try {
-      await browser.runtime.sendMessage(currentThemeSetEvent);
+      await chrome.runtime.sendMessage(currentThemeSetEvent);
     } catch (e) {
       console.warn("Unable to send current theme set message", e);
     }
-    const tabs = await browser.tabs.query({});
-    try {
-      await Promise.all(
-        tabs.map((tab) =>
-          browser.tabs
-            .sendMessage(tab.id!, currentThemeSetEvent)
-            .catch((e) =>
-              console.warn(
-                `Unable to broadcast to tab ${tab.id}, that current theme was updated.`,
-                e
-              )
-            )
-        )
-      );
-    } catch (e) {
-      console.warn(
-        "Unable to broadcast to all tabs current theme was updated.",
-        e
-      );
-    }
+    const tabs = await chrome.tabs.query({});
+    tabs.forEach((tab) =>
+      chrome.tabs
+        .sendMessage(tab.id!, currentThemeSetEvent)
+    )
   }
 
   async initialize() {
@@ -104,23 +81,23 @@ export abstract class ThemeManager {
   private _messageListener = this.handleContentScriptMessage.bind(this);
 
   connect() {
-    browser.runtime.onMessage.addListener(this._messageListener);
+    chrome.runtime.onMessage.addListener(this._messageListener);
   }
 
   async handleContentScriptMessage(event: PluginEvent<any>) {
     if (event.type === PluginEventTypes.THEME_SET) {
       const payload = event.payload as ThemeSetEventPayload;
       await this.applyBrowserTheme(DokiThemes[payload.themeId]);
-      await pluginSettings.set({ currentContentType: payload.content });
+      await pluginSettings.set({currentContentType: payload.content});
     } else if (event.type === PluginEventTypes.CONTENT_SCRIPT_INJECTED) {
-      const { currentTheme } = await pluginSettings.getAll();
+      const {currentTheme} = await pluginSettings.getAll();
       await this.dispatchCurrentThemeSet(DokiThemes[currentTheme]);
     }
     await this.handleMessage(event);
   }
 
   protected disconnect() {
-    browser.runtime.onMessage.removeListener(this._messageListener);
+    chrome.runtime.onMessage.removeListener(this._messageListener);
   }
 
   relieveOfDuty() {

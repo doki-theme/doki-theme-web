@@ -4,7 +4,6 @@ import ThemedSelect from "./ThemedSelect";
 import { PluginMode, pluginSettings } from "../../Storage";
 import { OptionSwitch } from "./optionSwitch";
 import { ThemeStuff } from "../../common/ThemeTools";
-import { FeatureContext } from "../../common/FeatureProvider";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "./popup.css";
 import {
@@ -42,9 +41,7 @@ const Popup = () => {
               mode: thing!.value,
             },
           };
-          browser.runtime.sendMessage(modeSetEvent).catch((e) => {
-            console.warn("Unable to send mode set message", e);
-          });
+          chrome.runtime.sendMessage(modeSetEvent);
         };
         return (
           <div

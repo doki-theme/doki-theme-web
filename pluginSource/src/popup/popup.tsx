@@ -5,7 +5,7 @@ import DokiThemeProvider from "../common/DokiThemeProvider";
 import FeatureProvider from "../common/FeatureProvider";
 import "react-tabs/style/react-tabs.css";
 
-browser.tabs.query({ active: true, currentWindow: true }).then(() => {
+chrome.tabs.query({ active: true, currentWindow: true }).then(() => {
   ReactDOM.render(
     <DokiThemeProvider>
       <FeatureProvider>

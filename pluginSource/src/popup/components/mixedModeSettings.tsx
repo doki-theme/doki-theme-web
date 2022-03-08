@@ -33,7 +33,7 @@ const MixedModeSettings = () => {
           themePool: formValues.themePool,
         },
       };
-    browser.runtime.sendMessage(mixedModesSettingsChanged);
+    chrome.runtime.sendMessage(mixedModesSettingsChanged);
   };
 
   if (!initialValues) {

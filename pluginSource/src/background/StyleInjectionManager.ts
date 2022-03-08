@@ -7,8 +7,8 @@ import { pluginSettings } from "../Storage";
 import RegisteredContentScript = browser.contentScripts.RegisteredContentScript;
 
 async function reloadTabs(obj: any) {
-  const tabs: browser.tabs.Tab[] = await browser.tabs.query(obj);
-  await Promise.all(tabs.map((tab) => browser.tabs.reload(tab.id!)));
+  const tabs: chrome.tabs.Tab[] = await chrome.tabs.query(obj);
+  await Promise.all(tabs.map((tab) => chrome.tabs.reload(tab.id!)));
 }
 
 export class StyleInjectionManager {
@@ -75,17 +75,17 @@ export class StyleInjectionManager {
     }
 
     try {
-      this.savedScripts[contentKey] = await browser.contentScripts.register({
-        js: [{ file: script }],
-        matches: ["<all_urls>"],
-      });
+      // this.savedScripts[contentKey] = await chrome.contentScripts.register({
+      //   js: [{ file: script }],
+      //   matches: ["<all_urls>"],
+      // });
     } catch (e) {
       console.error("unable to set style injections", e);
     }
   }
 
   async initialize() {
-    browser.runtime.onMessage.addListener(this.handleMessage.bind(this));
+    chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 
     const { injectScrollbars, injectSelection } = await pluginSettings.getAll();
     if (injectSelection) {

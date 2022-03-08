@@ -1,4 +1,3 @@
-import ThemeType = browser._manifest.ThemeType;
 import DokiThemeDefinitions from "../DokiThemeDefinitions";
 import { MasterDokiThemeDefinition, Sticker } from "doki-build-source";
 
@@ -136,10 +135,6 @@ export class DokiTheme {
 
   public get colors(): Colors {
     return this.dokiDefinition.colors;
-  }
-
-  public get browserTheme(): ThemeType {
-    return this.dokiDefinition.fireFoxTheme;
   }
 
   public get hasSecondaryContent(): boolean {

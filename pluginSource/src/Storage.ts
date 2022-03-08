@@ -35,7 +35,7 @@ class LocalOptions<T extends Options> {
 
   async getAll(): Promise<T> {
     const captainKeyes = Object.keys(this.options.defaults);
-    const storedOptions = await browser.storage.local.get(captainKeyes);
+    const storedOptions = await chrome.storage.local.get(captainKeyes);
 
     const fromEntries = Object.fromEntries(
       captainKeyes.map((key) => {
@@ -50,7 +50,7 @@ class LocalOptions<T extends Options> {
   }
 
   async set(newOption: Partial<T>): Promise<void> {
-    await browser.storage.local.set(newOption);
+    await chrome.storage.local.set(newOption);
   }
 }
 

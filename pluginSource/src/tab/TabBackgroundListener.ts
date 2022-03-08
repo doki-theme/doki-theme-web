@@ -29,19 +29,19 @@ function themeFavicon(themeId: string) {
 }
 
 export const notifyTabAttached = () => {
-  browser.tabs.getCurrent().then((tab) => {
+  chrome.tabs.getCurrent().then((tab) => {
     const tabAttachedEvent: PluginEvent<TabAttachedEventPayload> = {
       type: PluginEventTypes.TAB_ATTACHED,
       payload: {
         tabId: tab.id!,
       },
     };
-    return browser.runtime.sendMessage(tabAttachedEvent);
+    return chrome.runtime.sendMessage(tabAttachedEvent);
   });
 };
 
 export const attachBackgroundListener = () => {
-  browser.runtime.onMessage.addListener((event: PluginEvent<any>) => {
+  chrome.runtime.onMessage.addListener((event: PluginEvent<any>) => {
     if (event.type === PluginEventTypes.THEME_SET) {
       const themeSetPayload: ThemeSetEventPayload = event.payload;
       themeFavicon(themeSetPayload.themeId);

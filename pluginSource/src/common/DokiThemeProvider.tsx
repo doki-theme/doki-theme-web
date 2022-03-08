@@ -65,7 +65,7 @@ const DokiThemeProvider: FC = ({ children }) => {
       },
     };
     setCurrentContent(context.contentType);
-    browser.runtime.sendMessage(themeSetEvent);
+    chrome.runtime.sendMessage(themeSetEvent);
   };
 
   useEffect(() => {
@@ -86,9 +86,9 @@ const DokiThemeProvider: FC = ({ children }) => {
           setThemeId(payload.themeDefinition.information.id);
         }
       };
-      browser.runtime.onMessage.addListener(themeSetListener);
+      chrome.runtime.onMessage.addListener(themeSetListener);
       return () => {
-        browser.runtime.onMessage.removeListener(themeSetListener);
+        chrome.runtime.onMessage.removeListener(themeSetListener);
       };
     });
   }, []);

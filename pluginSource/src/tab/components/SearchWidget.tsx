@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import { DokiTheme } from "../../common/DokiTheme";
-import { svgToPng } from "../../background/svgTools";
+import React, {useEffect, useRef, useState} from "react";
+import {DokiTheme} from "../../common/DokiTheme";
+import {svgToPng} from "../../background/svgTools";
 
 function setThemedSearchInputIcon(currentTheme: DokiTheme) {
-  const searchOptions = { width: 24, height: 24 };
+  const searchOptions = {width: 24, height: 24};
   svgToPng(currentTheme, searchOptions).then((imgData) => {
     const pngImage = document.createElement("img");
     pngImage.src = imgData;
@@ -15,7 +15,7 @@ function setThemedSearchInputIcon(currentTheme: DokiTheme) {
 }
 
 function setThemedAboutIcon(currentTheme: DokiTheme) {
-  const aboutOptions = { width: 96, height: 96 };
+  const aboutOptions = {width: 96, height: 96};
   svgToPng(currentTheme, aboutOptions).then((imgData) => {
     const logo = document.querySelector("div[class='logo']");
     logo?.childNodes?.forEach((node) => {
@@ -27,7 +27,7 @@ function setThemedAboutIcon(currentTheme: DokiTheme) {
   });
 }
 
-const SearchWidget = ({ theme }: { theme: DokiTheme }) => {
+const SearchWidget = ({theme}: { theme: DokiTheme }) => {
   const logoElement = useRef(null);
   useEffect(() => {
     if (logoElement) {
@@ -45,20 +45,18 @@ const SearchWidget = ({ theme }: { theme: DokiTheme }) => {
   const [query, setQuery] = useState("");
 
   const conductSearch = () => {
-    browser.tabs.getCurrent().then((tab) => {
-      return browser.search.search({
-        query,
-        tabId: tab.id,
-      });
+    chrome.search.query({
+      text: query,
+      disposition: "CURRENT_TAB",
+    }, () => {
     });
   };
 
   const confirmSearch = () => {
-    return browser.permissions
+    return chrome.permissions
       .request({
         permissions: ["search"],
-      })
-      .then((searchGranted) => {
+      }, (searchGranted) => {
         if (searchGranted) {
           conductSearch();
         }

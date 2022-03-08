@@ -35,10 +35,10 @@ const DokiThemeProviderContentScript: FC = ({ children }) => {
         setInitialized(true);
       }
     };
-    browser.runtime.onMessage.addListener(themeSetListener);
+    chrome.runtime.onMessage.addListener(themeSetListener);
     notifyTabAttached();
     return () => {
-      browser.runtime.onMessage.removeListener(themeSetListener);
+      chrome.runtime.onMessage.removeListener(themeSetListener);
     };
   }, []);
 

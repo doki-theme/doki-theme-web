@@ -11,14 +11,14 @@
   "optional_permissions": [
     "search",
     "tabs",
-    "activeTab",
-    "<all_urls>"
+    "activeTab"
   ],
+  "host_permissions": ["*://*/*"],
   "permissions": ["storage"],
   "background": {
     "serviceWorker": "js/background.js"
   },
-  "browser_action": {
+  "action": {
     "browser_style": true,
     "default_icon": {
       "16": "icons/doki-theme-logo@16.png",

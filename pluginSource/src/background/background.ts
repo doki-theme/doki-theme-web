@@ -29,8 +29,8 @@ const stylInjectionManager = new StyleInjectionManager();
 const initializePlugin = async () => {
   await migrateLegacyPreferencesIfNecessary();
   currentThemeManager = await getCurrentThemeManager();
-  await currentThemeManager.initializeFirefox();
-  browser.runtime.onMessage.addListener(handleMessages);
+  await currentThemeManager.initializeChrome();
+  chrome.runtime.onMessage.addListener(handleMessages);
   await stylInjectionManager.initialize();
 };
 

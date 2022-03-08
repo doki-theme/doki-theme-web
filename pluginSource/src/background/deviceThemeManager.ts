@@ -38,7 +38,7 @@ export class DeviceThemeManager extends SingleThemeManager {
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      browser.browserSettings.overrideContentColorScheme.set({
+      chrome.browserSettings.overrideContentColorScheme.set({
         value: "system",
       });
     } catch (e) {

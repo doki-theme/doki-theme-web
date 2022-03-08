@@ -20,7 +20,7 @@ function deriveMode(legacyOptions: { [p: string]: any }): PluginMode {
 export async function migrateLegacyPreferencesIfNecessary(): Promise<void> {
   const options = await pluginSettings.getAll();
   if (!options.hasMigrated) {
-    const legacyOptions = await browser.storage.local.get([
+    const legacyOptions = await chrome.storage.local.get([
       "currentThemeId",
       "loadOnStart",
       "textSelection",

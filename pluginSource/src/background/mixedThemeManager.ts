@@ -44,7 +44,7 @@ export class MixedThemeManager extends ThemeManager {
       },
     };
     try {
-      await browser.tabs.sendMessage(tabId, themeSetEvent);
+      await chrome.tabs.sendMessage(tabId, themeSetEvent);
     } catch (e) {
       console.warn(
         `Unable to tell tab ${tabId} it's theme ${associatedTheme.themeId}`,
@@ -108,16 +108,16 @@ export class MixedThemeManager extends ThemeManager {
 
   connect() {
     super.connect();
-    browser.tabs.onActivated.addListener(this.tabActivationListener);
-    browser.tabs.onRemoved.addListener(this.tabRemovalListener);
-    browser.tabs.onCreated.addListener(this._tabCreationListener);
+    chrome.tabs.onActivated.addListener(this.tabActivationListener);
+    chrome.tabs.onRemoved.addListener(this.tabRemovalListener);
+    chrome.tabs.onCreated.addListener(this._tabCreationListener);
   }
 
   disconnect() {
     super.disconnect();
-    browser.tabs.onActivated.removeListener(this.tabActivationListener);
-    browser.tabs.onRemoved.removeListener(this.tabRemovalListener);
-    browser.tabs.onCreated.removeListener(this._tabCreationListener);
+    chrome.tabs.onActivated.removeListener(this.tabActivationListener);
+    chrome.tabs.onRemoved.removeListener(this.tabRemovalListener);
+    chrome.tabs.onCreated.removeListener(this._tabCreationListener);
   }
 
   private isInCurrentPool(dokiTheme: DokiTheme): boolean {
@@ -143,7 +143,7 @@ export class MixedThemeManager extends ThemeManager {
   }
 
   async getCurrentThemeId(): Promise<string> {
-    const [currentTab] = await browser.tabs.query({
+    const [currentTab] = await chrome.tabs.query({
       currentWindow: true,
       active: true,
     });

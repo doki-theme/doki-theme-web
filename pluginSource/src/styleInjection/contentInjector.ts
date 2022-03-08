@@ -10,12 +10,12 @@ export abstract class ContentInjector {
   constructor(private readonly styleId: string) {}
 
   initialize() {
-    browser.runtime.onMessage.addListener(this.handleMessage.bind(this));
+    chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
     const injectedEvent: PluginEvent<ContentScriptInjectedPayload> = {
       type: PluginEventTypes.CONTENT_SCRIPT_INJECTED,
       payload: {},
     };
-    browser.runtime.sendMessage(injectedEvent);
+    chrome.runtime.sendMessage(injectedEvent);
   }
 
   private handleMessage(message: PluginEvent<any>) {

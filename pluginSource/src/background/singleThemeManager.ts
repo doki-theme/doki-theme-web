@@ -53,7 +53,7 @@ export class SingleThemeManager extends ThemeManager {
         themeId: themeId,
       },
     };
-    await browser.tabs.sendMessage(tabId, themeSetEvent);
+    await chrome.tabs.sendMessage(tabId, themeSetEvent);
   }
 
   async handleMessage(message: PluginEvent<any>): Promise<void> {

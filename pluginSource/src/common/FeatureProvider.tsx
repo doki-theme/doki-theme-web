@@ -47,7 +47,7 @@ const FeatureProvider: FC = ({ children }) => {
       injectSelection: context.injectSelection,
       injectScrollbars: context.injectScrollbars,
     });
-    browser.runtime.sendMessage(featureSetEvent);
+    chrome.runtime.sendMessage(featureSetEvent);
   };
 
   useEffect(() => {

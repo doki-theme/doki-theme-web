@@ -21,7 +21,7 @@ const Tab = () => {
                     height: "100%",
                     backgroundSize: "cover",
                     backgroundPosition: theme.content.anchor,
-                    backgroundImage: `url(${browser.runtime.getURL(
+                    backgroundImage: `url(${chrome.runtime.getURL(
                       "backgrounds/" + theme.content.name
                     )})`,
                   }}

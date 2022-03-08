@@ -99,18 +99,18 @@ const DeviceMatchSettings = () => {
           },
         },
       };
-    browser.runtime.sendMessage(deviceMatchSettingsChanged);
+    chrome.runtime.sendMessage(deviceMatchSettingsChanged);
   };
 
   const [initialized, setInitialized] = useState(false);
   const [hasSettingsPermission, setHasSettingsPermissions] = useState(false);
 
   useEffect(() => {
-    const permissionPromise = browser.permissions
-      .contains(browserSettingsPermissions)
-      .then((granted) => {
-        setHasSettingsPermissions(granted);
-      });
+    // const permissionPromise = chrome.permissions
+    //   .contains(browserSettingsPermissions)
+    //   .then((granted) => {
+    //     setHasSettingsPermissions(granted);
+    //   });
     const settingsPromise = pluginSettings.getAll().then((settings) => {
       const darkThemeId = settings.darkThemeId;
       const darkContentType = settings.darkContentType;
@@ -139,9 +139,9 @@ const DeviceMatchSettings = () => {
       });
     });
 
-    Promise.all([permissionPromise, settingsPromise]).then(() => {
-      setInitialized(true);
-    });
+    // Promise.all([permissionPromise, settingsPromise]).then(() => {
+    //   setInitialized(true);
+    // });
   }, []);
 
   if (!initialized) {
@@ -149,16 +149,16 @@ const DeviceMatchSettings = () => {
   }
 
   const grantPermission = () => {
-    browser.permissions.request(browserSettingsPermissions).then((granted) => {
-      setHasSettingsPermissions(granted);
-      if (granted) {
-        const event: PluginEvent<BrowserSettingsGrantedPayload> = {
-          payload: {},
-          type: PluginEventTypes.BROWSER_SETTINGS_GRANTED,
-        };
-        browser.runtime.sendMessage(event);
-      }
-    });
+    // chrome.permissions.request(browserSettingsPermissions).then((granted) => {
+    //   setHasSettingsPermissions(granted);
+    //   if (granted) {
+    //     const event: PluginEvent<BrowserSettingsGrantedPayload> = {
+    //       payload: {},
+    //       type: PluginEventTypes.BROWSER_SETTINGS_GRANTED,
+    //     };
+    //     chrome.runtime.sendMessage(event);
+    //   }
+    // });
   };
 
   if (initialized && !hasSettingsPermission) {
