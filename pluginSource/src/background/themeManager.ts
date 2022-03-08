@@ -50,7 +50,8 @@ export abstract class ThemeManager {
   }
 
   async applyBrowserTheme(dokiTheme: DokiTheme) {
-    themeExtensionIconInToolBar(dokiTheme);
+    // todo: restore this
+    // themeExtensionIconInToolBar(dokiTheme);
     await pluginSettings.set({currentTheme: dokiTheme.themeId});
     await this.dispatchCurrentThemeSet(dokiTheme);
   }

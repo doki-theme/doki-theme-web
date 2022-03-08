@@ -29,7 +29,7 @@ function themeFavicon(themeId: string) {
 }
 
 export const notifyTabAttached = () => {
-  chrome.tabs.getCurrent().then((tab) => {
+  chrome.tabs.query({active: true, currentWindow: true}).then(([tab]) => {
     const tabAttachedEvent: PluginEvent<TabAttachedEventPayload> = {
       type: PluginEventTypes.TAB_ATTACHED,
       payload: {
