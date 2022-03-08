@@ -29,8 +29,6 @@ const generatedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes');
 
 const edgeGeneratedThemesDirectory = path.resolve(repoDirectory, 'edgeThemes');
 
-const hiResGeneratedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes_2560x1440');
-
 const fs = require('fs');
 const toPairs = require('lodash/toPairs');
 
@@ -391,35 +389,35 @@ preBuild()
             path.resolve(storageShedPath, 'hi-res', stickers.default.name),
           ].filter(hiResWaifu => fs.existsSync(hiResWaifu));
           const highResTheme = highResThemes[0];
-          if (highResTheme) {
-            const highResThemeDirectory = path.resolve(hiResGeneratedThemesDirectory, themeDirectoryName);
-            return (fs.existsSync(highResThemeDirectory) ?
-              walkDir(highResThemeDirectory)
-                .then(items => items.forEach(item => fs.unlinkSync(item))) : Promise.resolve())
-              .then(() => new Promise<void>((resolve, reject) => {
-                  ncp(themeDirectory, highResThemeDirectory, {
-                    clobber: false,
-                  }, (err: Error[] | null) => {
-                    if (err) {
-                      console.log(err)
-                      reject(err)
-                    } else {
-                      // copy high-res image to chrome
-                      const highResChromeBackgroundDirectory = path.resolve(highResThemeDirectory, 'images');
-                      const highResFile = path.resolve(highResChromeBackgroundDirectory, path.basename(highResTheme));
-                      fs.copyFileSync(
-                        highResTheme,
-                        highResFile
-                      )
-
-                      resolve()
-                    }
-                  })
-                })
-              )
-          } else {
+          // if (highResTheme) {
+            // const highResThemeDirectory = path.resolve(hiResGeneratedThemesDirectory, themeDirectoryName);
+            // return (fs.existsSync(highResThemeDirectory) ?
+            //   walkDir(highResThemeDirectory)
+            //     .then(items => items.forEach(item => fs.unlinkSync(item))) : Promise.resolve())
+            //   .then(() => new Promise<void>((resolve, reject) => {
+            //       ncp(themeDirectory, highResThemeDirectory, {
+            //         clobber: false,
+            //       }, (err: Error[] | null) => {
+            //         if (err) {
+            //           console.log(err)
+            //           reject(err)
+            //         } else {
+            //           // copy high-res image to chrome
+            //           const highResChromeBackgroundDirectory = path.resolve(highResThemeDirectory, 'images');
+            //           const highResFile = path.resolve(highResChromeBackgroundDirectory, path.basename(highResTheme));
+            //           fs.copyFileSync(
+            //             highResTheme,
+            //             highResFile
+            //           )
+            //
+            //           resolve()
+            //         }
+            //       })
+            //     })
+            //   )
+          // } else {
             return Promise.resolve()
-          }
+          // }
         })
 
         .then(() => {
@@ -459,7 +457,7 @@ preBuild()
 
       const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions);
       fs.writeFileSync(
-        path.resolve(repoDirectory, 'masterExtension', 'src', 'DokiThemeDefinitions.ts'),
+        path.resolve(repoDirectory, 'src', 'DokiThemeDefinitions.ts'),
         `export default ${finalDokiDefinitions};`);
     });
 })
