@@ -1,0 +1,43 @@
+{
+  "name": "Doki Theme for Firefox",
+  "short_name": "Doki Theme",
+  "version": "74.2.1",
+  "description": "A collection of themes based on girls from various anime, manga, and visual novels series.",
+  "manifest_version": 2,
+  "icons": {
+    "48": "icons/doki-theme-logo@48.png",
+    "96": "icons/doki-theme-logo@96.png"
+  },
+  "optional_permissions": [
+    "search",
+    "browserSettings",
+    "tabs",
+    "activeTab",
+    "<all_urls>"
+  ],
+  "permissions": ["storage", "theme"],
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": {
+      "16": "icons/doki-theme-logo@16.png",
+      "32": "icons/doki-theme-logo@32.png",
+      "64": "icons/doki-theme-logo@64.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Doki Theme"
+  },
+  "chrome_url_overrides": {
+    "newtab": "tab.html"
+  },
+  "chrome_settings_overrides": {
+    "homepage": "tab.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "95.0"
+    }
+  }
+}

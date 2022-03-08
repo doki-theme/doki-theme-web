@@ -457,7 +457,7 @@ preBuild()
 
       const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions);
       fs.writeFileSync(
-        path.resolve(repoDirectory, 'src', 'DokiThemeDefinitions.ts'),
+        path.resolve(repoDirectory, 'pluginSource', 'src', 'DokiThemeDefinitions.ts'),
         `export default ${finalDokiDefinitions};`);
     });
 })

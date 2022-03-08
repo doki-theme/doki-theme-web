@@ -1,0 +1,31 @@
+node_modules/
+scripts/
+testAssets/
+
+# macOS
+.DS_Store
+
+# IntelliJ
+out/
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+build/
+classes/
+
+./club_members/
+
+#gradle.properties
+*.icls
+src/test/resources/
+
+masterThemes/
+
+*.pyc
+.ipynb_checkpoints/
+
+dist/
+DokiThemeDefinitions.ts
+public/backgrounds/
