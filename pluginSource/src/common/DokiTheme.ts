@@ -68,7 +68,6 @@ export interface DokiThemeDefinition {
     MasterDokiThemeDefinition,
     "colors" | "overrides" | "ui" | "icons"
   >;
-  fireFoxTheme: any;
   colors: Colors;
 }
 

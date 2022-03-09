@@ -294,10 +294,6 @@ function preBuild(): Promise<void> {
   const masterVersion = JSON.parse(fs.readFileSync(path.resolve(repoDirectory, 'package.json'), {encoding: 'utf-8'}));
   const themeManifestTemplate = path.resolve(appTemplatesDirectoryPath, 'manifest.template.json');
   overrideVersion(themeManifestTemplate, masterVersion)
-  const masterExtensionPackageJson = path.resolve(repoDirectory, 'masterExtension', 'package.json');
-  overrideVersion(masterExtensionPackageJson, masterVersion);
-  const masterExtensionManifest = path.resolve(repoDirectory, 'masterExtension', 'public', 'manifest.json');
-  overrideVersion(masterExtensionManifest, masterVersion)
   return Promise.resolve()
 }
 

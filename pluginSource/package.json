@@ -17,8 +17,8 @@
     "lint": "npx prettier --write . && npx eslint ./src --ext .js,.jsx,.ts,.tsx --fix"
   },
   "devDependencies": {
-    "@types/firefox-webext-browser": "^94.0.1",
     "@types/chrome": "^0.0.179",
+    "@types/firefox-webext-browser": "^94.0.1",
     "@types/lodash": "^4.14.179",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.13",
