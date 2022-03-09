@@ -1,5 +1,4 @@
 import {DEFAULT_DOKI_THEME, DokiTheme, DokiThemes} from "../common/DokiTheme";
-import {themeExtensionIconInToolBar} from "./themedIcon";
 import {pluginSettings} from "../Storage";
 import {CurrentThemeSetEventPayload, PluginEvent, PluginEventTypes, ThemeSetEventPayload,} from "../Events";
 

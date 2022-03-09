@@ -15,28 +15,6 @@ const FeaturesSettings = () => {
                 showWidget: isSet,
               });
             };
-            const handleSelectionInjection = (isSet: boolean) => {
-              chrome.permissions
-                .request({
-                  permissions: ["tabs", "activeTab"],
-                  origins: ["*://*/*"],
-                }, (granted) => {
-                  if (granted) {
-                    setFeatures({...features, injectSelection: isSet});
-                  }
-                });
-            };
-            const handleScrollbarInjection = (isSet: boolean) => {
-              chrome.permissions
-                .request({
-                  permissions: ["tabs", "activeTab"],
-                  origins: ["*://*/*"],
-                }, (granted) => {
-                  if (granted) {
-                    setFeatures({...features, injectScrollbars: isSet});
-                  }
-                });
-            };
             return (
               <div style={{display: "block", flexDirection: "column"}}>
                 <label style={{display: "block", marginBottom: "1rem"}}>
@@ -47,26 +25,6 @@ const FeaturesSettings = () => {
                   <ThemedSwitch
                     onChange={handleWidgetChange}
                     checked={features.showWidget}
-                  />
-                </label>
-                <label style={{display: "block", marginBottom: "1rem"}}>
-                  <span style={{color: theme.colors.infoForeground}}>
-                    Inject Themed Text Selection
-                  </span>
-                  <br style={{marginBottom: "0.5rem"}}/>
-                  <ThemedSwitch
-                    onChange={handleSelectionInjection}
-                    checked={features.injectSelection}
-                  />
-                </label>
-                <label style={{display: "block", marginBottom: "1rem"}}>
-                  <span style={{color: theme.colors.infoForeground}}>
-                    Inject Themed Scrollbars
-                  </span>
-                  <br style={{marginBottom: "0.5rem"}}/>
-                  <ThemedSwitch
-                    onChange={handleScrollbarInjection}
-                    checked={features.injectScrollbars}
                   />
                 </label>
               </div>

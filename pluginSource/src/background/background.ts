@@ -5,7 +5,6 @@ import {
 } from "./getCurrentThemeManager";
 import { ModeSetEventPayload, PluginEvent, PluginEventTypes } from "../Events";
 import { pluginSettings } from "../Storage";
-import { migrateLegacyPreferencesIfNecessary } from "./LegacyMigration";
 
 let currentThemeManager: ThemeManager;
 
@@ -24,7 +23,6 @@ const handleMessages = (message: PluginEvent<any>) => {
 };
 
 const initializePlugin = async () => {
-  await migrateLegacyPreferencesIfNecessary();
   currentThemeManager = await getCurrentThemeManager();
   await currentThemeManager.initializeChrome();
   chrome.runtime.onMessage.addListener(handleMessages);

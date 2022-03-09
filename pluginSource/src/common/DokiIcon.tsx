@@ -15,7 +15,7 @@ function styleComponent(
   dokiTheme: DokiTheme
 ) {
   if (ref && ref.current) {
-    const divGuy: HTMLElement = ref.current;
+    const divGuy: HTMLElement = ref.current!!;
     svgToPng(dokiTheme, { width, height }).then((imgData) => {
       divGuy?.childNodes?.forEach((node) => {
         divGuy.removeChild(node);
