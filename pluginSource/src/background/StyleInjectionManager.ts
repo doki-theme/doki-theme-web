@@ -75,11 +75,10 @@ export class StyleInjectionManager {
     }
 
     try {
-      // @ts-ignore
-      this.savedScripts[contentKey] = await chrome.scripting.registerContentScript({
-        js: [script],
-        run_at: 'document_idle',
-        matches: ["*://*/*"],
+      const [tab] = await chrome.tabs.query({active: true, currentWindow: true})
+      await chrome.scripting.executeScript({
+        files: [script],
+        target: {tabId: tab.id!!}
       });
     } catch (e) {
       console.error("unable to set style injections", e);

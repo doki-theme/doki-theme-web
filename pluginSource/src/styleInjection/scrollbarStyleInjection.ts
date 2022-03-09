@@ -8,10 +8,16 @@ class ScrollbarStyleInjection extends ContentInjector {
 
   createStyles(dokiTheme: DokiThemeDefinition): string {
     const accentColor = dokiTheme.colors.accentColor;
-    return `:root{
-  scrollbar-color: ${accentColor} rgba(0, 0, 0, 0) !important;
-  scrollbar-width: thin !important;
-}`;
+    return `*::-webkit-scrollbar {
+        width: 0.5em;
+      }
+      *::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.00);
+      }
+      *::-webkit-scrollbar-thumb {
+        background-color: ${accentColor};
+     } 
+`;
   }
 }
 

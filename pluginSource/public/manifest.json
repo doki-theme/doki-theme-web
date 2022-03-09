@@ -8,13 +8,22 @@
     "48": "icons/doki-theme-logo@48.png",
     "96": "icons/doki-theme-logo@96.png"
   },
-  "optional_permissions": [
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "permissions": [
     "search",
     "tabs",
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
-  "host_permissions": ["*://*/*"],
-  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "run_at": "document_idle",
+      "js": ["js/scrollbarStyleInjection.js", "js/selectionStyleInjection.js"]
+    }
+  ],
   "background": {
     "service_worker": "js/background.js"
   },
