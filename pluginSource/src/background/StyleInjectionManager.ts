@@ -75,10 +75,12 @@ export class StyleInjectionManager {
     }
 
     try {
-      // this.savedScripts[contentKey] = await chrome.contentScripts.register({
-      //   js: [{ file: script }],
-      //   matches: ["<all_urls>"],
-      // });
+      // @ts-ignore
+      this.savedScripts[contentKey] = await chrome.scripting.registerContentScript({
+        js: [script],
+        run_at: 'document_idle',
+        matches: ["*://*/*"],
+      });
     } catch (e) {
       console.error("unable to set style injections", e);
     }

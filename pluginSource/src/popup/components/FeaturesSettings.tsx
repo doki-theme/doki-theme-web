@@ -19,7 +19,7 @@ const FeaturesSettings = () => {
               chrome.permissions
                 .request({
                   permissions: ["tabs", "activeTab"],
-                  origins: ["<all_urls>"],
+                  origins: ["*://*/*"],
                 }, (granted) => {
                   if (granted) {
                     setFeatures({...features, injectSelection: isSet});
@@ -30,7 +30,7 @@ const FeaturesSettings = () => {
               chrome.permissions
                 .request({
                   permissions: ["tabs", "activeTab"],
-                  origins: ["<all_urls>"],
+                  origins: ["*://*/*"],
                 }, (granted) => {
                   if (granted) {
                     setFeatures({...features, injectScrollbars: isSet});

@@ -16,7 +16,7 @@
   "host_permissions": ["*://*/*"],
   "permissions": ["storage"],
   "background": {
-    "serviceWorker": "js/background.js"
+    "service_worker": "js/background.js"
   },
   "action": {
     "browser_style": true,
