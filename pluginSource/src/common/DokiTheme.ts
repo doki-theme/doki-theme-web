@@ -104,6 +104,7 @@ export class CharacterTheme {
   }
 }
 
+// todo: override
 // RYUKO DARK
 export const DEFAULT_DARK_THEME_ID = "19b65ec8-133c-4655-a77b-13623d8e97d3";
 // RYUKO LIGHT
@@ -152,9 +153,12 @@ export class DokiTheme {
 }
 
 export const DEFAULT_DOKI_THEME = new DokiTheme(
-  DokiThemeDefinitions
+  DokiThemeDefinitions[DEFAULT_DARK_THEME_ID]
 );
 
-export const DokiThemes = {
-  [DEFAULT_DOKI_THEME.themeId]: DEFAULT_DOKI_THEME
-};
+export const DokiThemes = Object.fromEntries(
+  Object.entries(DokiThemeDefinitions).map(([key, value]) => [
+    key,
+    new DokiTheme(value),
+  ])
+);

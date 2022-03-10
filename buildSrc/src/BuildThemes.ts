@@ -453,7 +453,7 @@ preBuild()
         return accum;
       }, {});
 
-      const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions["19b65ec8-133c-4655-a77b-13623d8e97d3"]);
+      const finalDokiDefinitions = JSON.stringify(dokiThemeDefinitions);
       fs.writeFileSync(
         path.resolve(repoDirectory, 'pluginSource', 'src', 'DokiThemeDefinitions.ts'),
         `export default ${finalDokiDefinitions};`);
