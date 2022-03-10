@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ThemeContextContentScript } from "../../common/DokiThemeProviderContentScript";
 import { ThemeStuff } from "../../common/ThemeTools";
 import SearchWidget from "./SearchWidget";

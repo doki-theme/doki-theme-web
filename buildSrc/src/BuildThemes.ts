@@ -250,11 +250,13 @@ type ChromeDokiTheme = {
 function buildThemeDirectoryStruct(
   theme: ChromeDokiTheme,
   tabHeight: number,
+  imageDirectory: string,
   backgroundDirectory: string,
   themeDirectory: string,
   manifestDecorator: (manifest: ManifestTemplate) => ManifestTemplate = m => m
 ): Promise<void> {
 
+  fs.mkdirSync(imageDirectory, {recursive: true});
   fs.mkdirSync(backgroundDirectory, {recursive: true});
   //write manifest
   fs.writeFileSync(
@@ -269,13 +271,16 @@ function buildThemeDirectoryStruct(
     tabHeight,
     highlightColor,
     accentColor,
-    backgroundDirectory
+    imageDirectory
   )
-    .then(() => buildInactiveTabImage(theme, backgroundDirectory))
+    .then(() => buildInactiveTabImage(theme, imageDirectory))
 }
 
-function getBackgroundDirectory(themeDirectory: string) {
+function getImageDirectory(themeDirectory: string) {
   return path.resolve(themeDirectory, 'images');
+}
+function getBackgroundDirectory(themeDirectory: string) {
+  return path.resolve(themeDirectory, 'backgrounds');
 }
 
 function overrideVersion(masterExtensionPackageJson: string, masterVersion: any) {
@@ -342,6 +347,7 @@ preBuild()
         generatedThemesDirectory,
         themeDirectoryName
       );
+      const imageDirectory = getImageDirectory(themeDirectory);
       const backgroundDirectory = getBackgroundDirectory(themeDirectory);
 
       const edgeThemeDirectory = path.resolve(
@@ -353,6 +359,7 @@ preBuild()
       return buildThemeDirectoryStruct(
         theme,
         tabHeight,
+        imageDirectory,
         backgroundDirectory,
         themeDirectory,
       )
@@ -361,6 +368,7 @@ preBuild()
         .then(() => buildThemeDirectoryStruct(
           theme,
           tabHeight - 2,
+          getImageDirectory(edgeThemeDirectory),
           getBackgroundDirectory(edgeThemeDirectory),
           edgeThemeDirectory,
           manifest => ({
