@@ -333,106 +333,64 @@ preBuild()
     )
   }).then(dokiThemes => {
   // write things for extension
-  return Promise.resolve()
+  return dokiThemes.reduce((accum, theme: ChromeDokiTheme) =>
+    accum.then(() => {
+      const tabHeight = 31;
+      const stickers = getStickers(theme.definition, theme);
+      const themeDirectoryName = `${getName(theme.definition)}'s Theme`;
+      const themeDirectory = path.resolve(
+        generatedThemesDirectory,
+        themeDirectoryName
+      );
+      const backgroundDirectory = getBackgroundDirectory(themeDirectory);
 
-  // dokiThemes.reduce((accum, theme: ChromeDokiTheme) =>
-  //   accum.then(() => {
-  //     const tabHeight = 31;
-  //     const stickers = getStickers(theme.definition, theme);
-  //     const themeDirectoryName = `${getName(theme.definition)}'s Theme`;
-  //     const themeDirectory = path.resolve(
-  //       generatedThemesDirectory,
-  //       themeDirectoryName
-  //     );
-  //     const backgroundDirectory = getBackgroundDirectory(themeDirectory);
-  //
-  //     const edgeThemeDirectory = path.resolve(
-  //       edgeGeneratedThemesDirectory,
-  //       themeDirectoryName
-  //     )
-  //
-  //     // build chrome directories
-  //     return buildThemeDirectoryStruct(
-  //       theme,
-  //       tabHeight,
-  //       backgroundDirectory,
-  //       themeDirectory,
-  //     )
-  //
-  //       // build edge directories
-  //       .then(() => buildThemeDirectoryStruct(
-  //         theme,
-  //         tabHeight - 2,
-  //         getBackgroundDirectory(edgeThemeDirectory),
-  //         edgeThemeDirectory,
-  //         manifest => ({
-  //           ...manifest,
-  //           theme: {
-  //             ...manifest.theme,
-  //             images: omit(
-  //               manifest.theme.images,
-  //               ['theme_ntp_background', 'theme_ntp_background_incognito']
-  //             )
-  //           }
-  //         })
-  //       ))
-  //
-  //       .then(() => !isBuildDefs ? Promise.resolve() : Promise.reject("Shouldn't copy assets"))
-  //
-  //       .then(() => {
-  //         // copy asset to directory
-  //         const storageShedPath = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome')
-  //         const highResThemes = [
-  //           path.resolve(storageShedPath, 'hi-res', stickers.secondary && stickers.secondary.name || 'not_real'),
-  //           path.resolve(storageShedPath, 'hi-res', stickers.default.name),
-  //         ].filter(hiResWaifu => fs.existsSync(hiResWaifu));
-  //         const highResTheme = highResThemes[0];
-  //         // if (highResTheme) {
-  //           // const highResThemeDirectory = path.resolve(hiResGeneratedThemesDirectory, themeDirectoryName);
-  //           // return (fs.existsSync(highResThemeDirectory) ?
-  //           //   walkDir(highResThemeDirectory)
-  //           //     .then(items => items.forEach(item => fs.unlinkSync(item))) : Promise.resolve())
-  //           //   .then(() => new Promise<void>((resolve, reject) => {
-  //           //       ncp(themeDirectory, highResThemeDirectory, {
-  //           //         clobber: false,
-  //           //       }, (err: Error[] | null) => {
-  //           //         if (err) {
-  //           //           console.log(err)
-  //           //           reject(err)
-  //           //         } else {
-  //           //           // copy high-res image to chrome
-  //           //           const highResChromeBackgroundDirectory = path.resolve(highResThemeDirectory, 'images');
-  //           //           const highResFile = path.resolve(highResChromeBackgroundDirectory, path.basename(highResTheme));
-  //           //           fs.copyFileSync(
-  //           //             highResTheme,
-  //           //             highResFile
-  //           //           )
-  //           //
-  //           //           resolve()
-  //           //         }
-  //           //       })
-  //           //     })
-  //           //   )
-  //         // } else {
-  //           return Promise.resolve()
-  //         // }
-  //       })
-  //
-  //       .then(() => {
-  //         const backgroundName = getDefaultSticker(stickers);
-  //         const chromeLowRes = path.resolve(repoDirectory, '..', 'storage-shed', 'doki', 'backgrounds', 'chrome',
-  //           backgroundName);
-  //         const src = fs.existsSync(chromeLowRes) ?
-  //           chromeLowRes : path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', backgroundName);
-  //         fs.copyFileSync(
-  //           src,
-  //           path.resolve(backgroundDirectory, backgroundName)
-  //         )
-  //       })
-  //       .catch(() => {
-  //         // skipping asset copies
-  //       });
-  //   }), Promise.resolve())
+      const edgeThemeDirectory = path.resolve(
+        edgeGeneratedThemesDirectory,
+        themeDirectoryName
+      )
+
+      // build chrome directories
+      return buildThemeDirectoryStruct(
+        theme,
+        tabHeight,
+        backgroundDirectory,
+        themeDirectory,
+      )
+
+        // build edge directories
+        .then(() => buildThemeDirectoryStruct(
+          theme,
+          tabHeight - 2,
+          getBackgroundDirectory(edgeThemeDirectory),
+          edgeThemeDirectory,
+          manifest => ({
+            ...manifest,
+            theme: {
+              ...manifest.theme,
+              images: omit(
+                manifest.theme.images,
+                ['theme_ntp_background', 'theme_ntp_background_incognito']
+              )
+            }
+          })
+        ))
+
+        .then(() => !isBuildDefs ? Promise.resolve() : Promise.reject("Shouldn't copy assets"))
+
+        .then(() => {
+          // copy asset to directory
+          const assetRepPath = path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', 'wallpapers')
+          const backgroundName = stickers.secondary?.name || stickers.default.name;
+          const src = path.resolve(assetRepPath, backgroundName);
+          fs.copyFileSync(
+            src,
+            path.resolve(backgroundDirectory, backgroundName)
+          )
+        })
+        .catch(() => {
+          // skipping asset copies
+        });
+    }), Promise.resolve())
 
 
     .then(() => {
