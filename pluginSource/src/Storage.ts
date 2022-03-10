@@ -57,9 +57,9 @@ class LocalOptions<T extends Options> {
 export const pluginSettings = new LocalOptions<PluginLocalStorage>({
   defaults: {
     currentMode: PluginMode.SINGLE,
-    currentTheme: DEFAULT_DARK_THEME_ID,
+    currentTheme: CURRENT_THEME_ID || DEFAULT_DARK_THEME_ID,
     currentContentType: ContentType.PRIMARY,
-    darkThemeId: DEFAULT_DARK_THEME_ID,
+    darkThemeId: CURRENT_THEME_ID || DEFAULT_DARK_THEME_ID,
     darkContentType: ContentType.PRIMARY,
     lightThemeId: DEFAULT_LIGHT_THEME_ID,
     lightContentType: ContentType.PRIMARY,

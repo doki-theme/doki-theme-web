@@ -20,6 +20,9 @@ type ChromeDokiThemeDefinition = BaseAppDokiThemeDefinition;
 
 const path = require('path');
 
+const NEW_TAB_EXTENSION_DIR = 'newTab';
+const THEME_EXTENSION_DIR = 'theme';
+
 const {
   repoDirectory,
   appTemplatesDirectoryPath,
@@ -266,16 +269,24 @@ function buildThemeDirectoryStruct(
       const destinationFile =
         path.join(
           themeDirectory,
+          NEW_TAB_EXTENSION_DIR,
           pluginFile.substring(pluginSourceThemesDirectory.length)
         )
       fs.mkdirSync(destinationFile.substring(0, destinationFile.lastIndexOf(path.sep)), {recursive: true})
       fs.copyFileSync(pluginFile, destinationFile,)
+      if(destinationFile.endsWith('.js')) {
+        fs.writeFileSync(
+          destinationFile,
+          `const CURRENT_THEME_ID="${theme.definition.id}";` +
+          fs.readFileSync(destinationFile),
+        )
+      }
     }
   )
 
   //write manifest
   fs.writeFileSync(
-    path.resolve(themeDirectory, 'manifest.json'),
+    path.resolve(themeDirectory, THEME_EXTENSION_DIR, 'manifest.json'),
     JSON.stringify(manifestDecorator(theme.manifest), null, 2)
   );
 
@@ -292,11 +303,11 @@ function buildThemeDirectoryStruct(
 }
 
 function getImageDirectory(themeDirectory: string) {
-  return path.resolve(themeDirectory, 'images');
+  return path.resolve(themeDirectory, THEME_EXTENSION_DIR, 'images');
 }
 
 function getBackgroundDirectory(themeDirectory: string) {
-  return path.resolve(themeDirectory, 'backgrounds');
+  return path.resolve(themeDirectory, NEW_TAB_EXTENSION_DIR, 'backgrounds');
 }
 
 function overrideVersion(masterExtensionPackageJson: string, masterVersion: any) {
@@ -353,7 +364,7 @@ preBuild()
     accum.then(() => {
       const tabHeight = 31;
       const stickers = getStickers(theme.definition, theme);
-      const themeDirectoryName = `${getName(theme.definition)}'s Theme`;
+      const themeDirectoryName = `${getName(theme.definition)}'s Extensions`;
       const themeDirectory = path.resolve(
         generatedThemesDirectory,
         themeDirectoryName

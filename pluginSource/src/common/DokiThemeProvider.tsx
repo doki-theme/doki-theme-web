@@ -49,7 +49,7 @@ export const ThemeContext = React.createContext<DokiThemeContext>({
 });
 
 const DokiThemeProvider: FC = ({ children }) => {
-  const [themeId, setThemeId] = useState<string>(DEFAULT_DARK_THEME_ID);
+  const [themeId, setThemeId] = useState<string>(CURRENT_THEME_ID || DEFAULT_DARK_THEME_ID);
   const [currentContent, setCurrentContent] = useState<ContentType>(
     ContentType.PRIMARY
   );
