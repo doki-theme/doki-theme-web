@@ -388,6 +388,7 @@ preBuild()
           )
         }
       });
+      const edgeBackgroundDirectory = getBackgroundDirectory(edgeThemeDirectory);
       return buildThemeDirectoryStruct(
         theme,
         tabHeight,
@@ -403,7 +404,7 @@ preBuild()
           theme,
           tabHeight - 2,
           getImageDirectory(edgeThemeDirectory),
-          getBackgroundDirectory(edgeThemeDirectory),
+          edgeBackgroundDirectory,
           edgeThemeDirectory,
           pluginFiles,
           manifestDecorator,
@@ -419,6 +420,10 @@ preBuild()
           fs.copyFileSync(
             src,
             path.resolve(backgroundDirectory, backgroundName)
+          ),
+          fs.copyFileSync(
+            src,
+            path.resolve(edgeBackgroundDirectory, backgroundName)
           )
         })
         .catch(() => {
