@@ -152,12 +152,9 @@ export class DokiTheme {
 }
 
 export const DEFAULT_DOKI_THEME = new DokiTheme(
-  DokiThemeDefinitions[DEFAULT_DARK_THEME_ID]
+  DokiThemeDefinitions
 );
 
-export const DokiThemes = Object.fromEntries(
-  Object.entries(DokiThemeDefinitions).map(([key, value]) => [
-    key,
-    new DokiTheme(value),
-  ])
-);
+export const DokiThemes = {
+  [DEFAULT_DOKI_THEME.themeId]: DEFAULT_DOKI_THEME
+};
