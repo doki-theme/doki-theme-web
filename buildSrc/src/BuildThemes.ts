@@ -14,7 +14,7 @@ import {
   toRGBArray,
   walkDir
 } from 'doki-build-source';
-import { ManifestTemplate,} from './types';
+import {ManifestTemplate,} from './types';
 
 type ChromeDokiThemeDefinition = BaseAppDokiThemeDefinition;
 
@@ -28,6 +28,8 @@ const {
 const generatedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes');
 
 const edgeGeneratedThemesDirectory = path.resolve(repoDirectory, 'edgeThemes');
+
+const pluginSourceThemesDirectory = path.resolve(repoDirectory, 'pluginSource', 'dist');
 
 const fs = require('fs');
 const toPairs = require('lodash/toPairs');
@@ -118,8 +120,6 @@ function buildChromeThemeManifest(
   };
 }
 
-
-
 function createDokiTheme(
   dokiFileDefinitionPath: string,
   dokiThemeDefinition: MasterDokiThemeDefinition,
@@ -151,7 +151,7 @@ function createDokiTheme(
 const getStickers = (
   dokiDefinition: MasterDokiThemeDefinition,
   dokiTheme: any
-): { default: { path: string; name: string }, secondary?: {path: string, name: string} } => {
+): { default: { path: string; name: string }, secondary?: { path: string, name: string } } => {
   const secondary =
     dokiDefinition.stickers.secondary;
   return {
@@ -253,11 +253,26 @@ function buildThemeDirectoryStruct(
   imageDirectory: string,
   backgroundDirectory: string,
   themeDirectory: string,
-  manifestDecorator: (manifest: ManifestTemplate) => ManifestTemplate = m => m
+  pluginFiles: string[],
+  manifestDecorator: (manifest: ManifestTemplate) => ManifestTemplate = m => m,
 ): Promise<void> {
+  fs.rmdirSync(themeDirectory, {recursive: true});
 
   fs.mkdirSync(imageDirectory, {recursive: true});
   fs.mkdirSync(backgroundDirectory, {recursive: true});
+
+  pluginFiles.forEach(
+    pluginFile => {
+      const destinationFile =
+        path.join(
+          themeDirectory,
+          pluginFile.substring(pluginSourceThemesDirectory.length)
+        )
+      fs.mkdirSync(destinationFile.substring(0, destinationFile.lastIndexOf(path.sep)), {recursive: true})
+      fs.copyFileSync(pluginFile, destinationFile,)
+    }
+  )
+
   //write manifest
   fs.writeFileSync(
     path.resolve(themeDirectory, 'manifest.json'),
@@ -279,6 +294,7 @@ function buildThemeDirectoryStruct(
 function getImageDirectory(themeDirectory: string) {
   return path.resolve(themeDirectory, 'images');
 }
+
 function getBackgroundDirectory(themeDirectory: string) {
   return path.resolve(themeDirectory, 'backgrounds');
 }
@@ -302,14 +318,7 @@ function preBuild(): Promise<void> {
   return Promise.resolve()
 }
 
-type Sticker = { path: string; name: string };
-
-function getDefaultSticker(stickers: { default: Sticker, secondary?: Sticker }): string {
-  return stickers.secondary?.name || stickers.default?.name
-}
-
 // Begin theme construction
-
 const isBuildDefs = process.argv[2] === "defs"
 
 preBuild()
@@ -336,7 +345,9 @@ preBuild()
           )
       )
     )
-  }).then(dokiThemes => {
+  }).then(async dokiThemes => {
+  const pluginFiles: string[] = await walkDir(pluginSourceThemesDirectory);
+
   // write things for extension
   return dokiThemes.reduce((accum, theme: ChromeDokiTheme) =>
     accum.then(() => {
@@ -356,12 +367,24 @@ preBuild()
       )
 
       // build chrome directories
+      const manifestDecorator = (manifest: any) => ({
+        ...manifest,
+        theme: {
+          ...manifest.theme,
+          images: omit(
+            manifest.theme.images,
+            ['theme_ntp_background', 'theme_ntp_background_incognito']
+          )
+        }
+      });
       return buildThemeDirectoryStruct(
         theme,
         tabHeight,
         imageDirectory,
         backgroundDirectory,
         themeDirectory,
+        pluginFiles,
+        manifestDecorator
       )
 
         // build edge directories
@@ -371,16 +394,8 @@ preBuild()
           getImageDirectory(edgeThemeDirectory),
           getBackgroundDirectory(edgeThemeDirectory),
           edgeThemeDirectory,
-          manifest => ({
-            ...manifest,
-            theme: {
-              ...manifest.theme,
-              images: omit(
-                manifest.theme.images,
-                ['theme_ntp_background', 'theme_ntp_background_incognito']
-              )
-            }
-          })
+          pluginFiles,
+          manifestDecorator,
         ))
 
         .then(() => !isBuildDefs ? Promise.resolve() : Promise.reject("Shouldn't copy assets"))
