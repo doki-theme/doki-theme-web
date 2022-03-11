@@ -258,6 +258,7 @@ function buildThemeDirectoryStruct(
   themeDirectory: string,
   pluginFiles: string[],
   manifestDecorator: (manifest: ManifestTemplate) => ManifestTemplate = m => m,
+  newTabManifestDecorator: (manifest: ManifestTemplate) => ManifestTemplate = m => m,
 ): Promise<void> {
   fs.rmdirSync(themeDirectory, {recursive: true});
 
@@ -279,6 +280,11 @@ function buildThemeDirectoryStruct(
           destinationFile,
           `const CURRENT_THEME_ID="${theme.definition.id}";` +
           fs.readFileSync(destinationFile),
+        )
+      } else if (destinationFile.endsWith('manifest.json')) {
+        fs.writeFileSync(
+          destinationFile,
+          JSON.stringify(newTabManifestDecorator(JSON.parse(fs.readFileSync(destinationFile))), null, 2),
         )
       }
     }
@@ -396,7 +402,11 @@ preBuild()
         backgroundDirectory,
         themeDirectory,
         pluginFiles,
-        manifestDecorator
+        manifestDecorator,
+        manifest => ({
+          ...manifest,
+          name: `Doki Theme for Chrome: ${theme.definition.name}`
+        })
       )
 
         // build edge directories
@@ -408,6 +418,10 @@ preBuild()
           edgeThemeDirectory,
           pluginFiles,
           manifestDecorator,
+          manifest => ({
+            ...manifest,
+            name: `Doki Theme for Edge: ${theme.definition.name}`
+          })
         ))
 
         .then(() => !isBuildDefs ? Promise.resolve() : Promise.reject("Shouldn't copy assets"))
