@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>New Tab</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="js/tab.js"></script>
+    <style>
+      :root {
+        --base-background: #2f363c;
+        --accent-color: #a73035;
+        --search-border-radius: 40px;
+      }
+
+      html,
+      #tab,
+      body {
+        background-color: var(--base-background);
+        width: 100%;
+        height: 100%;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        font-size: 16px;
+      }
+
+      html,
+      body {
+        margin: 0;
+      }
+      main {
+        padding-top: 9.87vw;
+      }
+
+      /*Logo & WordMark*/
+      .logo-and-wordmark {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 49px;
+      }
+      .logo-and-wordmark .logo {
+        display: inline-block;
+        height: 96px;
+        width: 96px;
+      }
+      .logo-and-wordmark .wordmark {
+        display: inline-block;
+        font-size: 3rem;
+        color: var(--accent-color);
+        text-shadow: 1px 0 0 var(--base-background),
+          0 1px 0 var(--base-background), -1px 0 0 var(--base-background),
+          0 -1px 0 var(--base-background);
+        margin-inline-start: 15px;
+      }
+      /*Search Bar*/
+      .search-inner-wrapper {
+        width: 50vw;
+        cursor: default;
+        display: flex;
+        min-height: 48px;
+        margin: 0 auto;
+        position: relative;
+      }
+      input[type="search"] {
+        background-size: 24px;
+        border: solid 1px transparent;
+        border-radius: var(--search-border-radius);
+        box-shadow: 0 1px 4px 0 rgba(12, 12, 13, 0.2),
+          0 0 0 1px rgba(0, 0, 0, 0.15);
+        font-size: 15px;
+        padding: 0;
+        padding-inline-end: 48px;
+        padding-inline-start: 46px;
+        width: 100%;
+      }
+
+      input:hover {
+        box-shadow: 0 1px 4px 0 rgba(12, 12, 13, 0.2),
+          0 0 0 1px rgba(0, 0, 0, 0.25);
+      }
+      .search-inner-wrapper:active input,
+      input:focus {
+        border: 1px solid #0060df;
+        box-shadow: 0 0 0 1px #0060df, 0 0 0 4px rgba(0, 96, 223, 0.3);
+      }
+      .search-button {
+        background: url("forward.svg") no-repeat center center;
+        background-size: 16px 16px;
+        border: 0;
+        /*border-radius: 0 var(--search-border-radius) var(--search-border-radius) 0;*/
+        height: 100%;
+        inset-inline-end: 0;
+        position: absolute;
+        width: 48px;
+      }
+      .search-button:active {
+        background-color: rgba(12, 12, 13, 0.2);
+      }
+      .search-button:focus,
+      .search-button:hover {
+        background-color: rgba(12, 12, 13, 0.1);
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="tab"></div>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Ishtar Light",
+  "short_name": "Doki Theme",
+  "version": "74.2.0",
+  "description": "A light theme modeled after Ishtar from Fate",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        37,
+        36,
+        39
+      ],
+      "button_background": [
+        255,
+        254,
+        247
+      ],
+      "frame": [
+        255,
+        255,
+        252
+      ],
+      "frame_inactive": [
+        255,
+        254,
+        251
+      ],
+      "frame_incognito": [
+        255,
+        254,
+        251
+      ],
+      "frame_incognito_inactive": [
+        255,
+        255,
+        252
+      ],
+      "ntp_background": [
+        255,
+        255,
+        252
+      ],
+      "ntp_header": [
+        255,
+        254,
+        251
+      ],
+      "omnibox_background": [
+        252,
+        252,
+        250
+      ],
+      "omnibox_text": [
+        245,
+        168,
+        33
+      ],
+      "theme_toolbar": [
+        255,
+        249,
+        219
+      ],
+      "ntp_text": [
+        37,
+        36,
+        39
+      ],
+      "tab_background_text": [
+        37,
+        36,
+        39
+      ],
+      "tab_background_text_inactive": [
+        170,
+        170,
+        170
+      ],
+      "tab_text": [
+        37,
+        36,
+        39
+      ],
+      "toolbar": [
+        255,
+        254,
+        251
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.10613207547169812,
+        1,
+        0.5450980392156863
+      ],
+      "frame": [
+        0.10613207547169812,
+        1,
+        0.5450980392156863
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

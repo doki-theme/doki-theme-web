@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Christmas Chocola",
+  "short_name": "Doki Theme",
+  "version": "74.2.0",
+  "description": "A dark theme modeled after Chocola from NekoPara",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        211,
+        211,
+        211
+      ],
+      "button_background": [
+        84,
+        24,
+        39
+      ],
+      "frame": [
+        60,
+        22,
+        31
+      ],
+      "frame_inactive": [
+        58,
+        20,
+        29
+      ],
+      "frame_incognito": [
+        58,
+        20,
+        29
+      ],
+      "frame_incognito_inactive": [
+        60,
+        22,
+        31
+      ],
+      "ntp_background": [
+        60,
+        22,
+        31
+      ],
+      "ntp_header": [
+        58,
+        20,
+        29
+      ],
+      "omnibox_background": [
+        20,
+        39,
+        28
+      ],
+      "omnibox_text": [
+        35,
+        147,
+        36
+      ],
+      "theme_toolbar": [
+        78,
+        29,
+        42
+      ],
+      "ntp_text": [
+        211,
+        211,
+        211
+      ],
+      "tab_background_text": [
+        211,
+        211,
+        211
+      ],
+      "tab_background_text_inactive": [
+        109,
+        129,
+        108
+      ],
+      "tab_text": [
+        211,
+        211,
+        211
+      ],
+      "toolbar": [
+        58,
+        20,
+        29
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.3348214285714286,
+        1,
+        0.35686274509803917
+      ],
+      "frame": [
+        0.3348214285714286,
+        1,
+        0.35686274509803917
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Misaka Mikoto",
+  "short_name": "Doki Theme",
+  "version": "74.2.0",
+  "description": "A dark theme modeled after Mikoto from Toaru Majutsu no Index",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        219,
+        219,
+        219
+      ],
+      "button_background": [
+        40,
+        50,
+        90
+      ],
+      "frame": [
+        13,
+        25,
+        59
+      ],
+      "frame_inactive": [
+        11,
+        23,
+        58
+      ],
+      "frame_incognito": [
+        11,
+        23,
+        58
+      ],
+      "frame_incognito_inactive": [
+        13,
+        25,
+        59
+      ],
+      "ntp_background": [
+        13,
+        25,
+        59
+      ],
+      "ntp_header": [
+        11,
+        23,
+        58
+      ],
+      "omnibox_background": [
+        3,
+        14,
+        36
+      ],
+      "omnibox_text": [
+        62,
+        183,
+        229
+      ],
+      "theme_toolbar": [
+        32,
+        52,
+        104
+      ],
+      "ntp_text": [
+        219,
+        219,
+        219
+      ],
+      "tab_background_text": [
+        219,
+        219,
+        219
+      ],
+      "tab_background_text_inactive": [
+        93,
+        102,
+        128
+      ],
+      "tab_text": [
+        219,
+        219,
+        219
+      ],
+      "toolbar": [
+        11,
+        23,
+        58
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.5459081836327345,
+        1,
+        0.5705882352941176
+      ],
+      "frame": [
+        0.5459081836327345,
+        1,
+        0.5705882352941176
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

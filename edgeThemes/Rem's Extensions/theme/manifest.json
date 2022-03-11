@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Rem",
+  "short_name": "Doki Theme",
+  "version": "74.2.0",
+  "description": "A dark theme modeled after Rem from Re Zero",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        187,
+        187,
+        187
+      ],
+      "button_background": [
+        50,
+        51,
+        55
+      ],
+      "frame": [
+        41,
+        42,
+        48
+      ],
+      "frame_inactive": [
+        44,
+        45,
+        52
+      ],
+      "frame_incognito": [
+        44,
+        45,
+        52
+      ],
+      "frame_incognito_inactive": [
+        41,
+        42,
+        48
+      ],
+      "ntp_background": [
+        41,
+        42,
+        48
+      ],
+      "ntp_header": [
+        44,
+        45,
+        52
+      ],
+      "omnibox_background": [
+        49,
+        50,
+        57
+      ],
+      "omnibox_text": [
+        87,
+        140,
+        218
+      ],
+      "theme_toolbar": [
+        54,
+        55,
+        61
+      ],
+      "ntp_text": [
+        187,
+        187,
+        187
+      ],
+      "tab_background_text": [
+        187,
+        187,
+        187
+      ],
+      "tab_background_text_inactive": [
+        102,
+        104,
+        121
+      ],
+      "tab_text": [
+        187,
+        187,
+        187
+      ],
+      "toolbar": [
+        44,
+        45,
+        52
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.599236641221374,
+        1,
+        0.5980392156862745
+      ],
+      "frame": [
+        0.599236641221374,
+        1,
+        0.5980392156862745
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_logo_alternate": 0
+    }
+  }
+}
