@@ -17,6 +17,7 @@ Changelog
 - Moved the Firefox extension [from doki-theme-web](https://github.com/doki-theme/doki-theme-web) to [doki-theme-firefox](https://github.com/doki-theme/doki-theme-firefox).
 - Removed the `masterExtension` in favor of a `theme` and `newTab` theme specific extension for both Edge & Chrome.
 - Any maintainer now has the ability successfully run a build, no private dependencies now.
+- Updated extension to use centrally defined asset anchoring data.
 
 # 18.1.0 [Opt-In FireFox Features]
 

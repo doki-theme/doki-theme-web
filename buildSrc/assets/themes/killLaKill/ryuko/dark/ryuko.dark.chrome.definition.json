@@ -8,9 +8,7 @@
         "button_background_hover": "#563136",
         "tab_selected": "#563136"
       },
-      "properties": {
-        "ntp_background_alignment": "right"
-      }
+      "properties": {}
     }
   },
   "laf": {},

@@ -5,9 +5,7 @@
       "colors": {
         "omnibox_text": "&constantColor&"
       },
-      "properties": {
-        "ntp_background_alignment": "center"
-      }
+      "properties": {}
     }
   },
   "laf": {},

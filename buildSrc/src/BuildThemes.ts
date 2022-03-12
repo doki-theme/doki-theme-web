@@ -116,10 +116,8 @@ function buildChromeThemeManifest(
       ),
       properties: {
         ...manifestTheme.properties,
-        ntp_background_alignment: dokiThemeChromeDefinition.overrides.theme &&
-          dokiThemeChromeDefinition.overrides.theme.properties &&
-          dokiThemeChromeDefinition.overrides.theme.properties.ntp_background_alignment ||
-          manifestTheme.properties.ntp_background_alignment
+        ntp_background_alignment: dokiThemeDefinition.stickers.secondary?.anchor ||
+          dokiThemeDefinition.stickers.default.anchor
       }
     }
   };
