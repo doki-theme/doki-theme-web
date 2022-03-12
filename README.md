@@ -30,6 +30,7 @@ Things that are currently changed:
 
 ## Google Chrome
 
+https://raw.githubusercontent.com/doki-theme/doki-theme-web/v74.2-2.0.0-switch/screenshots/chrome_setup.mp4
 
 ### Steps
 1. Clone this repository
@@ -44,6 +45,8 @@ Things that are currently changed:
 1. Enjoy!
 
 ## Microsoft Edge
+
+https://raw.githubusercontent.com/doki-theme/doki-theme-web/v74.2-2.0.0-switch/screenshots/edge_setup.mp4
 
 ### Steps
 1. Clone this repository
