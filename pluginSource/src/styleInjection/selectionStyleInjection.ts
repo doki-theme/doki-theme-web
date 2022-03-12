@@ -16,8 +16,7 @@ class SelectionStyleInjection extends ContentInjector {
 ::selection{
   color: ${selectionForeground} !important;
   background-color: ${selectionBackground} !important;
-}
-`;
+}`;
   }
 }
 

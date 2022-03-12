@@ -315,7 +315,7 @@ function buildThemeDirectoryStruct(
         )
       fs.mkdirSync(destinationFile.substring(0, destinationFile.lastIndexOf(path.sep)), {recursive: true})
       fs.copyFileSync(pluginFile, destinationFile,)
-      if (destinationFile.endsWith('.js')) {
+      if (destinationFile.endsWith('.js') && !destinationFile.endsWith('selectionStyleInjection.js')) {
         fs.writeFileSync(
           destinationFile,
           `const CURRENT_THEME_ID="${theme.definition.id}";` +
