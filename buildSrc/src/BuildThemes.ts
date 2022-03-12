@@ -15,6 +15,8 @@ import {
   walkDir
 } from 'doki-build-source';
 import {ManifestTemplate,} from './types';
+import {svgToPng} from "./svgTools";
+import Jimp from "jimp";
 
 type ChromeDokiThemeDefinition = BaseAppDokiThemeDefinition;
 
@@ -250,6 +252,44 @@ type ChromeDokiTheme = {
   theme: {};
 }
 
+function resizeImage(img: Jimp, size: number): Promise<Buffer> {
+  return img.resize(size, size)
+    .getBufferAsync('image/png')
+}
+
+async function smolifyImage(
+  svgImage: Buffer,
+  sizes: number[],
+): Promise<Buffer[]> {
+  return new Promise((res, rej) => {
+    jimp.read(svgImage, (err: Error | null, img: Jimp) => {
+        if (err) {
+          rej(err)
+        } else {
+          sizes.reduce((accum, size) => accum.then(buffs => {
+            return resizeImage(img, size)
+              .then(smolImg => {
+                buffs.push(smolImg);
+                return buffs
+              });
+          }), Promise.resolve([] as Buffer[]))
+            .then(stuff => res(stuff))
+        }
+      }
+    )
+  })
+}
+
+async function buildThemedSVGs(theme: ChromeDokiTheme, themeDirectory: string): Promise<void> {
+  const svgPng = await svgToPng(theme.definition, {height: 96, width: 96})
+  fs.writeFileSync(path.join(themeDirectory, NEW_TAB_EXTENSION_DIR, 'icons', 'doki-theme-logo@96.png'), svgPng)
+  const sizes = [64, 48, 32, 16];
+  const newStuff = await smolifyImage(svgPng, sizes);
+  newStuff.forEach((binary, index) => {
+    fs.writeFileSync(path.join(themeDirectory, NEW_TAB_EXTENSION_DIR, 'icons', `doki-theme-logo@${sizes[index]}.png`), binary)
+  })
+}
+
 function buildThemeDirectoryStruct(
   theme: ChromeDokiTheme,
   tabHeight: number,
@@ -275,7 +315,7 @@ function buildThemeDirectoryStruct(
         )
       fs.mkdirSync(destinationFile.substring(0, destinationFile.lastIndexOf(path.sep)), {recursive: true})
       fs.copyFileSync(pluginFile, destinationFile,)
-      if(destinationFile.endsWith('.js')) {
+      if (destinationFile.endsWith('.js')) {
         fs.writeFileSync(
           destinationFile,
           `const CURRENT_THEME_ID="${theme.definition.id}";` +
@@ -306,6 +346,8 @@ function buildThemeDirectoryStruct(
     imageDirectory
   )
     .then(() => buildInactiveTabImage(theme, imageDirectory))
+
+    .then(() => buildThemedSVGs(theme, themeDirectory))
 }
 
 function getImageDirectory(themeDirectory: string) {
@@ -439,10 +481,10 @@ preBuild()
             src,
             path.resolve(backgroundDirectory, backgroundName)
           ),
-          fs.copyFileSync(
-            src,
-            path.resolve(edgeBackgroundDirectory, backgroundName)
-          )
+            fs.copyFileSync(
+              src,
+              path.resolve(edgeBackgroundDirectory, backgroundName)
+            )
         })
         .catch(() => {
           // skipping asset copies

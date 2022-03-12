@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "jimp": "^0.13.0",
-    "ncp": "^2.0.0"
+    "ncp": "^2.0.0",
+    "svg-png-converter": "^0.0.9"
   },
   "scripts": {
     "buildThemes": "ts-node ./src/BuildThemes.ts",
