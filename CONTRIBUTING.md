@@ -5,6 +5,7 @@ Contributing
 
 - [Build Process](#build-process-high-level-overview)
 - [Getting Started](#getting-started)
+- [Dev Notes](#dev-notes)
 - [Editing Themes](#editing-themes)
 - [Creating New Themes](#creating-new-themes)
 
@@ -29,7 +30,6 @@ more familiar with the process as a whole.
 
 - Yarn package manager
 - Node 14
-- Firefox
 - Chrome
 - Microsoft Edge
 
@@ -63,12 +63,22 @@ on Windows, have you considered Linux? Just kidding (mostly), you'll need to run
 ```shell
 git clone https://github.com/doki-theme/doki-master-theme.git masterThemes
 ```
+**Get the Assets**
+
+In the same parent folder as `doki-theme-web` you'll need to clone the `doki-theme-assets` repository, that way the
+build script can copy the correct assets so they can be bundled with the plugin.
+
+```shell
+git clone https://github.com/doki-theme/doki-theme-assets.git
+```
+
 
 Your directory structure should have at least these directories, (there will probably be more, but these are the
 important ones to know).
 
 ```
 your-workspace/
+├─ doki-theme-assets/
 ├─ doki-theme-web/
 │  ├─ masterThemes/
 │  ├─ buildSrc/
@@ -93,6 +103,50 @@ This will install all the required dependencies to run the theme build process.
 
 You should be good to edit and add themes after that!
 
+# Dev Notes
+
+Running the `pluginSource` application is a two step process.
+
+Make sure to have installed `web-ext` globally
+
+```shell
+npm i -g web-ext
+```
+
+Then to run the extension in a browser just run this in `pluginSource` directory:
+
+```shell
+web-ext -s .\dist run --target chromium
+```
+
+To have changes live reload, in the `pluginSource` run dis:
+
+```shell
+npm run watch
+```
+
+Note: Before running
+
+```shell
+yarn buildThemes
+```
+
+You'll need to build the extension in `pluginSource` first.
+
+Make sure that the dependencies are installed
+
+```shell
+npm install
+```
+
+Then you can run
+
+```shell
+npm run build
+```
+
+After that, `yarn buildThemes` should work as expected :) 
+
 ## Theme Editing Process
 
 I have too many themes to maintain manually, so theme creation/maintenance is automated and shared common parts to
@@ -112,25 +166,25 @@ Inside the `buildSrc` directory, there will be 2 directories:
     things.
 
 The `buildSrc` directory houses a `buildDefinitions` script that generates the application specific files necessary for apply
-the Doki Theme Suite. (**NOTE** you can't run `buildThemes` only I can, sorry!)
+the Doki Theme Suite.
 
 ### Web specifics
 
 There are two files of importance. They can be found in `buildSrc/assets/templates`. The files, `*.template`, are
-the templates for common CSS that used for all themes.
+the templates for common information that used for all themes.
 
 These templates are evaluated as part of the theme building process. When you run this command in the `buildSrc`
 directory:
 
 ```shell
-yarn buildDefinitions
+yarn buildThemes
 ```
 
 This will:
 
-- build out the `firefox` and `chrome` manifest templates
-- Create the tab images for the chrome themes
-- Build the `DokiThemeDefinitions.ts` for both the `masterExtension` and Firefox extension.
+- build out the `chrome` manifest templates
+- Create the tab images for the chrome themes, themed plugin icons, and probably more stuff since I've written this.
+- Build the `DokiThemeDefinitions.ts` for both the `pluginSource` extension.
 
 Sometimes a particular theme has something that is just a bit off. Thankfully, there is a way to fix small one-off
 issues.
@@ -140,7 +194,6 @@ defaults provided by the `masterThemes`
 
 Here is an example that overrides the following:
 
-- The background placement
 - Search bar text color
 
 ```json
@@ -150,9 +203,6 @@ Here is an example that overrides the following:
     "theme": {
       "colors": {
         "omnibox_text": "&accentColorDarker&"
-      },
-      "properties": {
-        "ntp_background_alignment": "right"
       }
     }
   },
@@ -215,7 +265,7 @@ yarn generateTemplates
 
 The code defined in the `buildSrc/src` directory is part of the common Doki Theme construction suite. All other plugins
 work the same way, just some details change for each plugin (especially for this plugin). This group of code exposes
-a `buildDefinitions` node script (**NOTE** you can't run `buildThemes` only I can, sorry!).
+a `buildThemes` node script.
 
 This script does all the annoying tedious stuff such as:
 

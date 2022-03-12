@@ -3,9 +3,7 @@
   "overrides": {
     "theme": {
       "colors": {},
-      "properties": {
-        "ntp_background_alignment_secondary": "right"
-      }
+      "properties": {}
     }
   },
   "laf": {},

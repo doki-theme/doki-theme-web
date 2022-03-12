@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Raphtalia",
+  "short_name": "Doki Theme",
+  "version": "74.2.0",
+  "description": "A dark theme modeled after Raphtalia from The Rising of Shield Hero",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        204,
+        204,
+        204
+      ],
+      "button_background": [
+        61,
+        51,
+        40
+      ],
+      "frame": [
+        35,
+        26,
+        19
+      ],
+      "frame_inactive": [
+        30,
+        23,
+        16
+      ],
+      "frame_incognito": [
+        30,
+        23,
+        16
+      ],
+      "frame_incognito_inactive": [
+        35,
+        26,
+        19
+      ],
+      "ntp_background": [
+        35,
+        26,
+        19
+      ],
+      "ntp_header": [
+        30,
+        23,
+        16
+      ],
+      "omnibox_background": [
+        30,
+        22,
+        15
+      ],
+      "omnibox_text": [
+        241,
+        153,
+        146
+      ],
+      "theme_toolbar": [
+        59,
+        35,
+        21
+      ],
+      "ntp_text": [
+        204,
+        204,
+        204
+      ],
+      "tab_background_text": [
+        204,
+        204,
+        204
+      ],
+      "tab_background_text_inactive": [
+        108,
+        95,
+        85
+      ],
+      "tab_text": [
+        204,
+        204,
+        204
+      ],
+      "toolbar": [
+        30,
+        23,
+        16
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.9978632478632479,
+        1,
+        0.388235294117647
+      ],
+      "frame": [
+        0.9978632478632479,
+        1,
+        0.388235294117647
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

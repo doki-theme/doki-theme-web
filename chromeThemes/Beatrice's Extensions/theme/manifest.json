@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Beatrice",
+  "short_name": "Doki Theme",
+  "version": "74.2.0",
+  "description": "A light theme modeled after Beatrice from Re Zero",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        0,
+        0,
+        0
+      ],
+      "button_background": [
+        253,
+        208,
+        228
+      ],
+      "frame": [
+        255,
+        228,
+        241
+      ],
+      "frame_inactive": [
+        255,
+        229,
+        241
+      ],
+      "frame_incognito": [
+        255,
+        229,
+        241
+      ],
+      "frame_incognito_inactive": [
+        255,
+        228,
+        241
+      ],
+      "ntp_background": [
+        255,
+        228,
+        241
+      ],
+      "ntp_header": [
+        255,
+        229,
+        241
+      ],
+      "omnibox_background": [
+        245,
+        193,
+        212
+      ],
+      "omnibox_text": [
+        36,
+        96,
+        255
+      ],
+      "theme_toolbar": [
+        255,
+        212,
+        236
+      ],
+      "ntp_text": [
+        0,
+        0,
+        0
+      ],
+      "tab_background_text": [
+        0,
+        0,
+        0
+      ],
+      "tab_background_text_inactive": [
+        170,
+        170,
+        170
+      ],
+      "tab_text": [
+        0,
+        0,
+        0
+      ],
+      "toolbar": [
+        255,
+        229,
+        241
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.6014492753623188,
+        1,
+        0.696078431372549
+      ],
+      "frame": [
+        0.6014492753623188,
+        1,
+        0.696078431372549
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

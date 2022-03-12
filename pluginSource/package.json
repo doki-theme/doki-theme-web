@@ -1,0 +1,42 @@
+{
+  "dependencies": {
+    "formik": "^2.2.9",
+    "lodash": "^4.17.21",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-select": "^5.2.2",
+    "react-switch": "^6.0.0",
+    "react-tabs": "^4.0.1"
+  },
+  "scripts": {
+    "start": "web-ext run --source-dir ./dist/",
+    "watch": "webpack --config webpack.dev.js --watch",
+    "build": "webpack --config webpack.prod.js",
+    "check:prettier": "npx prettier --check .",
+    "check:eslint": "npx eslint ./src --ext .js,.jsx,.ts,.tsx",
+    "lint": "npx prettier --write . && npx eslint ./src --ext .js,.jsx,.ts,.tsx --fix"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.179",
+    "@types/firefox-webext-browser": "^94.0.1",
+    "@types/lodash": "^4.14.179",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.13",
+    "@types/react-select": "^5.0.1",
+    "@types/react-tabs": "^2.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "copy-webpack-plugin": "^10.2.4",
+    "css-loader": "^6.7.0",
+    "doki-build-source": "^74.2.3",
+    "eslint": "^8.10.0",
+    "prettier": "2.5.1",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.7",
+    "typescript": "^4.6.2",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-merge": "^5.8.0"
+  },
+  "version": "74.2.0"
+}

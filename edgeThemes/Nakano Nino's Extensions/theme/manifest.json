@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Nakano Nino",
+  "short_name": "Doki Theme",
+  "version": "74.2.0",
+  "description": "A dark theme modeled after Nino from Quintessential Quintuplets",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        187,
+        187,
+        187
+      ],
+      "button_background": [
+        45,
+        35,
+        48
+      ],
+      "frame": [
+        26,
+        22,
+        28
+      ],
+      "frame_inactive": [
+        28,
+        25,
+        29
+      ],
+      "frame_incognito": [
+        28,
+        25,
+        29
+      ],
+      "frame_incognito_inactive": [
+        26,
+        22,
+        28
+      ],
+      "ntp_background": [
+        26,
+        22,
+        28
+      ],
+      "ntp_header": [
+        28,
+        25,
+        29
+      ],
+      "omnibox_background": [
+        34,
+        28,
+        35
+      ],
+      "omnibox_text": [
+        212,
+        85,
+        117
+      ],
+      "theme_toolbar": [
+        43,
+        30,
+        38
+      ],
+      "ntp_text": [
+        187,
+        187,
+        187
+      ],
+      "tab_background_text": [
+        187,
+        187,
+        187
+      ],
+      "tab_background_text_inactive": [
+        102,
+        104,
+        121
+      ],
+      "tab_text": [
+        187,
+        187,
+        187
+      ],
+      "toolbar": [
+        28,
+        25,
+        29
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.9580052493438321,
+        1,
+        0.5823529411764706
+      ],
+      "frame": [
+        0.9580052493438321,
+        1,
+        0.5823529411764706
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

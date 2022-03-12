@@ -1,7 +1,23 @@
 Changelog
 ---
 
-# Unreleased
+# v74.2-2.0.0 [Synapse break. Vanishment, this world!]
+
+**4 New Dark Themes!**
+
+- Decimate errors in the code alongside the Wicked Lord Shingan. Let your inner fantasies go rampant with Rikka Takanashi from: "Love, Chuunibyou, and Other Delusions".
+- It is comfy time! Don't let feature requests stress you out, because you can now code with Nadeshiko from Yuru Camp.
+- A Certain Scientific RailGun go: bzzzzzzt. Zap bugs out of existence with the electromaster Mikoto Misaka.
+- Raccoon + Tanuki = one really cute cinnamon bun. Enjoy your time coding with Raphtalia from: "Rising of the Shield Hero."
+
+![v74 Girls](https://doki.assets.unthrottled.io/misc/v74_girls.png)
+
+### Other Stuff
+
+- Moved the Firefox extension [from doki-theme-web](https://github.com/doki-theme/doki-theme-web) to [doki-theme-firefox](https://github.com/doki-theme/doki-theme-firefox).
+- Removed the `masterExtension` in favor of a `theme` and `newTab` theme specific extension for both Edge & Chrome.
+- Any maintainer now has the ability successfully run a build, no private dependencies now.
+- Updated extension to use centrally defined asset anchoring data.
 
 # 18.1.0 [Opt-In FireFox Features]
 

@@ -1,7 +1,9 @@
 {
-  "name": "The Doki Theme",
-  "version": "17.0.0",
-  "description": "Anime based themes for your chrome browser!",
+  "name": "Doki Theme for Chrome",
+  "short_name": "Doki Theme",
+  "version": "74.2.0",
+  "description": "A collection of themes based on girls from various anime, manga, and visual novels series.",
+  "manifest_version": 3,
   "theme": {
     "images": {
       "theme_ntp_background": "",
@@ -35,6 +37,5 @@
       "ntp_background_alignment": "center",
       "ntp_logo_alternate": 0
     }
-  },
-  "manifest_version": 2
+  }
 }
