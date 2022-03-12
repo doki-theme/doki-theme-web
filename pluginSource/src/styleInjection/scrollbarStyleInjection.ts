@@ -1,9 +1,11 @@
 import { ContentInjector } from "./contentInjector";
 import { DokiThemeDefinition } from "../common/DokiTheme";
+import {PluginLocalStorage} from "../Storage";
 
 class ScrollbarStyleInjection extends ContentInjector {
   constructor() {
-    super("doki_themed_scrollbar");
+    super("doki_themed_scrollbar",
+      (storage: PluginLocalStorage) => storage.injectScrollbars);
   }
 
   createStyles(dokiTheme: DokiThemeDefinition): string {

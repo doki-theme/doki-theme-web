@@ -1,9 +1,10 @@
 import { ContentInjector } from "./contentInjector";
 import { DokiThemeDefinition } from "../common/DokiTheme";
+import {PluginLocalStorage} from "../Storage";
 
 class SelectionStyleInjection extends ContentInjector {
   constructor() {
-    super("doki_themed_selection");
+    super("doki_themed_selection", (storage: PluginLocalStorage) => storage.injectSelection);
   }
 
   createStyles(dokiTheme: DokiThemeDefinition): string {

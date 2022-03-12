@@ -1,4 +1,4 @@
-# Doki Theme Chrome
+# Doki Theme Web
 | Google Chrome                                                   | Microsoft Edge                                          | 
 |-----------------------------------------------------------------|---------------------------------------------------------|
 | ![Yotsuba Chrome](./screenshots/backgrounds/yotsuba_chrome.png) | ![Azuki Edge](./screenshots/backgrounds/azuki_edge.png) |
@@ -27,8 +27,12 @@ This makes your browser look and feel like it is part of the Doki Theme.
 **New Tab Extension**
 
 This extension overrides your New Tab, and replaces it with a tab whose background has the official Doki Theme asset.
-It also injects styles into ever tab to theme the: Scroll Bar & Selection text, to match your selected theme.
+It also can inject styles into ever tab to theme the: Scroll Bar & Selection text, to match your selected theme.
 
+### Configuration
+
+You can configure the extension by opening the popup menu & clicking:
+- The Doki Theme logo located at the top.
 
 # Installation
 
@@ -64,10 +68,7 @@ https://user-images.githubusercontent.com/15972415/157995436-98b957e0-1274-4f65-
   1. Then choose the `newTab` directory and `open` or confirm. Repeat this process for the `theme` extension.
 7. Enjoy!
 
-### Configuration
 
-You can configure the extension by opening the popup menu & clicking:
-- The Doki Theme logo located at the top.
 
 
 # Contributions and Issues
