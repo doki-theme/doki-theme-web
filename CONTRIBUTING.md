@@ -183,7 +183,7 @@ yarn buildThemes
 This will:
 
 - build out the `chrome` manifest templates
-- Create the tab images for the chrome themes
+- Create the tab images for the chrome themes, themed plugin icons, and probably more stuff since I've written this.
 - Build the `DokiThemeDefinitions.ts` for both the `pluginSource` extension.
 
 Sometimes a particular theme has something that is just a bit off. Thankfully, there is a way to fix small one-off
