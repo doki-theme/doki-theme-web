@@ -1,7 +1,7 @@
-# Doki Theme Web
-| Google Chrome                                                   | Microsoft Edge                                          | Mozilla Firefox                                                   |
-|-----------------------------------------------------------------|---------------------------------------------------------|-------------------------------------------------------------------|
-| ![Yotsuba Chrome](./screenshots/backgrounds/yotsuba_chrome.png) | ![Azuki Edge](./screenshots/backgrounds/azuki_edge.png) | ![Aqua FireFox](./screenshots/backgrounds/firefox_background.png) |
+# Doki Theme Chrome
+| Google Chrome                                                   | Microsoft Edge                                          | 
+|-----------------------------------------------------------------|---------------------------------------------------------|
+| ![Yotsuba Chrome](./screenshots/backgrounds/yotsuba_chrome.png) | ![Azuki Edge](./screenshots/backgrounds/azuki_edge.png) |
 
 # Table of Contents
 
@@ -9,7 +9,6 @@
 
 - [Feature Set](#feature-set)
 - [Installation](#installation)
-  - [Demonstration Overview](#demonstration-overview)
   - [Google Chrome](#google-chrome)
   - [Microsoft Edge](#microsoft-edge)
 - [Contributions and Issues](#contributions-and-issues)
@@ -17,20 +16,25 @@
     
 # Feature Set
 
-Want to enhance your browsing experience? Then this plugin is for you! This extension will modify 
-the CSS of every webpage you visit to match your current theme choices.
+Because Chrome & Edge are jerks, I need to provide 2 extensions: 
+  - One to theme your browser
+  - One to modify the contents of your active tab & Theme your New tab.
 
-Things that are currently changed:
-- Selection foreground/background
-- Scrollbars
+**Theme Extension**
+
+This makes your browser look and feel like it is part of the Doki Theme.
+
+**New Tab Extension**
+
+This extension overrides your New Tab, and replaces it with a tab whose background has the official Doki Theme asset.
+It also injects styles into ever tab to theme the: Scroll Bar & Selection text, to match your selected theme.
+
 
 # Installation
-## Demonstration Overview
-![Theme Usage](./screenshots/chrome_usage.gif)
 
 ## Google Chrome
 
-https://raw.githubusercontent.com/doki-theme/doki-theme-web/v74.2-2.0.0-switch/screenshots/chrome_setup.mp4
+https://user-images.githubusercontent.com/15972415/157995434-30b5bdfc-b005-416f-a3fa-4bfdf72bc1be.mp4
 
 ### Steps
 1. Clone this repository
@@ -46,7 +50,7 @@ https://raw.githubusercontent.com/doki-theme/doki-theme-web/v74.2-2.0.0-switch/s
 
 ## Microsoft Edge
 
-https://raw.githubusercontent.com/doki-theme/doki-theme-web/v74.2-2.0.0-switch/screenshots/edge_setup.mp4
+https://user-images.githubusercontent.com/15972415/157995436-98b957e0-1274-4f65-934d-27b857792ec7.mp4
 
 ### Steps
 1. Clone this repository
