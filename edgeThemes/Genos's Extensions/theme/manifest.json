@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Genos",
+  "short_name": "Doki Theme",
+  "version": "78.2.0",
+  "description": "A dark theme modeled after Genos from One Punch Man",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        219,
+        219,
+        219
+      ],
+      "button_background": [
+        67,
+        66,
+        71
+      ],
+      "frame": [
+        47,
+        48,
+        49
+      ],
+      "frame_inactive": [
+        49,
+        50,
+        52
+      ],
+      "frame_incognito": [
+        49,
+        50,
+        52
+      ],
+      "frame_incognito_inactive": [
+        47,
+        48,
+        49
+      ],
+      "ntp_background": [
+        47,
+        48,
+        49
+      ],
+      "ntp_header": [
+        49,
+        50,
+        52
+      ],
+      "omnibox_background": [
+        35,
+        37,
+        41
+      ],
+      "omnibox_text": [
+        221,
+        199,
+        161
+      ],
+      "theme_toolbar": [
+        62,
+        64,
+        54
+      ],
+      "ntp_text": [
+        219,
+        219,
+        219
+      ],
+      "tab_background_text": [
+        219,
+        219,
+        219
+      ],
+      "tab_background_text_inactive": [
+        128,
+        117,
+        93
+      ],
+      "tab_text": [
+        219,
+        219,
+        219
+      ],
+      "toolbar": [
+        49,
+        50,
+        52
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.10555555555555556,
+        1,
+        0.7490196078431373
+      ],
+      "frame": [
+        0.10555555555555556,
+        1,
+        0.7490196078431373
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

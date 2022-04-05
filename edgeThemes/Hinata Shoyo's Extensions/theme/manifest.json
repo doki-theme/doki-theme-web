@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Hinata Shoyo",
+  "short_name": "Doki Theme",
+  "version": "78.2.0",
+  "description": "A dark theme modeled after Shoyo from Haikyu!!",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        176,
+        176,
+        176
+      ],
+      "button_background": [
+        59,
+        64,
+        96
+      ],
+      "frame": [
+        38,
+        34,
+        61
+      ],
+      "frame_inactive": [
+        32,
+        28,
+        55
+      ],
+      "frame_incognito": [
+        32,
+        28,
+        55
+      ],
+      "frame_incognito_inactive": [
+        38,
+        34,
+        61
+      ],
+      "ntp_background": [
+        38,
+        34,
+        61
+      ],
+      "ntp_header": [
+        32,
+        28,
+        55
+      ],
+      "omnibox_background": [
+        27,
+        24,
+        48
+      ],
+      "omnibox_text": [
+        245,
+        141,
+        2
+      ],
+      "theme_toolbar": [
+        70,
+        48,
+        56
+      ],
+      "ntp_text": [
+        176,
+        176,
+        176
+      ],
+      "tab_background_text": [
+        176,
+        176,
+        176
+      ],
+      "tab_background_text_inactive": [
+        85,
+        89,
+        108
+      ],
+      "tab_text": [
+        176,
+        176,
+        176
+      ],
+      "toolbar": [
+        32,
+        28,
+        55
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.0953360768175583,
+        1,
+        0.4843137254901961
+      ],
+      "frame": [
+        0.0953360768175583,
+        1,
+        0.4843137254901961
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

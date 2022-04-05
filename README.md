@@ -83,7 +83,7 @@ Not your thing or something bothering you? Feel free to submit [your feedback](h
 ## Dev Setup
 Please see the [contributing](./CONTRIBUTING.md) file for development concepts and setup.
 
-## Enjoying the plugin and want more people to use it?
+## Enjoying the plugin?
 Great! I am glad you like it!
 
 Be sure to share it with others who also may enjoy it as well!
