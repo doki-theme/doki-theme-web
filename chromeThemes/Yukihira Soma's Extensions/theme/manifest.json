@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Yukihira Soma",
+  "short_name": "Doki Theme",
+  "version": "78.2.0",
+  "description": "A dark theme modeled after Soma from Shokugeki no Soma",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        219,
+        219,
+        219
+      ],
+      "button_background": [
+        41,
+        59,
+        84
+      ],
+      "frame": [
+        18,
+        34,
+        53
+      ],
+      "frame_inactive": [
+        9,
+        25,
+        43
+      ],
+      "frame_incognito": [
+        9,
+        25,
+        43
+      ],
+      "frame_incognito_inactive": [
+        18,
+        34,
+        53
+      ],
+      "ntp_background": [
+        18,
+        34,
+        53
+      ],
+      "ntp_header": [
+        9,
+        25,
+        43
+      ],
+      "omnibox_background": [
+        6,
+        17,
+        29
+      ],
+      "omnibox_text": [
+        255,
+        239,
+        65
+      ],
+      "theme_toolbar": [
+        55,
+        35,
+        45
+      ],
+      "ntp_text": [
+        219,
+        219,
+        219
+      ],
+      "tab_background_text": [
+        219,
+        219,
+        219
+      ],
+      "tab_background_text_inactive": [
+        93,
+        108,
+        128
+      ],
+      "tab_text": [
+        219,
+        219,
+        219
+      ],
+      "toolbar": [
+        9,
+        25,
+        43
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.9609704641350211,
+        1,
+        0.5098039215686274
+      ],
+      "frame": [
+        0.9609704641350211,
+        1,
+        0.5098039215686274
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  }
+}
