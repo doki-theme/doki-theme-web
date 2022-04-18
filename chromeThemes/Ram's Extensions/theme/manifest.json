@@ -1,7 +1,7 @@
 {
   "name": "Doki Theme: Ram",
   "short_name": "Doki Theme",
-  "version": "78.2.0",
+  "version": "78.2.1",
   "description": "A dark theme modeled after Ram from Re Zero",
   "manifest_version": 3,
   "theme": {

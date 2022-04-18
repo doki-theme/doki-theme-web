@@ -473,7 +473,7 @@ preBuild()
         .then(() => {
           // copy asset to directory
           const assetRepPath = path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', 'wallpapers')
-          const backgroundName = stickers.secondary?.name || stickers.default.name;
+          const backgroundName = stickers.default.name;
           const src = path.resolve(assetRepPath, backgroundName);
           fs.copyFileSync(
             src,

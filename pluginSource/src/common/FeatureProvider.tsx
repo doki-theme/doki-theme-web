@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, {FC, PropsWithChildren, useEffect, useMemo, useState} from "react";
 import { pluginSettings } from "../Storage";
 import {
   FeatureSetEventPayload,
@@ -31,7 +31,7 @@ export const FeatureContext = React.createContext<PluginFeatureContext>({
   features: defaultFeatures,
 });
 
-const FeatureProvider: FC = ({ children }) => {
+const FeatureProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   const [initialized, setInitialized] = useState<boolean>(false);
   const [features, setFeatures] = useState<PluginFeatures>(defaultFeatures);
   const setTheme = (context: PluginFeatures) => {

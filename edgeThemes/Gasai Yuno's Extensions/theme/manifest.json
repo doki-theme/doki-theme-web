@@ -1,7 +1,7 @@
 {
   "name": "Doki Theme: Gasai Yuno",
   "short_name": "Doki Theme",
-  "version": "78.2.0",
+  "version": "78.2.1",
   "description": "A dark theme modeled after Yuno from Future Diary",
   "manifest_version": 3,
   "theme": {

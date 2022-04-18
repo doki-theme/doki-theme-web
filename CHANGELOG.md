@@ -1,6 +1,11 @@
 Changelog
 ---
 
+# 78.0-2.0.1 [Non-Functional Updates]
+
+- Upgraded plugins to use React v18.
+
+
 # 78.0-2.0.0 [The Boys]
 
 I'm trying to bring in a bit of inclusion.
