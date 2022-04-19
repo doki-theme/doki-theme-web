@@ -1,7 +1,7 @@
 {
   "name": "Doki Theme: Rei",
   "short_name": "Doki Theme",
-  "version": "78.2.1",
+  "version": "78.2.2",
   "description": "A dark theme modeled after Rei from Evangelion",
   "manifest_version": 3,
   "theme": {

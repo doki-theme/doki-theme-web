@@ -1,6 +1,10 @@
 Changelog
 ---
 
+# 78.0-2.1.0 [Better Brave Support]
+
+- Added themes that are better suited to the Brave Browser in the `braveThemes` directory
+
 # 78.0-2.0.1 [Non-Functional Updates]
 
 - Upgraded plugins to use React v18.

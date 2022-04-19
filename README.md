@@ -1,7 +1,7 @@
 # Doki Theme Web
-| Google Chrome                                                   | Microsoft Edge                                          | 
-|-----------------------------------------------------------------|---------------------------------------------------------|
-| ![Yotsuba Chrome](./screenshots/backgrounds/yotsuba_chrome.png) | ![Azuki Edge](./screenshots/backgrounds/azuki_edge.png) |
+| Google Chrome                                                   | Microsoft Edge                                          | Brave                                                                   |
+|-----------------------------------------------------------------|---------------------------------------------------------|-------------------------------------------------------------------------|
+| ![Yotsuba Chrome](./screenshots/backgrounds/yotsuba_chrome.png) | ![Azuki Edge](./screenshots/backgrounds/azuki_edge.png) | ![Hatsune Miku Brave](./screenshots/backgrounds/hatsune_miku_brave.png) |
 
 # Table of Contents
 
@@ -11,6 +11,7 @@
 - [Installation](#installation)
   - [Google Chrome](#google-chrome)
   - [Microsoft Edge](#microsoft-edge)
+  - [Brave](#brave)
 - [Contributions and Issues](#contributions-and-issues)
 
     
@@ -61,14 +62,28 @@ https://user-images.githubusercontent.com/15972415/157995436-98b957e0-1274-4f65-
 2. Open Edge
 3. Open the Extension Management page by navigating to edge://extensions.
     - The Extension Management page can also be opened by clicking on the Edge menu, hovering over More Tools then selecting Extensions.
-4. Enable Developer Mode by clicking the toggle switch next to Developer mode (1).
-5. Click the LOAD UNPACKED button and select the extension directory (2).
+4. Enable Developer Mode by clicking the toggle switch next to Developer mode.
+5. Click the LOAD UNPACKED button and select the extension directory.
 6. Navigate to the cloned repository
   1. To install a theme, go to `edgeThemes` and just select the theme directory you want.
   1. Then choose the `newTab` directory and `open` or confirm. Repeat this process for the `theme` extension.
 7. Enjoy!
 
+## Brave
 
+https://user-images.githubusercontent.com/15972415/163989146-c755797c-8686-43ff-9281-407074255e70.mp4
+
+### Steps
+1. Clone this repository
+2. Open Brave
+3. Open the Extension Management page by navigating to brave://extensions.
+  - The Extension Management page can also be opened by clicking on the Brave menu, then selecting Extensions.
+4. Enable Developer Mode by clicking the toggle switch next to Developer mode.
+5. Click the LOAD UNPACKED button and select the extension directory.
+6. Navigate to the cloned repository
+1. To install a theme, go to `braveThemes` and just select the theme directory you want.
+1. Then choose the `newTab` directory and `open` or confirm. Repeat this process for the `theme` extension.
+7. Enjoy!
 
 
 # Contributions and Issues
