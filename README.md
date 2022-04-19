@@ -71,7 +71,7 @@ https://user-images.githubusercontent.com/15972415/157995436-98b957e0-1274-4f65-
 
 ## Brave
 
-https://user-images.githubusercontent.com/15972415/157995436-98b957e0-1274-4f65-934d-27b857792ec7.mp4
+https://user-images.githubusercontent.com/15972415/163989146-c755797c-8686-43ff-9281-407074255e70.mp4
 
 ### Steps
 1. Clone this repository
