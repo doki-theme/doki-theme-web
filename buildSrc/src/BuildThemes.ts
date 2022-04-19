@@ -34,6 +34,8 @@ const generatedThemesDirectory = path.resolve(repoDirectory, 'chromeThemes');
 
 const edgeGeneratedThemesDirectory = path.resolve(repoDirectory, 'edgeThemes');
 
+const braveGeneratedThemesDirectory = path.resolve(repoDirectory, 'braveThemes');
+
 const pluginSourceThemesDirectory = path.resolve(repoDirectory, 'pluginSource', 'dist');
 
 const fs = require('fs');
@@ -426,6 +428,10 @@ preBuild()
         edgeGeneratedThemesDirectory,
         themeDirectoryName
       )
+      const braveThemeDirectory = path.resolve(
+        braveGeneratedThemesDirectory,
+        themeDirectoryName
+      )
 
       // build chrome directories
       const manifestDecorator = (manifest: any) => ({
@@ -439,6 +445,8 @@ preBuild()
         }
       });
       const edgeBackgroundDirectory = getBackgroundDirectory(edgeThemeDirectory);
+      const braveBackgroundDirectory = getBackgroundDirectory(braveThemeDirectory);
+
       return buildThemeDirectoryStruct(
         theme,
         tabHeight,
@@ -468,6 +476,21 @@ preBuild()
           })
         ))
 
+        // build brave directories
+        .then(() => buildThemeDirectoryStruct(
+          theme,
+          tabHeight - 5,
+          getImageDirectory(braveThemeDirectory),
+          braveBackgroundDirectory,
+          braveThemeDirectory,
+          pluginFiles,
+          manifestDecorator,
+          manifest => ({
+            ...manifest,
+            name: `Doki Theme for Brave: ${theme.definition.name}`
+          })
+        ))
+
         .then(() => !isBuildDefs ? Promise.resolve() : Promise.reject("Shouldn't copy assets"))
 
         .then(() => {
@@ -478,11 +501,15 @@ preBuild()
           fs.copyFileSync(
             src,
             path.resolve(backgroundDirectory, backgroundName)
-          ),
-            fs.copyFileSync(
-              src,
-              path.resolve(edgeBackgroundDirectory, backgroundName)
-            )
+          );
+          fs.copyFileSync(
+            src,
+            path.resolve(edgeBackgroundDirectory, backgroundName)
+          );
+          fs.copyFileSync(
+            src,
+            path.resolve(braveBackgroundDirectory, backgroundName)
+          )
         })
         .catch(() => {
           // skipping asset copies
