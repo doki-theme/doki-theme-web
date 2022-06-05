@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Nakano Itsuki",
+  "short_name": "Doki Theme",
+  "version": "84.2.2",
+  "description": "A light theme modeled after Itsuki from Quintessential Quintuplets",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        16,
+        16,
+        16
+      ],
+      "button_background": [
+        255,
+        160,
+        152
+      ],
+      "frame": [
+        248,
+        141,
+        129
+      ],
+      "frame_inactive": [
+        252,
+        136,
+        122
+      ],
+      "frame_incognito": [
+        252,
+        136,
+        122
+      ],
+      "frame_incognito_inactive": [
+        248,
+        141,
+        129
+      ],
+      "ntp_background": [
+        248,
+        141,
+        129
+      ],
+      "ntp_header": [
+        252,
+        136,
+        122
+      ],
+      "omnibox_background": [
+        243,
+        124,
+        111
+      ],
+      "omnibox_text": [
+        79,
+        82,
+        196
+      ],
+      "theme_toolbar": [
+        246,
+        126,
+        115
+      ],
+      "ntp_text": [
+        16,
+        16,
+        16
+      ],
+      "tab_background_text": [
+        16,
+        16,
+        16
+      ],
+      "tab_background_text_inactive": [
+        161,
+        71,
+        59
+      ],
+      "tab_text": [
+        16,
+        16,
+        16
+      ],
+      "toolbar": [
+        252,
+        136,
+        122
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.6623931623931624,
+        1,
+        0.5392156862745099
+      ],
+      "frame": [
+        0.6623931623931624,
+        1,
+        0.5392156862745099
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

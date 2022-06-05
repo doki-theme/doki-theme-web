@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Yuzuriha Inori",
+  "short_name": "Doki Theme",
+  "version": "84.2.2",
+  "description": "A light theme modeled after Inori from Guilty Crown",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        16,
+        16,
+        16
+      ],
+      "button_background": [
+        253,
+        191,
+        146
+      ],
+      "frame": [
+        246,
+        168,
+        115
+      ],
+      "frame_inactive": [
+        255,
+        167,
+        114
+      ],
+      "frame_incognito": [
+        255,
+        167,
+        114
+      ],
+      "frame_incognito_inactive": [
+        246,
+        168,
+        115
+      ],
+      "ntp_background": [
+        246,
+        168,
+        115
+      ],
+      "ntp_header": [
+        255,
+        167,
+        114
+      ],
+      "omnibox_background": [
+        246,
+        155,
+        92
+      ],
+      "omnibox_text": [
+        186,
+        21,
+        21
+      ],
+      "theme_toolbar": [
+        239,
+        153,
+        140
+      ],
+      "ntp_text": [
+        16,
+        16,
+        16
+      ],
+      "tab_background_text": [
+        16,
+        16,
+        16
+      ],
+      "tab_background_text_inactive": [
+        116,
+        51,
+        51
+      ],
+      "tab_text": [
+        16,
+        16,
+        16
+      ],
+      "toolbar": [
+        255,
+        167,
+        114
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0,
+        1,
+        0.40588235294117647
+      ],
+      "frame": [
+        0,
+        1,
+        0.40588235294117647
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Senko",
+  "short_name": "Doki Theme",
+  "version": "84.2.2",
+  "description": "A light theme modeled after Senko from Helpful Fox Senko-san",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        7,
+        54,
+        66
+      ],
+      "button_background": [
+        243,
+        217,
+        188
+      ],
+      "frame": [
+        255,
+        232,
+        209
+      ],
+      "frame_inactive": [
+        255,
+        231,
+        205
+      ],
+      "frame_incognito": [
+        255,
+        231,
+        205
+      ],
+      "frame_incognito_inactive": [
+        255,
+        232,
+        209
+      ],
+      "ntp_background": [
+        255,
+        232,
+        209
+      ],
+      "ntp_header": [
+        255,
+        231,
+        205
+      ],
+      "omnibox_background": [
+        245,
+        223,
+        190
+      ],
+      "omnibox_text": [
+        203,
+        55,
+        82
+      ],
+      "theme_toolbar": [
+        248,
+        222,
+        194
+      ],
+      "ntp_text": [
+        7,
+        54,
+        66
+      ],
+      "tab_background_text": [
+        7,
+        54,
+        66
+      ],
+      "tab_background_text_inactive": [
+        205,
+        151,
+        116
+      ],
+      "tab_text": [
+        7,
+        54,
+        66
+      ],
+      "toolbar": [
+        255,
+        231,
+        205
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.9695945945945946,
+        1,
+        0.5058823529411764
+      ],
+      "frame": [
+        0.9695945945945946,
+        1,
+        0.5058823529411764
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

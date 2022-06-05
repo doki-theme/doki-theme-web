@@ -1,7 +1,7 @@
 {
   "name": "Doki Theme: Asuna Dark",
   "short_name": "Doki Theme",
-  "version": "78.2.2",
+  "version": "84.2.2",
   "description": "A dark theme modeled after Asuna from Sword Art Online",
   "manifest_version": 3,
   "theme": {
@@ -56,9 +56,9 @@
         28
       ],
       "omnibox_text": [
-        219,
-        151,
-        77
+        126,
+        202,
+        250
       ],
       "theme_toolbar": [
         40,

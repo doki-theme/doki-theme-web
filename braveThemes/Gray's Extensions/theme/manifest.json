@@ -1,7 +1,7 @@
 {
   "name": "Doki Theme: Gray",
   "short_name": "Doki Theme",
-  "version": "78.2.2",
+  "version": "84.2.2",
   "description": "A dark theme modeled after Gray from Type-Moon",
   "manifest_version": 3,
   "theme": {
