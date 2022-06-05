@@ -2659,10 +2659,10 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-doki-build-source@78.2.3:
-  version "78.2.3"
-  resolved "https://registry.yarnpkg.com/doki-build-source/-/doki-build-source-78.2.3.tgz#23bacab848f51d4389615a373d266575ea880c86"
-  integrity sha512-8DmTsQTEriYKWweb6zd0VFQOj5w/A31ScF1eRQjrQ8WdkB8zf5bTzqJ115ADWsTjwElBqY1gDIvD19K4+oPesg==
+doki-build-source@84.2.3:
+  version "84.2.3"
+  resolved "https://registry.yarnpkg.com/doki-build-source/-/doki-build-source-84.2.3.tgz#5ced56b98db19f283be92e75c58dc75ef49a1462"
+  integrity sha512-4dI69k1ENipAkEM6+2KBoHzeEPh9OOqsQxj7ibgK3WPzqbLFVWJIpmznPJZ+gQgmLxM4LPd3qAomK6aOpxv4qg==
 
 dom-serializer@0:
   version "0.2.2"

@@ -1,7 +1,7 @@
 {
   "name": "Doki Theme: Astolfo",
   "short_name": "Doki Theme",
-  "version": "78.2.2",
+  "version": "84.2.2",
   "description": "A dark theme modeled after Astolfo from Fate",
   "manifest_version": 3,
   "theme": {

@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: C.C.",
+  "short_name": "Doki Theme",
+  "version": "84.2.2",
+  "description": "A light theme modeled after C.C. from Code Geass",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        16,
+        16,
+        16
+      ],
+      "button_background": [
+        224,
+        255,
+        180
+      ],
+      "frame": [
+        210,
+        246,
+        155
+      ],
+      "frame_inactive": [
+        196,
+        234,
+        138
+      ],
+      "frame_incognito": [
+        196,
+        234,
+        138
+      ],
+      "frame_incognito_inactive": [
+        210,
+        246,
+        155
+      ],
+      "ntp_background": [
+        210,
+        246,
+        155
+      ],
+      "ntp_header": [
+        196,
+        234,
+        138
+      ],
+      "omnibox_background": [
+        181,
+        222,
+        118
+      ],
+      "omnibox_text": [
+        8,
+        3,
+        165
+      ],
+      "theme_toolbar": [
+        192,
+        241,
+        121
+      ],
+      "ntp_text": [
+        16,
+        16,
+        16
+      ],
+      "tab_background_text": [
+        16,
+        16,
+        16
+      ],
+      "tab_background_text_inactive": [
+        80,
+        116,
+        51
+      ],
+      "tab_text": [
+        16,
+        16,
+        16
+      ],
+      "toolbar": [
+        196,
+        234,
+        138
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.24272930648769575,
+        1,
+        0.3823529411764706
+      ],
+      "frame": [
+        0.24272930648769575,
+        1,
+        0.3823529411764706
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

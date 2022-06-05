@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Tomori Nao",
+  "short_name": "Doki Theme",
+  "version": "84.2.2",
+  "description": "A light theme modeled after Nao from Charlotte",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        16,
+        16,
+        16
+      ],
+      "button_background": [
+        239,
+        230,
+        223
+      ],
+      "frame": [
+        245,
+        237,
+        229
+      ],
+      "frame_inactive": [
+        239,
+        231,
+        222
+      ],
+      "frame_incognito": [
+        239,
+        231,
+        222
+      ],
+      "frame_incognito_inactive": [
+        245,
+        237,
+        229
+      ],
+      "ntp_background": [
+        245,
+        237,
+        229
+      ],
+      "ntp_header": [
+        239,
+        231,
+        222
+      ],
+      "omnibox_background": [
+        233,
+        224,
+        219
+      ],
+      "omnibox_text": [
+        39,
+        111,
+        216
+      ],
+      "theme_toolbar": [
+        232,
+        221,
+        214
+      ],
+      "ntp_text": [
+        16,
+        16,
+        16
+      ],
+      "tab_background_text": [
+        16,
+        16,
+        16
+      ],
+      "tab_background_text_inactive": [
+        65,
+        125,
+        179
+      ],
+      "tab_text": [
+        16,
+        16,
+        16
+      ],
+      "toolbar": [
+        239,
+        231,
+        222
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.5988700564971752,
+        1,
+        0.5
+      ],
+      "frame": [
+        0.5988700564971752,
+        1,
+        0.5
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  }
+}
