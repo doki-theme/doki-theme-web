@@ -1,7 +1,7 @@
 {
   "name": "Doki Theme: Hiro",
   "short_name": "Doki Theme",
-  "version": "88.2.2",
+  "version": "88.2.3",
   "description": "A dark theme modeled after Hiro from Darling in the Franxx",
   "manifest_version": 3,
   "theme": {

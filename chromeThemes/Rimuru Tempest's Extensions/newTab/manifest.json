@@ -1,0 +1,48 @@
+{
+  "name": "Doki Theme for Chrome: Rimuru Tempest",
+  "short_name": "Doki Theme",
+  "version": "88.2.3",
+  "description": "A collection of themes based on girls from various anime, manga, and visual novels series.",
+  "manifest_version": 3,
+  "icons": {
+    "48": "icons/doki-theme-logo@48.png",
+    "96": "icons/doki-theme-logo@96.png"
+  },
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "permissions": [
+    "search",
+    "tabs",
+    "activeTab",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "js/scrollbarStyleInjection.js",
+        "js/selectionStyleInjection.js"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "action": {
+    "browser_style": true,
+    "default_icon": {
+      "16": "icons/doki-theme-logo@16.png",
+      "32": "icons/doki-theme-logo@32.png",
+      "64": "icons/doki-theme-logo@64.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Doki Theme"
+  },
+  "chrome_url_overrides": {
+    "newtab": "tab.html"
+  }
+}

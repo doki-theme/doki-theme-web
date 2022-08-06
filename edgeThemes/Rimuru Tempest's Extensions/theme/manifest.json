@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Rimuru Tempest",
+  "short_name": "Doki Theme",
+  "version": "88.2.3",
+  "description": "A dark theme modeled after Rimuru from That Time I Get ReIncarnated As A Slime",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        211,
+        211,
+        211
+      ],
+      "button_background": [
+        67,
+        63,
+        70
+      ],
+      "frame": [
+        38,
+        33,
+        39
+      ],
+      "frame_inactive": [
+        28,
+        23,
+        29
+      ],
+      "frame_incognito": [
+        28,
+        23,
+        29
+      ],
+      "frame_incognito_inactive": [
+        38,
+        33,
+        39
+      ],
+      "ntp_background": [
+        38,
+        33,
+        39
+      ],
+      "ntp_header": [
+        28,
+        23,
+        29
+      ],
+      "omnibox_background": [
+        21,
+        16,
+        22
+      ],
+      "omnibox_text": [
+        215,
+        207,
+        139
+      ],
+      "theme_toolbar": [
+        60,
+        55,
+        63
+      ],
+      "ntp_text": [
+        211,
+        211,
+        211
+      ],
+      "tab_background_text": [
+        211,
+        211,
+        211
+      ],
+      "tab_background_text_inactive": [
+        103,
+        90,
+        108
+      ],
+      "tab_text": [
+        211,
+        211,
+        211
+      ],
+      "toolbar": [
+        28,
+        23,
+        29
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.14912280701754385,
+        1,
+        0.6941176470588235
+      ],
+      "frame": [
+        0.14912280701754385,
+        1,
+        0.6941176470588235
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  }
+}
