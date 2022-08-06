@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Zero Two Light Sakura",
+  "short_name": "Doki Theme",
+  "version": "88.2.2",
+  "description": "A light theme modeled after Zero Two from Darling in the Franxx",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        37,
+        36,
+        39
+      ],
+      "button_background": [
+        255,
+        209,
+        226
+      ],
+      "frame": [
+        255,
+        234,
+        242
+      ],
+      "frame_inactive": [
+        255,
+        230,
+        238
+      ],
+      "frame_incognito": [
+        255,
+        230,
+        238
+      ],
+      "frame_incognito_inactive": [
+        255,
+        234,
+        242
+      ],
+      "ntp_background": [
+        255,
+        234,
+        242
+      ],
+      "ntp_header": [
+        255,
+        230,
+        238
+      ],
+      "omnibox_background": [
+        255,
+        222,
+        235
+      ],
+      "omnibox_text": [
+        166,
+        34,
+        16
+      ],
+      "theme_toolbar": [
+        255,
+        220,
+        231
+      ],
+      "ntp_text": [
+        37,
+        36,
+        39
+      ],
+      "tab_background_text": [
+        37,
+        36,
+        39
+      ],
+      "tab_background_text_inactive": [
+        187,
+        155,
+        177
+      ],
+      "tab_text": [
+        37,
+        36,
+        39
+      ],
+      "toolbar": [
+        255,
+        230,
+        238
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.02,
+        1,
+        0.3568627450980392
+      ],
+      "frame": [
+        0.02,
+        1,
+        0.3568627450980392
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

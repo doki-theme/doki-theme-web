@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Zero Two Dark Obsidian",
+  "short_name": "Doki Theme",
+  "version": "88.2.2",
+  "description": "A dark theme modeled after Zero Two from Darling in the Franxx",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        187,
+        187,
+        187
+      ],
+      "button_background": [
+        41,
+        49,
+        43
+      ],
+      "frame": [
+        26,
+        12,
+        18
+      ],
+      "frame_inactive": [
+        23,
+        7,
+        14
+      ],
+      "frame_incognito": [
+        23,
+        7,
+        14
+      ],
+      "frame_incognito_inactive": [
+        26,
+        12,
+        18
+      ],
+      "ntp_background": [
+        26,
+        12,
+        18
+      ],
+      "ntp_header": [
+        23,
+        7,
+        14
+      ],
+      "omnibox_background": [
+        14,
+        5,
+        9
+      ],
+      "omnibox_text": [
+        30,
+        205,
+        134
+      ],
+      "theme_toolbar": [
+        21,
+        44,
+        30
+      ],
+      "ntp_text": [
+        187,
+        187,
+        187
+      ],
+      "tab_background_text": [
+        187,
+        187,
+        187
+      ],
+      "tab_background_text_inactive": [
+        83,
+        97,
+        91
+      ],
+      "tab_text": [
+        187,
+        187,
+        187
+      ],
+      "toolbar": [
+        23,
+        7,
+        14
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.43238095238095237,
+        1,
+        0.4607843137254902
+      ],
+      "frame": [
+        0.43238095238095237,
+        1,
+        0.4607843137254902
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_logo_alternate": 0
+    }
+  }
+}
