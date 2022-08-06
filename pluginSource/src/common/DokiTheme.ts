@@ -28,7 +28,7 @@ export interface Colors {
   accentColorLessTransparent: string;
   accentColorMoreTransparent: string;
   accentColor: string;
-  accentContrastColor: string;
+  accentContrastColor?: string;
   stopColor: string;
   testScopeColor: string;
   popupMask: string;
@@ -59,8 +59,9 @@ export interface Colors {
   fileRed: string;
   filePurple: string;
   editorAccentColor: string;
+  foregroundColorEditor: string;
 
-  [key: string]: string;
+  [key: string]: string | undefined;
 }
 
 export interface DokiThemeDefinition {

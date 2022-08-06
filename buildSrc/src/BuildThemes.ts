@@ -384,6 +384,11 @@ function preBuild(): Promise<void> {
 // Begin theme construction
 const isBuildDefs = process.argv[2] === "defs"
 
+const ZERO_TWO_DARK_OBSIDIAN = "13adffd9-acbe-47af-8101-fa71269a4c5c";
+function isSpecial(id: string) {
+  return ZERO_TWO_DARK_OBSIDIAN === id;
+}
+
 preBuild()
   .then(() => {
     const manifestTemplate = readJson<ManifestTemplate>(path.resolve(appTemplatesDirectoryPath, 'manifest.template.json'))
@@ -495,7 +500,10 @@ preBuild()
 
         .then(() => {
           // copy asset to directory
-          const assetRepPath = path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', 'wallpapers')
+          const assetRepPath =
+            isSpecial(theme.definition.id) ?
+            path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds') :
+            path.resolve(repoDirectory, '..', 'doki-theme-assets', 'backgrounds', 'wallpapers')
           const backgroundName = stickers.default.name;
           const src = path.resolve(assetRepPath, backgroundName);
           fs.copyFileSync(

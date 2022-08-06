@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Hiro",
+  "short_name": "Doki Theme",
+  "version": "88.2.2",
+  "description": "A dark theme modeled after Hiro from Darling in the Franxx",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        176,
+        176,
+        176
+      ],
+      "button_background": [
+        57,
+        60,
+        69
+      ],
+      "frame": [
+        29,
+        30,
+        34
+      ],
+      "frame_inactive": [
+        22,
+        23,
+        26
+      ],
+      "frame_incognito": [
+        22,
+        23,
+        26
+      ],
+      "frame_incognito_inactive": [
+        29,
+        30,
+        34
+      ],
+      "ntp_background": [
+        29,
+        30,
+        34
+      ],
+      "ntp_header": [
+        22,
+        23,
+        26
+      ],
+      "omnibox_background": [
+        18,
+        19,
+        23
+      ],
+      "omnibox_text": [
+        106,
+        150,
+        233
+      ],
+      "theme_toolbar": [
+        49,
+        50,
+        54
+      ],
+      "ntp_text": [
+        176,
+        176,
+        176
+      ],
+      "tab_background_text": [
+        176,
+        176,
+        176
+      ],
+      "tab_background_text_inactive": [
+        79,
+        93,
+        118
+      ],
+      "tab_text": [
+        176,
+        176,
+        176
+      ],
+      "toolbar": [
+        22,
+        23,
+        26
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.5980392156862745,
+        1,
+        0.5196078431372548
+      ],
+      "frame": [
+        0.5980392156862745,
+        1,
+        0.5196078431372548
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "right",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

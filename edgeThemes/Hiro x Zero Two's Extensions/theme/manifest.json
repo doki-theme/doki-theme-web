@@ -1,0 +1,111 @@
+{
+  "name": "Doki Theme: Hiro x Zero Two",
+  "short_name": "Doki Theme",
+  "version": "88.2.2",
+  "description": "A dark theme modeled after Hiro x Zero Two from Darling in the Franxx",
+  "manifest_version": 3,
+  "theme": {
+    "images": {
+      "theme_toolbar": "images/tab_highlight.png",
+      "theme_tab_background": "images/tab_inactive.png"
+    },
+    "colors": {
+      "bookmark_text": [
+        184,
+        184,
+        184
+      ],
+      "button_background": [
+        55,
+        44,
+        64
+      ],
+      "frame": [
+        21,
+        11,
+        36
+      ],
+      "frame_inactive": [
+        21,
+        11,
+        36
+      ],
+      "frame_incognito": [
+        21,
+        11,
+        36
+      ],
+      "frame_incognito_inactive": [
+        21,
+        11,
+        36
+      ],
+      "ntp_background": [
+        21,
+        11,
+        36
+      ],
+      "ntp_header": [
+        21,
+        11,
+        36
+      ],
+      "omnibox_background": [
+        13,
+        4,
+        28
+      ],
+      "omnibox_text": [
+        255,
+        150,
+        253
+      ],
+      "theme_toolbar": [
+        59,
+        14,
+        32
+      ],
+      "ntp_text": [
+        184,
+        184,
+        184
+      ],
+      "tab_background_text": [
+        184,
+        184,
+        184
+      ],
+      "tab_background_text_inactive": [
+        95,
+        78,
+        101
+      ],
+      "tab_text": [
+        184,
+        184,
+        184
+      ],
+      "toolbar": [
+        21,
+        11,
+        36
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0,
+        1,
+        0.5058823529411764
+      ],
+      "frame": [
+        0,
+        1,
+        0.5058823529411764
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_logo_alternate": 0
+    }
+  }
+}

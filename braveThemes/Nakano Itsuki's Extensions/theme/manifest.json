@@ -1,7 +1,7 @@
 {
   "name": "Doki Theme: Nakano Itsuki",
   "short_name": "Doki Theme",
-  "version": "84.2.2",
+  "version": "88.2.2",
   "description": "A light theme modeled after Itsuki from Quintessential Quintuplets",
   "manifest_version": 3,
   "theme": {
@@ -17,43 +17,43 @@
       ],
       "button_background": [
         255,
-        160,
-        152
+        183,
+        180
       ],
       "frame": [
-        248,
-        141,
-        129
+        255,
+        201,
+        201
       ],
       "frame_inactive": [
-        252,
-        136,
-        122
+        255,
+        190,
+        190
       ],
       "frame_incognito": [
-        252,
-        136,
-        122
+        255,
+        190,
+        190
       ],
       "frame_incognito_inactive": [
-        248,
-        141,
-        129
+        255,
+        201,
+        201
       ],
       "ntp_background": [
-        248,
-        141,
-        129
+        255,
+        201,
+        201
       ],
       "ntp_header": [
-        252,
-        136,
-        122
+        255,
+        190,
+        190
       ],
       "omnibox_background": [
-        243,
-        124,
-        111
+        252,
+        153,
+        153
       ],
       "omnibox_text": [
         79,
@@ -61,9 +61,9 @@
         196
       ],
       "theme_toolbar": [
-        246,
-        126,
-        115
+        255,
+        169,
+        168
       ],
       "ntp_text": [
         16,
@@ -76,9 +76,9 @@
         16
       ],
       "tab_background_text_inactive": [
-        161,
-        71,
-        59
+        208,
+        126,
+        114
       ],
       "tab_text": [
         16,
@@ -86,9 +86,9 @@
         16
       ],
       "toolbar": [
-        252,
-        136,
-        122
+        255,
+        190,
+        190
       ]
     },
     "tints": {

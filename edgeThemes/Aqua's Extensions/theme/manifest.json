@@ -1,7 +1,7 @@
 {
   "name": "Doki Theme: Aqua",
   "short_name": "Doki Theme",
-  "version": "84.2.2",
+  "version": "88.2.2",
   "description": "A dark theme modeled after Aqua from KonoSuba",
   "manifest_version": 3,
   "theme": {
